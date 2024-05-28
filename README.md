@@ -6,9 +6,9 @@
 실행하는법
 
 ```
-yarn install
+pnpm install
 
-yarn build
+pnpm build
 
-yarn start
+pnpm start
 ```
