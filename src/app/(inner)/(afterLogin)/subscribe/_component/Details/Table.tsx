@@ -24,7 +24,6 @@ type RowData = {
   구독번호: string;
   구독시작일: string;
   구독만료일: string;
-  사용자레벨: string;
   cntuIqryKey: string;
 };
 
@@ -75,8 +74,7 @@ export default function Table({ session }: DetailsProps) {
         구독번호: item.F03,
         구독시작일: stringToDate(item.F04),
         구독만료일: stringToDate(item.F05),
-        사용자레벨: item.F06,
-        cntuIqryKey: item.F07,
+        cntuIqryKey: item.F06,
       }));
     },
     enabled: subscribeDetails.nonce > 0,

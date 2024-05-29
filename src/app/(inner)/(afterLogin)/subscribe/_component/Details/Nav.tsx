@@ -1,5 +1,4 @@
 import useModalStore from "@/hook/useModalStore";
-import dayjs from "@/model/dayjs";
 import { Cell, Form, Input, Label, List } from "@inner/(afterLogin)/_component/Nav.style";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
@@ -8,6 +7,7 @@ import { subscribeDetailsAtom } from "../../_lib/atom";
 import { ButtonBox, Wrap } from "./Nav.style";
 import RegisterSubscrModal from "./RegisterSubscriptionModal";
 import { DefaultButton } from "@/app/_component/Button.style";
+import { format } from "date-fns";
 
 interface NavProps {
   session: Session;
@@ -15,7 +15,7 @@ interface NavProps {
 
 export default function Nav({ session }: NavProps) {
   const [userId, setUserId] = useState("");
-  const [baseDt, setBaseDt] = useState(dayjs().format("YYYY-MM-DD"));
+  const [baseDt, setBaseDt] = useState(format(new Date(), "yyyy-MM-dd"));
   const setSubscrobeDetails = useSetAtom(subscribeDetailsAtom);
 
   const modalStore = useModalStore();

@@ -28,7 +28,6 @@ enum RegisterSubscrInput {
   userId = `${ID}UserId`,
   subscrStartDt = `${ID}SubscrStartDt`,
   subscrEndDt = `${ID}SubscrEndDt`,
-  userLv = `${ID}UserLv`,
 }
 
 interface RegisterSubscrModalProps {
@@ -42,7 +41,6 @@ export default function RegisterSubscrModal({
   const [userId, setUserId] = useState("");
   const [subscrStartDt, setSubscrStartDt] = useState("");
   const [subscrEndDt, setSubscrEndDt] = useState("");
-  const [userLv, setUserLv] = useState("");
   const setSubscribeDetails = useSetAtom(subscribeDetailsAtom);
 
   const modalStore = useModalStore();
@@ -59,7 +57,6 @@ export default function RegisterSubscrModal({
           userId,
           subscrStartDt.replaceAll("-", ""),
           subscrEndDt.replaceAll("-", ""),
-          userLv,
         ],
       });
       const B9011AData = B9011ARes.svcRspnData;
@@ -91,9 +88,6 @@ export default function RegisterSubscrModal({
         break;
       case RegisterSubscrInput.subscrEndDt:
         setSubscrEndDt(() => value);
-        break;
-      case RegisterSubscrInput.userLv:
-        setUserLv(() => value);
         break;
     }
   };
@@ -137,15 +131,6 @@ export default function RegisterSubscrModal({
                 onChange={onChange}
                 id={RegisterSubscrInput.subscrEndDt}
                 type="date"
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor={RegisterSubscrInput.userLv}>사용자레벨</Label>
-              <Input
-                value={userLv}
-                onChange={onChange}
-                id={RegisterSubscrInput.userLv}
-                type="text"
               />
             </InputBox>
           </List>

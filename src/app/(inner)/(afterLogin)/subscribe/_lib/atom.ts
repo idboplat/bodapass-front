@@ -1,10 +1,10 @@
-import dayjs from "@/model/dayjs";
+import { format } from "date-fns";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 export const subscribeDetailsAtom = atom({
   userId: "",
-  baseDt: dayjs().format("YYYYMMDD"),
+  baseDt: format(new Date(), "yyyyMMdd"),
   cntuIqryKey: "",
   history: [] as string[],
   nonce: 0,
@@ -14,7 +14,7 @@ subscribeDetailsAtom.onMount = (set) => {
   return () => {
     set(() => ({
       userId: "",
-      baseDt: dayjs().format("YYYYMMDD"),
+      baseDt: format(new Date(), "yyyyMMdd"),
       cntuIqryKey: "",
       history: [],
       nonce: 0,

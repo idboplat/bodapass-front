@@ -41,18 +41,7 @@ export type B9011QData = RspnData<{
   F04: string;
   F05: string;
   F06: string;
-  F07: string;
 }>;
-
-export type B9011QCell = {
-  사용자ID: string;
-  사용자명: string;
-  구독번호: string;
-  구독시작일: string;
-  구독만료일: string;
-  사용자레벨: string;
-  cntuIqryKey: string;
-};
 
 export type B9011AData = RspnData<{
   F01: Filler;

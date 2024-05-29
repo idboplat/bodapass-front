@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import CryptoJS from "crypto-js";
 import TmsError from "@/model/error/TmsError";
-import dayjs from "@/model/dayjs";
+import { formatInTimeZone } from "date-fns-tz";
 
 const CORP_CD = "Z01";
 /** svcErrYn이 true로 응답되도 에러처리 하지않는 에러코드 목록 */
@@ -73,7 +73,7 @@ export const genarateBody = ({
   data: any[];
 }) => {
   /** YYYYMMDDHHmmssSSS */
-  const currentTime = dayjs().utc().format("YYYYMMDDHHmmssSSS").toString();
+  const currentTime = formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS");
 
   const svcRqst = {
     svcTranKey: 1,
