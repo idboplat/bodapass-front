@@ -12,7 +12,7 @@ import {
   InputBox,
   Label,
   List,
-} from "@inner/(afterLogin)/user/_component/RegisterModal.style";
+} from "@/app/(web)/(afterLogin)/user/_component/RegisterModal.style";
 import { useMutation } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";

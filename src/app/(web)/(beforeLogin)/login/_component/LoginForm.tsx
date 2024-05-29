@@ -2,7 +2,7 @@
 
 import ErrorModal from "@/app/_component/ErrorModal";
 import useModalStore from "@/hook/useModalStore";
-import ResetButton from "@inner/_component/ResetButton";
+import ResetButton from "@/app/(web)/_component/ResetButton";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

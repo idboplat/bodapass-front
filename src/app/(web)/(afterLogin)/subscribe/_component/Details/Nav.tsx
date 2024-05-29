@@ -1,5 +1,5 @@
 import useModalStore from "@/hook/useModalStore";
-import { Cell, Form, Input, Label, List } from "@inner/(afterLogin)/_component/Nav.style";
+import { Cell, Form, Input, Label, List } from "@/app/(web)/(afterLogin)/_component/Nav.style";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
 import { FormEvent, useState } from "react";

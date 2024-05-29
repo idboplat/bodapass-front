@@ -6,7 +6,7 @@ import { GRID_COLS } from "../_const/colum";
 import AgCustomTheme from "@/style/AgCustomTheme.style";
 import { Session } from "next-auth";
 import callTms from "@/model/callTms";
-import Pagination from "@inner/(afterLogin)/_component/Pagination";
+import Pagination from "@/app/(web)/(afterLogin)/_component/Pagination";
 import { useAtom, useSetAtom } from "jotai";
 import { nextUserListAtom, prevUserListAtom, userListAtom, userListKeyAtom } from "../_lib/atom";
 import { B9001QData } from "@/type/api";

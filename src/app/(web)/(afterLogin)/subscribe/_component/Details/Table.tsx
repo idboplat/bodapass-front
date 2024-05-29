@@ -1,7 +1,7 @@
 import callTms from "@/model/callTms";
 import AgCustomTheme from "@/style/AgCustomTheme.style";
 import { B9011QData } from "@/type/api";
-import Pagination from "@inner/(afterLogin)/_component/Pagination";
+import Pagination from "@/app/(web)/(afterLogin)/_component/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import { ICellRendererParams, RowClickedEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";

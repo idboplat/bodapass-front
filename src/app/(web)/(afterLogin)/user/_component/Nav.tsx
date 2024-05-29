@@ -11,7 +11,7 @@ import {
   Label,
   List,
   Wrap,
-} from "@inner/(afterLogin)/_component/Nav.style";
+} from "@/app/(web)/(afterLogin)/_component/Nav.style";
 import { useSetAtom } from "jotai";
 import { Session } from "next-auth";
 import { FormEvent, useState } from "react";
