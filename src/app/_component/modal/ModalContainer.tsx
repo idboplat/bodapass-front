@@ -1,7 +1,5 @@
 "use client";
-import useModalStore from "@/hook/useModalStore";
-import { modalRenderAtom } from "@/model/modal/modalContext";
-import { useAtom } from "jotai";
+import { useModalStore } from "@/app/_lib/modalStore";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -9,9 +7,8 @@ import { createPortal } from "react-dom";
 const MODAL_ID = "modalRoot";
 
 export default function ModalContainer() {
-  useAtom(modalRenderAtom);
-  const modalStore = useModalStore();
-  const isEmpty = modalStore.length === 0;
+  const { modals: modalInfos, actions } = useModalStore();
+  const isEmpty = modalInfos.length === 0;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
 
@@ -22,14 +19,14 @@ export default function ModalContainer() {
     document.body.appendChild(modalBox);
     containerRef.current = modalBox;
     return () => {
-      modalStore.clear();
+      actions.closeAll();
       modalBox.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    modalStore.clear();
+    actions.closeAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -37,7 +34,7 @@ export default function ModalContainer() {
 
   return createPortal(
     <>
-      {modalStore.all.map((modalInfo) => (
+      {modalInfos.map((modalInfo) => (
         <modalInfo.Component key={modalInfo.key} {...modalInfo.props} />
       ))}
     </>,

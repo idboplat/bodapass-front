@@ -2,14 +2,14 @@
 import { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryCache, QueryClientProvider } from "@tanstack/react-query";
 import TmsError from "@/model/error/TmsError";
-import useModalStore from "@/hook/useModalStore";
 import ErrorModal from "./modal/ErrorModal";
 import { signOut } from "next-auth/react";
+import { useSetModalStore } from "../_lib/modalStore";
 
 const SESSION_OUT_CODES = ["WW104", "20029"];
 
 export default function ReactQuery({ children }: PropsWithChildren) {
-  const modalStore = useModalStore();
+  const modalStore = useSetModalStore();
 
   const [querClient] = useState(() => {
     return new QueryClient({

@@ -1,4 +1,4 @@
-import { ModalProps } from "@/model/modal/modalController";
+import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
 import * as style from "./modal.css";
 import { modalDefaultBtn } from "./modalBtn.css";

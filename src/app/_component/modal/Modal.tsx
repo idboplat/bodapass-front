@@ -8,7 +8,6 @@ interface ModalProps {
   className?: string;
   id: string;
   children: React.ReactNode;
-  width?: number;
   showBackdrop?: boolean;
   removeScrollBar?: boolean;
   onClose?: () => void;
@@ -18,7 +17,6 @@ interface ModalProps {
 export default function Modal({
   id,
   children,
-  width,
   onClose = () => {},
   showBackdrop = true,
   removeScrollBar = false,

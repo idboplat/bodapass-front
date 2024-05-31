@@ -2,10 +2,10 @@
 import AlertModal from "@/app/_component/modal/AlertModal";
 import ConfirmModal from "@/app/_component/modal/ConfirmModal";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import useModalStore from "@/hook/useModalStore";
+import { useSetModalStore } from "@/app/_lib/modalStore";
 
 export default function Home() {
-  const modalStore = useModalStore();
+  const modalStore = useSetModalStore();
 
   const openAlertModal = async () => {
     const result = await modalStore.push(AlertModal, {

@@ -1,6 +1,5 @@
 "use client";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import useModalStore from "@/hook/useModalStore";
 import ResetButton from "@/app/_component/btn/ResetBtn";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -8,13 +7,14 @@ import { useState } from "react";
 import emailLoginFn from "../_lib/login";
 import DotsLoading from "@/app/_component/loading/DotsLoading";
 import * as style from "./loginForm.css";
+import { useSetModalStore } from "@/app/_lib/modalStore";
 
 export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const modalStore = useModalStore();
+  const modalStore = useSetModalStore();
 
   const mutateEmailLogin = useMutation({
     mutationKey: ["emailLogin"],

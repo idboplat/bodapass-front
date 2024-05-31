@@ -1,12 +1,11 @@
+import dynamic from "next/dynamic";
 import { PropsWithChildren } from "react";
-import NextAuth from "./NextAuth";
-import Jotai from "./Jotai";
-import ReactQuery from "./ReactQuery";
+import { Toaster } from "sonner";
 import Devtools from "./Devtools";
 import Hotkeys from "./Hotkeys";
-import ModalProvider from "./modal/ModalProvider";
-import dynamic from "next/dynamic";
-import { Toaster } from "sonner";
+import Jotai from "./Jotai";
+import NextAuth from "./NextAuth";
+import ReactQuery from "./ReactQuery";
 
 const ModalContainer = dynamic(() => import("./modal/ModalContainer"), { ssr: false });
 
@@ -14,16 +13,14 @@ export default function Configs({ children }: PropsWithChildren) {
   return (
     <NextAuth>
       <Jotai>
-        <ModalProvider>
-          <Hotkeys>
-            <ReactQuery>
-              {children}
-              <Devtools />
-              <ModalContainer />
-              <Toaster />
-            </ReactQuery>
-          </Hotkeys>
-        </ModalProvider>
+        <Hotkeys>
+          <ReactQuery>
+            {children}
+            <Devtools />
+            <ModalContainer />
+            <Toaster />
+          </ReactQuery>
+        </Hotkeys>
       </Jotai>
     </NextAuth>
   );
