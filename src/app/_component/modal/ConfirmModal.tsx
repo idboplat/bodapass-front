@@ -1,4 +1,4 @@
-import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
+import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
 import * as style from "./modal.css";
 import { modalCancelBtn, modalDefaultBtn } from "./modalBtn.css";
@@ -16,7 +16,6 @@ export default function ConfirmModal({
   onClose,
   onSuccess,
 }: ModalProps<ConfirmModalProps>) {
-  const modalStore = useSetModalStore();
   return (
     <Modal id={ID} onClose={onClose}>
       <div className={style.modalCenterContent}>
@@ -32,9 +31,6 @@ export default function ConfirmModal({
           </button>
           <button className={modalDefaultBtn} type="button" onClick={() => onSuccess(true)}>
             확인
-          </button>
-          <button className={modalDefaultBtn} type="button" onClick={() => modalStore.closeAll()}>
-            닫기
           </button>
         </div>
       </div>
