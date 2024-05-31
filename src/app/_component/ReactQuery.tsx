@@ -1,12 +1,16 @@
 "use client";
 import { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryCache, QueryClientProvider } from "@tanstack/react-query";
-import TmsError from "@/model/error/TmsError";
+import { TmsError } from "@/model/error/TmsError";
 import ErrorModal from "./modal/ErrorModal";
 import { signOut } from "next-auth/react";
 import { useSetModalStore } from "../_lib/modalStore";
 
 const SESSION_OUT_CODES = ["WW104", "20029"];
+
+const checkSessionOutCode = (error: TmsError) => {
+  return SESSION_OUT_CODES.includes(error.errCode || "");
+};
 
 export default function ReactQuery({ children }: PropsWithChildren) {
   const modalStore = useSetModalStore();
@@ -19,19 +23,13 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           if (querykey.includes("ignore")) return;
 
           if (error instanceof TmsError) {
-            //TODO: TMS error code에 따른 예외처리
-            const errorCode = error.errCode || "";
-            if (SESSION_OUT_CODES.includes(errorCode)) {
-              await signOut({ redirect: true, callbackUrl: "/sessionout" });
+            if (checkSessionOutCode(error)) {
+              // await signOut({ redirect: true, callbackUrl: "/sessionout" });
               return;
             }
           }
 
-          modalStore.push(ErrorModal, {
-            props: {
-              error,
-            },
-          });
+          await modalStore.push(ErrorModal, { props: { error } });
         },
       }),
       defaultOptions: {
@@ -39,12 +37,32 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           gcTime: 30 * 1000, // 30초
           staleTime: 10 * 1000, // 10초
           refetchOnWindowFocus: false,
-          retry: 3,
+          retry: (failureCount, error) => {
+            // failureCount 0부터 시작
+            if (error instanceof TmsError) {
+              if (checkSessionOutCode(error)) {
+                // 세션에러일 경우 재시도 하지 않음
+                return false;
+              }
+            }
+            // 그 외의 경우 재시도 횟수를 3으로 설정
+            return failureCount < 2;
+          },
           retryDelay: 1000 * 2,
         },
         mutations: {
           gcTime: 0,
           retry: false,
+          onError: async (error) => {
+            if (error instanceof TmsError) {
+              if (checkSessionOutCode(error)) {
+                await signOut({ redirect: true, callbackUrl: "/sessionout" });
+                return;
+              }
+            }
+
+            await modalStore.push(ErrorModal, { props: { error } });
+          },
         },
       },
     });

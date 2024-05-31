@@ -1,4 +1,4 @@
-export default class TmsError extends Error {
+export class TmsError extends Error {
   static readonly isTmsError = true;
   readonly requestSvcId: string;
   /**

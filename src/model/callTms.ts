@@ -1,6 +1,6 @@
 import { Session } from "next-auth";
 import CryptoJS from "crypto-js";
-import TmsError from "@/model/error/TmsError";
+import { TmsError } from "@/model/error/TmsError";
 import { formatInTimeZone } from "date-fns-tz";
 
 const CORP_CD = "Z01";
