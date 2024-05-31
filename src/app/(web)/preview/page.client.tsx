@@ -1,18 +1,8 @@
 "use client";
-import AlertModal from "@/app/_component/AlertModal";
-import ConfirmModal from "@/app/_component/ConfirmModal";
-import ErrorModal from "@/app/_component/ErrorModal";
+import AlertModal from "@/app/_component/modal/AlertModal";
+import ConfirmModal from "@/app/_component/modal/ConfirmModal";
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 import useModalStore from "@/hook/useModalStore";
-import { textLine } from "@/style/mixin";
-import styled from "@emotion/styled";
-
-const TextOneLine = styled.p`
-  ${textLine("16px", 1)}
-`;
-
-const TextTwoLine = styled.p`
-  ${textLine("16px", 2)}
-`;
 
 export default function Home() {
   const modalStore = useModalStore();
@@ -49,18 +39,6 @@ export default function Home() {
       <br />
       <div>
         <div>Mixin: style 함수</div>
-        <TextOneLine>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis, reiciendis veniam quo
-          iusto odio accusamus corrupti ipsam voluptas repellat magnam dolor nulla itaque possimus
-          numquam ipsum quisquam cupiditate? Quam, tempora.
-        </TextOneLine>
-        <hr />
-        <hr />
-        <TextTwoLine>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam nisi, architecto sunt qui,
-          distinctio facere laudantium quas tempora illo molestias ea, voluptates magni quos? Id,
-          maiores repellendus. Quos, vel nesciunt.
-        </TextTwoLine>
       </div>
       <br />
       <div>

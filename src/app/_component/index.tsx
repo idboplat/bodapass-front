@@ -4,28 +4,27 @@ import Jotai from "./Jotai";
 import ReactQuery from "./ReactQuery";
 import Devtools from "./Devtools";
 import Hotkeys from "./Hotkeys";
-import ModalProvider from "./ModalProvider";
-import Emotion from "./Emotion";
+import ModalProvider from "./modal/ModalProvider";
 import dynamic from "next/dynamic";
+import { Toaster } from "sonner";
 
-const ModalContainer = dynamic(() => import("./ModalContainer"), { ssr: false });
+const ModalContainer = dynamic(() => import("./modal/ModalContainer"), { ssr: false });
 
 export default function Configs({ children }: PropsWithChildren) {
   return (
     <NextAuth>
-      <Emotion>
-        <Jotai>
-          <ModalProvider>
-            <Hotkeys>
-              <ReactQuery>
-                {children}
-                <Devtools />
-                <ModalContainer />
-              </ReactQuery>
-            </Hotkeys>
-          </ModalProvider>
-        </Jotai>
-      </Emotion>
+      <Jotai>
+        <ModalProvider>
+          <Hotkeys>
+            <ReactQuery>
+              {children}
+              <Devtools />
+              <ModalContainer />
+              <Toaster />
+            </ReactQuery>
+          </Hotkeys>
+        </ModalProvider>
+      </Jotai>
     </NextAuth>
   );
 }

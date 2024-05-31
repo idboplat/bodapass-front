@@ -1,22 +1,13 @@
 "use client";
-
-import ErrorModal from "@/app/_component/ErrorModal";
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 import useModalStore from "@/hook/useModalStore";
-import ResetButton from "@/app/(web)/_component/ResetButton";
+import ResetButton from "@/app/_component/btn/ResetBtn";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import emailLoginFn from "../_lib/login";
-import {
-  Button,
-  ButtonBox,
-  Form,
-  Input,
-  InputBox,
-  InputWrap,
-  Label,
-  Loading,
-} from "./LoginForm.style";
+import DotsLoading from "@/app/_component/loading/DotsLoading";
+import * as style from "./loginForm.css";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -64,26 +55,42 @@ export default function LoginForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <InputWrap>
-        <Label htmlFor="loginEmailInput">아이디</Label>
-        <InputBox>
-          <Input id="loginEmailInput" type="text" value={email} onChange={handleInput} />
+    <form className={style.form} onSubmit={handleSubmit}>
+      <div className={style.inputWrap}>
+        <label className={style.label} htmlFor="loginEmailInput">
+          아이디
+        </label>
+        <div className={style.inputBox}>
+          <input
+            className={style.input}
+            id="loginEmailInput"
+            type="text"
+            value={email}
+            onChange={handleInput}
+          />
           <ResetButton isShow={email !== ""} onClick={() => setEmail("")} />
-        </InputBox>
-      </InputWrap>
-      <InputWrap>
-        <Label htmlFor="loginPasswordInput">비밀번호</Label>
-        <InputBox>
-          <Input id="loginPasswordInput" type="password" value={password} onChange={handleInput} />
+        </div>
+      </div>
+      <div className={style.inputWrap}>
+        <label className={style.label} htmlFor="loginPasswordInput">
+          비밀번호
+        </label>
+        <div className={style.inputBox}>
+          <input
+            className={style.input}
+            id="loginPasswordInput"
+            type="password"
+            value={password}
+            onChange={handleInput}
+          />
           <ResetButton isShow={password !== ""} onClick={() => setPassword("")} />
-        </InputBox>
-      </InputWrap>
-      <ButtonBox>
-        <Button type="submit" disabled={isLoading}>
-          {mutateEmailLogin.isPending ? <Loading /> : "로그인"}
-        </Button>
-      </ButtonBox>
-    </Form>
+        </div>
+      </div>
+      <div className={style.btnBox}>
+        <button className={style.loginBtn} type="submit" disabled={isLoading}>
+          {isLoading ? <DotsLoading /> : "로그인"}
+        </button>
+      </div>
+    </form>
   );
 }

@@ -1,15 +1,5 @@
 "use client";
-
-import styled from "@emotion/styled";
 import { useEffect } from "react";
-
-const Wrap = styled.div``;
-
-const Desc = styled.div``;
-
-const ButtonBox = styled.div``;
-
-const Button = styled.button``;
 
 export default function Error({
   error,
@@ -28,21 +18,21 @@ export default function Error({
   return (
     <>
       <title>500 | Server Error</title>
-      <Wrap>
+      <div>
         <h2>Internal Server Error</h2>
-        <Desc>
+        <div>
           <p>
             {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production"
               ? error.message // 개발 스테이징 환경에서만 보이게 한다.
               : "Something wrong"}
           </p>
-        </Desc>
-        <ButtonBox>
-          <Button type="button" onClick={reset}>
+        </div>
+        <div>
+          <button type="button" onClick={reset}>
             다시시도
-          </Button>
-        </ButtonBox>
-      </Wrap>
+          </button>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,3 +1,5 @@
+import "@/style/global.css";
+import "@/style/globalTheme.css";
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { PropsWithChildren } from "react";

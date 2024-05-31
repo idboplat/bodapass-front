@@ -1,17 +1,23 @@
-"use client";
+import { PropsWithChildren } from "react";
+import Header from "./_component/Header";
+import SidebarLayout from "./_component/sidebar/SidebarLayout";
 
+// css 순서변경 금지
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-
-import { PropsWithChildren } from "react";
-import LayoutClient from "./layout.client";
-import { Toaster } from "sonner";
+import * as style from "./layout.css";
+import Sidebar from "./_component/sidebar/Sidebar";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <LayoutClient>
-      {children}
-      <Toaster />
-    </LayoutClient>
+    <div className={style.col}>
+      <Header />
+      <div className={style.row}>
+        <SidebarLayout>
+          <Sidebar />
+        </SidebarLayout>
+        {children}
+      </div>
+    </div>
   );
 }

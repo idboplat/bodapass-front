@@ -3,7 +3,7 @@ import { PropsWithChildren, useState } from "react";
 import { QueryClient, QueryCache, QueryClientProvider } from "@tanstack/react-query";
 import TmsError from "@/model/error/TmsError";
 import useModalStore from "@/hook/useModalStore";
-import ErrorModal from "./ErrorModal";
+import ErrorModal from "./modal/ErrorModal";
 import { signOut } from "next-auth/react";
 
 const SESSION_OUT_CODES = ["WW104", "20029"];
