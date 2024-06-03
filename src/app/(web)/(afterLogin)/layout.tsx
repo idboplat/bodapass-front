@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Header from "./_component/Header";
+import Header from "./_component/header/Header";
 import SidebarLayout from "./_component/sidebar/SidebarLayout";
 
 // css 순서변경 금지

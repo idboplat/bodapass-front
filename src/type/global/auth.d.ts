@@ -18,6 +18,8 @@ declare module "next-auth" {
       sessionId: string;
       sessionKey: string;
       errorMsg?: string;
+      exp: string;
+      iat: string;
     };
   }
 }
@@ -29,6 +31,8 @@ declare module "next-auth/jwt" {
       sessionId: string;
       sessionKey: string;
       errorMsg?: string;
+      exp: string;
+      iat: string;
     };
   }
 }
