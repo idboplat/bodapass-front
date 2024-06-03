@@ -23,7 +23,6 @@ declare global {
       readonly NEXT_API_URL: string;
 
       // dev-tools
-      readonly NEXT_PUBLIC_ENABLE_JOTAI_DEVTOOLS?: "true" | "false";
       readonly NEXT_PUBLIC_ENABLE_REACT_QUERY_DEVTOOLS?: "true" | "false";
     }
   }

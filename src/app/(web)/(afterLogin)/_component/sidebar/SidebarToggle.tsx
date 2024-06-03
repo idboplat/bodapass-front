@@ -1,16 +1,16 @@
 "use client";
-import { isSidebarToggleAtom } from "@/app/_lib/atom";
+import { useApp } from "@/app/_lib/app";
 import classNames from "classnames";
-import { useSetAtom } from "jotai";
 import { LuMenu } from "react-icons/lu";
+import { useStore } from "zustand";
 import { btn, hoverBox, icon } from "./sidebarToggle.css";
 
 export default function SidebarToggle() {
-  const setShow = useSetAtom(isSidebarToggleAtom);
-
+  const store = useApp();
+  const actions = useStore(store, (store) => store.actions);
   return (
     <>
-      <button className={btn} onClick={() => setShow((prev) => !prev)}>
+      <button className={btn} onClick={() => actions.toggleSidebar()}>
         <LuMenu className={icon} size={21} color="#666666" />
       </button>
       <div className={classNames(hoverBox, "hover")}>
