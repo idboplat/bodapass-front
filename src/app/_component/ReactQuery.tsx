@@ -5,6 +5,8 @@ import { TmsError } from "@/model/error/TmsError";
 import ErrorModal from "./modal/ErrorModal";
 import { signOut } from "next-auth/react";
 import { useSetModalStore } from "../_lib/modalStore";
+import { useApp } from "../_lib/app";
+import { useStore } from "zustand";
 
 const SESSION_OUT_CODES = ["WW104", "20029"];
 
@@ -14,6 +16,8 @@ const checkSessionOutCode = (error: TmsError) => {
 
 export default function ReactQuery({ children }: PropsWithChildren) {
   const modalStore = useSetModalStore();
+  const store = useApp();
+  const action = useStore(store, (store) => store.actions);
 
   const [querClient] = useState(() => {
     return new QueryClient({
@@ -24,7 +28,9 @@ export default function ReactQuery({ children }: PropsWithChildren) {
 
           if (error instanceof TmsError) {
             if (checkSessionOutCode(error)) {
-              // await signOut({ redirect: true, callbackUrl: "/sessionout" });
+              await signOut({ redirect: false, callbackUrl: "/sessionout" });
+              action.logout();
+              window.location.href = "/sessionout";
               return;
             }
           }
@@ -56,7 +62,9 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           onError: async (error) => {
             if (error instanceof TmsError) {
               if (checkSessionOutCode(error)) {
-                await signOut({ redirect: true, callbackUrl: "/sessionout" });
+                await signOut({ redirect: false, callbackUrl: "/sessionout" });
+                action.logout();
+                window.location.href = "/sessionout";
                 return;
               }
             }

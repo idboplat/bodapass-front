@@ -8,6 +8,8 @@ import emailLoginFn from "../_lib/login";
 import DotsLoading from "@/app/_component/loading/DotsLoading";
 import * as style from "./loginForm.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
+import { useApp } from "@/app/_lib/app";
+import { useStore } from "zustand";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -15,6 +17,8 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const modalStore = useSetModalStore();
+  const store = useApp();
+  const action = useStore(store, (store) => store.actions);
 
   const mutateEmailLogin = useMutation({
     mutationKey: ["emailLogin"],
@@ -22,6 +26,7 @@ export default function LoginForm() {
     onMutate: () => setIsLoading(() => true),
     onSuccess: () => {
       // 로그인이 성공해도 화면이 전환될때까지 로딩처리
+      action.login();
       router.replace("/");
     },
     onError: async (error) => {
