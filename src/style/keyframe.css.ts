@@ -10,3 +10,12 @@ export const fadeIn = keyframes({
     visibility: "visible",
   },
 });
+
+export const placeholderShimmer = keyframes({
+  "0%": {
+    backgroundPosition: "-468px 0",
+  },
+  "100%": {
+    backgroundPosition: "468px 0",
+  },
+});
