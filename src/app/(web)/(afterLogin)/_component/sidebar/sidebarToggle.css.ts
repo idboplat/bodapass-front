@@ -5,7 +5,6 @@ export const btn = style({
   height: 32,
   transition: "background-color 0.2s ease",
   borderRadius: 9999,
-  marginRight: 7,
   ":hover": {
     background: "#e2e2e2",
   },

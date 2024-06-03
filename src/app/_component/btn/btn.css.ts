@@ -1,7 +1,7 @@
 import { global } from "@/style/globalTheme.css";
 import { style } from "@vanilla-extract/css";
 
-export const defaultButton = style([
+export const defaultBtn = style([
   {
     backgroundColor: global.blueDefault,
     padding: 3,
