@@ -19,3 +19,14 @@ export const placeholderShimmer = keyframes({
     backgroundPosition: "468px 0",
   },
 });
+
+export const openMenu = keyframes({
+  "0%": {
+    opacity: 0,
+    transform: "translateY(-4px)",
+  },
+  "100%": {
+    opacity: 1,
+    transform: "translateY(0)",
+  },
+});
