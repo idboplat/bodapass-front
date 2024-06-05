@@ -41,7 +41,7 @@ export default function TextSelect({
       <div className={wrap} style={style}>
         <div className={selected} onClick={onToggle}>
           <span>{selectedItem}</span>
-          <IoMdArrowDropdown size={14} />
+          <IoMdArrowDropdown size={14} color="#919492" />
         </div>
         <div className={classNames(absolute, isShow && "show")}>
           <ul className={list} onClick={handleChange}>

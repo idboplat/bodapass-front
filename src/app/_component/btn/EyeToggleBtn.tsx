@@ -13,11 +13,11 @@ export default function EyeToggleBtn({ value, onClick }: EyeToggleBtnProps) {
   };
 
   return (
-    <button className={button} tabIndex={-1} onClick={onClickBtn}>
+    <button className={button} type="button" tabIndex={-1} onClick={onClickBtn}>
       {value ? (
-        <AiFillEye size="17px" color="inherit" />
+        <AiFillEye size="17px" color="#919492" />
       ) : (
-        <AiFillEyeInvisible size="17px" color="inherit" />
+        <AiFillEyeInvisible size="17px" color="#919492" />
       )}
     </button>
   );

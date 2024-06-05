@@ -1,15 +1,22 @@
 "use client";
+import UnderLineInput from "@/app/_component/input/UnderLineInput";
+import DotsLoading from "@/app/_component/loading/DotsLoading";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import ResetButton from "@/app/_component/btn/ResetBtn";
+import { useApp } from "@/app/_lib/app";
+import { useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import emailLoginFn from "../_lib/login";
-import DotsLoading from "@/app/_component/loading/DotsLoading";
-import * as style from "./loginForm.css";
-import { useSetModalStore } from "@/app/_lib/modalStore";
-import { useApp } from "@/app/_lib/app";
 import { useStore } from "zustand";
+import emailLoginFn from "../_lib/login";
+import * as style from "./loginForm.css";
+
+const ID = "loginForm";
+
+enum LoginInput {
+  email = ID + "Email",
+  pw = ID + "Pw",
+}
 
 export default function LoginForm() {
   const router = useRouter();
@@ -44,10 +51,10 @@ export default function LoginForm() {
     const value = e.target.value;
 
     switch (id) {
-      case "loginEmailInput":
+      case LoginInput.email:
         setEmail(() => value);
         break;
-      case "loginPasswordInput":
+      case LoginInput.pw:
         setPassword(() => value);
         break;
     }
@@ -62,34 +69,28 @@ export default function LoginForm() {
   return (
     <form className={style.form} onSubmit={handleSubmit}>
       <div className={style.inputWrap}>
-        <label className={style.label} htmlFor="loginEmailInput">
+        <label className={style.label} htmlFor={LoginInput.email}>
           아이디
         </label>
-        <div className={style.inputBox}>
-          <input
-            className={style.input}
-            id="loginEmailInput"
-            type="text"
-            value={email}
-            onChange={handleInput}
-          />
-          <ResetButton isShow={email !== ""} onClick={() => setEmail("")} />
-        </div>
+        <UnderLineInput
+          id={LoginInput.email}
+          type="text"
+          value={email}
+          onChange={handleInput}
+          onReset={() => setEmail("")}
+        />
       </div>
       <div className={style.inputWrap}>
-        <label className={style.label} htmlFor="loginPasswordInput">
+        <label className={style.label} htmlFor={LoginInput.pw}>
           비밀번호
         </label>
-        <div className={style.inputBox}>
-          <input
-            className={style.input}
-            id="loginPasswordInput"
-            type="password"
-            value={password}
-            onChange={handleInput}
-          />
-          <ResetButton isShow={password !== ""} onClick={() => setPassword("")} />
-        </div>
+        <UnderLineInput
+          id={LoginInput.pw}
+          type="password"
+          value={password}
+          onChange={handleInput}
+          onReset={() => setPassword("")}
+        />
       </div>
       <div className={style.btnBox}>
         <button className={style.loginBtn} type="submit" disabled={isLoading}>
