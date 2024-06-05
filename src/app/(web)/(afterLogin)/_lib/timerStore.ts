@@ -14,6 +14,8 @@ const initState: State = {
   time: formatISO(new Date()),
 };
 
+export const TIMER_STORAGE_KEY = "timer-session";
+
 export const useTimerStore = create<State & Action>()(
   devtools(
     persist(
@@ -23,7 +25,7 @@ export const useTimerStore = create<State & Action>()(
           set(() => ({ time: formatISO(new Date()) }));
         },
       }),
-      { name: "timer-session" },
+      { name: TIMER_STORAGE_KEY },
     ),
   ),
 );

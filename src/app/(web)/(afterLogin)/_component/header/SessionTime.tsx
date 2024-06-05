@@ -1,5 +1,5 @@
 "use client";
-import { useTimerStore } from "@web/(afterLogin)/_lib/timerStore";
+import { TIMER_STORAGE_KEY, useTimerStore } from "@web/(afterLogin)/_lib/timerStore";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
@@ -31,8 +31,11 @@ export default function SessionTime({}: SessionTimeProps) {
   }, [remain]);
 
   useEffect(() => {
-    const syncTimer = () => setRemain(() => Time);
-    syncTimer();
+    setRemain(() => Time); // 타이머초기화
+    const syncTimer = (e: StorageEvent) => {
+      if (e.key !== TIMER_STORAGE_KEY) return;
+      setRemain(() => Time);
+    };
     window.addEventListener("storage", syncTimer);
     return () => window.removeEventListener("storage", syncTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
