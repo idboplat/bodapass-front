@@ -16,8 +16,8 @@ export type CallbacksJwt = CallbacksOptions<Profile, Account>["jwt"];
 
 export type EventCallbacksSignOut = EventCallbacks["signOut"];
 
-export type newSession = updateSession;
-
 export type updateSession = {
   type: "updateSession";
 };
+
+export type newSession = updateSession;
