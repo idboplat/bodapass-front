@@ -17,11 +17,12 @@ export const modalCenterContent = style({
 });
 
 export const modalHeader = style({
-  marginBottom: 7,
+  marginBottom: 14,
 });
 
 export const modalTitle = style({
   fontSize: 16,
+  fontWeight: 500,
 });
 
 export const modalBtnBox = style({

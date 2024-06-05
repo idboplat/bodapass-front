@@ -6,6 +6,7 @@ export default async function Page() {
   const session = await getServerSessionWithOptions();
 
   if (!session) return redirect("/login");
+
   return (
     <div>
       <Client session={session} />
