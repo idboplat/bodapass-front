@@ -28,7 +28,7 @@ export const absolute = style([
     animation: `${openMenu} 0.2s ease-out`,
     left: -1.25,
     zIndex: 3,
-    paddingTop: 3,
+    paddingTop: 5,
     top: "100%",
     display: "none",
     selectors: {
