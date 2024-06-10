@@ -7,7 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { inputBox } from "./createCorpModal.css";
+import { checkBoxDiv, inputBox } from "./createCorpModal.css";
+import CheckBox from "@/app/_component/input/CheckBox";
 
 const ID = "createCorpModal";
 
@@ -23,6 +24,7 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
   const [type, setType] = useState<string | null>(null);
   const [corpName, setCorpName] = useState("");
   const [pw, setPw] = useState("");
+  const [pwCheck, setPwCheck] = useState(false);
 
   const mutation = useMutation({
     mutationKey: ["서비스 아이디"],
@@ -56,6 +58,8 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
 
   const onChangeSelect = (value: string) => setType(() => value);
 
+  const togglePwCheck = () => setPwCheck((pre) => !pre);
+
   return (
     <Modal id={ID} onClose={onClose}>
       <form onSubmit={handleSubmit} className={style.modalCenterContent}>
@@ -81,6 +85,7 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
               value={corpName}
               id={CreateCorpInput.corpName}
               onChange={onChangeInput}
+              onReset={() => setCorpName("")}
             />
           </div>
           <div className={inputBox}>
@@ -89,8 +94,12 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
               value={pw}
               id={CreateCorpInput.pw}
               onChange={onChangeInput}
-              type="password"
+              type={pwCheck ? "text" : "password"}
+              onReset={() => setPw("")}
             />
+            <div className={checkBoxDiv}>
+              <CheckBox value={pwCheck} onClick={togglePwCheck} label={"비밀번호 확인"} />
+            </div>
           </div>
         </div>
         <div className={style.modalBtnBox}>

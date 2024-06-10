@@ -104,3 +104,12 @@ globalStyle(".blind", {
   overflow: "hidden",
   clip: "rect(0, 0, 0, 0)",
 });
+
+globalStyle(".blind", {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+});
