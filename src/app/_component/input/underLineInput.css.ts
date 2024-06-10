@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const inputBox = style({
   display: "flex",
   borderBottom: "1px solid #000",
+  alignItems: "center",
   gap: 5,
 });
 
