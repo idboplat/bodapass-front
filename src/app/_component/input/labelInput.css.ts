@@ -21,6 +21,7 @@ export const label = style([
 
 export const input = style([
   {
+    width: "100%",
     flexGrow: 1, //input이 box를 전부 채우도록
     "::placeholder": {
       opacity: 0,
