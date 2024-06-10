@@ -638,6 +638,11 @@
   display: flex;
   align-items: center;
 }
+
+.react-datepicker__input-container input {
+  outline: none;
+}
+
 .react-datepicker__input-container .react-datepicker__calendar-icon {
   box-sizing: content-box;
   margin-right: 3px;
