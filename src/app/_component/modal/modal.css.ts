@@ -29,6 +29,7 @@ export const modalBtnBox = style({
   display: "flex",
   flexDirection: "row-reverse",
   gap: 14,
+  marginTop: 14,
 });
 
 globalStyle(`${modalBtnBox} > button`, {
