@@ -2,25 +2,13 @@ import { globalStyle } from "@vanilla-extract/css";
 
 /** vars */
 
-globalStyle(":root", {
+globalStyle("[class*=ag-theme-]", {
   vars: {
     "--ag-header-background-color": "#e2e3f0",
     "--ag-border-color": "#cbd3e2",
     "--ag-cell-horizontal-border": "0.5px solid #e8ebf1",
   },
 });
-
-globalStyle("[class*=ag-theme-]", {
-  backgroundColor: "var(--ag-header-background-color)",
-  borderColor: "var(--ag-border-color)",
-  borderBottom: "var(--ag-cell-horizontal-border)",
-});
-
-globalStyle(".ag-body-vertical-scroll-viewport", {
-  overflowY: "hidden",
-});
-
-globalStyle(".ag-root-wrapper", {});
 
 /**  hide and scroll */
 globalStyle(".ag-body-vertical-scroll-viewport", {
@@ -39,8 +27,6 @@ globalStyle(".ag-theme-quartz.hide", {
 globalStyle(".ag-theme-quartz", {});
 
 globalStyle(".ag-root-wrapper", {
-  borderColor: "#cbd3e2",
-  border: "0.5px solid #e8ebf1",
   borderRadius: 5,
 });
 

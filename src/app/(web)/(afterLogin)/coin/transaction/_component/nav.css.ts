@@ -1,0 +1,18 @@
+import { style } from "@vanilla-extract/css";
+
+export const navWrap = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  height: 150,
+});
+
+export const historyFilterwrap = style({
+  display: "flex",
+  gap: 30,
+});
+
+export const btnWrap = style({
+  display: "flex",
+  gap: 10,
+});
