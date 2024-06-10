@@ -18,7 +18,7 @@ export default function UnderLineInput({
   onReset,
   type = "text",
 }: UnderLineInputProps) {
-  const [show, setShow] = useState(false);
+  const [isShow, setShow] = useState(false);
 
   const toggleShow = () => setShow((prev) => !prev);
 
@@ -27,12 +27,12 @@ export default function UnderLineInput({
       <input
         className={input}
         id={id}
-        type={show ? "text" : type}
+        type={isShow ? "text" : type}
         value={value}
         onChange={onChange}
       />
       {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
-      {type === "password" && <EyeToggleBtn value={show} onClick={toggleShow} />}
+      {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}
     </div>
   );
 }

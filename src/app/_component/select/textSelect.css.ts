@@ -21,6 +21,17 @@ export const selected = style([
   },
 ]);
 
+export const arrow = style([
+  {
+    transition: "transform 0.2s ease",
+    selectors: {
+      "&.show": {
+        transform: "rotateX(180deg)",
+      },
+    },
+  },
+]);
+
 export const absolute = style([
   {
     width: "calc(100% + 2.5px)", // 양쪽 border 두께만큼 더함
