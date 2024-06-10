@@ -10,15 +10,15 @@ import * as style from "@/app/_component/modal/modal.css";
 
 const ID = "createEmplModal";
 
-enum CreateCorpInput {
-  emplName = ID + "emplName",
+enum CreateEmplInput {
+  emplName = ID + "EmplName",
   pw = ID + "Pw",
   pwCheck = ID + "PwCheck",
 }
 
-interface CreateCorpModalProps {}
+interface CreateEmplModalProps {}
 
-export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<CreateCorpModalProps>) {
+export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<CreateEmplModalProps>) {
   const [emplName, setEmplName] = useState("");
   const [pw, setPw] = useState("");
   const [pwCheck, setPwCheck] = useState("");
@@ -44,13 +44,13 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     switch (id) {
-      case CreateCorpInput.emplName:
+      case CreateEmplInput.emplName:
         setEmplName(() => value);
         break;
-      case CreateCorpInput.pw:
+      case CreateEmplInput.pw:
         setPw(() => value);
         break;
-      case CreateCorpInput.pwCheck:
+      case CreateEmplInput.pwCheck:
         setPwCheck(() => value);
         break;
     }
@@ -65,22 +65,22 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
             <h3 className={style.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.emplName}>
+            <label className={label} htmlFor={CreateEmplInput.emplName}>
               신규 사원명
             </label>
             <DefaultInput
-              id={CreateCorpInput.emplName}
+              id={CreateEmplInput.emplName}
               value={emplName}
               onChange={onChangeInput}
               onReset={() => setEmplName("")}
             />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.pw}>
+            <label className={label} htmlFor={CreateEmplInput.pw}>
               신규 비밀번호
             </label>
             <DefaultInput
-              id={CreateCorpInput.pw}
+              id={CreateEmplInput.pw}
               value={pw}
               onChange={onChangeInput}
               type={"password"}
@@ -88,11 +88,11 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
             />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.pwCheck}>
+            <label className={label} htmlFor={CreateEmplInput.pwCheck}>
               신규 비밀번호 확인
             </label>
             <DefaultInput
-              id={CreateCorpInput.pwCheck}
+              id={CreateEmplInput.pwCheck}
               value={pwCheck}
               onChange={onChangeInput}
               type={"password"}
