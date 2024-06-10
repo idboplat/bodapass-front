@@ -21,7 +21,7 @@ export const modalHeader = style({
 });
 
 export const modalTitle = style({
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: 500,
 });
 
