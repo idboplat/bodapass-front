@@ -1,76 +1,91 @@
-import { globalStyle } from '@vanilla-extract/css';
+import { globalStyle } from "@vanilla-extract/css";
 
 /** vars */
-globalStyle('[class*=ag-theme-]', {
+
+globalStyle(":root", {
   vars: {
-    '--ag-header-background-color': '#e2e3f0',
-    '--ag-border-color': '#cbd3e2',
-    '--ag-cell-horizontal-border': '0.5px solid #e8ebf1',
+    "--ag-header-background-color": "#e2e3f0",
+    "--ag-border-color": "#cbd3e2",
+    "--ag-cell-horizontal-border": "0.5px solid #e8ebf1",
   },
 });
 
+globalStyle("[class*=ag-theme-]", {
+  backgroundColor: "var(--ag-header-background-color)",
+  borderColor: "var(--ag-border-color)",
+  borderBottom: "var(--ag-cell-horizontal-border)",
+});
+
+globalStyle(".ag-body-vertical-scroll-viewport", {
+  overflowY: "hidden",
+});
+
+globalStyle(".ag-root-wrapper", {});
+
 /**  hide and scroll */
-globalStyle('.ag-body-vertical-scroll-viewport', {
-  overflowY: 'hidden',
+globalStyle(".ag-body-vertical-scroll-viewport", {
+  overflowY: "hidden",
 });
 
-globalStyle('.ag-theme-quartz.scroll .ag-body-vertical-scroll-viewport', {
-  overflowY: 'scroll',
+globalStyle(".ag-theme-quartz.scroll .ag-body-vertical-scroll-viewport", {
+  overflowY: "scroll",
 });
 
-globalStyle('.ag-theme-quartz.hide', {
-  display: 'none',
+globalStyle(".ag-theme-quartz.hide", {
+  display: "none",
 });
 
 /** .etc */
-globalStyle('.ag-theme-quartz', {});
+globalStyle(".ag-theme-quartz", {});
 
-globalStyle('.ag-root-wrapper', {
+globalStyle(".ag-root-wrapper", {
+  borderColor: "#cbd3e2",
+  border: "0.5px solid #e8ebf1",
   borderRadius: 5,
 });
 
-globalStyle('.ag-header, .ag-advanced-filter-header', {
-  borderBottomColor: '#cbd3e2',
+globalStyle(".ag-header, .ag-advanced-filter-header", {
+  borderBottomColor: "#cbd3e2",
 });
 
-globalStyle('.ag-ltr .ag-cell', {
-  borderRight: '0.5px solid #e8ebf1',
-  borderLeft: '0.5px solid #e8ebf1',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+globalStyle(".ag-ltr .ag-cell", {
+  borderRight: "0.5px solid #e8ebf1",
+  borderLeft: "0.5px solid #e8ebf1",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   padding: 0,
 });
 
-globalStyle('.ag-header-group-cell-with-group', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRight: '0.5px solid #cbd3e2',
-  borderLeft: '0.5px solid #cbd3e2',
+globalStyle(".ag-header-group-cell-with-group", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  borderRight: "0.5px solid #cbd3e2",
+  borderLeft: "0.5px solid #cbd3e2",
 });
 
-globalStyle('.ag-header-cell, .ag-header-group-cell', {
+globalStyle(".ag-header-cell, .ag-header-group-cell", {
   padding: 0,
-  cursor: 'pointer',
-  borderRight: '0.5px solid #cbd3e2',
-  borderLeft: '0.5px solid #cbd3e2',
+  cursor: "pointer",
+  borderRight: "0.5px solid #cbd3e2",
+  borderLeft: "0.5px solid #cbd3e2",
 });
 
-globalStyle('.ag-header-group-cell-label, .ag-header-cell-label', {
-  justifyContent: 'center',
+globalStyle(".ag-header-group-cell-label, .ag-header-cell-label", {
+  justifyContent: "center",
 });
 
-globalStyle('.topGrid', {
-  height: '100%',
-  flex: '1 1 auto',
+globalStyle(".topGrid", {
+  height: "100%",
+  flex: "1 1 auto",
 });
 
-globalStyle('.footerGrid', {
-  flex: 'none',
+globalStyle(".footerGrid", {
+  flex: "none",
   height: 42,
 });
 
-globalStyle('.footerGrid .ag-header', {
-  display: 'none',
+globalStyle(".footerGrid .ag-header", {
+  display: "none",
 });
