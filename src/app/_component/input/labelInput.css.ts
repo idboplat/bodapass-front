@@ -7,6 +7,7 @@ export const labelInputBox = style([
     borderRadius: 3,
     position: "relative",
     display: "flex",
+    gap: 5,
   },
 ]);
 

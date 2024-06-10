@@ -9,6 +9,7 @@ interface DefaultInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onReset: () => void;
   type?: "password" | "text";
+  placeholder?: string;
 }
 
 export default function DefaultInput({
@@ -17,6 +18,7 @@ export default function DefaultInput({
   onChange,
   type = "text",
   onReset,
+  placeholder,
 }: DefaultInputProps) {
   const [isShow, setShow] = useState(false);
 
@@ -30,6 +32,7 @@ export default function DefaultInput({
         className={input}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
       />
       {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}

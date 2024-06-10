@@ -7,8 +7,11 @@ export const inputBox = style({
 });
 
 export const input = style({
-  flexGrow: 1,
+  width: "100%",
   padding: 7,
+  "::placeholder": {
+    color: "#bfbfbf",
+  },
   ":focus": {
     outline: "none",
   },

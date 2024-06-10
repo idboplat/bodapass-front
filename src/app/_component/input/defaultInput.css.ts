@@ -13,12 +13,9 @@ export const inputBox = style([
 
 export const input = style([
   {
-    flexGrow: 1, //input이 box를 전부 채우도록
-    // border: "1px solid red",
+    width: "100%",
     "::placeholder": {
-      opacity: 0,
-      visibility: "hidden",
-      transition: "opacity 0.2s ease, visibility 0.2s ease",
+      color: "#bfbfbf",
     },
     ":focus": {
       outline: "none",
