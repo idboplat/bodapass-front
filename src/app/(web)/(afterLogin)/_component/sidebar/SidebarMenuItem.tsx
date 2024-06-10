@@ -1,6 +1,5 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import classNames from "classnames";
 import { menuItem } from "./sidebar.css";
 
@@ -16,10 +15,10 @@ export default function SidebarMenuItem({ svg, text, href }: SidebarMenuItemProp
 
   return (
     <li className={classNames(menuItem, isActive && "active")}>
-      <Link href={href}>
+      <a href={href}>
         {svg}
         <span>{text}</span>
-      </Link>
+      </a>
     </li>
   );
 }
