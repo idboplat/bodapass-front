@@ -1,9 +1,9 @@
 "use client";
 
 import { AgGridReact } from "ag-grid-react";
-import { GRID_COLS } from "../_const/colum";
 import { useState } from "react";
-import { tableWrap } from "./Table.css";
+import { GRID_COLS } from "../_const/colum";
+import { tableWrap } from "./table.css";
 
 export default function Table() {
   const [colDefs] = useState<any>([...GRID_COLS]);
