@@ -14,10 +14,10 @@ export default function Nav() {
   const date = useCorpStore((state) => state.date);
   const actions = useSetCorpStore();
 
-  const action = useSetModalStore();
+  const modalAction = useSetModalStore();
 
   const openModal = () => {
-    action.push(CreateCorpModal);
+    modalAction.push(CreateCorpModal);
   };
 
   const onChange = (date: [DateType, DateType]) => {

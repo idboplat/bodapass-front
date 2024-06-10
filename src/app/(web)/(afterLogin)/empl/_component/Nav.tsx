@@ -1,18 +1,26 @@
 "use client";
 
-import RangePicker from "@web/(afterLogin)/_component/RangePicker";
-import { navWrap, leftWrap, inputWrap, datePickerWrap } from "./nav.css";
+import { navBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
-import { useEmplStore, useSetEmplStore } from "../_lib/store";
+import { useSetModalStore } from "@/app/_lib/modalStore";
 import { DateType } from "@web/(afterLogin)/_component/DatePicker";
+import RangePicker from "@web/(afterLogin)/_component/RangePicker";
+import { useEmplStore, useSetEmplStore } from "../_lib/store";
+import CreateEmplModal from "./CreateEmplModal";
+import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 
 export default function Nav() {
   const date = useEmplStore((state) => state.date);
   const corpCode = useEmplStore((state) => state.corpCode);
   const emplID = useEmplStore((state) => state.emplID);
   const emplName = useEmplStore((state) => state.emplName);
-
   const actions = useSetEmplStore();
+
+  const modalAction = useSetModalStore();
+
+  const openModal = () => {
+    modalAction.push(CreateEmplModal);
+  };
 
   const onDateChange = (date: [DateType, DateType]) => {
     actions.setState({ date });
@@ -72,6 +80,12 @@ export default function Nav() {
           <div>등록일</div>
           <RangePicker date={date} onChange={onDateChange} />
         </div>
+      </div>
+      <div className={btnWrap}>
+        <button className={navBtn} onClick={openModal}>
+          사원 등록
+        </button>
+        <button className={navBtn}>조회</button>
       </div>
     </div>
   );
