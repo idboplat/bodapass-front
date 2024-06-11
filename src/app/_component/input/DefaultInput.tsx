@@ -4,12 +4,13 @@ import ResetButton from "../btn/ResetBtn";
 import { input, inputBox } from "./defaultInput.css";
 
 interface DefaultInputProps {
-  value: string;
   id?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onReset: () => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onReset?: () => void;
   type?: "password" | "text";
   placeholder?: string;
+  style?: React.CSSProperties;
 }
 
 export default function DefaultInput({
@@ -19,13 +20,14 @@ export default function DefaultInput({
   type = "text",
   onReset,
   placeholder,
+  style,
 }: DefaultInputProps) {
   const [isShow, setShow] = useState(false);
 
   const toggleShow = () => setShow((prev) => !prev);
 
   return (
-    <div className={inputBox}>
+    <div className={inputBox} style={style}>
       <input
         id={id}
         type={isShow ? "text" : type}

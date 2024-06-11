@@ -1,19 +1,21 @@
 import classNames from "classnames";
-import * as css from "./checkBox.css";
 import { useHotkeys } from "react-hotkeys-hook";
+import * as css from "./checkBox.css";
 
 interface CheckBoxProps {
-  value: boolean;
+  id?: string;
+  value?: boolean;
+  onClick?: () => void;
   label?: string;
-  onClick: () => void;
   checkBoxSize?: number;
   style?: React.CSSProperties;
 }
 
 export default function CheckBox({
+  id,
   value,
   label,
-  onClick,
+  onClick = () => {},
   style,
   checkBoxSize = 14,
 }: CheckBoxProps) {
@@ -32,6 +34,7 @@ export default function CheckBox({
       }
     >
       <input
+        id={id}
         tabIndex={-1}
         className={css.input}
         type="checkbox"

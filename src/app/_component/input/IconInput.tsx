@@ -1,13 +1,14 @@
 import { input, inputBox } from "./iconInput.css";
 
 interface IconInputProps {
-  value: string;
   id?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: "password" | "text";
   placeholder?: string;
   leftSide?: React.ReactNode;
   rightSide?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 export default function IcontInput({
@@ -18,9 +19,10 @@ export default function IcontInput({
   placeholder,
   leftSide,
   rightSide,
+  style,
 }: IconInputProps) {
   return (
-    <div className={inputBox}>
+    <div className={inputBox} style={style}>
       {leftSide}
       <input
         id={id}

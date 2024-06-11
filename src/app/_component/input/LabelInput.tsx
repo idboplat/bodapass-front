@@ -6,8 +6,8 @@ import * as css from "./labelInput.css";
 interface LabelInputProps {
   id: string;
   label: string;
-  value: string;
-  onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (value: React.ChangeEvent<HTMLInputElement>) => void;
   onReset?: () => void;
   type?: "password" | "text";
   placeholder?: string;
@@ -19,7 +19,7 @@ export default function LabelInput({
   value,
   onChange,
   onReset,
-  type,
+  type = "text",
   label,
   placeholder,
   style,

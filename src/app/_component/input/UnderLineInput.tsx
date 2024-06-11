@@ -4,12 +4,13 @@ import { input, inputBox } from "./underLineInput.css";
 import EyeToggleBtn from "../btn/EyeToggleBtn";
 
 interface UnderLineInputProps {
-  value: string;
   id?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onReset?: () => void;
   type?: "password" | "text";
   placeholder?: string;
+  style?: React.CSSProperties;
 }
 
 export default function UnderLineInput({
@@ -19,13 +20,14 @@ export default function UnderLineInput({
   onReset,
   type = "text",
   placeholder,
+  style,
 }: UnderLineInputProps) {
   const [isShow, setShow] = useState(false);
 
   const toggleShow = () => setShow((prev) => !prev);
 
   return (
-    <div className={inputBox}>
+    <div className={inputBox} style={style}>
       <input
         className={input}
         id={id}
