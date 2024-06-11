@@ -8,7 +8,7 @@ import Hotkeys from "./Hotkeys";
 import NextAuth from "./NextAuth";
 import ReactQuery from "./ReactQuery";
 
-const ModalContainer = dynamic(() => import("./modal/ModalContainer"), { ssr: false });
+const ModalContainer = dynamic(() => import("../modal/ModalContainer"), { ssr: false });
 
 export default async function Configs({ children }: PropsWithChildren) {
   const session = await getServerSessionWithOptions();

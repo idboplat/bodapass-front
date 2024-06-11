@@ -1,3 +1,4 @@
+import { openModal } from "@/style/keyframe.css";
 import { fixedMaxSize, flexCenter, zIndex } from "@/style/var";
 import { globalStyle, style } from "@vanilla-extract/css";
 
@@ -14,6 +15,7 @@ export const modalCenterContent = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  animation: `${openModal} 0.2s cubic-bezier(0.23, 1, 0.32, 1)`,
 });
 
 export const modalHeader = style({

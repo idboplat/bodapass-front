@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { AppContext, SESSION_STORAGE_KEY, createAppStore } from "../_lib/app";
+import { AppContext, SESSION_STORAGE_KEY, createAppStore } from "../../_lib/app";
 import { Session } from "next-auth";
 
 interface AppProps {

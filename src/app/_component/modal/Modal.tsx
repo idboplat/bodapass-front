@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHotkeys, useHotkeysContext } from "react-hotkeys-hook";
 import { RemoveScroll } from "react-remove-scroll";
-import Backdrop from "../Backdrop";
+import Backdrop from "./Backdrop";
 import { modalLayout } from "./modal.css";
 
 interface ModalProps {

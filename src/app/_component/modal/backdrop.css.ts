@@ -5,4 +5,5 @@ export const backdrop = style({
   width: "100%",
   height: "100%",
   backgroundColor: "rgba(0, 0, 0, 0.45)",
+  backdropFilter: "blur(2px)",
 });
