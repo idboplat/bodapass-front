@@ -8,5 +8,6 @@ export const rangePickerWrap = style([
     display: "flex",
     alignItems: "center",
     padding: 3,
+    zIndex: 10,
   },
 ]);
