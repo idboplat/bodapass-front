@@ -17,7 +17,7 @@ export default function RangePicker({ date, onChange }: RangePickerProps) {
         startDate={date[0]}
         endDate={date[1]}
         onChange={onChange}
-        placeholderText="날짜를 선택해주세요."
+        placeholderText="시작일자 ~ 종료일자"
         selectsRange
         dateFormat={"yyyy-MM-dd"}
         isClearable
