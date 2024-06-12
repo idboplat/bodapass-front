@@ -16,12 +16,15 @@ const ID = "loginForm";
 enum LoginInput {
   email = ID + "Email",
   pw = ID + "Pw",
+  corpCode = ID + "CorpCode",
 }
 
 export default function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [_email, setEmail] = useState("");
+  const [_password, setPassword] = useState("");
+  const [_corpCode, setCorpCode] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
   const modalStore = useSetModalStore();
   const store = useApp();
@@ -57,40 +60,41 @@ export default function LoginForm() {
       case LoginInput.pw:
         setPassword(() => value);
         break;
+      case LoginInput.corpCode:
+        setCorpCode(() => value);
+        break;
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
+    const email = e.target[LoginInput.email].value;
+    const password = e.target[LoginInput.pw].value;
+    const corpCode = e.target[LoginInput.corpCode].value;
+
     if (mutateEmailLogin.isPending) return;
-    mutateEmailLogin.mutate({ email, password });
+    mutateEmailLogin.mutate({ email, password, corpCode });
   };
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
       <div className={style.inputWrap}>
+        <label className={style.label} htmlFor={LoginInput.corpCode}>
+          회사코드
+        </label>
+        <UnderLineInput id={LoginInput.corpCode} type="text" onChange={handleInput} />
+      </div>
+      <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.email}>
           아이디
         </label>
-        <UnderLineInput
-          id={LoginInput.email}
-          type="text"
-          value={email}
-          onChange={handleInput}
-          onReset={() => setEmail("")}
-        />
+        <UnderLineInput id={LoginInput.email} type="text" onChange={handleInput} />
       </div>
       <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.pw}>
           비밀번호
         </label>
-        <UnderLineInput
-          id={LoginInput.pw}
-          type="password"
-          value={password}
-          onChange={handleInput}
-          onReset={() => setPassword("")}
-        />
+        <UnderLineInput id={LoginInput.pw} type="password" onChange={handleInput} />
       </div>
       <div className={style.btnBox}>
         <button className={style.loginBtn} type="submit" disabled={isLoading}>
