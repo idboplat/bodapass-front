@@ -30,7 +30,11 @@ export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<Creat
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: any) => {
+    const emplName = e.target[CreateEmplInput.emplName].value;
+    const pw = e.target[CreateEmplInput.pw].value;
+    const pwCheck = e.target[CreateEmplInput.pwCheck].value;
+
     try {
       e.preventDefault();
       mutation.mutate();
@@ -68,36 +72,19 @@ export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<Creat
             <label className={label} htmlFor={CreateEmplInput.emplName}>
               신규 사원명
             </label>
-            <DefaultInput
-              id={CreateEmplInput.emplName}
-              value={emplName}
-              onChange={onChangeInput}
-              onReset={() => setEmplName("")}
-            />
+            <DefaultInput id={CreateEmplInput.emplName} onChange={onChangeInput} />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreateEmplInput.pw}>
               신규 비밀번호
             </label>
-            <DefaultInput
-              id={CreateEmplInput.pw}
-              value={pw}
-              onChange={onChangeInput}
-              type={"password"}
-              onReset={() => setPw("")}
-            />
+            <DefaultInput id={CreateEmplInput.pw} onChange={onChangeInput} type={"password"} />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreateEmplInput.pwCheck}>
               신규 비밀번호 확인
             </label>
-            <DefaultInput
-              id={CreateEmplInput.pwCheck}
-              value={pwCheck}
-              onChange={onChangeInput}
-              type={"password"}
-              onReset={() => setPwCheck("")}
-            />
+            <DefaultInput id={CreateEmplInput.pwCheck} onChange={onChangeInput} type={"password"} />
           </div>
         </div>
         <div className={style.modalBtnBox}>
