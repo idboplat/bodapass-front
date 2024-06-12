@@ -10,7 +10,7 @@ export default function SidebarMenuList() {
       <SidebarMenuItem svg={"20200"} text="코인관리" href="/coin" />
       <SidebarMenuItem svg={"20210"} text="코인거래내역" href="/coin/transaction" />
       <li>3xxxx 중개사 화면 </li>
-      <SidebarMenuItem svg={"30210"} text="사원관리" href="/empl?group=brok" />
+      <SidebarMenuItem svg={"30210"} text="사원관리" href="/empl/brok" />
       <li>4xxxx 하위 거래소 화면</li>
     </ul>
   );
