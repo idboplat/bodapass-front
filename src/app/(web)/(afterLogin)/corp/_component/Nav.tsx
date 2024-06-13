@@ -9,10 +9,13 @@ import { DateType } from "@web/(afterLogin)/_component/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import CreateCorpModal from "./CreateCorpModal";
+import ToggleBtn from "@web/(afterLogin)/_component/ToggleBtn";
+import { useState } from "react";
 
 export default function Nav() {
   const date = useCorpStore((state) => state.date);
   const actions = useSetCorpStore();
+  const [toggleValue, setToggleValue] = useState(false);
 
   const modalAction = useSetModalStore();
 
@@ -49,6 +52,13 @@ export default function Nav() {
         </button>
         <button className={navBtn}>조회</button>
       </div>
+
+      <ToggleBtn
+        activeColor="lightpink"
+        style={{ width: "50px", height: "25px" }}
+        value={toggleValue}
+        onClick={() => setToggleValue((pre) => !pre)}
+      />
     </div>
   );
 }
