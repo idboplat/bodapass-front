@@ -34,5 +34,12 @@ export const btn = style({
     "&.active:after": {
       left: "50%",
     },
+    "&.disabled": {
+      backgroundColor: "#f0f0f0   ",
+      cursor: "not-allowed",
+    },
+    "&.disabled:after": {
+      backgroundColor: "#f0f0f0 ",
+    },
   },
 });

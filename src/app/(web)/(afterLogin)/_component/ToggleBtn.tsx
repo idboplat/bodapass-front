@@ -8,6 +8,7 @@ interface ToggleBtnProps {
   onClick?: () => void;
   style?: React.CSSProperties;
   activeColor?: string;
+  disabled?: boolean;
 }
 
 export default function ToggleBtn({
@@ -16,13 +17,16 @@ export default function ToggleBtn({
   onClick = () => {},
   style,
   activeColor,
+  disabled,
 }: ToggleBtnProps) {
-  const labelRef = useHotkeys<HTMLLabelElement>("enter", onClick);
+  const labelRef = useHotkeys<HTMLLabelElement>("enter", () => {
+    if (!disabled) onClick();
+  });
 
   return (
     <label
       tabIndex={0}
-      className={classNames(btn, value && "active")}
+      className={classNames(btn, value && "active", disabled && "disabled")}
       ref={labelRef}
       style={{ "--toggleBtn-bgColor": activeColor, ...style } as React.CSSProperties}
     >
@@ -33,6 +37,7 @@ export default function ToggleBtn({
         className={light}
         checked={value}
         onChange={onClick}
+        disabled={disabled}
       />
     </label>
   );
