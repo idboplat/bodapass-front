@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { AppContext, SESSION_STORAGE_KEY, createAppStore } from "../../_lib/app";
 import { Session } from "next-auth";
+import { formatISO } from "date-fns";
 
 interface AppProps {
   children: React.ReactNode;
@@ -10,17 +11,20 @@ interface AppProps {
 
 export default function App({ session, children }: AppProps) {
   const store = useRef(
-    createAppStore({ session: !!session ? "user" : "guest", theme: "light", sidebar: true }),
+    createAppStore({
+      session: !!session ? formatISO(new Date()) : "guest",
+      theme: "light",
+      sidebar: true,
+    }),
   );
 
   useEffect(() => {
-    // 쿠키와 로컬스토리지의 세션 정보를 동기화
     const syncStore = (e: StorageEvent) => {
       if (e.key === SESSION_STORAGE_KEY) {
-        const newV = e.newValue;
-        const oldV = e.oldValue;
+        const oldV = e.oldValue !== "guest";
+        const newV = e.newValue === "guest";
 
-        if (newV !== oldV) {
+        if (newV && oldV) {
           window.location.reload();
         }
       }
