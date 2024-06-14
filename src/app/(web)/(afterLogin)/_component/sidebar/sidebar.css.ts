@@ -28,7 +28,7 @@ export const sidebar = style([
     paddingBottom: 14,
     visibility: "hidden",
     opacity: 0,
-    left: "-100%",
+    left: -200,
     transition: "visibility 0.3s linear, opacity 0.3s linear, left 0.3s linear",
     selectors: {
       "&.show": {
