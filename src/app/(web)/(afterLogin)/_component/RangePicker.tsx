@@ -8,7 +8,9 @@ interface RangePickerProps {
   date: [DateType, DateType];
   onChange: ([newStartDate, newEndDate]: [DateType, DateType]) => void;
 }
-
+// ex) 6개월 이상 조회할 수 없습니다.
+// minDate={new Date("2024-01-01")}
+// maxDate={!!date[0] ? addMonths(date[0] as Date, 6) : new Date("2024-12-31")}
 export default function RangePicker({ date, onChange }: RangePickerProps) {
   return (
     <div className={rangePickerWrap}>
