@@ -1,5 +1,5 @@
 "use client";
-import { TIMER_STORAGE_KEY, useTimerStore } from "@web/(afterLogin)/_lib/timerStore";
+import { SESSION_STORAGE_KEY } from "@/app/_lib/app";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
@@ -12,7 +12,6 @@ interface SessionTimeProps {
 
 export default function SessionTime({}: SessionTimeProps) {
   const [remain, setRemain] = useState(Time);
-  const store = useTimerStore();
 
   const mutateLogout = useLogoutMutation();
 
@@ -33,13 +32,13 @@ export default function SessionTime({}: SessionTimeProps) {
   useEffect(() => {
     setRemain(() => Time); // 타이머초기화
     const syncTimer = (e: StorageEvent) => {
-      if (e.key !== TIMER_STORAGE_KEY) return;
+      if (e.key !== SESSION_STORAGE_KEY) return;
       setRemain(() => Time);
     };
     window.addEventListener("storage", syncTimer);
     return () => window.removeEventListener("storage", syncTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store.time]);
+  }, []);
 
   const addPad = (num: number) => num.toString().padStart(2, "0");
   const min = addPad(Math.floor(remain / 60));

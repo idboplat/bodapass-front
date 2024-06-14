@@ -1,4 +1,3 @@
-import { fadeIn } from "@/style/keyframe.css";
 import { flexCenter, zIndex } from "@/style/var";
 import { globalStyle, style } from "@vanilla-extract/css";
 
@@ -6,7 +5,7 @@ export const layout = style({
   position: "relative",
   width: 0,
   flexShrink: 0,
-  transition: "width 0.3s ease",
+  transition: "width 0.3s linear",
   selectors: {
     "&.show": {
       width: 200,
@@ -18,9 +17,7 @@ export const sidebar = style([
   zIndex.sidebar,
   {
     width: 200,
-    animation: `${fadeIn} 0.2s ease`,
     position: "fixed",
-    left: 0,
     top: 42,
     height: "calc(100dvh - 42px)",
     background: "#f4f4f2",
@@ -29,6 +26,17 @@ export const sidebar = style([
     justifyContent: "space-between",
     padding: 7,
     paddingBottom: 14,
+    visibility: "hidden",
+    opacity: 0,
+    left: -200,
+    transition: "visibility 0.3s linear, opacity 0.3s linear, left 0.3s linear",
+    selectors: {
+      "&.show": {
+        visibility: "visible",
+        opacity: 1,
+        left: 0,
+      },
+    },
   },
 ]);
 

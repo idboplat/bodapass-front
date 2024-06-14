@@ -5,7 +5,6 @@ import * as style from "./layout.css";
 
 import { PropsWithChildren } from "react";
 import Header from "./_component/header/Header";
-import SidebarLayout from "./_component/sidebar/SidebarLayout";
 import Sidebar from "./_component/sidebar/Sidebar";
 
 export default async function Layout({ children }: PropsWithChildren) {
@@ -13,9 +12,7 @@ export default async function Layout({ children }: PropsWithChildren) {
     <div className={style.col}>
       <Header />
       <div className={style.row}>
-        <SidebarLayout>
-          <Sidebar />
-        </SidebarLayout>
+        <Sidebar />
         {children}
       </div>
     </div>

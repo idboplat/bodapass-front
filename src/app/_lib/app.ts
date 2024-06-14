@@ -1,10 +1,11 @@
+import { formatISO } from "date-fns";
 import { createContext, useContext } from "react";
-import { createStore } from "zustand";
+import { createStore, useStore } from "zustand";
 
 export const SESSION_STORAGE_KEY = "auth-session";
 
 type State = {
-  session: "guest" | "user";
+  session: string;
   theme: "light" | "dark";
   sidebar: boolean;
 };
@@ -13,6 +14,7 @@ type Action = {
   actions: {
     logout: () => void;
     login: () => void;
+    refresh: () => void;
     toggleSidebar: () => void;
   };
 };
@@ -25,17 +27,19 @@ export const createAppStore = (initState: State) => {
     localStorage.setItem(SESSION_STORAGE_KEY, initState.session);
   }
 
-  return createStore<State & Action>((set) => ({
+  return createStore<State & Action>((set, get) => ({
     ...initState,
     actions: {
       login: () => {
-        localStorage.setItem(SESSION_STORAGE_KEY, "user");
-        set({ session: "user" });
+        const session = formatISO(new Date());
+        localStorage.setItem(SESSION_STORAGE_KEY, session);
+        set(() => ({ session }));
       },
       logout: () => {
         localStorage.setItem(SESSION_STORAGE_KEY, "guest");
-        set({ session: "guest" });
+        set(() => ({ session: "guest" }));
       },
+      refresh: () => get().actions.login(),
       toggleSidebar: () => set((pre) => ({ sidebar: !pre.sidebar })),
     },
   }));
@@ -47,4 +51,10 @@ export const useApp = () => {
   const context = useContext(AppContext);
   if (!context) throw new Error("useApp must be used within a AppProvider");
   return context;
+};
+
+export const useSetApp = () => {
+  const context = useContext(AppContext);
+  if (!context) throw new Error("useSetApp must be used within a AppProvider");
+  return useStore(context, (store) => store.actions);
 };
