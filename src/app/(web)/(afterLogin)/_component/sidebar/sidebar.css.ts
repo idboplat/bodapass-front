@@ -5,7 +5,7 @@ export const layout = style({
   position: "relative",
   width: 0,
   flexShrink: 0,
-  transition: "width 0.3s linear",
+  transition: "width 0.3s ease",
   selectors: {
     "&.show": {
       width: 200,
@@ -29,7 +29,7 @@ export const sidebar = style([
     visibility: "hidden",
     opacity: 0,
     left: -200,
-    transition: "visibility 0.3s linear, opacity 0.3s linear, left 0.3s linear",
+    transition: "visibility 0.3s ease, opacity 0.3s ease, left 0.3s ease",
     selectors: {
       "&.show": {
         visibility: "visible",

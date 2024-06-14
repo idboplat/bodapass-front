@@ -277,7 +277,7 @@
   ul.react-datepicker__time-list {
   list-style: none;
   margin: 0;
-  height: calc(195px + 1.7rem / 2);
+  height: calc(195px + 2rem / 2);
   overflow-y: scroll;
   padding-right: 0;
   padding-left: 0;
@@ -336,10 +336,10 @@
 .react-datepicker__week-number {
   color: #ccc;
   display: inline-block;
-  width: 1.7rem;
-  line-height: 1.7rem;
+  width: 2rem;
+  line-height: 2rem;
   text-align: center;
-  margin: 0.166rem;
+  margin: 0.05rem;
 }
 .react-datepicker__week-number.react-datepicker__week-number--clickable {
   cursor: pointer;
@@ -382,10 +382,10 @@
 .react-datepicker__time-name {
   color: #000;
   display: inline-block;
-  width: 1.7rem;
-  line-height: 1.7rem;
+  width: 2rem;
+  line-height: 2rem;
   text-align: center;
-  margin: 0.166rem;
+  margin: 0.05rem;
 }
 
 .react-datepicker__day,
