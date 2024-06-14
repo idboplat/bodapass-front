@@ -29,7 +29,7 @@ export const sidebar = style([
     visibility: "hidden",
     opacity: 0,
     left: "-100%",
-    transition: "all 0.3s linear",
+    transition: "visibility 0.3s linear, opacity 0.3s linear, left 0.3s linear",
     selectors: {
       "&.show": {
         visibility: "visible",
