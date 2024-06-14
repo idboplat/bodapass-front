@@ -8,6 +8,11 @@ export const inputBox = style([
     position: "relative",
     display: "flex",
     gap: 5,
+    selectors: {
+      "&.disabled": {
+        backgroundColor: "#f0f0f0",
+      },
+    },
   },
 ]);
 
