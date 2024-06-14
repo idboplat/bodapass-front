@@ -13,3 +13,10 @@ export const checkBoxDiv = style([
     fontSize: 12,
   },
 ]);
+
+export const label = style([
+  {
+    display: "inline-block",
+    marginBottom: 2,
+  },
+]);

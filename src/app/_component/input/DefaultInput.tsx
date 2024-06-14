@@ -2,6 +2,7 @@ import { useState } from "react";
 import EyeToggleBtn from "../btn/EyeToggleBtn";
 import ResetButton from "../btn/ResetBtn";
 import { input, inputBox } from "./defaultInput.css";
+import classNames from "classnames";
 
 interface DefaultInputProps {
   id?: string;
@@ -11,6 +12,7 @@ interface DefaultInputProps {
   type?: "password" | "text";
   placeholder?: string;
   style?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 export default function DefaultInput({
@@ -21,13 +23,14 @@ export default function DefaultInput({
   onReset,
   placeholder,
   style,
+  disabled,
 }: DefaultInputProps) {
   const [isShow, setShow] = useState(false);
 
   const toggleShow = () => setShow((prev) => !prev);
 
   return (
-    <div className={inputBox} style={style}>
+    <div className={classNames(inputBox, disabled && "disabled")} style={style}>
       <input
         id={id}
         type={isShow ? "text" : type}
@@ -35,8 +38,9 @@ export default function DefaultInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        disabled={disabled}
       />
-      {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
+      {!!onReset && disabled === false && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}
     </div>
   );
