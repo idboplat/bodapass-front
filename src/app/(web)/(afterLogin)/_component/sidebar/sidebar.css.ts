@@ -24,7 +24,6 @@ export const sidebar = style([
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    padding: 7,
     paddingBottom: 14,
     visibility: "hidden",
     opacity: 0,
