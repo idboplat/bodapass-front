@@ -1,5 +1,11 @@
 import classNames from "classnames";
 import { wrap } from "./pagePagination.css";
+import {
+  MdOutlineKeyboardDoubleArrowRight as ArrowLast,
+  MdOutlineKeyboardDoubleArrowLeft as ArrowFirst,
+  MdKeyboardArrowRight as ArrowRight,
+  MdKeyboardArrowLeft as ArrowLeft,
+} from "react-icons/md";
 
 interface PaginationProps {
   currentCount: number;
@@ -49,31 +55,34 @@ export default function PagePagination({
   return (
     <div className={wrap}>
       <button onClick={onClickFirst} disabled={disabledFirst}>
-        처음
+        <ArrowFirst size={24} />
       </button>
       <button onClick={onClickPrev} disabled={disabledPrev}>
-        이전
+        <ArrowLeft size={24} />
       </button>
-      {paginationArr.map((num) => {
-        const disabledCurrent = currentPage === num;
+      <ol>
+        {paginationArr.map((num) => {
+          const disabledCurrent = currentPage === num;
 
-        if (num === null) return null;
-        return (
-          <button
-            className={classNames(disabledCurrent && "active")}
-            key={"pagination" + num}
-            onClick={() => onClickPage(num)}
-            disabled={disabledCurrent}
-          >
-            {num}
-          </button>
-        );
-      })}
+          if (num === null) return null;
+          return (
+            <li key={"pagination" + num}>
+              <button
+                className={classNames(disabledCurrent && "active")}
+                onClick={() => onClickPage(num)}
+                disabled={disabledCurrent}
+              >
+                {num}
+              </button>
+            </li>
+          );
+        })}
+      </ol>
       <button onClick={onClickNext} disabled={disabledNext}>
-        다음
+        <ArrowRight size={24} />
       </button>
       <button onClick={onClickLast} disabled={disabledLast}>
-        마지막
+        <ArrowLast size={24} />
       </button>
     </div>
   );
