@@ -7,6 +7,7 @@ import Devtools from "./Devtools";
 import Hotkeys from "./Hotkeys";
 import NextAuth from "./NextAuth";
 import ReactQuery from "./ReactQuery";
+import ToastBox from "@web/(afterLogin)/_component/ToastBox";
 
 const ModalContainer = dynamic(() => import("../modal/ModalContainer"), { ssr: false });
 
@@ -21,7 +22,7 @@ export default async function Configs({ children }: PropsWithChildren) {
             {children}
             <Devtools />
             <ModalContainer />
-            <Toaster />
+            <ToastBox />
           </ReactQuery>
         </Hotkeys>
       </NextAuth>
