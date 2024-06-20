@@ -1,7 +1,6 @@
 import { fixed, title, wrap } from "./header.css";
 import SidebarToggle from "../sidebar/SidebarToggle";
 import dynamic from "next/dynamic";
-import SessionUpdateBtn from "./SessionUpdateBtn";
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { redirect } from "next/navigation";
 
@@ -23,7 +22,6 @@ export default async function Header() {
         </div>
         <div>
           <SessionTime session={session} />
-          <SessionUpdateBtn />
         </div>
       </div>
     </header>

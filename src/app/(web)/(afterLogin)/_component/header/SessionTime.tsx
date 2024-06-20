@@ -1,8 +1,9 @@
 "use client";
-import { SESSION_STORAGE_KEY } from "@/app/_lib/app";
+import { SESSION_STORAGE_KEY, useSetApp } from "@/app/_lib/app";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
+import { btn } from "./sessionTime.css";
 
 const Time = 3600;
 
@@ -12,8 +13,14 @@ interface SessionTimeProps {
 
 export default function SessionTime({}: SessionTimeProps) {
   const [remain, setRemain] = useState(Time);
+  const actions = useSetApp();
 
   const mutateLogout = useLogoutMutation();
+
+  const resetTime = () => {
+    setRemain(() => Time);
+    actions.refresh(); //로컬스토리지 변경
+  };
 
   useEffect(() => {
     if (remain < 0) return;
@@ -30,7 +37,6 @@ export default function SessionTime({}: SessionTimeProps) {
   }, [remain]);
 
   useEffect(() => {
-    setRemain(() => Time); // 타이머초기화
     const syncTimer = (e: StorageEvent) => {
       if (e.key !== SESSION_STORAGE_KEY) return;
       setRemain(() => Time);
@@ -46,8 +52,13 @@ export default function SessionTime({}: SessionTimeProps) {
   const timeFormat = `남은시간 : ${min}분 ${sec}초`;
 
   return (
-    <span className="sessionTime">
-      <time>{timeFormat}</time>
-    </span>
+    <>
+      <span>
+        <time>{timeFormat}</time>
+      </span>
+      <button className={btn} onClick={resetTime}>
+        연장하기
+      </button>
+    </>
   );
 }
