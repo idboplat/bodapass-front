@@ -3,9 +3,9 @@
 import DateBtn from "@/app/_component/btn/DateBtn";
 import { navWrap, historyFilterwrap, btnWrap } from "./nav.css";
 import { useTransactionStore, useSetTransactionStore } from "../_lib/store";
-import RangePicker from "@web/(afterLogin)/_component/RangePicker";
+import RangePicker from "@web/(afterLogin)/_component/datepicker/RangePicker";
 import { addDays, addMonths, addWeeks } from "date-fns";
-import { DateType } from "@web/(afterLogin)/_component/DatePicker";
+import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 
 export default function Nav() {

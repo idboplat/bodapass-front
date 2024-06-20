@@ -30,4 +30,5 @@ const nextConfig = {
     return config;
   },
 };
+
 export default withVanillaExtract(nextConfig);

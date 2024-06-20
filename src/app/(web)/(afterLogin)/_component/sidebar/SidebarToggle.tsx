@@ -1,5 +1,5 @@
 "use client";
-import { useSetApp } from "@/app/_lib/app";
+import { useSetApp } from "@/app/_lib/appStore";
 import classNames from "classnames";
 import { LuMenu } from "react-icons/lu";
 import { btn, hoverBox, icon } from "./sidebarToggle.css";

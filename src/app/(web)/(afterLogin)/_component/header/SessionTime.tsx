@@ -1,5 +1,5 @@
 "use client";
-import { SESSION_STORAGE_KEY, useSetApp } from "@/app/_lib/app";
+import { SESSION_STORAGE_KEY, useSetApp } from "@/app/_lib/appStore";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";

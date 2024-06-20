@@ -2,7 +2,7 @@
 import UnderLineInput from "@/app/_component/input/UnderLineInput";
 import DotsLoading from "@/app/_component/loading/DotsLoading";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import { useApp } from "@/app/_lib/app";
+import { useApp } from "@/app/_lib/appStore";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -21,9 +21,6 @@ enum LoginInput {
 
 export default function LoginForm() {
   const router = useRouter();
-  const [_email, setEmail] = useState("");
-  const [_password, setPassword] = useState("");
-  const [_corpCode, setCorpCode] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const modalStore = useSetModalStore();
@@ -49,23 +46,6 @@ export default function LoginForm() {
     },
   });
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const id = e.target.id;
-    const value = e.target.value;
-
-    switch (id) {
-      case LoginInput.email:
-        setEmail(() => value);
-        break;
-      case LoginInput.pw:
-        setPassword(() => value);
-        break;
-      case LoginInput.corpCode:
-        setCorpCode(() => value);
-        break;
-    }
-  };
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const email = e.target[LoginInput.email].value;
@@ -82,19 +62,19 @@ export default function LoginForm() {
         <label className={style.label} htmlFor={LoginInput.corpCode}>
           회사코드
         </label>
-        <UnderLineInput id={LoginInput.corpCode} type="text" onChange={handleInput} />
+        <UnderLineInput id={LoginInput.corpCode} type="text" />
       </div>
       <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.email}>
           아이디
         </label>
-        <UnderLineInput id={LoginInput.email} type="text" onChange={handleInput} />
+        <UnderLineInput id={LoginInput.email} type="text" />
       </div>
       <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.pw}>
           비밀번호
         </label>
-        <UnderLineInput id={LoginInput.pw} type="password" onChange={handleInput} />
+        <UnderLineInput id={LoginInput.pw} type="password" />
       </div>
       <div className={style.btnBox}>
         <button className={style.loginBtn} type="submit" disabled={isLoading}>
