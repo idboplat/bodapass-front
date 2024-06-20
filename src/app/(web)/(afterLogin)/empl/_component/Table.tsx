@@ -5,7 +5,7 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { tableWrap } from "./table.css";
 import classNames from "classnames";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@web/(afterLogin)/_component/pagination/PagePagination";
 
 export default function Table() {
   const [colDefs] = useState([...GRID_COLS]);
