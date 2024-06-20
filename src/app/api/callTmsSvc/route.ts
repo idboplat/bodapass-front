@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const hash = request.headers.get("x-content-hash");
     const sesId = request.headers.get("X-TMS-SES-ID");
 
-    const response = await fetch(`${process.env.NEXT_API_URL}`, {
+    const response = await fetch(`${process.env.WAS_HTTP_URL}`, {
       method: "POST",
       body: JSON.stringify(bodyRes),
       headers: {

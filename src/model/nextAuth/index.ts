@@ -24,7 +24,6 @@ const authOptions: AuthOptions = {
     // error: "/login/denied",
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NEXT_PUBLIC_ENABLE_NEXT_AUTH_DEBUG === "true",
   session: {
     maxAge: 60 * 60, // 1시간
   },

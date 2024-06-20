@@ -126,7 +126,7 @@ const callTms = async <T extends RspnData<any>>({
     headers["X-TMS-SES-ID"] = session.user.sessionId;
   }
 
-  const requertUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/callTmsSvc`;
+  const requertUrl = `${process.env.NEXT_PUBLIC_FRONT_URL}/api/callTmsSvc`;
   const response = await fetch(requertUrl, {
     method: "POST",
     headers,
