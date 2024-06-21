@@ -16,14 +16,12 @@ const ID = "loginForm";
 enum LoginInput {
   email = ID + "Email",
   pw = ID + "Pw",
-  corpCode = ID + "CorpCode",
 }
 
 export default function LoginForm() {
   const router = useRouter();
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
-  const [_corpCode, setCorpCode] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const modalStore = useSetModalStore();
@@ -60,30 +58,21 @@ export default function LoginForm() {
       case LoginInput.pw:
         setPassword(() => value);
         break;
-      case LoginInput.corpCode:
-        setCorpCode(() => value);
-        break;
     }
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     const email = e.target[LoginInput.email].value;
     const password = e.target[LoginInput.pw].value;
-    const corpCode = e.target[LoginInput.corpCode].value;
 
     if (mutateEmailLogin.isPending) return;
-    mutateEmailLogin.mutate({ email, password, corpCode });
+    mutateEmailLogin.mutate({ email, password });
   };
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
-      <div className={style.inputWrap}>
-        <label className={style.label} htmlFor={LoginInput.corpCode}>
-          회사코드
-        </label>
-        <UnderLineInput id={LoginInput.corpCode} type="text" onChange={handleInput} />
-      </div>
       <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.email}>
           아이디
