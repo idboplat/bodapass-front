@@ -3,7 +3,6 @@ import CryptoJS from "crypto-js";
 import { TmsError } from "@/model/error/TmsError";
 import { formatInTimeZone } from "date-fns-tz";
 
-const CORP_CD = "Z01";
 /** svcErrYn이 true로 응답되도 에러처리 하지않는 에러코드 목록 */
 const EXCLUDE_RSPN_CDS: string[] = [];
 
@@ -90,7 +89,7 @@ export const genarateBody = ({
     apiTranKey: 1,
     apiCallDtm: currentTime,
     apiLangCd: "KO",
-    apiCorpCd: CORP_CD,
+    apiCorpCd: session?.user.corpCd || "",
     apiUserId: session?.user.id || "guest",
     svcRqstList: [svcRqst],
   };
