@@ -7,7 +7,7 @@ import { tableWrap } from "./table.css";
 import classNames from "classnames";
 
 export default function Table() {
-  const [colDefs] = useState<any>([...GRID_COLS]);
+  const [colDefs] = useState([...GRID_COLS]);
 
   return (
     <div className={classNames("ag-theme-alpine", tableWrap)}>
