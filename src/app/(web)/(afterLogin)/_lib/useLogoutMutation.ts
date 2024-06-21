@@ -1,4 +1,4 @@
-import { useSetApp } from "@/app/_lib/app";
+import { useSetApp } from "@/app/_lib/appStore";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 

@@ -1,6 +1,5 @@
-import { DateType } from "@web/(afterLogin)/_component/DatePicker";
+import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { create, useStore } from "zustand";
-import { devtools } from "zustand/middleware";
 
 type emplState = {
   corpCode: string;
@@ -23,17 +22,12 @@ const initState: emplState = {
   date: [null, null],
 };
 
-export const useEmplStore = create<emplState & emplActions>()(
-  devtools(
-    (set) => ({
-      ...initState,
-      actions: {
-        setState: (state) => set(() => ({ ...state })),
-        reset: () => set(initState),
-      },
-    }),
-    { name: "empl", enabled: process.env.NODE_ENV === "development" },
-  ),
-);
+export const useEmplStore = create<emplState & emplActions>()((set) => ({
+  ...initState,
+  actions: {
+    setState: (state) => set(() => ({ ...state })),
+    reset: () => set(initState),
+  },
+}));
 
 export const useSetEmplStore = () => useStore(useEmplStore, (store) => store.actions);

@@ -2,7 +2,7 @@
 import UnderLineInput from "@/app/_component/input/UnderLineInput";
 import DotsLoading from "@/app/_component/loading/DotsLoading";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import { useApp } from "@/app/_lib/app";
+import { useApp } from "@/app/_lib/appStore";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -77,13 +77,13 @@ export default function LoginForm() {
         <label className={style.label} htmlFor={LoginInput.email}>
           아이디
         </label>
-        <UnderLineInput id={LoginInput.email} type="text" onChange={handleInput} />
+        <UnderLineInput id={LoginInput.email} type="text" />
       </div>
       <div className={style.inputWrap}>
         <label className={style.label} htmlFor={LoginInput.pw}>
           비밀번호
         </label>
-        <UnderLineInput id={LoginInput.pw} type="password" onChange={handleInput} />
+        <UnderLineInput id={LoginInput.pw} type="password" />
       </div>
       <div className={style.btnBox}>
         <button className={style.loginBtn} type="submit" disabled={isLoading}>

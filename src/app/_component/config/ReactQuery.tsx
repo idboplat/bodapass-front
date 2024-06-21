@@ -1,12 +1,11 @@
 "use client";
-import { PropsWithChildren, useState } from "react";
-import { QueryClient, QueryCache, QueryClientProvider } from "@tanstack/react-query";
 import { TmsError } from "@/model/error/TmsError";
-import ErrorModal from "../modal/ErrorModal";
+import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
+import { PropsWithChildren, useState } from "react";
+import { useSetApp } from "../../_lib/appStore";
 import { useSetModalStore } from "../../_lib/modalStore";
-import { useApp } from "../../_lib/app";
-import { useStore } from "zustand";
+import ErrorModal from "../modal/ErrorModal";
 
 const SESSION_OUT_CODES = ["WW104", "20029"];
 
@@ -16,24 +15,25 @@ const checkSessionOutCode = (error: TmsError) => {
 
 export default function ReactQuery({ children }: PropsWithChildren) {
   const modalStore = useSetModalStore();
-  const store = useApp();
-  const action = useStore(store, (store) => store.actions);
+  const action = useSetApp();
 
   const [querClient] = useState(() => {
     return new QueryClient({
       queryCache: new QueryCache({
         async onError(error, query) {
           const querykey = query.queryKey;
-          if (querykey.includes("ignore")) return;
 
           if (error instanceof TmsError) {
             if (checkSessionOutCode(error)) {
-              await signOut({ redirect: false, callbackUrl: "/sessionout" });
+              await signOut({ redirect: false });
               action.logout();
               window.location.href = "/sessionout";
               return;
             }
           }
+
+          // 에러 모달을 무시하고 싶을 때 queryKey에 ignore를 추가
+          if (querykey.includes("ignore")) return;
 
           await modalStore.push(ErrorModal, { props: { error } });
         },

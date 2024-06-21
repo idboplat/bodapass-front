@@ -1,5 +1,5 @@
 "use client";
-import { useApp } from "@/app/_lib/app";
+import { useApp } from "@/app/_lib/appStore";
 import classNames from "classnames";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useStore } from "zustand";

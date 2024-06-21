@@ -1,9 +1,11 @@
-import { style, globalStyle } from '@vanilla-extract/css';
+import { style } from "@vanilla-extract/css";
 
-export const wrap = style({
-  display: 'flex',
+export const btn = style({
+  fontWeight: 500,
+  transition: "background-color 0.3s ease",
+  padding: "3px 5px",
+  borderRadius: 3,
+  ":hover": {
+    backgroundColor: "#e9e9e9",
+  },
 });
-
-globalStyle(`${wrap} > span`, { flex: 2 });
-
-globalStyle(`${wrap} > button`, { flex: 1 });
