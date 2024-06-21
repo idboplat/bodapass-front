@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { HTMLInputTypeAttribute, useState } from "react";
 import EyeToggleBtn from "../btn/EyeToggleBtn";
 import ResetButton from "../btn/ResetBtn";
 import { input, inputBox } from "./defaultInput.css";
@@ -9,10 +9,11 @@ interface DefaultInputProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onReset?: () => void;
-  type?: "password" | "text";
+  type?: HTMLInputTypeAttribute;
   placeholder?: string;
   style?: React.CSSProperties;
   disabled?: boolean;
+  required?: boolean;
 }
 
 export default function DefaultInput({
@@ -24,6 +25,7 @@ export default function DefaultInput({
   placeholder,
   style,
   disabled,
+  required,
 }: DefaultInputProps) {
   const [isShow, setShow] = useState(false);
 
@@ -39,6 +41,7 @@ export default function DefaultInput({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
+        required={required}
       />
       {!!onReset && disabled === false && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}

@@ -26,6 +26,7 @@ export default function RangePicker({ date, onChange }: RangePickerProps) {
         showIcon
         icon={<CalendarIcon />}
         locale={ko}
+        autoComplete="off" // input에 자동완성 기능을 끄는 속성
       />
     </div>
   );

@@ -4,7 +4,7 @@ import { arrowBtn, page, wrap } from "./pagination.css";
 interface PaginationProps {
   next: () => void;
   prev: () => void;
-  disableNext: boolean;
+  disableNext: boolean | undefined;
   disablePrev: boolean;
   currnetPage: number;
 }
@@ -22,7 +22,11 @@ export default function Pagination({
         <MdOutlineArrowBackIos size={14} />
       </button>
       <span className={page}>{currnetPage}</span>
-      <button className={arrowBtn} onClick={next} disabled={disableNext}>
+      <button
+        className={arrowBtn}
+        onClick={next}
+        disabled={disableNext === undefined ? true : disableNext}
+      >
         <MdOutlineArrowForwardIos size={14} />
       </button>
     </div>
