@@ -4,17 +4,15 @@ export type Filler = "";
 export type FillerRspnData = RspnData<{ F01: Filler }>;
 export type StringRspnData = RspnData<{ F01: string }>;
 
-export type B0001AData = RspnData<{
+/** 회사 등록 */
+export type TBW_000000_P01 = RspnData<{
   F01: string;
   F02: string;
   F03: string;
-  F04: string;
-  F05: string;
-  F06: string;
-  F07: string;
 }>;
 
-export type B9001QData = RspnData<{
+/** 상품 정보(종목)(코인선물) 조회  */
+export type TBW_000000_Q01 = RspnData<{
   F01: string;
   F02: string;
   F03: string;
@@ -27,41 +25,71 @@ export type B9001QData = RspnData<{
   F10: string;
   F11: string;
   F12: string;
+  F13: string;
 }>;
 
-export type B9001AData = RspnData<{
-  F01: string;
-  F02: string;
-  F03: string;
-}>;
-
-export type B9001BData = RspnData<{
-  F01: string;
-}>;
-
-export type B9011QData = RspnData<{
+/** 그룹 코드(사원)(공통) 로그인  */
+export type TBW_000001_P01 = RspnData<{
   F01: string;
   F02: string;
   F03: string;
   F04: string;
   F05: string;
-  F06: string;
 }>;
 
-export type B9011AData = RspnData<{
+/** 그룹 코드(사원)(공통) 로그아웃  */
+export type TBW_000001_P02 = RspnData<{
   F01: Filler;
 }>;
 
-export type B9011BData = RspnData<{
+/** 그룹 코드(사원)(공통) 등록(서브관리자)  */
+export type TBW_000010_P01 = RspnData<{
   F01: Filler;
 }>;
 
-export type B9012QData = RspnData<{
+/** 계좌 입출고(코인선물) - 신청 접수(사원)  */
+export type TBW_000100_P01 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 접수 취소(사원)  */
+export type TBW_000100_P02 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 접수 거부(사원)(관리자)  */
+export type TBW_000100_P03 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 적용 완료(사원)(관리자)  */
+export type TBW_000100_P04 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 접수(고객)  */
+export type TBW_000200_P01 = RspnData<{
   F01: string;
   F02: string;
   F03: string;
 }>;
 
-export type B9012AData = RspnData<{
+/** 계좌 입출고(코인선물) - 신청 접수 취소(고객)  */
+export type TBW_000200_P02 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 접수 거부(고객)(관리자)  */
+export type TBW_000200_P03 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 입출고(코인선물) - 신청 적용 완료(고객)(관리자)  */
+export type TBW_000200_P04 = RspnData<{
+  F01: Filler;
+}>;
+
+/** 계좌 잔고(코인선물) 입고(G1)  */
+export type TBW_000300_P01 = RspnData<{
   F01: Filler;
 }>;
