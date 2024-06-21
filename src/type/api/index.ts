@@ -7,6 +7,11 @@ export type StringRspnData = RspnData<{ F01: string }>;
 export type B0001AData = RspnData<{
   F01: string;
   F02: string;
+  F03: string;
+  F04: string;
+  F05: string;
+  F06: string;
+  F07: string;
 }>;
 
 export type B9001QData = RspnData<{

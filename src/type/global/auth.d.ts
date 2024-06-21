@@ -10,6 +10,7 @@ declare module "next-auth" {
     sessionId: string;
     sessionKey: string;
     errorMsg?: string;
+    corpCd: string;
   }
 
   interface Session {
@@ -18,6 +19,7 @@ declare module "next-auth" {
       sessionId: string;
       sessionKey: string;
       errorMsg?: string;
+      corpCd: string;
     };
   }
 }
@@ -29,6 +31,7 @@ declare module "next-auth/jwt" {
       sessionId: string;
       sessionKey: string;
       errorMsg?: string;
+      corpCd: string;
     };
   }
 }
