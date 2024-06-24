@@ -5,12 +5,12 @@ import Table from "./Table";
 import { title, wrap } from "./home.css";
 
 export default async function Home() {
-  // const session = await getServerSessionWithOptions();
+  const session = await getServerSessionWithOptions();
 
-  // if (!session) return redirect("/login");
+  if (!session) return redirect("/login");
   return (
     <div className={wrap}>
-      <div className={title}>사원관리</div>
+      <div className={title}>20110 사원관리</div>
       <Nav />
       <Table />
     </div>
