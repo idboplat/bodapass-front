@@ -49,8 +49,8 @@ export const menuItem = style({
       backgroundColor: "#ebebe7",
     },
     "&.active ": {
-      fontWeight: 900,
-      // backgroundColor: "#ebebe7",
+      fontWeight: 700,
+      backgroundColor: "#ebebe7",
     },
   },
 });
