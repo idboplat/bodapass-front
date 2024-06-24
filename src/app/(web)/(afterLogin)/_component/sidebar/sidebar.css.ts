@@ -48,8 +48,9 @@ export const menuItem = style({
     "&:hover": {
       backgroundColor: "#ebebe7",
     },
-    "&.active": {
-      color: "#9b9b9b",
+    "&.active ": {
+      fontWeight: 900,
+      // backgroundColor: "#ebebe7",
     },
   },
 });
@@ -60,6 +61,11 @@ globalStyle(`${menuItem} > a`, {
   padding: "6px 10px",
   gap: 6,
   fontWeight: 400,
+});
+
+globalStyle(`${menuItem}.active > a`, {
+  fontWeight: 700,
+  cursor: "default",
 });
 
 export const logoutBox = style([
