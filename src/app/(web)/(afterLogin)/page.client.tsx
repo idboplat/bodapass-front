@@ -4,7 +4,7 @@ import { useSetModalStore } from "@/app/_lib/modalStore";
 import { Session } from "next-auth";
 import CreateCorpModal from "./corp/_component/CreateCorpModal";
 
-export default function Client({ session }: { session: Session }) {
+export default function Client() {
   const action = useSetModalStore();
 
   const onClick = () => {

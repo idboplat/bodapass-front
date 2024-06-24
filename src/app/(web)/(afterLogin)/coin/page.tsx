@@ -5,9 +5,9 @@ import Table from "./_component/Table";
 import { wrap } from "./page.css";
 
 export default async function Page() {
-  const session = await getServerSessionWithOptions();
+  // const session = await getServerSessionWithOptions();
 
-  if (!session) return redirect("/login");
+  // if (!session) return redirect("/login");
   return (
     <div className={wrap}>
       <Nav />

@@ -7,11 +7,12 @@ import { redirect } from "next/navigation";
 const SessionTime = dynamic(() => import("./SessionTime"), { ssr: false });
 
 export default async function Header() {
-  const session = await getServerSessionWithOptions();
+  // const session = await getServerSessionWithOptions();
+  // console.log("session", session);
 
-  if (!session) {
-    redirect("/login");
-  }
+  // if (!session) {
+  //   redirect("/login");
+  // }
 
   return (
     <header className={wrap}>
@@ -20,9 +21,7 @@ export default async function Header() {
           <SidebarToggle />
           <h1 className={title}>Admin Demo</h1>
         </div>
-        <div>
-          <SessionTime session={session} />
-        </div>
+        <div>{/* <SessionTime session={session} /> */}</div>
       </div>
     </header>
   );
