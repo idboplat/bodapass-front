@@ -63,13 +63,12 @@ export default function LoginForm() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    router.push("/corp");
 
-    // const email = e.target[LoginInput.email].value;
-    // const password = e.target[LoginInput.pw].value;
+    const email = e.target[LoginInput.email].value;
+    const password = e.target[LoginInput.pw].value;
 
-    // if (mutateEmailLogin.isPending) return;
-    // mutateEmailLogin.mutate({ email, password });
+    if (mutateEmailLogin.isPending) return;
+    mutateEmailLogin.mutate({ email, password });
   };
 
   return (
