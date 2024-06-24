@@ -8,7 +8,7 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
     if (!credentials) return null;
     const TBW_000001_P01Res = await callTms<TBW_000001_P01>({
       svcId: "TBW_000001_P01",
-      data: [credentials.email, credentials.password, credentials.corpCode],
+      data: [credentials.email, credentials.password],
       session: null,
     });
     const TBW_000001_P01Data = TBW_000001_P01Res.svcRspnData;
