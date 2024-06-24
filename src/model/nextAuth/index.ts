@@ -3,6 +3,7 @@ import { AuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signIn, session, jwt } from "@/model/nextAuth/callbacks";
 import { credentialAuthorize } from "@/model/nextAuth/providers";
+import { signOut } from "./events";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -18,7 +19,7 @@ const authOptions: AuthOptions = {
     session,
     jwt,
   },
-  events: {},
+  events: { signOut },
   pages: {
     signIn: "/login",
     // error: "/login/denied",
