@@ -21,6 +21,7 @@ export default function DatePicker({ startDate, onChange }: DatePickerProps) {
         dateFormat={"yyyy-MM-dd"}
         isClearable
         locale={ko}
+        autoComplete="off" // input에 자동완성 기능을 끄는 속성
       />
     </div>
   );
