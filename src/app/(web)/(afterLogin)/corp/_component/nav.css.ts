@@ -4,7 +4,7 @@ export const navWrap = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  height: 150,
+  height: 120,
 });
 
 export const historyFilterwrap = style({

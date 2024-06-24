@@ -6,3 +6,9 @@ export const wrap = style({
   display: "flex",
   flexDirection: "column",
 });
+
+export const title = style({
+  fontSize: 20,
+  fontWeight: 700,
+  marginTop: 15,
+});
