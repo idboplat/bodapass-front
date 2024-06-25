@@ -22,7 +22,7 @@ export default function Table({ session }: { session: Session }) {
         session,
         svcId: "TBW_000000_R01",
         // data: [session.user.corpCd, corp.corpNm, corp.corpGrpTp || ""],
-        data: [session.user.corpCd, "", ""],
+        data: [session.user.corpCd, "", "", ""],
         pgSize: 20,
       });
       const TBW_000000_R01Data = TBW_000000_R01Res.svcRspnData || [];
