@@ -77,7 +77,7 @@ export default function Form({ session }: FormProps) {
           <TextSelect
             value={corpGrpValue}
             onChange={onChangeSelect}
-            items={["", ...CORP_GRP_VALUE]}
+            items={["*", ...CORP_GRP_VALUE]}
             placeholder="회사유형"
             style={{
               height: 35.6,

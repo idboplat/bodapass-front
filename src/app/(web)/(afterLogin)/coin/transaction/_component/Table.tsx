@@ -11,6 +11,8 @@ import { GRID_COLS, RowData } from "../_const/colum";
 import { useTransactionStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
+import { getMvioRmrkTp, getMvioTp } from "@/app/_const/tp";
+import { dateToString } from "@/app/_lib/dateFormatter";
 
 interface TableProps {
   session: Session;
@@ -37,7 +39,7 @@ export default function Table({ session }: TableProps) {
         svcId: "TBW_001000_Q01",
         data: [
           session.user.corpCd,
-          "",
+          dateToString(transactionStore.mvioDd),
           transactionStore.instCd,
           transactionStore.mvioTp,
           transactionStore.mvioRmrkTp,
@@ -55,8 +57,8 @@ export default function Table({ session }: TableProps) {
         "입출고 일련번호": item.F03,
         "계좌 번호": item.F04,
         "종목 코드": item.F05,
-        "입출고 구분": item.F06,
-        "입출고 적요 구분": item.F07,
+        "입출고 구분": getMvioTp(item.F06),
+        "입출고 적요 구분": getMvioRmrkTp(item.F07),
         "입출고 수량": item.F08,
         "잔고 수량": item.F09,
         "신청 상태 구분": item.F10,

@@ -11,7 +11,7 @@ import TextSelect from "@/app/_component/select/TextSelect";
 import { dateToString } from "@/app/_lib/dateFormatter";
 
 export default function Form() {
-  const [mvioDd, setMvioDd] = useState<DateType>(new Date());
+  const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("");
@@ -26,7 +26,7 @@ export default function Form() {
       mvioRmrkTp: "",
       rqstStatTp: "",
       instCd,
-      mvioDd: dateToString(mvioDd),
+      mvioDd,
     };
 
     if (mvioRmrkTp === "매매손익") {
@@ -37,20 +37,14 @@ export default function Form() {
       newState.mvioRmrkTp = "3";
     }
 
-    if (mvioRmrkTp === "매매손익") {
-      newState.mvioRmrkTp = "1";
-    } else if (mvioRmrkTp === "매매 수수료") {
-      newState.mvioRmrkTp = "2";
-    } else if (mvioRmrkTp === "입출고") {
-      newState.mvioRmrkTp = "3";
-    }
-
-    if (mvioRmrkTp === "매매손익") {
-      newState.mvioRmrkTp = "1";
-    } else if (mvioRmrkTp === "매매 수수료") {
-      newState.mvioRmrkTp = "2";
-    } else if (mvioRmrkTp === "입출고") {
-      newState.mvioRmrkTp = "3";
+    if (rqstStatTp === "접수") {
+      newState.rqstStatTp = "REQ";
+    } else if (rqstStatTp === "취소") {
+      newState.rqstStatTp = "CAN";
+    } else if (rqstStatTp === "거부") {
+      newState.rqstStatTp = "REJ";
+    } else if (rqstStatTp === "완료") {
+      newState.rqstStatTp = "APL";
     }
 
     actions.setState(newState);

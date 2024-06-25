@@ -43,7 +43,7 @@ export default function CreCoinModal({
       const TBW_000300_P01Res = await callTms<TBW_000300_P01>({
         session,
         svcId: "TBW_000300_P01",
-        data: [session.user.corpCd, instCd, amount],
+        data: [session.user.corpCd, instCd, amount.replaceAll(",", "")],
       });
       const TBW_000300_P01Data = TBW_000300_P01Res.svcRspnData;
       if (TBW_000300_P01Data === null) {

@@ -5,7 +5,7 @@ import { create, useStore } from "zustand";
 
 type TransactionState = {
   date: [DateType, DateType];
-  mvioDd: string;
+  mvioDd: Date | null;
   instCd: string;
   mvioTp: string;
   mvioRmrkTp: string;
@@ -17,7 +17,7 @@ type TransactionState = {
 type TransactionActions = {
   actions: {
     setState: (state: {
-      mvioDd: string; //입출고일자
+      mvioDd: Date | null; //입출고일자
       instCd: string;
       mvioTp: string; //입출고
       mvioRmrkTp: string; //매매손익
@@ -30,7 +30,7 @@ type TransactionActions = {
 
 const initState: TransactionState = {
   date: [null, null],
-  mvioDd: format(new Date(), "yyyyMMdd"),
+  mvioDd: null,
   instCd: "",
   mvioTp: "",
   mvioRmrkTp: "",
