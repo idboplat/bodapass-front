@@ -29,9 +29,10 @@ export default function Table({ session }: TableProps) {
           session.user.corpCd, //사원ID
           "", //입력 사원 ID
           "", //입력 사원명
+          "", // 조회 시작 일자
+          "", // 조회 종료 일자
         ],
       });
-
       const data = res.svcRspnData;
       return data || [];
     },
@@ -39,14 +40,12 @@ export default function Table({ session }: TableProps) {
       const result = data.map<RowData>((item) => ({
         사원코드: item.F01, //external_user_id
         사원명: item.F02,
-        // 세션ID: item.F03,
-        // 세션키: item.F04,
-        회사코드: item.F05,
-        회사명: item.F06,
-        생성작업ID: item.F07,
-        생성작업일시: item.F08,
-        변경작업ID: item.F09,
-        변경작업일시: item.F10,
+        회사코드: item.F03,
+        회사명: item.F04,
+        생성작업ID: item.F05,
+        생성작업일시: item.F06,
+        변경작업ID: item.F07,
+        변경작업일시: item.F08,
       }));
       return result;
     },

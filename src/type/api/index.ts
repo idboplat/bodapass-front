@@ -130,8 +130,6 @@ export type TBW_000001_Q01 = RspnData<{
   F06: string;
   F07: string;
   F08: string;
-  F09: string;
-  F10: string;
 }>;
 
 /** 계좌 입출고(코인선물) 내역 조회  */

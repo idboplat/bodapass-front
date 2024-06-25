@@ -2,13 +2,19 @@ import { ColDef } from "ag-grid-community";
 
 export type RowData = {
   회사코드: string;
-  회사명: string;
-  구매요청수량: string;
-  요청상태: string;
-  요청일시: string;
-  처리일시: string;
-  요청사원ID: string;
-  처리사원ID: string;
+  "입출고 일자": string;
+  "입출고 일련번호": string;
+  "계좌 번호": string;
+  "종목 코드": string;
+  "입출고 구분": string;
+  "입출고 적요 구분": string;
+  "입출고 수량": string;
+  "잔고 수량": string;
+  "신청 상태 구분": string;
+  "생성 작업 ID": string;
+  "생성 작업 일시": string;
+  "변경 작업 ID": string;
+  "변경 작업 일시": string;
 };
 
 export const GRID_COLS: ColDef[] = [
@@ -19,43 +25,79 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "회사명",
+    field: "입출고 일자",
     width: 180,
     resizable: true,
     editable: true,
   },
   {
-    field: "구매요청수량",
+    field: "입출고 일련번호",
     width: 180,
     resizable: true,
     editable: true,
   },
   {
-    field: "요청상태",
+    field: "계좌 번호",
     width: 160,
     resizable: true,
     editable: false,
   },
   {
-    field: "요청일시",
+    field: "종목 코드",
     width: 200,
     resizable: true,
     editable: true,
   },
   {
-    field: "처리일시",
+    field: "입출고 구분",
     width: 200,
     resizable: true,
     editable: true,
   },
   {
-    field: "요청사원 ID",
+    field: "입출고 적요 구분",
     width: 200,
     resizable: true,
     editable: true,
   },
   {
-    field: "처리사원 ID",
+    field: "입출고 수량",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "잔고 수량",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "신청 상태 구분",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "생성 작업 ID",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "생성 작업 일시",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "변경 작업 ID",
+    width: 200,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "변경 작업 일시",
     width: 200,
     resizable: true,
     editable: true,

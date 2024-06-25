@@ -8,29 +8,29 @@ import classNames from "classnames";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { Session } from "next-auth";
-import { TBW_001000_Q01 } from "@/type/api";
+import { TBW_000300_Q01 } from "@/type/api";
 
 export default function Table({ session }: { session: Session }) {
   const [colDefs] = useState([...GRID_COLS]);
 
   const { data } = useQuery({
-    queryKey: ["TBW_001000_Q01"],
+    queryKey: ["TBW_000300_Q01"],
     queryFn: async () => {
-      const TBW_001000_Q01Res = await callTms<TBW_001000_Q01>({
+      const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
-        svcId: "TBW_001000_Q01",
-        data: [session.user.corpCd],
+        svcId: "TBW_000300_Q01",
+        data: [""], // 입출고 구분
         pgSize: 20,
       });
-      const TBW_001000_Q01Data = TBW_001000_Q01Res.svcRspnData || [];
-      return TBW_001000_Q01Data;
+      const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];
+      return TBW_000300_Q01Data;
     },
     select: (data) => {
       const result = data.map((item) => ({
         회사코드: item.F01,
         "입출고 일자": item.F02,
         "입출고 일련번호": item.F03,
-        종목코드: item.F04,
+        "종목 코드": item.F04,
         "입출고 구분": item.F05,
         "입출고 수량": item.F06,
         "생성 작업 ID": item.F07,
@@ -46,7 +46,7 @@ export default function Table({ session }: { session: Session }) {
     <div className={classNames("ag-theme-alpine", tableWrap)}>
       <AgGridReact
         columnDefs={colDefs}
-        rowData={[]}
+        rowData={data}
         overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
         headerHeight={28}
         rowHeight={28}
