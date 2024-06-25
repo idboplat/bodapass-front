@@ -1,25 +1,30 @@
+import { CORP_GRP_TP } from "@/type/common";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { create, useStore } from "zustand";
 
 type CorpState = {
   date: [DateType, DateType];
+  corpNm: string;
+  corpGrpTp: CORP_GRP_TP | null;
 };
 
 type CorpActions = {
   actions: {
-    setDate: (date: [DateType, DateType]) => void;
+    setState: (state: Partial<CorpState>) => void;
     reset: () => void;
   };
 };
 
 const initState: CorpState = {
   date: [null, null],
+  corpNm: "",
+  corpGrpTp: null,
 };
 
 export const useCorpStore = create<CorpState & CorpActions>()((set) => ({
   ...initState,
   actions: {
-    setDate: (date) => set(() => ({ date })),
+    setState: (state) => set(() => ({ ...state })),
     reset: () => set(initState),
   },
 }));

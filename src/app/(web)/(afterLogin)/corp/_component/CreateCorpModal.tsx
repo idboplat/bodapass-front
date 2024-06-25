@@ -9,6 +9,9 @@ import { CORP_GRP, CORP_GRP_TP } from "@/type/common";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { inputBox, label } from "./createCorpModal.css";
+import callTms from "@/model/callTms";
+import { TBW_000000_P01 } from "@/type/api";
+import { Session } from "next-auth";
 
 const ID = "createCorpModal";
 
@@ -20,18 +23,33 @@ enum CreateCorpInput {
 }
 
 type corpGrpType = "G1" | "G2" | "G3" | "G4";
-interface CreateCorpModalProps {}
+interface CreateCorpModalProps {
+  session: Session;
+}
 
-export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<CreateCorpModalProps>) {
+export default function CreateCorpModal({
+  onClose,
+  onSuccess,
+  session,
+}: ModalProps<CreateCorpModalProps>) {
   const [corpGrpTp, setCorpGrpTp] = useState<corpGrpType | null>(null);
   const [corpNm, setCorpNm] = useState("");
   const [mastCorpCd, setMastCorpCd] = useState("");
   const [pwCheck] = useState(false);
 
   const mutation = useMutation({
-    mutationKey: ["서비스 아이디"],
+    mutationKey: ["TBW_000000_P01"],
     mutationFn: async () => {
-      console.table({ corpGrpTp, corpNm: corpNm.trim(), mastCorpCd });
+      const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
+        session,
+        svcId: "TBW_000000_P01",
+        data: [corpNm.trim(), corpGrpTp || "", mastCorpCd.trim()],
+      });
+      const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
+      if (TBW_000000_P01Data === null) {
+        throw new Error("TBW_000000_P01Data is null");
+      }
+      // console.table({ corpGrpTp, corpNm: corpNm.trim(), mastCorpCd });
     },
   });
 
@@ -47,8 +65,16 @@ export default function CreateCorpModal({ onClose, onSuccess }: ModalProps<Creat
   };
 
   const getCorpGrpTpItems = (corpGrpTp: CORP_GRP_TP) => {
-    const idx = CORP_GRP.findIndex((v) => v === corpGrpTp);
-    return CORP_GRP.slice(idx + 1);
+    switch (corpGrpTp) {
+      case "G1":
+        return ["G2", "G4"];
+      case "G2":
+        return ["G3", "G4"];
+      case "G3":
+        return ["G4"];
+      default:
+        return [];
+    }
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

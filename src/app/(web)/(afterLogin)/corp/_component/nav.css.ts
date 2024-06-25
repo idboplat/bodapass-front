@@ -22,3 +22,9 @@ export const datePickerWrap = style({
   gap: 10,
   alignItems: "center",
 });
+
+export const inputWrap = style({
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+});
