@@ -2,7 +2,7 @@
 
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
-import { GRID_COLS } from "../_const/colum";
+import { GRID_COLS, RowData } from "../_const/colum";
 import { tableWrap } from "./table.css";
 import classNames from "classnames";
 import PagePagination from "@web/(afterLogin)/_component/pagination/PagePagination";
@@ -36,12 +36,17 @@ export default function Table({ session }: TableProps) {
       return data || [];
     },
     select: (data) => {
-      const result = data.map((item) => ({
-        사원코드: item.F01,
+      const result = data.map<RowData>((item) => ({
+        사원코드: item.F01, //external_user_id
         사원명: item.F02,
+        // 세션ID: item.F03,
+        // 세션키: item.F04,
         회사코드: item.F05,
-        등록일: item.F08,
-        최근접속일시: "", //??
+        회사명: item.F06,
+        생성작업ID: item.F07,
+        생성작업일시: item.F08,
+        변경작업ID: item.F09,
+        변경작업일시: item.F10,
       }));
       return result;
     },
@@ -51,14 +56,12 @@ export default function Table({ session }: TableProps) {
     setDataId(page);
   };
 
-  console.log("data", data);
-
   return (
     <>
       <div className={classNames("ag-theme-alpine", tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
-          rowData={[]}
+          rowData={data}
           overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
           headerHeight={28}
           rowHeight={28}
