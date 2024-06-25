@@ -6,23 +6,30 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
   try {
     const credentials = _credentials as unknown as Credentials;
     if (!credentials) return null;
-    const TBW_000001_P01Res = await callTms<TBW_000001_P01>({
-      svcId: "TBW_000001_P01",
-      data: [credentials.email, credentials.password],
-      session: null,
-    });
-    const TBW_000001_P01Data = TBW_000001_P01Res.svcRspnData;
-    if (TBW_000001_P01Data === null) {
-      throw new Error("관리자에게 문의하세요");
-    }
+    // const TBW_000001_P01Res = await callTms<TBW_000001_P01>({
+    //   svcId: "TBW_000001_P01",
+    //   data: [credentials.email, credentials.password],
+    //   session: null,
+    // });
+    // const TBW_000001_P01Data = TBW_000001_P01Res.svcRspnData;
+    // if (TBW_000001_P01Data === null) {
+    //   throw new Error("관리자에게 문의하세요");
+    // }
 
-    const { F03, F04, F05 } = TBW_000001_P01Data[0];
+    // const { F03, F04, F05 } = TBW_000001_P01Data[0];
+    // return {
+    //   id: credentials.email,
+    //   sessionId: F03,
+    //   sessionKey: F04,
+    //   errorMsg: undefined,
+    //   corpCd: F05,
+    // };
     return {
       id: credentials.email,
-      sessionId: F03,
-      sessionKey: F04,
+      sessionId: "",
+      sessionKey: "",
       errorMsg: undefined,
-      corpCd: F05,
+      corpCd: "",
     };
   } catch (error) {
     console.error("EmailLogin", error);
