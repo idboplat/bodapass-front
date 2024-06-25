@@ -11,6 +11,8 @@ import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp"
 import { TBW_000300_P01 } from "@/type/api";
 import callTms from "@/model/callTms";
 import { Session } from "next-auth";
+import { toast } from "sonner";
+import { useSetCoinStore } from "../_lib/store";
 
 const ID = "creCoinModal";
 
@@ -33,6 +35,8 @@ export default function CreCoinModal({
   const [amount, setAmount] = useState("");
   // const [otp, setOtp] = useState("");
 
+  const actions = useSetCoinStore();
+
   const mutation = useMutation({
     mutationKey: ["TBW_000300_P01"],
     mutationFn: async () => {
@@ -45,6 +49,11 @@ export default function CreCoinModal({
       if (TBW_000300_P01Data === null) {
         throw new Error("TBW_000300_P01Data is null");
       }
+    },
+    onSuccess: () => {
+      toast.success("코인이 발행되었습니다.");
+      actions.reset();
+      onSuccess(true);
     },
   });
 

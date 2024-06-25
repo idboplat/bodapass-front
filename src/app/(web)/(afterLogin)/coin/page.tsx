@@ -11,7 +11,7 @@ export default async function Page() {
   return (
     <div className={wrap}>
       <div className={title}>200300 코인관리</div>
-      <Nav />
+      <Nav session={session} />
       <Table session={session} />
     </div>
   );

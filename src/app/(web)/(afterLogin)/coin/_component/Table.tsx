@@ -13,15 +13,15 @@ import { useCoinStore } from "../_lib/store";
 
 export default function Table({ session }: { session: Session }) {
   const [colDefs] = useState([...GRID_COLS]);
-  const coin = useCoinStore();
+  const coinStore = useCoinStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_000300_Q01", coin],
+    queryKey: ["TBW_000300_Q01", coinStore],
     queryFn: async () => {
       const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
         svcId: "TBW_000300_Q01",
-        data: [coin.mvioTp], // 입출고 구분
+        data: [coinStore.mvioTp], // 입출고 구분
         pgSize: 20,
       });
       const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];
@@ -42,13 +42,16 @@ export default function Table({ session }: { session: Session }) {
       }));
       return result;
     },
+    enabled: coinStore.nonce > 0,
   });
+
+  const rowData = coinStore.nonce === 0 ? [] : data;
 
   return (
     <div className={classNames("ag-theme-alpine", tableWrap)}>
       <AgGridReact
         columnDefs={colDefs}
-        rowData={data}
+        rowData={rowData}
         overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
         headerHeight={28}
         rowHeight={28}

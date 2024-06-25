@@ -12,8 +12,13 @@ import CreCoinModal from "./CreCoinlModal";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useState } from "react";
+import { Session } from "next-auth";
 
-export default function Nav() {
+interface NavProps {
+  session: Session;
+}
+
+export default function Nav({ session }: NavProps) {
   const date = useCoinStore((state) => state.date);
   const [mvioTp, setMvioTp] = useState("");
   const actions = useSetCoinStore();
@@ -21,16 +26,16 @@ export default function Nav() {
   const modalAction = useSetModalStore();
 
   const openModal = () => {
-    modalAction.push(CreCoinModal);
+    modalAction.push(CreCoinModal, { props: { session } });
   };
 
-  const onChange = (date: [DateType, DateType]) => {
-    actions.setState({ date });
-  };
+  // const onChange = (date: [DateType, DateType]) => {
+  //   actions.setState({ date });
+  // };
 
-  const onDateBtnClick = (startDate: DateType, endDate: DateType) => {
-    actions.setState({ date: [startDate, endDate] });
-  };
+  // const onDateBtnClick = (startDate: DateType, endDate: DateType) => {
+  //   actions.setState({ date: [startDate, endDate] });
+  // };
 
   const onChangeSelect = (value: string) => {
     setMvioTp(() => value);
@@ -39,11 +44,11 @@ export default function Nav() {
     e.preventDefault();
 
     if (mvioTp === "입고") {
-      actions.setState({ mvioTp: "I" });
+      actions.setState("I");
     } else if (mvioTp === "출고") {
-      actions.setState({ mvioTp: "O" });
+      actions.setState("O");
     } else {
-      actions.setState({ mvioTp: "" });
+      actions.setState("");
     }
   };
 
@@ -64,7 +69,7 @@ export default function Nav() {
           />
         </div>
       </div>
-      <div className={historyFilterwrap}>
+      {/* <div className={historyFilterwrap}>
         <div className={btnWrap}>
           <DateBtn onClick={() => onDateBtnClick(addDays(today, -1), today)}>1D</DateBtn>
           <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1), today)}>1W</DateBtn>
@@ -74,7 +79,7 @@ export default function Nav() {
         <div>
           <RangePicker date={date} onChange={onChange} />
         </div>
-      </div>
+      </div> */}
       <div className={btnWrap}>
         <button className={navBtn} onClick={openModal} type="button">
           추가발행
