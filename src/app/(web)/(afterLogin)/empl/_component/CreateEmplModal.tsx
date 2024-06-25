@@ -5,31 +5,51 @@ import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { inputBox, label } from "./createEmplModal.css";
+import { inputBox, label, pwCheckBox } from "./createEmplModal.css";
 import * as style from "@/app/_component/modal/modal.css";
+import callTms from "@/model/callTms";
+import { Session } from "next-auth";
+import { toast } from "sonner";
+import { TBW_000001_P01 } from "@/type/api";
 
 const ID = "createEmplModal";
 
 enum CreateEmplInput {
+  extnUserId = ID + "ExtnUserId",
   emplName = ID + "EmplName",
   pw = ID + "Pw",
   pwCheck = ID + "PwCheck",
 }
 
-interface CreateEmplModalProps {}
+interface CreateEmplModalProps {
+  session: Session;
+}
 
-export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<CreateEmplModalProps>) {
+export default function CreateEmplModal({ onClose, session }: ModalProps<CreateEmplModalProps>) {
+  const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
   const [pw, setPw] = useState("");
   const [pwCheck, setPwCheck] = useState("");
+  const isPwCheck = pw === pwCheck;
 
   const mutation = useMutation({
-    mutationKey: ["서비스 아이디"],
+    mutationKey: ["TBW_000010_P01"],
     mutationFn: async () => {
-      console.table({ emplName: emplName.trim(), pw, pwCheck });
+      const TBW_000010_P01Res = await callTms<TBW_000001_P01>({
+        session,
+        svcId: "TBW_000010_P01",
+        data: [session.user.corpCd, extnUserId.trim(), emplName.trim(), pw],
+      });
+      const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
+      if (TBW_000010_P01Data === null) {
+        throw new Error("TBW_000010_P01Data is null");
+      }
+    },
+    onSuccess: () => {
+      toast.success("사원이 등록되었습니다.");
+      onClose();
     },
   });
-
   const handleSubmit = (e: any) => {
     const emplName = e.target[CreateEmplInput.emplName].value;
     const pw = e.target[CreateEmplInput.pw].value;
@@ -48,6 +68,9 @@ export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<Creat
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     switch (id) {
+      case CreateEmplInput.extnUserId:
+        setExtnUserId(() => value);
+        break;
       case CreateEmplInput.emplName:
         setEmplName(() => value);
         break;
@@ -69,6 +92,12 @@ export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<Creat
             <h3 className={style.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
+            <label className={label} htmlFor={CreateEmplInput.extnUserId}>
+              사원 ID
+            </label>
+            <DefaultInput id={CreateEmplInput.extnUserId} onChange={onChangeInput} />
+          </div>
+          <div className={inputBox}>
             <label className={label} htmlFor={CreateEmplInput.emplName}>
               신규 사원명
             </label>
@@ -85,10 +114,17 @@ export default function CreateEmplModal({ onClose, onSuccess }: ModalProps<Creat
               신규 비밀번호 확인
             </label>
             <DefaultInput id={CreateEmplInput.pwCheck} onChange={onChangeInput} type={"password"} />
+            <div className={pwCheckBox}>
+              {pw && !isPwCheck ? "비밀번호가 일치하지 않습니다." : ""}
+            </div>
           </div>
         </div>
         <div className={style.modalBtnBox}>
-          <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
+          <button
+            className={modalDefaultBtn}
+            type="submit"
+            disabled={mutation.isPending || !isPwCheck}
+          >
             등록
           </button>
         </div>

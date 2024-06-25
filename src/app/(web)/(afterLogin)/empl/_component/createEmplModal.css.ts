@@ -20,3 +20,9 @@ export const label = style([
     marginBottom: 2,
   },
 ]);
+
+export const pwCheckBox = style({
+  minHeight: 20,
+  fontSize: 12,
+  color: "#FF7777",
+});
