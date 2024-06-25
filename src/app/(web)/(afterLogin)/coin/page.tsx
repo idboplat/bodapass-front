@@ -12,7 +12,7 @@ export default async function Page() {
     <div className={wrap}>
       <div className={title}>20200 코인관리</div>
       <Nav />
-      <Table />
+      <Table session={session} />
     </div>
   );
 }
