@@ -3,6 +3,10 @@ import CryptoJS from "crypto-js";
 import { TmsError } from "@/model/error/TmsError";
 import { formatInTimeZone } from "date-fns-tz";
 
+export const isArray = <T>(item: T | T[]): item is T[] => {
+  return Array.isArray(item);
+};
+
 /** svcErrYn이 true로 응답되도 에러처리 하지않는 에러코드 목록 */
 const EXCLUDE_RSPN_CDS: string[] = [];
 

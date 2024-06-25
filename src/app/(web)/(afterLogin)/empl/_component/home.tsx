@@ -12,7 +12,7 @@ export default async function Home() {
     <div className={wrap}>
       <div className={title}>20110 사원관리</div>
       <Nav />
-      <Table />
+      <Table session={session} />
     </div>
   );
 }
