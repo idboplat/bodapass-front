@@ -8,24 +8,43 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { inputBox, label } from "./creCoinModal.css";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
+import { TBW_000300_P01 } from "@/type/api";
+import callTms from "@/model/callTms";
+import { Session } from "next-auth";
 
 const ID = "creCoinModal";
 
 enum CreCoinInput {
+  instCd = ID + "InstCd",
   amount = ID + "Amount",
   otp = ID + "Otp",
 }
 
-interface CreCoinModalProps {}
+interface CreCoinModalProps {
+  session: Session;
+}
 
-export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinModalProps>) {
+export default function CreCoinModal({
+  onClose,
+  onSuccess,
+  session,
+}: ModalProps<CreCoinModalProps>) {
+  const [instCd, setInstCd] = useState("");
   const [amount, setAmount] = useState("");
-  const [otp, setOtp] = useState("");
+  // const [otp, setOtp] = useState("");
 
   const mutation = useMutation({
-    mutationKey: ["서비스 아이디"],
+    mutationKey: ["TBW_000300_P01"],
     mutationFn: async () => {
-      console.table({ emplName: amount.trim(), otp });
+      const TBW_000300_P01Res = await callTms<TBW_000300_P01>({
+        session,
+        svcId: "TBW_000300_P01",
+        data: [session.user.corpCd, instCd, amount],
+      });
+      const TBW_000300_P01Data = TBW_000300_P01Res.svcRspnData;
+      if (TBW_000300_P01Data === null) {
+        throw new Error("TBW_000300_P01Data is null");
+      }
     },
   });
 
@@ -44,15 +63,13 @@ export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinM
     const { id, value } = e.target;
 
     switch (id) {
+      case CreCoinInput.instCd:
+        setInstCd(() => value);
+        break;
       case CreCoinInput.amount:
         const integerStr = deleteIntegerZero(replaceToNumber(value));
         if (integerStr.length > 20) return; // 최대 20자리
         setAmount(() => addComma(integerStr));
-        break;
-      case CreCoinInput.otp:
-        const numberStr = replaceToNumber(value);
-        if (numberStr.length > 6) return; // 최대 6자리
-        setOtp(() => numberStr);
         break;
     }
   };
@@ -66,8 +83,19 @@ export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinM
             <h3 className={style.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
+            <label className={label} htmlFor={CreCoinInput.instCd}>
+              종목 코드
+            </label>
+            <DefaultInput
+              id={CreCoinInput.instCd}
+              value={instCd}
+              onChange={onChangeInput}
+              onReset={() => setInstCd("")}
+            />
+          </div>
+          <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.amount}>
-              추가발행수량
+              입출고 수량
             </label>
             <DefaultInput
               id={CreCoinInput.amount}
@@ -76,7 +104,7 @@ export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinM
               onReset={() => setAmount("")}
             />
           </div>
-          <div className={inputBox}>
+          {/* <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.otp}>
               OTP
             </label>
@@ -86,7 +114,7 @@ export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinM
               onChange={onChangeInput}
               onReset={() => setOtp("")}
             />
-          </div>
+          </div> */}
         </div>
         <div className={style.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>

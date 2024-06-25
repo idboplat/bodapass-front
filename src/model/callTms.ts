@@ -149,6 +149,7 @@ const callTms = async <T extends RspnData<any>>({
 
   const tmsResult: TmsResponse<T> = await response.json();
   const tmsData = tmsResult?.svcRspnList?.[0];
+  console.log("tmsResult", tmsResult);
 
   if (tmsData === undefined) {
     const message = "tmsData is undefined \n Requested resource not found";

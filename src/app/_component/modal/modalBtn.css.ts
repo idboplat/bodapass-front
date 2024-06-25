@@ -15,6 +15,8 @@ export const modalDefaultBtn = style([
     },
     ":disabled": {
       background: global.blueDisabled,
+      cursor: "default",
+      color: "red",
     },
   },
 ]);

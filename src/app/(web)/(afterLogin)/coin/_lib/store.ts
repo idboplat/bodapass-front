@@ -3,23 +3,25 @@ import { create, useStore } from "zustand";
 
 type CoinState = {
   date: [DateType, DateType];
+  mvioTp: string;
 };
 
 type CoinActions = {
   actions: {
-    setDate: (date: [DateType, DateType]) => void;
+    setState: (state: Partial<CoinState>) => void;
     reset: () => void;
   };
 };
 
 const initState: CoinState = {
   date: [null, null],
+  mvioTp: "",
 };
 
 export const useCoinStore = create<CoinState & CoinActions>()((set) => ({
   ...initState,
   actions: {
-    setDate: (date) => set(() => ({ date })),
+    setState: (state) => set(() => ({ ...state })),
     reset: () => set(initState),
   },
 }));

@@ -12,7 +12,7 @@ import CreCorpModal from "./CreCorpModal";
 import { useState } from "react";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { CORP_GRP_ENTRY, CORP_GRP_ITEM, CORP_GRP_KEY, CORP_GRP_VALUE } from "@/app/_const/tp";
+import { CORP_GRP_ENTRY, CORP_GRP_KEY, CORP_GRP_VALUE } from "@/app/_const/tp";
 
 export default function Nav() {
   const [date, setDate] = useState<[DateType, DateType]>([new Date(), new Date()]);
@@ -44,6 +44,7 @@ export default function Nav() {
     const idx = CORP_GRP_ENTRY.findIndex((item) => item[1] === corpGrpValue);
     if (idx === -1) return;
     actions.setState({ corpGrpTp: CORP_GRP_KEY[idx] });
+    actions.setState({ corpNm });
   };
 
   const today = new Date();
@@ -56,8 +57,8 @@ export default function Nav() {
             label="회사명"
             value={corpNm}
             id="corpNm"
-            onChange={(e) => actions.setState({ corpNm: e.target.value })}
-            onReset={() => actions.setState({ corpNm: "" })}
+            onChange={(e) => setCorpNm(() => e.target.value)}
+            onReset={() => setCorpNm(() => "")}
           />
         </div>
         <div>

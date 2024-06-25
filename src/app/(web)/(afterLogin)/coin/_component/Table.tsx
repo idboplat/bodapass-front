@@ -9,17 +9,19 @@ import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { TBW_000300_Q01 } from "@/type/api";
+import { useCoinStore } from "../_lib/store";
 
 export default function Table({ session }: { session: Session }) {
   const [colDefs] = useState([...GRID_COLS]);
+  const coin = useCoinStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_000300_Q01"],
+    queryKey: ["TBW_000300_Q01", coin],
     queryFn: async () => {
       const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
         svcId: "TBW_000300_Q01",
-        data: [""], // 입출고 구분
+        data: [coin.mvioTp], // 입출고 구분
         pgSize: 20,
       });
       const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];

@@ -36,12 +36,11 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
-    mutationFn: async () => {
-      console.log("mutationFn");
+    mutationFn: async (data: string[]) => {
       const TBW_000010_P01Res = await callTms<TBW_000001_P01>({
         session,
         svcId: "TBW_000010_P01",
-        data: [session.user.corpCd, extnUserId.trim(), emplName.trim(), pw.trim()],
+        data,
       });
       const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
       if (TBW_000010_P01Data === null) {
@@ -56,12 +55,12 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   });
   const handleSubmit = (e: any) => {
     const emplName = e.target[CreEmplInput.emplName].value;
+    const extnUserId = e.target[CreEmplInput.extnUserId].value;
     const pw = e.target[CreEmplInput.pw].value;
-    const pwCheck = e.target[CreEmplInput.pwCheck].value;
 
     try {
       e.preventDefault();
-      mutation.mutate();
+      mutation.mutate([session.user.corpCd, extnUserId.trim(), emplName.trim(), pw]);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -127,7 +126,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
           <button
             className={modalDefaultBtn}
             type="submit"
-            disabled={mutation.isPending || !isPwCheck}
+            disabled={isPwCheck === false || mutation.isPending}
           >
             등록
           </button>

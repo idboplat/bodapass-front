@@ -11,11 +11,13 @@ import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01 } from "@/type/api";
 import { Session } from "next-auth";
+import { useTransactionStore } from "../_lib/store";
 
 export default function Table({ session }: { session: Session }) {
+  const transaction = useTransactionStore();
   const [colDefs] = useState(() => {
     const cols = [...GRID_COLS];
-    cols[3].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
+    cols[9].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
       const { data, rowIndex } = node;
       const isRender = data && rowIndex !== null;
       return isRender ? <ReqStatus index={rowIndex} data={data} /> : null;
@@ -24,12 +26,19 @@ export default function Table({ session }: { session: Session }) {
   });
 
   const { data } = useQuery({
-    queryKey: ["TBW_001000_Q01"],
+    queryKey: ["TBW_001000_Q01", transaction],
     queryFn: async () => {
       const TBW_001000_Q01Res = await callTms<TBW_001000_Q01>({
         session,
         svcId: "TBW_001000_Q01",
-        data: [session.user.corpCd, "", "", "", "", ""],
+        data: [
+          session.user.corpCd,
+          "",
+          transaction.instCd,
+          transaction.mvioTp,
+          transaction.mvioRmrkTp,
+          transaction.rqstStatTp,
+        ],
         pgSize: 20,
       });
       const TBW_001000_Q01Data = TBW_001000_Q01Res.svcRspnData || [];

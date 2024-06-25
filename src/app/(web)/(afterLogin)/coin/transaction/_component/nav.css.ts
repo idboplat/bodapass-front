@@ -16,3 +16,16 @@ export const btnWrap = style({
   display: "flex",
   gap: 10,
 });
+
+export const inputWrap = style({
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+});
+
+export const datePickerWrap = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: 10,
+});
