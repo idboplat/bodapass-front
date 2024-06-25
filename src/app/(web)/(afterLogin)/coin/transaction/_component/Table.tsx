@@ -1,20 +1,22 @@
 "use client";
-
-import { AgGridReact } from "ag-grid-react";
-import { useState } from "react";
-import { GRID_COLS, RowData } from "../_const/colum";
-import { tableWrap } from "./table.css";
-import classNames from "classnames";
-import { ICellRendererParams } from "ag-grid-community";
-import ReqStatus from "./ReqStatus";
-import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01 } from "@/type/api";
+import { useQuery } from "@tanstack/react-query";
+import { ICellRendererParams } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
+import classNames from "classnames";
 import { Session } from "next-auth";
+import { useState } from "react";
+import { GRID_COLS, RowData } from "../_const/colum";
 import { useTransactionStore } from "../_lib/store";
+import ReqStatus from "./ReqStatus";
+import { tableWrap } from "./table.css";
 
-export default function Table({ session }: { session: Session }) {
-  const transaction = useTransactionStore();
+interface TableProps {
+  session: Session;
+}
+
+export default function Table({ session }: TableProps) {
   const [colDefs] = useState(() => {
     const cols = [...GRID_COLS];
     cols[9].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
@@ -25,8 +27,10 @@ export default function Table({ session }: { session: Session }) {
     return cols;
   });
 
+  const transactionStore = useTransactionStore();
+
   const { data } = useQuery({
-    queryKey: ["TBW_001000_Q01", transaction],
+    queryKey: ["TBW_001000_Q01", transactionStore],
     queryFn: async () => {
       const TBW_001000_Q01Res = await callTms<TBW_001000_Q01>({
         session,
@@ -34,10 +38,10 @@ export default function Table({ session }: { session: Session }) {
         data: [
           session.user.corpCd,
           "",
-          transaction.instCd,
-          transaction.mvioTp,
-          transaction.mvioRmrkTp,
-          transaction.rqstStatTp,
+          transactionStore.instCd,
+          transactionStore.mvioTp,
+          transactionStore.mvioRmrkTp,
+          transactionStore.rqstStatTp,
         ],
         pgSize: 20,
       });
@@ -63,15 +67,16 @@ export default function Table({ session }: { session: Session }) {
       }));
       return result;
     },
+    enabled: transactionStore.nonce > 0,
   });
 
-  console.log("TBW_001000_Q01Data", data);
+  const rowData = transactionStore.nonce === 0 ? [] : data;
 
   return (
     <div className={classNames("ag-theme-alpine", tableWrap)}>
       <AgGridReact
         columnDefs={colDefs}
-        rowData={data}
+        rowData={rowData}
         overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
         headerHeight={28}
         rowHeight={28}

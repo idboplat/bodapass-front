@@ -1,5 +1,6 @@
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type TransactionState = {
@@ -9,11 +10,20 @@ type TransactionState = {
   mvioTp: string;
   mvioRmrkTp: string;
   rqstStatTp: string;
+  nonce: number;
+  resetTime: string;
 };
 
 type TransactionActions = {
   actions: {
-    setState: (state: Partial<TransactionState>) => void;
+    setState: (state: {
+      mvioDd: string; //입출고일자
+      instCd: string;
+      mvioTp: string; //입출고
+      mvioRmrkTp: string; //매매손익
+      rqstStatTp: string; //신청상태구분
+    }) => void;
+    refreshPage: () => void;
     reset: () => void;
   };
 };
@@ -25,13 +35,22 @@ const initState: TransactionState = {
   mvioTp: "",
   mvioRmrkTp: "",
   rqstStatTp: "",
+  nonce: 0,
+  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
 };
 
 export const useTransactionStore = create<TransactionState & TransactionActions>()((set) => ({
   ...initState,
   actions: {
-    setState: (state) => set(() => ({ ...state })),
-    reset: () => set(initState),
+    setState: (newState) => set((state) => ({ ...newState, nonce: state.nonce + 1 })),
+    refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
+    reset: () => {
+      set(() => ({
+        ...initState,
+        nonce: 1,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      }));
+    },
   },
 }));
 
