@@ -18,9 +18,9 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
 
     console.log("TBW_000001_P01Data", TBW_000001_P01Data);
 
-    const { F03, F04, F05 } = TBW_000001_P01Data[0];
+    const { F01, F03, F04, F05 } = TBW_000001_P01Data[0];
     return {
-      id: credentials.email,
+      id: F01,
       sessionId: F03,
       sessionKey: F04,
       errorMsg: undefined,
