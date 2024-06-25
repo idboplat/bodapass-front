@@ -1,17 +1,17 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
+import * as style from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
-import * as style from "@/app/_component/modal/modal.css";
 import callTms from "@/model/callTms";
+import { TBW_000000_P01 } from "@/type/api";
+import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
+import { useState } from "react";
 import { toast } from "sonner";
-import { TBW_000001_P01 } from "@/type/api";
 import { useSetEmplStore } from "../_lib/store";
+import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
 
 const ID = "creEmplModal";
 
@@ -37,14 +37,14 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
     mutationFn: async (data: string[]) => {
-      const TBW_000010_P01Res = await callTms<TBW_000001_P01>({
+      const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
         session,
-        svcId: "TBW_000010_P01",
+        svcId: "TBW_000000_P01",
         data,
       });
-      const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
-      if (TBW_000010_P01Data === null) {
-        throw new Error("TBW_000010_P01Data is null");
+      const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
+      if (TBW_000000_P01Data === null) {
+        throw new Error("TBW_000000_P01Data is null");
       }
     },
     onSuccess: () => {

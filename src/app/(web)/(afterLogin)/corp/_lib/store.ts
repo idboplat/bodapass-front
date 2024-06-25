@@ -1,17 +1,21 @@
 import { CORP_GRP_TP } from "@/type/common";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
+import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type CorpState = {
   date: [DateType, DateType];
   corpNm: string;
   corpGrpTp: CORP_GRP_TP | null;
+  nonce: number;
+  resetTime: string;
 };
 
 type CorpActions = {
   actions: {
-    setState: (state: Partial<CorpState>) => void;
+    setState: (corpNm: string, corpGrpTp: CORP_GRP_TP) => void;
     reset: () => void;
+    refreshPage: () => void;
   };
 };
 
@@ -19,13 +23,23 @@ const initState: CorpState = {
   date: [null, null],
   corpNm: "",
   corpGrpTp: null,
+  nonce: 0,
+  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
 };
 
 export const useCorpStore = create<CorpState & CorpActions>()((set) => ({
   ...initState,
   actions: {
-    setState: (state) => set(() => ({ ...state })),
-    reset: () => set(initState),
+    setState: (corpNm, corpGrpTp) => {
+      set((state) => ({ corpNm, corpGrpTp, nonce: state.nonce + 1 }));
+    },
+    refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
+    reset: () =>
+      set(() => ({
+        ...initState,
+        nonce: 1,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      })),
   },
 }));
 

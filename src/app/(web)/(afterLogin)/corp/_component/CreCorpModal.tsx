@@ -12,6 +12,8 @@ import { inputBox, label } from "./creCorpModal.css";
 import callTms from "@/model/callTms";
 import { TBW_000000_P01 } from "@/type/api";
 import { Session } from "next-auth";
+import { toast } from "sonner";
+import { useSetCorpStore } from "../_lib/store";
 
 const ID = "creCorpModal";
 
@@ -38,19 +40,25 @@ export default function CreCorpModal({
   const [mastCorpCd, setMastCorpCd] = useState("");
   const [pwCheck] = useState(false);
 
+  const actions = useSetCorpStore();
+
   const mutation = useMutation({
     mutationKey: ["TBW_000000_P01"],
     mutationFn: async () => {
       const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
         session,
         svcId: "TBW_000000_P01",
-        data: [corpNm.trim(), corpGrpTp || "", mastCorpCd.trim()],
+        data: [corpNm.trim(), corpGrpTp || "", session.user.corpCd],
       });
       const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
       if (TBW_000000_P01Data === null) {
         throw new Error("TBW_000000_P01Data is null");
       }
-      // console.table({ corpGrpTp, corpNm: corpNm.trim(), mastCorpCd });
+    },
+    onSuccess: () => {
+      toast.success("회사가 등록되었습니다.");
+      actions.reset();
+      onSuccess(true);
     },
   });
 
@@ -122,8 +130,7 @@ export default function CreCorpModal({
               onReset={() => setCorpNm("")}
             />
           </div>
-
-          <div className={inputBox}>
+          {/* <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.mastCorpCd}>
               주 회사 코드
             </label>
@@ -133,8 +140,8 @@ export default function CreCorpModal({
               onChange={onChangeInput}
               onReset={() => setMastCorpCd("")}
             />
-          </div>
-          <div className={inputBox}>
+          </div> */}
+          {/* <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.pw}>
               Main 관리자 비밀번호
             </label>
@@ -143,7 +150,7 @@ export default function CreCorpModal({
               onChange={onChangeInput}
               type={pwCheck ? "text" : "password"}
             />
-          </div>
+          </div> */}
         </div>
         <div className={style.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>

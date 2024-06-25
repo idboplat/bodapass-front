@@ -68,7 +68,7 @@ class CallTms {
     data.forEach((item, i) => {
       const index = i + 1;
       const key = index < 10 ? `F0${index}` : `F${index}`;
-      result[key] = item || " ";
+      result[key] = item;
     });
     return result;
   }

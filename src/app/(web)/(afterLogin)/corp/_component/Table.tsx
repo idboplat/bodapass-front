@@ -1,5 +1,4 @@
 "use client";
-
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
@@ -11,18 +10,21 @@ import { TBW_000000_R01 } from "@/type/api";
 import { Session } from "next-auth";
 import { useCorpStore } from "../_lib/store";
 
-export default function Table({ session }: { session: Session }) {
+interface TableProps {
+  session: Session;
+}
+
+export default function Table({ session }: TableProps) {
   const [colDefs] = useState([...GRID_COLS]);
-  const corp = useCorpStore();
+  const corpStore = useCorpStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_000000_R01"],
+    queryKey: ["TBW_000000_R01", corpStore],
     queryFn: async () => {
       const TBW_000000_R01Res = await callTms<TBW_000000_R01>({
         session,
         svcId: "TBW_000000_R01",
-        // data: [session.user.corpCd, corp.corpNm, corp.corpGrpTp || ""],
-        data: [session.user.corpCd, "", "", ""],
+        data: [session.user.corpCd, corpStore.corpNm, corpStore.corpGrpTp || ""],
         pgSize: 20,
       });
       const TBW_000000_R01Data = TBW_000000_R01Res.svcRspnData || [];
@@ -41,15 +43,16 @@ export default function Table({ session }: { session: Session }) {
       }));
       return result;
     },
+    enabled: corpStore.nonce > 0,
   });
 
-  console.log("TBW_000000_R01 data ::::: ", data);
+  const rowData = corpStore.nonce === 0 ? [] : data;
 
   return (
     <div className={classNames("ag-theme-alpine", tableWrap)}>
       <AgGridReact
         columnDefs={colDefs}
-        rowData={data}
+        rowData={rowData}
         overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
         headerHeight={28}
         rowHeight={28}
