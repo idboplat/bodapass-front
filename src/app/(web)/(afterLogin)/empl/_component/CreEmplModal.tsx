@@ -5,7 +5,7 @@ import * as style from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
-import { TBW_000000_P01 } from "@/type/api";
+import { TBW_000010_P01 } from "@/type/api";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
@@ -37,14 +37,14 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
     mutationFn: async (data: string[]) => {
-      const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
+      const TBW_000010_P01Res = await callTms<TBW_000010_P01>({
         session,
-        svcId: "TBW_000000_P01",
+        svcId: "TBW_000010_P01",
         data,
       });
-      const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
-      if (TBW_000000_P01Data === null) {
-        throw new Error("TBW_000000_P01Data is null");
+      const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
+      if (TBW_000010_P01Data === null) {
+        throw new Error("TBW_000010_P01Data is null");
       }
     },
     onSuccess: () => {
