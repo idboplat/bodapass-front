@@ -6,19 +6,19 @@ import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { inputBox, label } from "./createCoinModal.css";
+import { inputBox, label } from "./creCoinModal.css";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 
-const ID = "createCoinModal";
+const ID = "creCoinModal";
 
-enum CreateCoinInput {
+enum CreCoinInput {
   amount = ID + "Amount",
   otp = ID + "Otp",
 }
 
-interface CreateCoinModalProps {}
+interface CreCoinModalProps {}
 
-export default function CreateCoinModal({ onClose, onSuccess }: ModalProps<CreateCoinModalProps>) {
+export default function CreCoinModal({ onClose, onSuccess }: ModalProps<CreCoinModalProps>) {
   const [amount, setAmount] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -44,12 +44,12 @@ export default function CreateCoinModal({ onClose, onSuccess }: ModalProps<Creat
     const { id, value } = e.target;
 
     switch (id) {
-      case CreateCoinInput.amount:
+      case CreCoinInput.amount:
         const integerStr = deleteIntegerZero(replaceToNumber(value));
         if (integerStr.length > 20) return; // 최대 20자리
         setAmount(() => addComma(integerStr));
         break;
-      case CreateCoinInput.otp:
+      case CreCoinInput.otp:
         const numberStr = replaceToNumber(value);
         if (numberStr.length > 6) return; // 최대 6자리
         setOtp(() => numberStr);
@@ -66,22 +66,22 @@ export default function CreateCoinModal({ onClose, onSuccess }: ModalProps<Creat
             <h3 className={style.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCoinInput.amount}>
+            <label className={label} htmlFor={CreCoinInput.amount}>
               추가발행수량
             </label>
             <DefaultInput
-              id={CreateCoinInput.amount}
+              id={CreCoinInput.amount}
               value={amount}
               onChange={onChangeInput}
               onReset={() => setAmount("")}
             />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCoinInput.otp}>
+            <label className={label} htmlFor={CreCoinInput.otp}>
               OTP
             </label>
             <DefaultInput
-              id={CreateCoinInput.otp}
+              id={CreCoinInput.otp}
               value={otp}
               onChange={onChangeInput}
               onReset={() => setOtp("")}

@@ -5,27 +5,27 @@ import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { inputBox, label, pwCheckBox } from "./createEmplModal.css";
+import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
 import * as style from "@/app/_component/modal/modal.css";
 import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { TBW_000001_P01 } from "@/type/api";
 
-const ID = "createEmplModal";
+const ID = "creEmplModal";
 
-enum CreateEmplInput {
+enum CreEmplInput {
   extnUserId = ID + "ExtnUserId",
   emplName = ID + "EmplName",
   pw = ID + "Pw",
   pwCheck = ID + "PwCheck",
 }
 
-interface CreateEmplModalProps {
+interface CreEmplModalProps {
   session: Session;
 }
 
-export default function CreateEmplModal({ onClose, session }: ModalProps<CreateEmplModalProps>) {
+export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplModalProps>) {
   const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
   const [pw, setPw] = useState("");
@@ -51,9 +51,9 @@ export default function CreateEmplModal({ onClose, session }: ModalProps<CreateE
     },
   });
   const handleSubmit = (e: any) => {
-    const emplName = e.target[CreateEmplInput.emplName].value;
-    const pw = e.target[CreateEmplInput.pw].value;
-    const pwCheck = e.target[CreateEmplInput.pwCheck].value;
+    const emplName = e.target[CreEmplInput.emplName].value;
+    const pw = e.target[CreEmplInput.pw].value;
+    const pwCheck = e.target[CreEmplInput.pwCheck].value;
 
     try {
       e.preventDefault();
@@ -68,16 +68,16 @@ export default function CreateEmplModal({ onClose, session }: ModalProps<CreateE
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     switch (id) {
-      case CreateEmplInput.extnUserId:
+      case CreEmplInput.extnUserId:
         setExtnUserId(() => value);
         break;
-      case CreateEmplInput.emplName:
+      case CreEmplInput.emplName:
         setEmplName(() => value);
         break;
-      case CreateEmplInput.pw:
+      case CreEmplInput.pw:
         setPw(() => value);
         break;
-      case CreateEmplInput.pwCheck:
+      case CreEmplInput.pwCheck:
         setPwCheck(() => value);
         break;
     }
@@ -92,28 +92,28 @@ export default function CreateEmplModal({ onClose, session }: ModalProps<CreateE
             <h3 className={style.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateEmplInput.extnUserId}>
+            <label className={label} htmlFor={CreEmplInput.extnUserId}>
               사원 ID
             </label>
-            <DefaultInput id={CreateEmplInput.extnUserId} onChange={onChangeInput} />
+            <DefaultInput id={CreEmplInput.extnUserId} onChange={onChangeInput} />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateEmplInput.emplName}>
+            <label className={label} htmlFor={CreEmplInput.emplName}>
               신규 사원명
             </label>
-            <DefaultInput id={CreateEmplInput.emplName} onChange={onChangeInput} />
+            <DefaultInput id={CreEmplInput.emplName} onChange={onChangeInput} />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateEmplInput.pw}>
+            <label className={label} htmlFor={CreEmplInput.pw}>
               신규 비밀번호
             </label>
-            <DefaultInput id={CreateEmplInput.pw} onChange={onChangeInput} type={"password"} />
+            <DefaultInput id={CreEmplInput.pw} onChange={onChangeInput} type={"password"} />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateEmplInput.pwCheck}>
+            <label className={label} htmlFor={CreEmplInput.pwCheck}>
               신규 비밀번호 확인
             </label>
-            <DefaultInput id={CreateEmplInput.pwCheck} onChange={onChangeInput} type={"password"} />
+            <DefaultInput id={CreEmplInput.pwCheck} onChange={onChangeInput} type={"password"} />
             <div className={pwCheckBox}>
               {pw && !isPwCheck ? "비밀번호가 일치하지 않습니다." : ""}
             </div>

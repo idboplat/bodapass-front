@@ -8,7 +8,7 @@ import { addDays, addMonths, addWeeks } from "date-fns";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
-import CreateCoinModal from "./CreateCoinlModal";
+import CreCoinModal from "./CreCoinlModal";
 
 export default function Nav() {
   const date = useCoinStore((state) => state.date);
@@ -17,7 +17,7 @@ export default function Nav() {
   const modalAction = useSetModalStore();
 
   const openModal = () => {
-    modalAction.push(CreateCoinModal);
+    modalAction.push(CreCoinModal);
   };
 
   const onChange = (date: [DateType, DateType]) => {

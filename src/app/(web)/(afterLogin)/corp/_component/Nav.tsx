@@ -8,7 +8,7 @@ import { addDays, addMonths, addWeeks } from "date-fns";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
-import CreateCorpModal from "./CreateCorpModal";
+import CreCorpModal from "./CreCorpModal";
 import { useState } from "react";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
@@ -23,7 +23,7 @@ export default function Nav() {
   const modalAction = useSetModalStore();
 
   const openModal = () => {
-    modalAction.push(CreateCorpModal);
+    modalAction.push(CreCorpModal);
   };
 
   const onChange = (date: [DateType, DateType]) => {

@@ -2,13 +2,13 @@
 import { defaultBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { Session } from "next-auth";
-import CreateCorpModal from "./corp/_component/CreateCorpModal";
+import CreCorpModal from "./corp/_component/CreCorpModal";
 
 export default function Client() {
   const action = useSetModalStore();
 
   const onClick = () => {
-    action.push(CreateCorpModal);
+    action.push(CreCorpModal);
   };
 
   return (

@@ -6,7 +6,7 @@ import { useSetModalStore } from "@/app/_lib/modalStore";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import RangePicker from "@web/(afterLogin)/_component/datepicker/RangePicker";
 import { useEmplStore, useSetEmplStore } from "../_lib/store";
-import CreateEmplModal from "./CreateEmplModal";
+import CreEmplModal from "./CreEmplModal";
 import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 
 export default function Nav() {
@@ -19,7 +19,7 @@ export default function Nav() {
   const modalAction = useSetModalStore();
 
   const openModal = () => {
-    modalAction.push(CreateEmplModal);
+    modalAction.push(CreEmplModal);
   };
 
   const onDateChange = (date: [DateType, DateType]) => {

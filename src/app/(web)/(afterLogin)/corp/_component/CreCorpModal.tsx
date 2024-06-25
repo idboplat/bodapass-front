@@ -8,14 +8,14 @@ import { ModalProps } from "@/app/_lib/modalStore";
 import { CORP_GRP, CORP_GRP_TP } from "@/type/common";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { inputBox, label } from "./createCorpModal.css";
+import { inputBox, label } from "./creCorpModal.css";
 import callTms from "@/model/callTms";
 import { TBW_000000_P01 } from "@/type/api";
 import { Session } from "next-auth";
 
-const ID = "createCorpModal";
+const ID = "creCorpModal";
 
-enum CreateCorpInput {
+enum CreCorpInput {
   corpGrpTp = ID + "Type",
   corpNm = ID + "CorpNm",
   mastCorpCd = ID + "MastCorpCd",
@@ -23,15 +23,16 @@ enum CreateCorpInput {
 }
 
 type corpGrpType = "G1" | "G2" | "G3" | "G4";
-interface CreateCorpModalProps {
+
+interface CreCorpModalProps {
   session: Session;
 }
 
-export default function CreateCorpModal({
+export default function CreCorpModal({
   onClose,
   onSuccess,
   session,
-}: ModalProps<CreateCorpModalProps>) {
+}: ModalProps<CreCorpModalProps>) {
   const [corpGrpTp, setCorpGrpTp] = useState<corpGrpType | null>(null);
   const [corpNm, setCorpNm] = useState("");
   const [mastCorpCd, setMastCorpCd] = useState("");
@@ -80,10 +81,10 @@ export default function CreateCorpModal({
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     switch (id) {
-      case CreateCorpInput.corpNm:
+      case CreCorpInput.corpNm:
         setCorpNm(() => value);
         break;
-      case CreateCorpInput.mastCorpCd:
+      case CreCorpInput.mastCorpCd:
         setMastCorpCd(() => value);
         break;
     }
@@ -111,11 +112,11 @@ export default function CreateCorpModal({
             />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.corpNm}>
+            <label className={label} htmlFor={CreCorpInput.corpNm}>
               회사명
             </label>
             <DefaultInput
-              id={CreateCorpInput.corpNm}
+              id={CreCorpInput.corpNm}
               value={corpNm}
               onChange={onChangeInput}
               onReset={() => setCorpNm("")}
@@ -123,22 +124,22 @@ export default function CreateCorpModal({
           </div>
 
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.mastCorpCd}>
+            <label className={label} htmlFor={CreCorpInput.mastCorpCd}>
               주 회사 코드
             </label>
             <DefaultInput
               value={mastCorpCd}
-              id={CreateCorpInput.mastCorpCd}
+              id={CreCorpInput.mastCorpCd}
               onChange={onChangeInput}
               onReset={() => setMastCorpCd("")}
             />
           </div>
           <div className={inputBox}>
-            <label className={label} htmlFor={CreateCorpInput.pw}>
+            <label className={label} htmlFor={CreCorpInput.pw}>
               Main 관리자 비밀번호
             </label>
             <DefaultInput
-              id={CreateCorpInput.pw}
+              id={CreCorpInput.pw}
               onChange={onChangeInput}
               type={pwCheck ? "text" : "password"}
             />
