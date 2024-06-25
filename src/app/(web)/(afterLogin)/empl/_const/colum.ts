@@ -1,7 +1,7 @@
 import { ColDef } from "ag-grid-community";
 
 export type RowData = {
-  사원코드: string;
+  사원ID: string;
   사원명: string;
   회사코드: string;
   회사명: string;
@@ -13,7 +13,7 @@ export type RowData = {
 
 export const GRID_COLS: ColDef[] = [
   {
-    field: "사원코드",
+    field: "사원ID",
     width: 160,
     resizable: true,
     editable: true,

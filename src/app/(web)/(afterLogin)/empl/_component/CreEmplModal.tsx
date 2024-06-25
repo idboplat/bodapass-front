@@ -11,6 +11,7 @@ import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { TBW_000001_P01 } from "@/type/api";
+import { useSetEmplStore } from "../_lib/store";
 
 const ID = "creEmplModal";
 
@@ -31,14 +32,16 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const [pw, setPw] = useState("");
   const [pwCheck, setPwCheck] = useState("");
   const isPwCheck = pw === pwCheck;
+  const actions = useSetEmplStore();
 
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
     mutationFn: async () => {
+      console.log("mutationFn");
       const TBW_000010_P01Res = await callTms<TBW_000001_P01>({
         session,
         svcId: "TBW_000010_P01",
-        data: [session.user.corpCd, extnUserId.trim(), emplName.trim(), pw],
+        data: [session.user.corpCd, extnUserId.trim(), emplName.trim(), pw.trim()],
       });
       const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
       if (TBW_000010_P01Data === null) {
@@ -47,6 +50,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
     },
     onSuccess: () => {
       toast.success("사원이 등록되었습니다.");
+      actions.reset();
       onClose();
     },
   });

@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <div className={wrap}>
       <div className={title}>200200 사원관리</div>
-      <Nav />
+      <Nav session={session} />
       <Table session={session} />
     </div>
   );
