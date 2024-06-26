@@ -14,7 +14,7 @@ export const modalDefaultBtn = style([
       backgroundColor: global.blueHover,
     },
     ":disabled": {
-      background: global.blueDisabled,
+      background: "#B0B0B0",
       cursor: "default",
     },
   },
