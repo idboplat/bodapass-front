@@ -1,7 +1,7 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { MVIO_RMRK_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
+import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
 import DatePicker, { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { useState } from "react";
 import { useSetTransactionStore } from "../_lib/store";
@@ -19,7 +19,7 @@ export default function Form() {
     e.preventDefault();
 
     actions.setState({
-      mvioTp: mvioTp === "입고" ? "I" : "O",
+      mvioTp: findEntity(MVIO_TP_ITEM, mvioTp)?.[0] || "",
       mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
       rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
       instCd,
