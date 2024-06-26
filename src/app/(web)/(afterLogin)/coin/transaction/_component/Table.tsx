@@ -11,7 +11,7 @@ import { GRID_COLS, RowData } from "../_const/colum";
 import { useTransactionStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
-import { getMvioRmrkTp, getMvioTp } from "@/app/_const/tp";
+import { convertMvioRmrkTp, converMvioTp } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 
 interface TableProps {
@@ -21,7 +21,7 @@ interface TableProps {
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState(() => {
     const cols = [...GRID_COLS];
-    cols[9].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
+    cols[7].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
       const { data, rowIndex } = node;
       const isRender = data && rowIndex !== null;
       return isRender ? <ReqStatus index={rowIndex} data={data} /> : null;
@@ -57,8 +57,8 @@ export default function Table({ session }: TableProps) {
         "입출고 일련번호": item.F03,
         "계좌 번호": item.F04,
         "종목 코드": item.F05,
-        "입출고 구분": getMvioTp(item.F06),
-        "입출고 적요 구분": getMvioRmrkTp(item.F07),
+        "입출고 구분": converMvioTp(item.F06),
+        "입출고 적요 구분": convertMvioRmrkTp(item.F07),
         "입출고 수량": item.F08,
         "잔고 수량": item.F09,
         "신청 상태 구분": item.F10,
