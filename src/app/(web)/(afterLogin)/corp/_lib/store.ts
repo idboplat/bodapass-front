@@ -1,4 +1,3 @@
-import { CORP_GRP_TP } from "@/type/common";
 import { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
@@ -6,14 +5,14 @@ import { create, useStore } from "zustand";
 type CorpState = {
   date: [DateType, DateType];
   corpNm: string;
-  corpGrpTp: CORP_GRP_TP | null;
+  corpGrpTp: string | null;
   nonce: number;
   resetTime: string;
 };
 
 type CorpActions = {
   actions: {
-    setState: (corpNm: string, corpGrpTp: CORP_GRP_TP) => void;
+    setState: (corpNm: string, corpGrpTp: string) => void;
     reset: () => void;
     refreshPage: () => void;
   };

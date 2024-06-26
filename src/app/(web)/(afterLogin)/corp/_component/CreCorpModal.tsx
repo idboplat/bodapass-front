@@ -73,7 +73,7 @@ export default function CreCorpModal({
     }
   };
 
-  const getCorpGrpTpItems = (corpGrpTp: CORP_GRP_TP) => {
+  const getCorpGrpTpItems = (corpGrpTp: string) => {
     switch (corpGrpTp) {
       case "G1":
         return ["G2", "G4"];

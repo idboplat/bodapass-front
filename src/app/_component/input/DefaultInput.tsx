@@ -46,7 +46,7 @@ export default function DefaultInput({
         required={required}
         ref={inputRef}
       />
-      {!!onReset && disabled === false && <ResetButton isShow={value !== ""} onClick={onReset} />}
+      {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}
     </div>
   );
