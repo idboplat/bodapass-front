@@ -20,24 +20,19 @@ export const RGST_STAT_ITEM: Entity = [
   ["APL", "완료"],
 ];
 
+export const MVIO_TP_ITEM: Entity = [
+  ["I", "입고"],
+  ["O", "출고"],
+];
+
 export const findEntity = (entity: Entity, value: string) => {
   return entity.find(([tp, text]) => tp === value || text === value);
 };
 
-export const getMvioTp = (value: string) => {
-  if (value === "I") {
-    return "입고";
-  } else {
-    return "출고";
-  }
+export const converMvioTp = (value: string) => {
+  return Object.fromEntries(MVIO_TP_ITEM)[value] || value;
 };
 
-export const getMvioRmrkTp = (value: string) => {
-  if (value === "1") {
-    return "매매손익";
-  } else if (value === "2") {
-    return "매매 수수료";
-  } else if (value === "3") {
-    return "입출고";
-  }
+export const convertMvioRmrkTp = (value: string) => {
+  return Object.fromEntries(MVIO_RMRK_ITEM)[value] || value;
 };
