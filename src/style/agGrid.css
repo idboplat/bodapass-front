@@ -1115,7 +1115,7 @@
   --ag-tab-min-width: 220px;
   --ag-menu-min-width: 181px;
   --ag-side-bar-panel-width: 200px;
-  --ag-font-family: "Helvetica Neue", sans-serif;
+  --ag-font-family: inherit;
   --ag-font-size: 14px;
   --ag-card-radius: var(--ag-border-radius);
   --ag-card-shadow: none;
@@ -8897,8 +8897,7 @@ input[class^="ag-"][type="range"]:disabled {
   --ag-widget-vertical-spacing: calc(var(--ag-grid-size) * 1.5);
   --ag-toggle-button-height: 18px;
   --ag-toggle-button-width: 28px;
-  --ag-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
-    Cantarell, "Helvetica Neue", sans-serif;
+  --ag-font-family: inherit;
   --ag-font-size: 13px;
   --ag-icon-font-family: agGridAlpine;
   --ag-selected-tab-underline-color: var(--ag-alpine-active-color);
@@ -8983,7 +8982,7 @@ input[class^="ag-"][type="range"]:disabled {
 .ag-theme-alpine-auto-dark .ag-header-row,
 .ag-theme-alpine-auto-dark .ag-panel-title-bar-title,
 .ag-theme-alpine-auto-dark .ag-multi-filter-group-title-bar {
-  font-weight: 700;
+  font-weight: 500;
   color: var(--ag-header-foreground-color);
 }
 .ag-theme-alpine .ag-row,
@@ -9494,7 +9493,7 @@ input[class^="ag-"][type="range"]:disabled {
 }
 
 .ag-root-wrapper {
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .ag-header,
