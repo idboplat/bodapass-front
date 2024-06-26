@@ -1,13 +1,13 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { CORP_GRP_ENTRY, CORP_GRP_KEY, CORP_GRP_VALUE } from "@/app/_const/tp";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { ChangeEvent, useState } from "react";
 import { useSetCorpStore } from "../_lib/store";
 import CreCorpModal from "./CreCorpModal";
 import { btnWrap, inputWrap, navWrap } from "./nav.css";
 import { Session } from "next-auth";
+import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 
 enum CorpNavForm {
   corpNm = "corpNm",
@@ -54,9 +54,8 @@ export default function Form({ session }: FormProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const idx = CORP_GRP_ENTRY.findIndex((item) => item[1] === corpGrpValue);
-    //idx가 없으면 ""로 설정
-    actions.setState(corpNm, CORP_GRP_KEY?.[idx] || "");
+    const item = findEntity(CORP_GRP_ITEM, corpGrpValue);
+    actions.setState(corpNm, item?.[0] || "");
   };
 
   const today = new Date();
@@ -71,17 +70,20 @@ export default function Form({ session }: FormProps) {
             id={CorpNavForm.corpNm}
             onChange={onChange}
             onReset={() => setCorpNm("")}
+            style={{
+              width: 160,
+            }}
           />
         </div>
         <div>
           <TextSelect
             value={corpGrpValue}
             onChange={onChangeSelect}
-            items={["*", ...CORP_GRP_VALUE]}
+            items={["*", "메인거래소", "중개사(G2)", "중개사(G3)", "거래소"]}
             placeholder="회사유형"
             style={{
               height: 35.6,
-              width: 120,
+              width: 160,
             }}
           />
         </div>

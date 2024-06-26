@@ -1,14 +1,11 @@
-import DateBtn from "@/app/_component/btn/DateBtn";
-import { navWrap, historyFilterwrap, btnWrap, inputWrap, datePickerWrap } from "./nav.css";
-import { useTransactionStore, useSetTransactionStore } from "../_lib/store";
-import RangePicker from "@web/(afterLogin)/_component/datepicker/RangePicker";
-import { addDays, addMonths, addWeeks, format, set } from "date-fns";
-import DatePicker, { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
-import { useState } from "react";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { dateToString } from "@/app/_lib/dateFormatter";
+import { MVIO_RMRK_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
+import DatePicker, { DateType } from "@web/(afterLogin)/_component/datepicker/DatePicker";
+import { useState } from "react";
+import { useSetTransactionStore } from "../_lib/store";
+import { datePickerWrap, inputWrap, navWrap } from "./nav.css";
 
 export default function Form() {
   const [mvioDd, setMvioDd] = useState<DateType>(null);
@@ -21,33 +18,13 @@ export default function Form() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newState = {
+    actions.setState({
       mvioTp: mvioTp === "입고" ? "I" : "O",
-      mvioRmrkTp: "",
-      rqstStatTp: "",
+      mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
+      rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
       instCd,
       mvioDd,
-    };
-
-    if (mvioRmrkTp === "매매손익") {
-      newState.mvioRmrkTp = "1";
-    } else if (mvioRmrkTp === "매매 수수료") {
-      newState.mvioRmrkTp = "2";
-    } else if (mvioRmrkTp === "입출고") {
-      newState.mvioRmrkTp = "3";
-    }
-
-    if (rqstStatTp === "접수") {
-      newState.rqstStatTp = "REQ";
-    } else if (rqstStatTp === "취소") {
-      newState.rqstStatTp = "CAN";
-    } else if (rqstStatTp === "거부") {
-      newState.rqstStatTp = "REJ";
-    } else if (rqstStatTp === "완료") {
-      newState.rqstStatTp = "APL";
-    }
-
-    actions.setState(newState);
+    });
   };
 
   const onChangeDatePicker = (date: DateType) => {
@@ -81,7 +58,7 @@ export default function Form() {
             placeholder="입출고 구분"
             style={{
               height: 35.6,
-              width: 100,
+              width: 120,
             }}
           />
         </div>
@@ -105,7 +82,7 @@ export default function Form() {
             placeholder="신청 상태 구분"
             style={{
               height: 35.6,
-              width: 150,
+              width: 120,
             }}
           />
         </div>
