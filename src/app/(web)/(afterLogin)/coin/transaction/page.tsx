@@ -10,7 +10,7 @@ export default async function Page() {
   if (!session) return redirect("/login");
   return (
     <div className={wrap}>
-      <div className={title}>200400 코인거래내역</div>
+      <div className={title}>200400 코인입출금내역</div>
       <Nav />
       <Table session={session} />
     </div>
