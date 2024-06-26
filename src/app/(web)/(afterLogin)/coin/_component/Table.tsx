@@ -32,11 +32,11 @@ export default function Table({ session }: { session: Session }) {
     select: (data) => {
       const result = data.map((item) => ({
         회사코드: item.F01,
-        "입출고 일자": stringToDate(item.F02),
-        "입출고 일련번호": item.F03,
+        "발행 일자": stringToDate(item.F02),
+        "발행 일련번호": item.F03,
         "종목 코드": item.F04,
         // "입출고 구분": convertText(MVIO_TP_ITEM, item.F05),
-        "입출고 수량": item.F06,
+        "발행 수량": item.F06,
         "생성 작업 ID": item.F07,
         "생성 작업 일시": item.F08,
         "변경 작업 ID": item.F09,

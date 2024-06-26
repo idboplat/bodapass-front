@@ -9,13 +9,13 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "입출고 일자",
+    field: "발행 일자",
     width: 100,
     resizable: true,
     editable: true,
   },
   {
-    field: "입출고 일련번호",
+    field: "발행 일련번호",
     width: 120,
     resizable: true,
     editable: true,
@@ -33,7 +33,7 @@ export const GRID_COLS: ColDef[] = [
   //   editable: true,
   // },
   {
-    field: "입출고 수량",
+    field: "발행 수량",
     width: 180,
     resizable: true,
     editable: true,
