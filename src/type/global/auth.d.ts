@@ -11,6 +11,7 @@ declare module "next-auth" {
     sessionKey: string;
     errorMsg?: string;
     corpCd: string;
+    corpGrpTp: string;
   }
 
   interface Session {
@@ -20,6 +21,7 @@ declare module "next-auth" {
       sessionKey: string;
       errorMsg?: string;
       corpCd: string;
+      corpGrpTp: string;
     };
   }
 }
@@ -32,6 +34,7 @@ declare module "next-auth/jwt" {
       sessionKey: string;
       errorMsg?: string;
       corpCd: string;
+      corpGrpTp: string;
     };
   }
 }

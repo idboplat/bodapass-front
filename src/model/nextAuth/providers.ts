@@ -18,13 +18,14 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
 
     console.log("TBW_000001_P01Data", TBW_000001_P01Data);
 
-    const { F01, F03, F04, F05 } = TBW_000001_P01Data[0];
+    const { F01, F03, F04, F05, F06 } = TBW_000001_P01Data[0];
     return {
       id: F01,
       sessionId: F03,
       sessionKey: F04,
       errorMsg: undefined,
       corpCd: F05,
+      corpGrpTp: F06,
     };
   } catch (error) {
     console.error("EmailLogin", error);
@@ -35,6 +36,7 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
       sessionKey: "",
       errorMsg: error instanceof Error ? error.message : "서비스 접근권한이 없습니다.",
       corpCd: "",
+      corpGrpTp: "",
     };
   }
 };

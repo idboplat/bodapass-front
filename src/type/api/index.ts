@@ -35,6 +35,7 @@ export type TBW_000001_P01 = RspnData<{
   F03: string;
   F04: string;
   F05: string;
+  F06: string;
 }>;
 
 /** 그룹 코드(사원)(공통) 로그아웃  */
