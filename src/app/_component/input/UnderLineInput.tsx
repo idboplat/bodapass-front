@@ -11,6 +11,7 @@ interface UnderLineInputProps {
   type?: "password" | "text";
   placeholder?: string;
   style?: React.CSSProperties;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 export default function UnderLineInput({
@@ -21,6 +22,7 @@ export default function UnderLineInput({
   type = "text",
   placeholder,
   style,
+  inputRef,
 }: UnderLineInputProps) {
   const [isShow, setShow] = useState(false);
 
@@ -35,6 +37,7 @@ export default function UnderLineInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        ref={inputRef}
       />
       {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}

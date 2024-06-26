@@ -1,17 +1,19 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import * as style from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
-import { ModalProps } from "@/app/_lib/modalStore";
+import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000010_P01 } from "@/type/api";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSetEmplStore } from "../_lib/store";
 import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
+import { input } from "@web/(beforeLogin)/login/_component/loginForm.css";
 
 const ID = "creEmplModal";
 
@@ -27,16 +29,17 @@ interface CreEmplModalProps {
 }
 
 export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplModalProps>) {
-  const [extnUserId, setExtnUserId] = useState("");
-  const [emplName, setEmplName] = useState("");
-  const [pw, setPw] = useState("");
-  const [pwCheck, setPwCheck] = useState("");
-  const isPwCheck = pw === pwCheck;
+  const pwRef = useRef<HTMLInputElement>(null);
+  const pwCheckRef = useRef<HTMLInputElement>(null);
+  const [validationPw, setValidationPw] = useState(true);
+
   const actions = useSetEmplStore();
+  const modalStore = useSetModalStore();
 
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
     mutationFn: async (data: string[]) => {
+      console.log("mutationFn");
       const TBW_000010_P01Res = await callTms<TBW_000010_P01>({
         session,
         svcId: "TBW_000010_P01",
@@ -53,36 +56,27 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
       onClose();
     },
   });
-  const handleSubmit = (e: any) => {
-    const emplName = e.target[CreEmplInput.emplName].value;
-    const extnUserId = e.target[CreEmplInput.extnUserId].value;
-    const pw = e.target[CreEmplInput.pw].value;
 
+  const checkPw = () => {
+    const pw = pwRef.current?.value;
+    const pwCheck = pwCheckRef.current?.value;
+
+    setValidationPw(() => pw === pwCheck);
+  };
+
+  const handleSubmit = async (e: any) => {
     try {
       e.preventDefault();
+      const emplName = e.target[CreEmplInput.emplName].value;
+      const extnUserId = e.target[CreEmplInput.extnUserId].value;
+      const pw = e.target[CreEmplInput.pw].value;
+
+      if (pw === "") throw new Error("비밀번호를 입력해주세요.");
       mutation.mutate([session.user.corpCd, extnUserId.trim(), emplName.trim(), pw]);
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        await modalStore.push(ErrorModal, { props: { error } });
       }
-    }
-  };
-
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    switch (id) {
-      case CreEmplInput.extnUserId:
-        setExtnUserId(() => value);
-        break;
-      case CreEmplInput.emplName:
-        setEmplName(() => value);
-        break;
-      case CreEmplInput.pw:
-        setPw(() => value);
-        break;
-      case CreEmplInput.pwCheck:
-        setPwCheck(() => value);
-        break;
     }
   };
 
@@ -98,35 +92,43 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             <label className={label} htmlFor={CreEmplInput.extnUserId}>
               사원 ID
             </label>
-            <DefaultInput id={CreEmplInput.extnUserId} onChange={onChangeInput} />
+            <DefaultInput id={CreEmplInput.extnUserId} />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.emplName}>
               신규 사원명
             </label>
-            <DefaultInput id={CreEmplInput.emplName} onChange={onChangeInput} />
+            <DefaultInput id={CreEmplInput.emplName} />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.pw}>
               신규 비밀번호
             </label>
-            <DefaultInput id={CreEmplInput.pw} onChange={onChangeInput} type={"password"} />
+            <DefaultInput
+              id={CreEmplInput.pw}
+              type={"password"}
+              inputRef={pwRef}
+              onChange={checkPw}
+            />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.pwCheck}>
               신규 비밀번호 확인
             </label>
-            <DefaultInput id={CreEmplInput.pwCheck} onChange={onChangeInput} type={"password"} />
-            <div className={pwCheckBox}>
-              {pw && !isPwCheck ? "비밀번호가 일치하지 않습니다." : ""}
-            </div>
+            <DefaultInput
+              id={CreEmplInput.pwCheck}
+              type={"password"}
+              inputRef={pwCheckRef}
+              onChange={checkPw}
+            />
+            <div className={pwCheckBox}>{!validationPw ? "비밀번호가 일치하지 않습니다." : ""}</div>
           </div>
         </div>
         <div className={style.modalBtnBox}>
           <button
             className={modalDefaultBtn}
             type="submit"
-            disabled={isPwCheck === false || mutation.isPending}
+            disabled={validationPw === false || mutation.isPending}
           >
             등록
           </button>

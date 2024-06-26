@@ -9,6 +9,7 @@ interface IconInputProps {
   leftSide?: React.ReactNode;
   rightSide?: React.ReactNode;
   style?: React.CSSProperties;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 export default function IcontInput({
@@ -20,6 +21,7 @@ export default function IcontInput({
   leftSide,
   rightSide,
   style,
+  inputRef,
 }: IconInputProps) {
   return (
     <div className={inputBox} style={style}>
@@ -31,6 +33,7 @@ export default function IcontInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        ref={inputRef}
       />
       {rightSide}
     </div>

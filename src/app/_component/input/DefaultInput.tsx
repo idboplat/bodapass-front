@@ -14,6 +14,7 @@ interface DefaultInputProps {
   style?: React.CSSProperties;
   disabled?: boolean;
   required?: boolean;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 export default function DefaultInput({
@@ -26,6 +27,7 @@ export default function DefaultInput({
   style,
   disabled,
   required,
+  inputRef,
 }: DefaultInputProps) {
   const [isShow, setShow] = useState(false);
 
@@ -42,6 +44,7 @@ export default function DefaultInput({
         placeholder={placeholder}
         disabled={disabled}
         required={required}
+        ref={inputRef}
       />
       {!!onReset && disabled === false && <ResetButton isShow={value !== ""} onClick={onReset} />}
       {type === "password" && <EyeToggleBtn value={isShow} onClick={toggleShow} />}

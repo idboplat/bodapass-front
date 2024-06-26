@@ -12,6 +12,7 @@ interface LabelInputProps {
   type?: "password" | "text";
   placeholder?: string;
   style?: React.CSSProperties;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
 export default function LabelInput({
@@ -23,6 +24,7 @@ export default function LabelInput({
   label,
   placeholder,
   style,
+  inputRef,
 }: LabelInputProps) {
   const [focus, setFocus] = useState(false);
 
@@ -41,6 +43,7 @@ export default function LabelInput({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        ref={inputRef}
       />
       {!!onReset && <ResetButton isShow={value !== ""} onClick={onReset} />}
     </div>

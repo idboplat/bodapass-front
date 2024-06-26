@@ -20,10 +20,8 @@ enum LoginInput {
 
 export default function LoginForm() {
   const router = useRouter();
-  const [_email, setEmail] = useState("");
-  const [_password, setPassword] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
+
   const modalStore = useSetModalStore();
   const store = useApp();
   const action = useStore(store, (store) => store.actions);
@@ -38,28 +36,10 @@ export default function LoginForm() {
       router.replace("/");
     },
     onError: async (error) => {
-      await modalStore.push(ErrorModal, {
-        props: {
-          error,
-        },
-      });
+      await modalStore.push(ErrorModal, { props: { error } });
       setIsLoading(() => false);
     },
   });
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const id = e.target.id;
-    const value = e.target.value;
-
-    switch (id) {
-      case LoginInput.email:
-        setEmail(() => value);
-        break;
-      case LoginInput.pw:
-        setPassword(() => value);
-        break;
-    }
-  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
