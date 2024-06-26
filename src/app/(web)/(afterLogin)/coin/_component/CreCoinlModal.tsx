@@ -89,7 +89,7 @@ export default function CreCoinModal({
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={style.modalHeader}>
-            <h3 className={style.modalTitle}>사원등록</h3>
+            <h3 className={style.modalTitle}>코인 추가발행</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.instCd}>
