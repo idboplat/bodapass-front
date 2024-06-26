@@ -9,6 +9,7 @@ import callTms from "@/model/callTms";
 import { TBW_000000_R01 } from "@/type/api";
 import { Session } from "next-auth";
 import { useCorpStore } from "../_lib/store";
+import { CORP_GRP_ITEM, convertText } from "@/app/_const/tp";
 
 interface TableProps {
   session: Session;
@@ -34,7 +35,7 @@ export default function Table({ session }: TableProps) {
       const result = data.map((item) => ({
         회사코드: item.F01,
         회사명: item.F02,
-        "회사 그룹 구분": item.F03,
+        "회사 그룹 구분": convertText(CORP_GRP_ITEM, item.F03),
         "주 회사코드": item.F04,
         "생성 작업 ID": item.F05,
         "생성 작업 일시": item.F06,

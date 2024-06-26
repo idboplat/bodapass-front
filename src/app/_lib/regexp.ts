@@ -102,7 +102,7 @@ export const addComma = (string: string) => {
   return parts.join(".");
 };
 
-/** YY-MM-DD HH:MM:SS 형식으로 변환 */
+/** YYYY-MM-DD HH:MM:SS 형식으로 변환 */
 export const stringToDateTime = (inputString: string) => {
   const formattedDate = `${inputString.slice(0, 4)}-${inputString.slice(4, 6)}-${inputString.slice(
     6,
@@ -111,7 +111,7 @@ export const stringToDateTime = (inputString: string) => {
   return formattedDate;
 };
 
-/** YY-MM-DD 형식으로 변환 */
+/** YYYY-MM-DD 형식으로 변환 */
 export const stringToDate = (inputString: string) => {
   const formattedDate = `${inputString.slice(0, 4)}-${inputString.slice(4, 6)}-${inputString.slice(
     6,

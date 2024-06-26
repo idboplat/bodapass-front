@@ -15,7 +15,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "회사 그룹 구분",
-    width: 100,
+    width: 120,
     resizable: true,
     editable: true,
   },

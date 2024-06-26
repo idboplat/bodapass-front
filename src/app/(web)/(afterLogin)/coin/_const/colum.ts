@@ -16,7 +16,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "입출고 일련번호",
-    width: 100,
+    width: 120,
     resizable: true,
     editable: true,
   },

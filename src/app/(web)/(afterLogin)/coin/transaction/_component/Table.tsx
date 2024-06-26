@@ -11,8 +11,9 @@ import { GRID_COLS, RowData } from "../_const/colum";
 import { useTransactionStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
-import { convertMvioRmrkTp, converMvioTp } from "@/app/_const/tp";
+import { convertText, MVIO_TP_ITEM, MVIO_RMRK_ITEM } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
+import { stringToDate } from "@/app/_lib/regexp";
 
 interface TableProps {
   session: Session;
@@ -53,12 +54,12 @@ export default function Table({ session }: TableProps) {
     select: (data) => {
       const result = data.map((item) => ({
         회사코드: item.F01,
-        "입출고 일자": item.F02,
+        "입출고 일자": stringToDate(item.F02),
         "입출고 일련번호": item.F03,
         "계좌 번호": item.F04,
         "종목 코드": item.F05,
-        "입출고 구분": converMvioTp(item.F06),
-        "입출고 적요 구분": convertMvioRmrkTp(item.F07),
+        "입출고 구분": convertText(MVIO_TP_ITEM, item.F06),
+        "입출고 적요 구분": convertText(MVIO_RMRK_ITEM, item.F07),
         "입출고 수량": item.F08,
         "잔고 수량": item.F09,
         "신청 상태 구분": item.F10,
