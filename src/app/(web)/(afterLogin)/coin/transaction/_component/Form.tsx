@@ -36,10 +36,6 @@ export default function Form() {
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>
-        <div className={datePickerWrap}>
-          <label>입출고 일자</label>
-          <DatePicker startDate={mvioDd} onChange={onChangeDatePicker} />
-        </div>
         <div>
           <LabelInput
             label="종목코드"
@@ -85,6 +81,9 @@ export default function Form() {
               width: 120,
             }}
           />
+        </div>
+        <div className={datePickerWrap}>
+          <DatePicker startDate={mvioDd} onChange={onChangeDatePicker} />
         </div>
       </div>
       <div>

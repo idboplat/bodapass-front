@@ -22,7 +22,7 @@ export default function DatePicker({ startDate, onChange }: DatePickerProps) {
         isClearable
         locale={ko}
         autoComplete="off" // input에 자동완성 기능을 끄는 속성
-        placeholderText="YYYY-MM-DD"
+        placeholderText="입출고일자"
       />
     </div>
   );
