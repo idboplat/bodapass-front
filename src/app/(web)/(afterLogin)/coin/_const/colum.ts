@@ -26,12 +26,12 @@ export const GRID_COLS: ColDef[] = [
     resizable: true,
     editable: true,
   },
-  {
-    field: "입출고 구분",
-    width: 100,
-    resizable: true,
-    editable: true,
-  },
+  // {
+  //   field: "입출고 구분",
+  //   width: 100,
+  //   resizable: true,
+  //   editable: true,
+  // },
   {
     field: "입출고 수량",
     width: 180,

@@ -53,7 +53,7 @@ export default function Form({ session }: FormProps) {
   const today = new Date();
   return (
     <form className={navWrap} onSubmit={onSubmit}>
-      <div className={inputWrap}>
+      {/* <div className={inputWrap}>
         <div>
           <TextSelect
             value={mvioTp}
@@ -66,7 +66,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-      </div>
+      </div> */}
       {/* <div className={historyFilterwrap}>
         <div className={btnWrap}>
           <DateBtn onClick={() => onDateBtnClick(addDays(today, -1), today)}>1D</DateBtn>

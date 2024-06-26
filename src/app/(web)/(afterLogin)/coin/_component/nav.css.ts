@@ -13,6 +13,7 @@ export const historyFilterwrap = style({
 });
 
 export const btnWrap = style({
+  marginLeft: "auto",
   display: "flex",
   gap: 10,
 });
