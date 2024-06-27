@@ -3,8 +3,8 @@ import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type emplState = {
-  corpCode: string;
   emplId: string;
+  extnUserId: string;
   emplName: string;
   date: [DateType, DateType];
   resetTime: string;
@@ -13,15 +13,20 @@ type emplState = {
 
 type emplActions = {
   actions: {
-    setState: (id: string, name: string, date: [DateType, DateType]) => void;
+    setState: (
+      emplId: string,
+      extnUserId: string,
+      emplName: string,
+      date: [DateType, DateType],
+    ) => void;
     refreshPage: () => void;
     reset: () => void;
   };
 };
 
 const initState: emplState = {
-  corpCode: "",
   emplId: "",
+  extnUserId: "",
   emplName: "",
   date: [null, null],
   resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
@@ -31,9 +36,10 @@ const initState: emplState = {
 export const useEmplStore = create<emplState & emplActions>()((set) => ({
   ...initState,
   actions: {
-    setState: (emplId, emplName, date) => {
+    setState: (emplId, extnUserId, emplName, date) => {
       set((state) => ({
         emplId,
+        extnUserId,
         emplName,
         date,
         nonce: state.nonce + 1,
