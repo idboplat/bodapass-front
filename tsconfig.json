@@ -18,6 +18,12 @@
       }
     ],
     "paths": {
+      "@balance/*": ["./src/app/(web)/(afterLogin)/_component/balance/*"],
+      "@log/*": ["./src/app/(web)/(afterLogin)/_component/log/*"],
+      "@management/*": ["./src/app/(web)/(afterLogin)/_component/management/*"],
+      "@order/*": ["./src/app/(web)/(afterLogin)/_component/order/*"],
+      "@status/*": ["./src/app/(web)/(afterLogin)/_component/status/*"],
+      "@user/*": ["./src/app/(web)/(afterLogin)/_component/user/*"],
       "@web/*": ["./src/app/(web)/*"],
       "@api/*": ["./src/app/api/*"],
       "@/*": ["./src/*"],

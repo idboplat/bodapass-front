@@ -6,5 +6,5 @@ export default async function Page() {
 
   if (!session) return redirect("/login");
 
-  redirect("/corp");
+  redirect("/G1/100101");
 }
