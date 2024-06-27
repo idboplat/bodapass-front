@@ -16,8 +16,8 @@ export default function SidebarMenuList() {
         <div>asdasdad</div>
         <div>asdasdad</div>
       </Accordion> */}
-      <SidebarMenuItem svg={"200100"} text="회사관리" href="/corp" />
-      <SidebarMenuItem svg={"200200"} text="사원관리" href="/empl" />
+      <SidebarMenuItem svg={"100101"} text="회사관리" href="/corp" />
+      <SidebarMenuItem svg={"100202"} text="관리자 관리" href="/empl" />
       <SidebarMenuItem svg={"200300"} text="코인관리(발행)" href="/coin" />
       <SidebarMenuItem svg={"200400"} text="코인입출금내역" href="/coin/transaction" />
       {/* <li>3xxxx 중개사 화면 </li>

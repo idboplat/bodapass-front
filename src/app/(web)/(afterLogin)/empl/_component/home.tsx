@@ -10,7 +10,7 @@ export default async function Home() {
   if (!session) return redirect("/login");
   return (
     <div className={wrap}>
-      <div className={title}>200200 사원관리</div>
+      <div className={title}>100202 관리자 관리</div>
       <Nav session={session} />
       <Table session={session} />
     </div>
