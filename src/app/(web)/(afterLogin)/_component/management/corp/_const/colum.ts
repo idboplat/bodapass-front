@@ -2,49 +2,39 @@ import { ColDef } from "ag-grid-community";
 
 export const GRID_COLS: ColDef[] = [
   {
-    field: "회사코드",
+    field: "회사 코드",
     width: 100,
     resizable: true,
     editable: true,
   },
   {
-    field: "회사명",
+    field: "회사 명",
     width: 100,
     resizable: true,
     editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
-    field: "회사 그룹 구분",
+    field: "회사 유형",
     width: 120,
     resizable: true,
     editable: true,
   },
   {
-    field: "주 회사코드",
+    field: "상위 회사 코드",
     width: 100,
     resizable: true,
     editable: true,
   },
   {
-    field: "생성 작업 ID",
+    field: "생성자",
     width: 180,
     resizable: true,
     editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
-    field: "생성 작업 일시",
-    width: 220,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "변경 작업 ID",
-    width: 180,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "변경 작업 일시",
+    field: "생성 일시",
     width: 220,
     resizable: true,
     editable: true,

@@ -65,7 +65,7 @@ export default function Form({ session }: FormProps) {
       <div className={inputWrap}>
         <div>
           <LabelInput
-            label="회사명"
+            label="회사 명"
             value={corpNm}
             id={CorpNavForm.corpNm}
             onChange={onChange}
@@ -80,10 +80,10 @@ export default function Form({ session }: FormProps) {
             value={corpGrpValue}
             onChange={onChangeSelect}
             items={["*", "메인거래소", "중개사(G2)", "중개사(G3)", "거래소"]}
-            placeholder="회사유형"
+            placeholder="회사 유형"
             style={{
-              height: 35.6,
-              width: 160,
+              height: 36,
+              width: 100,
             }}
           />
         </div>
@@ -102,7 +102,7 @@ export default function Form({ session }: FormProps) {
       </div> */}
       <div className={btnWrap}>
         <button type="button" className={navBtn} onClick={openModal}>
-          회사 등록
+          회사 생성
         </button>
         <button type="submit" className={navBtn}>
           조회
