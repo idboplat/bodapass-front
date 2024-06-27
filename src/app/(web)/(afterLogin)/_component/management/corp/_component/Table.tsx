@@ -10,6 +10,7 @@ import { TBW_000000_R01 } from "@/type/api";
 import { Session } from "next-auth";
 import { useCorpStore } from "../_lib/store";
 import { CORP_GRP_ITEM, convertText } from "@/app/_const/tp";
+import { convertToStandardDateTime } from "@/app/_lib/regexp";
 
 interface TableProps {
   session: Session;
@@ -33,14 +34,12 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        회사코드: item.F01,
-        회사명: item.F02,
-        "회사 그룹 구분": convertText(CORP_GRP_ITEM, item.F03),
-        "주 회사코드": item.F04,
-        "생성 작업 ID": item.F05,
-        "생성 작업 일시": item.F06,
-        "변경 작업 ID": item.F07,
-        "변경 작업 일시": item.F08,
+        "회사 코드": item.F01,
+        "회사 명": item.F02,
+        "회사 유형": convertText(CORP_GRP_ITEM, item.F03),
+        "상위 회사 코드": item.F04,
+        생성자: item.F05,
+        "생성 일시": convertToStandardDateTime(item.F06),
       }));
       return result;
     },
