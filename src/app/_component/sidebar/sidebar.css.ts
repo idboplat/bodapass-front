@@ -41,7 +41,6 @@ export const sidebar = style([
 
 export const menuItem = style({
   borderRadius: 2,
-  backgroundColor: "transparent",
   transition: "color 0.2s ease",
   color: "#5E5E5E",
   selectors: {
@@ -51,7 +50,7 @@ export const menuItem = style({
     "&.active ": {
       fontWeight: 500,
       color: "#1C1C1C",
-      backgroundColor: "#ffffff",
+      backgroundColor: "#f9f9f9",
     },
   },
 });

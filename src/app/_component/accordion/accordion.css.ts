@@ -5,15 +5,23 @@ export const accordion = style({});
 export const titleBox = style({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   padding: "6px 10px",
   cursor: "pointer",
-  backgroundColor: "#E7E7E5",
+  transition: "background-color 0.2s linear",
+  selectors: {
+    "&.show": {
+      backgroundColor: "#E7E7E5",
+    },
+  },
 });
 
-export const title = style({});
+export const title = style({
+  fontWeight: 500,
+});
 
 export const icon = style({
-  transition: "transform 0.2s ease",
+  transition: "transform 0.2s linear",
   transform: "rotateX(0deg)",
   selectors: {
     "&.show": {
@@ -24,7 +32,7 @@ export const icon = style({
 
 export const content = style({
   maxHeight: 0,
-  transition: "max-height 0.2s ease",
+  transition: "max-height 0.2s linear",
   overflow: "hidden",
 
   selectors: {

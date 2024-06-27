@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { IoIosArrowDown } from "react-icons/io";
+import { SlArrowDown } from "react-icons/sl";
 import * as css from "./accordion.css";
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -17,9 +17,14 @@ export default function Accordion({ isShow, onClick, title, children, style }: A
 
   return (
     <div className={css.accordion} style={style}>
-      <div ref={ref} className={css.titleBox} onClick={onClick} tabIndex={0}>
+      <div
+        ref={ref}
+        className={classNames(css.titleBox, isShow && "show")}
+        onClick={onClick}
+        tabIndex={0}
+      >
         <span className={css.title}>{title}</span>
-        <IoIosArrowDown className={classNames(css.icon, isShow && "show")} size={20} />
+        <SlArrowDown className={classNames(css.icon, isShow && "show")} size={10} />
       </div>
       <div className={classNames(css.content, isShow && "show")}>{children}</div>
     </div>
