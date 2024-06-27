@@ -21,7 +21,7 @@ export default function RangePicker({ date, onChange }: RangePickerProps) {
         onChange={onChange}
         placeholderText="시작일자 ~ 종료일자"
         selectsRange
-        dateFormat={"yyyy-MM-dd"}
+        dateFormat={"yyyy년 MM월 dd일 "}
         isClearable
         showIcon
         icon={<CalendarIcon />}

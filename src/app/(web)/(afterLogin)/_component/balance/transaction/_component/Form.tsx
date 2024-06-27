@@ -61,8 +61,9 @@ export default function Form() {
             items={["*", "입고", "출고"]}
             placeholder="입출 구분"
             style={{
-              height: 35.6,
-              width: 120,
+              height: 36,
+              width: 90,
+              textAlign: "center",
             }}
           />
         </div>
@@ -73,8 +74,9 @@ export default function Form() {
             items={["*", "매매손익", "매매 수수료", "입출고"]}
             placeholder="적요 구분"
             style={{
-              height: 35.6,
-              width: 120,
+              height: 36,
+              width: 90,
+              textAlign: "center",
             }}
           />
         </div>
@@ -85,8 +87,9 @@ export default function Form() {
             items={["*", "접수", "취소", "거부", "완료"]}
             placeholder="상태 구분"
             style={{
-              height: 35.6,
-              width: 120,
+              height: 36,
+              width: 90,
+              textAlign: "center",
             }}
           />
         </div>

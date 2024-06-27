@@ -20,7 +20,7 @@ export default function DatePicker({ style, startDate, onChange, placeholder }: 
         onChange={onChange}
         showIcon
         icon={<CalendarIcon />}
-        dateFormat={"yyyy-MM-dd"}
+        dateFormat={"yyyy년 MM월 dd일"}
         isClearable
         locale={ko}
         autoComplete="off" // input에 자동완성 기능을 끄는 속성

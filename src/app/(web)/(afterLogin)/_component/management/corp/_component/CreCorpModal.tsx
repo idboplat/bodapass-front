@@ -115,7 +115,7 @@ export default function CreCorpModal({
               items={getCorpGrpTpItems("G1")}
               placeholder="회사그룹 구분"
               style={{
-                height: 35.6,
+                height: 36,
               }}
             />
           </div>

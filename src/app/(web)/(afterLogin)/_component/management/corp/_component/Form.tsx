@@ -84,6 +84,7 @@ export default function Form({ session }: FormProps) {
             style={{
               height: 36,
               width: 100,
+              textAlign: "center",
             }}
           />
         </div>

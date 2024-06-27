@@ -61,7 +61,7 @@ export default function Form({ session }: FormProps) {
             items={["*", "입고", "출고"]}
             placeholder="입출고 구분"
             style={{
-              height: 35.6,
+              height: 36,
               width: 120,
             }}
           />
