@@ -8,11 +8,13 @@ export type DateType = Date | null;
 interface DatePickerProps {
   startDate: DateType;
   onChange: (newStartDate: DateType) => void;
+  placeholder?: string;
+  style?: React.CSSProperties;
 }
 
-export default function DatePicker({ startDate, onChange }: DatePickerProps) {
+export default function DatePicker({ style, startDate, onChange, placeholder }: DatePickerProps) {
   return (
-    <div className={datePickerWrap}>
+    <div className={datePickerWrap} style={style}>
       <ReactDatePicker
         selected={startDate}
         onChange={onChange}
@@ -22,7 +24,7 @@ export default function DatePicker({ startDate, onChange }: DatePickerProps) {
         isClearable
         locale={ko}
         autoComplete="off" // input에 자동완성 기능을 끄는 속성
-        placeholderText="입출고일자"
+        placeholderText={placeholder}
       />
     </div>
   );

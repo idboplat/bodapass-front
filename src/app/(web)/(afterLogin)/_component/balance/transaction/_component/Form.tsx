@@ -36,9 +36,17 @@ export default function Form() {
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>
+        <div className={datePickerWrap}>
+          <DatePicker
+            style={{ width: 216 }}
+            startDate={mvioDd}
+            onChange={onChangeDatePicker}
+            placeholder="일자"
+          />
+        </div>
         <div>
           <LabelInput
-            label="종목코드"
+            label="종목 코드"
             value={instCd}
             id="instCd"
             onChange={(e) => setInstCd(() => e.target.value)}
@@ -51,7 +59,7 @@ export default function Form() {
             value={mvioTp}
             onChange={(value: string) => setMvioTp(() => value)}
             items={["*", "입고", "출고"]}
-            placeholder="입출고 구분"
+            placeholder="입출 구분"
             style={{
               height: 35.6,
               width: 120,
@@ -63,7 +71,7 @@ export default function Form() {
             value={mvioRmrkTp}
             onChange={(value: string) => setMvioRmrkTp(() => value)}
             items={["*", "매매손익", "매매 수수료", "입출고"]}
-            placeholder="입출고 적요 구분"
+            placeholder="적요 구분"
             style={{
               height: 35.6,
               width: 120,
@@ -75,15 +83,12 @@ export default function Form() {
             value={rqstStatTp}
             onChange={(value: string) => setRqstStatTp(() => value)}
             items={["*", "접수", "취소", "거부", "완료"]}
-            placeholder="신청 상태 구분"
+            placeholder="상태 구분"
             style={{
               height: 35.6,
               width: 120,
             }}
           />
-        </div>
-        <div className={datePickerWrap}>
-          <DatePicker startDate={mvioDd} onChange={onChangeDatePicker} />
         </div>
       </div>
       <div>

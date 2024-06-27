@@ -3,7 +3,7 @@ import Nav from "./_component/Nav";
 import Table from "./_component/Table";
 import * as css from "./home.css";
 
-type TransactionHomeProps = {};
+interface TransactionHomeProps {}
 
 export default async function TransactionHome({ session, page }: HomeProps<TransactionHomeProps>) {
   const title = page.number + " " + page.title;

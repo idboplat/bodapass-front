@@ -41,7 +41,8 @@
 }
 
 .react-datepicker-popper {
-  z-index: 1;
+  /* 사이드바 보다 높게 설정 */
+  z-index: 501;
   line-height: 0;
 }
 .react-datepicker-popper .react-datepicker__triangle {
