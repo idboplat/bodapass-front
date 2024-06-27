@@ -102,7 +102,7 @@ export const addComma = (string: string) => {
   return parts.join(".");
 };
 
-/** YYYY-MM-DD HH:MM:SS 형식으로 변환 */
+/** 14글자 string -> YYYY-MM-DD HH:MM:SS 형식으로 변환 */
 export const stringToDateTime = (inputString: string) => {
   const formattedDate = `${inputString.slice(0, 4)}-${inputString.slice(4, 6)}-${inputString.slice(
     6,
@@ -118,4 +118,47 @@ export const stringToDate = (inputString: string) => {
     8,
   )}`;
   return formattedDate;
+};
+
+/** DD-MMM-YY HH.MM.SS.SSSSSS AM/PM -> YYYY-MM-DD HH:MM:SS 형식으로 변환 */
+/**ex) 27-JUN-24 04.12.45.283920 PM ->  2024-06-27 16:12:45 */
+export const convertToStandardDateTime = (dateString: string) => {
+  // 주어진 문자열에서 날짜와 시간을 분리합니다.
+  const [datePart, timePart, period] = dateString.split(" ");
+
+  // 날짜 부분을 분리하여 년, 월, 일로 나눕니다.
+  const [day, month, year] = datePart.split("-");
+  const monthMap: { [key: string]: string } = {
+    JAN: "01",
+    FEB: "02",
+    MAR: "03",
+    APR: "04",
+    MAY: "05",
+    JUN: "06",
+    JUL: "07",
+    AUG: "08",
+    SEP: "09",
+    OCT: "10",
+    NOV: "11",
+    DEC: "12",
+  };
+  const formattedMonth = monthMap[month];
+  const formattedDate = `20${year}-${formattedMonth}-${day}`;
+
+  // 시간 부분에서 밀리초를 제거하고 시, 분, 초로 나눕니다.
+  const [hours, minutes, seconds] = timePart.split(".");
+
+  // PM/AM을 처리하여 24시간 형식으로 변환합니다.
+  let formattedHours = parseInt(hours);
+  if (period === "PM" && formattedHours !== 12) {
+    formattedHours += 12;
+  } else if (period === "AM" && formattedHours === 12) {
+    formattedHours = 0;
+  }
+
+  // 2자리로 맞추기 위해 앞에 0을 추가합니다.
+  const formattedTime = `${formattedHours.toString().padStart(2, "0")}:${minutes}:${seconds}`;
+
+  // 최종 형식으로 변환된 문자열을 반환합니다.
+  return `${formattedDate} ${formattedTime}`;
 };
