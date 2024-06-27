@@ -3,7 +3,7 @@ import Nav from "./_component/Nav";
 import Table from "./_component/Table";
 import * as css from "./home.css";
 
-type DeployHomeProps = {};
+interface DeployHomeProps {}
 
 export default async function DeployHome({ session, page }: HomeProps<DeployHomeProps>) {
   const title = page.number + " " + page.title;

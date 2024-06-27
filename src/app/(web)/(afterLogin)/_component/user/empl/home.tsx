@@ -3,7 +3,7 @@ import Nav from "./_component/Nav";
 import Table from "./_component/Table";
 import * as css from "./home.css";
 
-type EmplHomeProps = {};
+interface EmplHomeProps {}
 
 export default async function EmplHome({ page, session }: HomeProps<EmplHomeProps>) {
   const title = page.number + " " + page.title;

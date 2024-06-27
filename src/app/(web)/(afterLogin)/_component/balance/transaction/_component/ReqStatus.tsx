@@ -26,13 +26,13 @@ export default function ReqStatus({ index, data }: ReqStatusProps) {
     });
   };
 
-  if (data["신청 상태 구분"] !== "REQ") {
-    return <span>{STATUS_TEXT[data["신청 상태 구분"]]}</span>;
+  if (data["상태 구분"] !== "REQ") {
+    return <span>{STATUS_TEXT[data["상태 구분"]]}</span>;
   }
 
   return (
     <button className={classNames(req)} onClick={onClick}>
-      {STATUS_TEXT[data["신청 상태 구분"]]}
+      {STATUS_TEXT[data["상태 구분"]]}
     </button>
   );
 }

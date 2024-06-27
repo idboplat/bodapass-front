@@ -13,7 +13,7 @@ import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
 import { convertText, MVIO_TP_ITEM, MVIO_RMRK_ITEM } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
-import { stringToDate } from "@/app/_lib/regexp";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 
 interface TableProps {
   session: Session;
@@ -22,7 +22,7 @@ interface TableProps {
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState(() => {
     const cols = [...GRID_COLS];
-    cols[7].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
+    cols[6].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
       const { data, rowIndex } = node;
       const isRender = data && rowIndex !== null;
       return isRender ? <ReqStatus index={rowIndex} data={data} /> : null;
@@ -53,20 +53,20 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        회사코드: item.F01,
-        "입출고 일자": stringToDate(item.F02),
-        "입출고 일련번호": item.F03,
-        "계좌 번호": item.F04,
+        "회사 코드": item.F01,
+        일자: stringToDate(item.F02),
+        일련번호: item.F03,
+        계좌번호: item.F04,
         "종목 코드": item.F05,
-        "입출고 구분": convertText(MVIO_TP_ITEM, item.F06),
-        "입출고 적요 구분": convertText(MVIO_RMRK_ITEM, item.F07),
-        "입출고 수량": item.F08,
+        "입출 구분": convertText(MVIO_TP_ITEM, item.F06),
+        "적요 구분": convertText(MVIO_RMRK_ITEM, item.F07),
+        수량: item.F08,
         "잔고 수량": item.F09,
-        "신청 상태 구분": item.F10,
-        "생성 작업 ID": item.F11,
-        "생성 작업 일시": item.F12,
-        "변경 작업 ID": item.F13,
-        "변경 작업 일시": item.F14,
+        "상태 구분": item.F10,
+        작업자: item.F11,
+        "생성 일시": convertToStandardDateTime(item.F12),
+        수정자: item.F13,
+        "수정 일시": convertToStandardDateTime(item.F14),
       }));
       return result;
     },

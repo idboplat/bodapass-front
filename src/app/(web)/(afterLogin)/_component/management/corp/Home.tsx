@@ -3,7 +3,7 @@ import Table from "./_component/Table";
 import * as css from "./home.css";
 import { HomeProps } from "@/type/common";
 
-type CorpHomeProps = {};
+interface CorpHomeProps {}
 
 export default async function CorpHome({ page, session }: HomeProps<CorpHomeProps>) {
   const title = page.number + " " + page.title;
