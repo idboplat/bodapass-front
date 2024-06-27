@@ -1,61 +1,57 @@
 import { ColDef } from "ag-grid-community";
 
 export type RowData = {
-  사원ID: string;
-  사원명: string;
-  회사코드: string;
-  회사명: string;
-  생성작업ID: string;
-  생성작업일시: string;
-  변경작업ID: string;
-  변경작업일시: string;
+  "관리자 코드": string;
+  "관리자 ID": string;
+  "관리자 명": string;
+  "회사 코드": string;
+  "회사 명": string;
+  생성자: string;
+  "생성 일시": string;
 };
 
 export const GRID_COLS: ColDef[] = [
   {
-    field: "사원ID",
-    width: 120,
+    field: "관리자 코드",
+    width: 140,
     resizable: true,
     editable: true,
   },
   {
-    field: "사원명",
+    field: "관리자 ID",
     width: 120,
     resizable: true,
     editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
-    field: "회사코드",
+    field: "관리자 명",
+    width: 120,
+    resizable: true,
+    editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
+  },
+  {
+    field: "회사 코드",
     width: 100,
     resizable: true,
     editable: true,
   },
   {
-    field: "회사명",
+    field: "회사 명",
     width: 100,
     resizable: true,
     editable: true,
   },
   {
-    field: "생성작업ID",
+    field: "생성자",
     width: 180,
     resizable: true,
     editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
-    field: "생성작업일시",
-    width: 220,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "변경작업ID",
-    width: 180,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "변경작업일시",
+    field: "생성 일시",
     width: 220,
     resizable: true,
     editable: true,

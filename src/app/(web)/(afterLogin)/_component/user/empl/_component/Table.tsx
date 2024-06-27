@@ -27,8 +27,8 @@ export default function Table({ session }: TableProps) {
         svcId: "TBW_000001_Q01",
         session,
         data: [
-          session.user.corpCd, //사원ID
-          emplStore.emplId, //입력 사원 ID
+          emplStore.emplId, //사원ID
+          emplStore.extnUserId, //입력 사원 ID
           emplStore.emplName, //입력 사원명
         ],
       });
@@ -37,14 +37,13 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map<RowData>((item) => ({
-        사원ID: item.F01,
-        사원명: item.F02,
-        회사코드: item.F03,
-        회사명: item.F04,
-        생성작업ID: item.F05,
-        생성작업일시: item.F06,
-        변경작업ID: item.F07,
-        변경작업일시: item.F08,
+        "관리자 코드": item.F01,
+        "관리자 ID": item.F02,
+        "관리자 명": item.F03,
+        "회사 코드": item.F04,
+        "회사 명": item.F05,
+        생성자: item.F06,
+        "생성 일시": item.F07,
       }));
       return result;
     },
