@@ -10,8 +10,7 @@ import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { TBW_000300_Q01 } from "@/type/api";
 import { useCoinStore } from "../_lib/store";
-import { MVIO_TP_ITEM, convertText } from "@/app/_const/tp";
-import { stringToDate } from "@/app/_lib/regexp";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 
 export default function Table({ session }: { session: Session }) {
   const [colDefs] = useState([...GRID_COLS]);
@@ -31,16 +30,15 @@ export default function Table({ session }: { session: Session }) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        회사코드: item.F01,
-        "발행 일자": stringToDate(item.F02),
-        "발행 일련번호": item.F03,
-        "종목 코드": item.F04,
-        // "입출고 구분": convertText(MVIO_TP_ITEM, item.F05),
-        "발행 수량": item.F06,
-        "생성 작업 ID": item.F07,
-        "생성 작업 일시": item.F08,
-        "변경 작업 ID": item.F09,
-        "변경 작업 일시": item.F10,
+        "회사 코드": item.F01,
+        일자: stringToDate(item.F02),
+        일련번호: item.F03,
+        종목: item.F04,
+        수량: item.F06,
+        작업자: item.F07,
+        "생성 일시": convertToStandardDateTime(item.F08),
+        수정자: item.F09,
+        "수정 일시": convertToStandardDateTime(item.F10),
       }));
       return result;
     },
