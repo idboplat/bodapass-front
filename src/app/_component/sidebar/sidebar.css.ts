@@ -42,15 +42,16 @@ export const sidebar = style([
 export const menuItem = style({
   borderRadius: 2,
   backgroundColor: "transparent",
-  transition: "background-color 0.2s ease",
-  color: "#242424",
+  transition: "color 0.2s ease",
+  color: "#5E5E5E",
   selectors: {
     "&:hover": {
-      backgroundColor: "#ebebe7",
+      color: "#1C1C1C",
     },
     "&.active ": {
-      fontWeight: 700,
-      backgroundColor: "#ebebe7",
+      fontWeight: 500,
+      color: "#1C1C1C",
+      backgroundColor: "#ffffff",
     },
   },
 });
@@ -60,11 +61,9 @@ globalStyle(`${menuItem} > a`, {
   alignItems: "center",
   padding: "6px 10px",
   gap: 6,
-  fontWeight: 400,
 });
 
 globalStyle(`${menuItem}.active > a`, {
-  fontWeight: 700,
   cursor: "default",
 });
 

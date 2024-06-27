@@ -1,14 +1,19 @@
 "use client";
 import { useApp } from "@/app/_lib/appStore";
+import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
 import classNames from "classnames";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useStore } from "zustand";
-import { layout } from "./sidebar.css";
 import SidebarLogoutBtn from "./SidebarLogoutBtn";
 import SidebarMenuList from "./SidebarMenuList";
-import { logoutBox, sidebar } from "./sidebar.css";
+import { layout, logoutBox, sidebar } from "./sidebar.css";
+import { Session } from "next-auth";
 
-export default function Sidebar() {
+interface SidebarProps {
+  pathList: ClientPath[];
+  session: Session;
+}
+export default function Sidebar({ pathList, session }: SidebarProps) {
   const store = useApp();
   const isSidebarToggle = useStore(store, (store) => store.sidebar);
   const actions = useStore(store, (store) => store.actions);
@@ -18,7 +23,7 @@ export default function Sidebar() {
   return (
     <div className={classNames(layout, isSidebarToggle && "show")}>
       <aside className={classNames(sidebar, isSidebarToggle && "show")}>
-        <SidebarMenuList />
+        <SidebarMenuList pathList={pathList} corpTp={session.user.corpGrpTp} />
         <div className={logoutBox}>
           <SidebarLogoutBtn />
         </div>

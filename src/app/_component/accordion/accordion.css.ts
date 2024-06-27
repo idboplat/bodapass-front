@@ -13,7 +13,7 @@ export const titleBox = style({
 export const title = style({});
 
 export const icon = style({
-  transition: "transform 0.5s ease",
+  transition: "transform 0.2s ease",
   transform: "rotateX(0deg)",
   selectors: {
     "&.show": {
@@ -24,9 +24,8 @@ export const icon = style({
 
 export const content = style({
   maxHeight: 0,
-  transition: "max-height 0.5s ease",
+  transition: "max-height 0.2s ease",
   overflow: "hidden",
-  padding: "0px 10px",
 
   selectors: {
     "&.show": {
