@@ -2,12 +2,12 @@ import { ColDef } from "ag-grid-community";
 import { reqStatusRenderer } from "../_lib/reqStatusRenderer";
 
 export const GRID_100503_COLS: ColDef[] = [
-  {
-    field: "회사 코드",
-    width: 100,
-    resizable: true,
-    editable: true,
-  },
+  // {
+  //   field: "회사 코드",
+  //   width: 100,
+  //   resizable: true,
+  //   editable: true,
+  // },
   {
     field: "일자",
     width: 100,
