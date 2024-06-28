@@ -13,7 +13,7 @@ export default async function Page({ params }: PageProps) {
   const session = await getServerSessionWithOptions();
   const page = getPage(G2_PATH_LIST, params.page);
 
-  if (session?.user.corpGrpTp !== "G1" || !page) {
+  if (session?.user.corpGrpTp !== "G2" || !page) {
     redirect("/notAuthorized");
   }
 

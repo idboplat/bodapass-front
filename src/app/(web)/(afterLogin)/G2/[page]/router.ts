@@ -7,11 +7,11 @@ import { Path } from "@web/(afterLogin)/_lib/getPage";
 export const G2_PATH_LIST: Path[] = [
   {
     category: "운영",
-    pages: [],
+    pages: [{ title: "회사 관리", number: "200101", Component: CorpHome }],
   },
   {
     category: "사용자",
-    pages: [],
+    pages: [{ title: "관리자 관리", number: "200202", Component: EmplHome }],
   },
   // {
   //   category: "로그",
@@ -19,7 +19,7 @@ export const G2_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [],
+    pages: [{ title: "GLE 구매 신청 내역(B2B)", number: "200502", Component: TransactionHome }],
   },
   // {
   //   category: "현황",

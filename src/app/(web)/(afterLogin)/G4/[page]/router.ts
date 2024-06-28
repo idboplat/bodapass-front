@@ -11,7 +11,7 @@ export const G4_PATH_LIST: Path[] = [
   },
   {
     category: "사용자",
-    pages: [],
+    pages: [{ title: "관리자 관리", number: "400202", Component: EmplHome }],
   },
   // {
   //   category: "로그",
@@ -19,7 +19,7 @@ export const G4_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [],
+    pages: [{ title: "GLE 구매 신청 내역(B2B)", number: "400502", Component: TransactionHome }],
   },
   // {
   //   category: "현황",
