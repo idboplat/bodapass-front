@@ -39,7 +39,7 @@ export const zIndex = {
     zIndex: 10000,
   },
   sidebar: {
-    zIndex: 10,
+    zIndex: 500,
   },
 };
 
