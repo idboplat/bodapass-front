@@ -4,7 +4,7 @@ import { modalCancelBtn, modalDefaultBtn } from "@/app/_component/modal/modalBtn
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { RowData } from "../_const/colum";
+import { RowData } from "../_const/row";
 
 const ID = "approveModal";
 

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { menuItem } from "./sidebar.css";
 
 interface SidebarMenuItemProps {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   text: string;
   href: string;
 }

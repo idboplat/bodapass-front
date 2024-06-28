@@ -17,12 +17,7 @@ export default function Category({ path, corpTp }: CategoryProps) {
     <Accordion title={path.category} isShow={isShow} onClick={toggleShow}>
       {path.pages.map((page) => {
         return (
-          <SidebarMenuItem
-            key={page.number}
-            icon={page.number}
-            text={page.title}
-            href={`/${corpTp}/${page.number}`}
-          />
+          <SidebarMenuItem key={page.number} text={page.title} href={`/${corpTp}/${page.number}`} />
         );
       })}
     </Accordion>

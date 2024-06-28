@@ -1,6 +1,6 @@
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import classNames from "classnames";
-import { RowData } from "../_const/colum";
+import { RowData } from "../_const/row";
 import ApproveModal from "./ApproveModal";
 import { req } from "./reqStatus.css";
 

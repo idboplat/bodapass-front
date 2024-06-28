@@ -4,14 +4,14 @@ import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import EmplHome from "@web/(afterLogin)/_component/user/empl/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
 
-export const G1_PATH_LIST: Path[] = [
+export const G4_PATH_LIST: Path[] = [
   {
     category: "운영",
-    pages: [{ title: "회사 관리", number: "100101", Component: CorpHome }],
+    pages: [],
   },
   {
     category: "사용자",
-    pages: [{ title: "관리자 관리", number: "100202", Component: EmplHome }],
+    pages: [],
   },
   // {
   //   category: "로그",
@@ -19,11 +19,7 @@ export const G1_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [
-      { title: "발행내역", number: "100501", Component: DeployHome },
-      { title: "GLE 구매 신청 내역(B2B)", number: "100502", Component: TransactionHome },
-      { title: "입출금 내역(B2C)", number: "100503", Component: TransactionHome },
-    ],
+    pages: [],
   },
   // {
   //   category: "현황",

@@ -1,34 +1,33 @@
 "use client";
+import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, convertText } from "@/app/_const/tp";
+import { dateToString } from "@/app/_lib/dateFormatter";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
-import { ICellRendererParams } from "ag-grid-community";
+import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
-import { GRID_COLS, RowData } from "../_const/colum";
 import { useTransactionStore } from "../_lib/store";
-import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
-import { convertText, MVIO_TP_ITEM, MVIO_RMRK_ITEM } from "@/app/_const/tp";
-import { dateToString } from "@/app/_lib/dateFormatter";
-import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
+import { reqStatusRenderer } from "../_lib/reqStatusRenderer";
 
 interface TableProps {
   session: Session;
+  cols: ColDef[];
 }
 
-export default function Table({ session }: TableProps) {
-  const [colDefs] = useState(() => {
-    const cols = [...GRID_COLS];
-    cols[6].cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
-      const { data, rowIndex } = node;
-      const isRender = data && rowIndex !== null;
-      return isRender ? <ReqStatus index={rowIndex} data={data} /> : null;
-    };
-    return cols;
-  });
+export default function Table({ session, cols }: TableProps) {
+  const [colDefs] = useState(
+    cols.map((col) => {
+      if (col.field === "상태 구분") {
+        col.cellRenderer = reqStatusRenderer;
+      }
+      return col;
+    }),
+  );
 
   const transactionStore = useTransactionStore();
 
