@@ -1,25 +1,25 @@
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import * as css from "@/app/_component/modal/modal.css";
-import { modalDefaultBtn, modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
+import { modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { RowData } from "../_const/row";
 
-const ID = "approveModal";
+const ID = "cancelModal";
 
-interface ApproveModalProps {
+interface CancelModalProps {
   data: RowData;
   index: number;
 }
 
-export default function ApproveModal({
+export default function CancelModal({
   data,
   index,
   onClose,
   onSuccess,
-}: ModalProps<ApproveModalProps>) {
+}: ModalProps<CancelModalProps>) {
   const queryClient = useQueryClient();
 
   const muation = useMutation({
@@ -44,9 +44,9 @@ export default function ApproveModal({
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>요청승인</h3>
+            <h3 className={css.modalTitle}>취소요청</h3>
           </div>
-          <p>승인 또는 거절</p>
+          <p>취소</p>
         </div>
         <div className={css.modalBtnBox}>
           <button
@@ -55,15 +55,7 @@ export default function ApproveModal({
             onClick={onClose}
             disabled={muation.isPending}
           >
-            거절
-          </button>
-          <button
-            className={modalDefaultBtn}
-            type="button"
-            onClick={() => muation.mutate()}
-            disabled={muation.isPending}
-          >
-            승인
+            취소
           </button>
         </div>
       </div>

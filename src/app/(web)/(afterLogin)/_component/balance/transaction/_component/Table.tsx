@@ -3,27 +3,33 @@ import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, convertText } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
-import { TBW_001000_Q01 } from "@/type/api";
+import { TBW_001000_Q01, TBW_001000_R01 } from "@/type/api";
+import { Meta } from "@/type/common";
 import { useQuery } from "@tanstack/react-query";
-import { ColDef } from "ag-grid-community";
+import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
+import { RowData } from "../_const/row";
 import { useTransactionStore } from "../_lib/store";
+import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
-import { reqStatusRenderer } from "../_lib/reqStatusRenderer";
 
 interface TableProps {
   session: Session;
-  cols: ColDef[];
+  meta: Meta;
 }
 
-export default function Table({ session, cols }: TableProps) {
+export default function Table({ session, meta }: TableProps) {
   const [colDefs] = useState(
-    cols.map((col) => {
+    meta.cols.map((col) => {
       if (col.field === "상태 구분") {
-        col.cellRenderer = reqStatusRenderer;
+        col.cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
+          const { data, rowIndex } = node;
+          const isRender = data && rowIndex !== null;
+          return isRender ? <ReqStatus index={rowIndex} data={data} session={session} /> : null;
+        };
       }
       return col;
     }),
@@ -32,11 +38,11 @@ export default function Table({ session, cols }: TableProps) {
   const transactionStore = useTransactionStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_001000_Q01", transactionStore],
+    queryKey: [meta.svcId, transactionStore],
     queryFn: async () => {
-      const TBW_001000_Q01Res = await callTms<TBW_001000_Q01>({
+      const res = await callTms<TBW_001000_Q01 | TBW_001000_R01>({
         session,
-        svcId: "TBW_001000_Q01",
+        svcId: meta.svcId,
         data: [
           session.user.corpCd,
           dateToString(transactionStore.mvioDd),
@@ -47,8 +53,8 @@ export default function Table({ session, cols }: TableProps) {
         ],
         pgSize: 20,
       });
-      const TBW_001000_Q01Data = TBW_001000_Q01Res.svcRspnData || [];
-      return TBW_001000_Q01Data;
+      const data = res.svcRspnData || [];
+      return data;
     },
     select: (data) => {
       const result = data.map((item) => ({

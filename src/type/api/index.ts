@@ -150,3 +150,21 @@ export type TBW_001000_Q01 = RspnData<{
   F13: string;
   F14: string;
 }>;
+
+/** 입출금 신청 내역(B2C) 조회 */
+export type TBW_001000_R01 = RspnData<{
+  F01: string;
+  F02: string;
+  F03: string;
+  F04: string;
+  F05: string;
+  F06: string;
+  F07: string;
+  F08: string;
+  F09: string;
+  F10: string;
+  F11: string;
+  F12: string;
+  F13: string;
+  F14: string;
+}>;
