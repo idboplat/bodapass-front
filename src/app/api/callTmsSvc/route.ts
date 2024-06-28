@@ -43,6 +43,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error("TMS_DEBUG_ERROR", error);
-    return NextResponse.json({ status: 500 });
+    return NextResponse.json(null, { status: 500 });
   }
 }
