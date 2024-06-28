@@ -1,13 +1,9 @@
-'use client';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
-import * as styles from './placeholder.css';
+import { placeHolder } from "./placeholder.css";
 
 type PlaceHolderProps = {
-  height: string;
+  style?: React.CSSProperties;
 };
 
-export default function PlaceHolder({ height }: PlaceHolderProps) {
-  return (
-    <div className={styles.bg} style={assignInlineVars(styles.placeholderContract, { height })} />
-  );
+export default function PlaceHolder({ style }: PlaceHolderProps) {
+  return <div className={placeHolder} style={style} />;
 }

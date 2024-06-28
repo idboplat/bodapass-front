@@ -2,7 +2,7 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as style from "@/app/_component/modal/modal.css";
+import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
@@ -82,11 +82,11 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={style.modalCenterContent}>
+      <form onSubmit={handleSubmit} className={css.modalCenterContent}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={style.modalHeader}>
-            <h3 className={style.modalTitle}>사원등록</h3>
+          <div className={css.modalHeader}>
+            <h3 className={css.modalTitle}>사원등록</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.extnUserId}>
@@ -124,7 +124,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             <div className={pwCheckBox}>{!validationPw ? "비밀번호가 일치하지 않습니다." : ""}</div>
           </div>
         </div>
-        <div className={style.modalBtnBox}>
+        <div className={css.modalBtnBox}>
           <button
             className={modalDefaultBtn}
             type="submit"

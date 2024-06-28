@@ -1,7 +1,7 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
 import ModalCloseBtn from "./ModalCloseBtn";
-import * as style from "./modal.css";
+import * as css from "./modal.css";
 import { modalDefaultBtn } from "./modalBtn.css";
 
 const ID = "errorModal";
@@ -18,15 +18,15 @@ export default function ErrorModal({
 }: ModalProps<ErrorModalProps>) {
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={style.modalCenterContent}>
+      <div className={css.modalCenterContent}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={style.modalHeader}>
-            <h3 className={style.modalTitle}>{title}</h3>
+          <div className={css.modalHeader}>
+            <h3 className={css.modalTitle}>{title}</h3>
           </div>
           <p>{error.message}</p>
         </div>
-        <div className={style.modalBtnBox}>
+        <div className={css.modalBtnBox}>
           <button className={modalDefaultBtn} type="button" onClick={onClose}>
             확인
           </button>

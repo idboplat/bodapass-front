@@ -1,7 +1,7 @@
 // css 순서변경 금지
 import "@/style/agGrid.css";
 import "@/style/datepicker.css";
-import * as style from "./layout.css";
+import * as css from "./layout.css";
 
 import Header from "@/app/_component/header/Header";
 import Sidebar from "@/app/_component/sidebar/Sidebar";
@@ -32,9 +32,9 @@ export default async function Layout({ children }: PropsWithChildren) {
   const clientPath = getClientPathList(pathMap[session.user.corpGrpTp]);
 
   return (
-    <div className={style.col}>
+    <div className={css.col}>
       <Header />
-      <div className={style.row}>
+      <div className={css.row}>
         <Sidebar pathList={clientPath} session={session} />
         {children}
       </div>

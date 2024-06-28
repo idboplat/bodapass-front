@@ -1,12 +1,12 @@
-import * as style from "./dotsLoading.css";
+import * as css from "./dotsLoading.css";
 
 export default function DotsLoading() {
   return (
-    <div className={style.wrap}>
-      <div className={style.box}>
-        <span className={style.circle} />
-        <span className={style.circle} />
-        <span className={style.circle} />
+    <div className={css.wrap}>
+      <div className={css.box}>
+        <span className={css.circle} />
+        <span className={css.circle} />
+        <span className={css.circle} />
       </div>
     </div>
   );

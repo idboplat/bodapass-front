@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as style from "@/app/_component/modal/modal.css";
+import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps } from "@/app/_lib/modalStore";
@@ -102,11 +102,11 @@ export default function CreCorpModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={style.modalCenterContent}>
+      <form onSubmit={handleSubmit} className={css.modalCenterContent}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={style.modalHeader}>
-            <h3 className={style.modalTitle}>회사 등록</h3>
+          <div className={css.modalHeader}>
+            <h3 className={css.modalTitle}>회사 등록</h3>
           </div>
           <div className={inputBox}>
             <TextSelect
@@ -152,7 +152,7 @@ export default function CreCorpModal({
             />
           </div> */}
         </div>
-        <div className={style.modalBtnBox}>
+        <div className={css.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
             등록
           </button>

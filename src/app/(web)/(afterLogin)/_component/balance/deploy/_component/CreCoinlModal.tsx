@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as style from "@/app/_component/modal/modal.css";
+import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
@@ -85,11 +85,11 @@ export default function CreCoinModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={style.modalCenterContent} style={{ width: 450 }}>
+      <form onSubmit={handleSubmit} className={css.modalCenterContent} style={{ width: 450 }}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={style.modalHeader}>
-            <h3 className={style.modalTitle}>코인 추가발행</h3>
+          <div className={css.modalHeader}>
+            <h3 className={css.modalTitle}>코인 추가발행</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.instCd}>
@@ -125,7 +125,7 @@ export default function CreCoinModal({
             />
           </div> */}
         </div>
-        <div className={style.modalBtnBox}>
+        <div className={css.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
             등록
           </button>
