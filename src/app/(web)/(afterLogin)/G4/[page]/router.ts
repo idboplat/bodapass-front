@@ -19,7 +19,18 @@ export const G4_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [{ title: "GLE 구매 신청 내역(B2B)", number: "400502", Component: TransactionHome }],
+    pages: [
+      {
+        title: "GLE 구매 신청 내역(B2B)",
+        number: "400502",
+        Component: TransactionHome,
+      },
+      {
+        title: "입출금 내역(B2C)",
+        number: "400503",
+        Component: TransactionHome,
+      },
+    ],
   },
   // {
   //   category: "현황",

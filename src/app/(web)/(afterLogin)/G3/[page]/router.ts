@@ -18,6 +18,9 @@ export const G3_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [{ title: "GLE 구매 신청 내역(B2B)", number: "200502", Component: TransactionHome }],
+    pages: [
+      { title: "GLE 구매 신청 내역(B2B)", number: "200502", Component: TransactionHome },
+      { title: "입출금 내역(B2C)", number: "200503", Component: TransactionHome },
+    ],
   },
 ];
