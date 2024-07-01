@@ -39,7 +39,6 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
     mutationFn: async (data: string[]) => {
-      console.log("mutationFn");
       const TBW_000010_P01Res = await callTms<TBW_000010_P01>({
         session,
         svcId: "TBW_000010_P01",

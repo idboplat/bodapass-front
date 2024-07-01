@@ -16,8 +16,6 @@ export const credentialAuthorize: CredentialAuthorize = async (_credentials, req
       throw new Error("관리자에게 문의하세요");
     }
 
-    console.log("TBW_000001_P01Data", TBW_000001_P01Data);
-
     const { F01, F03, F04, F05, F06 } = TBW_000001_P01Data[0];
     return {
       id: F01,

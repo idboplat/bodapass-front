@@ -10,6 +10,6 @@ export const signOut: EventCallbacks["signOut"] = async ({ token }) => {
       session: token as unknown as Session,
     });
   } catch (error) {
-    console.log("signOut error", error);
+    console.error("TBW_000001_P02", error);
   }
 };
