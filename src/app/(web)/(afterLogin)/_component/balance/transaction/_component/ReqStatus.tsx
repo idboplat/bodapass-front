@@ -38,7 +38,7 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
       const res = await callTms<TBW_002000_Q01>({
         session,
         svcId: "TBW_002000_Q01",
-        data: [session.user.corpCd, data.일자.replaceAll("-", ""), data.일련번호],
+        data: [data["회사 코드"], data.일자.replaceAll("-", ""), data.일련번호],
         pgSize: 1,
       });
 
