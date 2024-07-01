@@ -24,7 +24,7 @@ export default function CancelModal({
   onClose,
   onSuccess,
 }: ModalProps<CancelModalProps>) {
-  const muation = useMutation({
+  const mutation = useMutation({
     mutationKey: ["TBW_000100_P02"],
     mutationFn: async () => {
       const TBW_000100_P02Res = await callTms<TBW_000100_P02>({
@@ -32,7 +32,7 @@ export default function CancelModal({
         session,
         data: [
           session.user.corpCd,
-          data.일자, //입출고 일자
+          data.일자.replaceAll("-", ""), //입출고 일자
           data.일련번호, //입출고 일련번호
         ],
       });
@@ -65,8 +65,8 @@ export default function CancelModal({
           <button
             className={modalDenyBtn}
             type="button"
-            onClick={onClose}
-            disabled={muation.isPending}
+            onClick={() => mutation.mutate()}
+            disabled={mutation.isPending}
           >
             취소
           </button>
