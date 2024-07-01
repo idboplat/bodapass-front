@@ -29,3 +29,9 @@ export const datePickerWrap = style({
   alignItems: "center",
   gap: 10,
 });
+
+export const btnBox = style({
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+});

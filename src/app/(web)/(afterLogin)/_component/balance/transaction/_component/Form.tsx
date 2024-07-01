@@ -5,15 +5,22 @@ import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/
 import DatePicker, { DateType } from "@/app/_component/datepicker/DatePicker";
 import { useState } from "react";
 import { useSetTransactionStore } from "../_lib/store";
-import { datePickerWrap, inputWrap, navWrap } from "./nav.css";
+import { btnBox, datePickerWrap, inputWrap, navWrap } from "./nav.css";
+import { useSetModalStore } from "@/app/_lib/modalStore";
+import ReqModal from "./ReqModal";
 
-export default function Form() {
+interface FormProps {
+  showReqBtn: boolean;
+}
+
+export default function Form({ showReqBtn }: FormProps) {
   const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("");
   const [rqstStatTp, setRqstStatTp] = useState("");
   const actions = useSetTransactionStore();
+  const modalStore = useSetModalStore();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +38,9 @@ export default function Form() {
     setMvioDd(() => date);
   };
 
+  const openReqModal = async () => {
+    await modalStore.push(ReqModal, { props: {} });
+  };
   const today = new Date();
 
   return (
@@ -94,7 +104,12 @@ export default function Form() {
           />
         </div>
       </div>
-      <div>
+      <div className={btnBox}>
+        {showReqBtn && (
+          <button type="button" onClick={openReqModal} className={navBtn}>
+            구매 신청
+          </button>
+        )}
         <button className={navBtn} type="submit">
           조회
         </button>
