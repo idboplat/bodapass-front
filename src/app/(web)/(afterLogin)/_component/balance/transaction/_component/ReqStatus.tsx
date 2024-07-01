@@ -8,7 +8,8 @@ import { req } from "./reqStatus.css";
 import { useTransactionStore } from "../_lib/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
-import { TBW_001000_Q01, TBW_001000_R01 } from "@/type/api";
+import { TBW_001000_Q01, TBW_001000_R01, TBW_002000_Q01 } from "@/type/api";
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 
 interface ReqStatusProps {
   session: Session;
@@ -28,15 +29,16 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
   const transactionStore = useTransactionStore();
   const actions = useSetModalStore();
   const queryClient = useQueryClient();
+  const modalStore = useSetModalStore();
 
   const mutationGetRow = useMutation({
     mutationKey: ["getTableRowData"],
     mutationFn: async () => {
       // 단건 조회 API 호출
-      const res = await callTms<TBW_001000_Q01 | TBW_001000_R01>({
+      const res = await callTms<TBW_002000_Q01>({
         session,
-        svcId,
-        data: [session.user.corpCd, data.일자.replaceAll("-", ""), data["종목 코드"], "", "", ""],
+        svcId: "TBW_002000_Q01",
+        data: [session.user.corpCd, data.일자.replaceAll("-", ""), data.일련번호],
         pgSize: 1,
       });
 
@@ -56,8 +58,9 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
         },
       );
     },
-    onError: (error) => {
+    onError: async (error) => {
       //재조회 실패 시 페이지 새로고침
+      await modalStore.push(ErrorModal, { props: { error } });
       transactionStore.actions.refreshPage();
     },
   });
@@ -92,7 +95,7 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
   const G4Granted = session.user.corpCd !== data["회사 코드"] && session.user.corpGrpTp === "G4";
 
   return (
-    <button className={classNames(req)} onClick={onClick} disabled={G4Granted}>
+    <button type="button" className={classNames(req)} onClick={onClick} disabled={G4Granted}>
       {STATUS_TEXT[data["상태 구분"]]}
     </button>
   );

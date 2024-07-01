@@ -29,6 +29,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("onSubmit");
 
     actions.setState({
       mvioTp: findEntity(MVIO_TP_ITEM, mvioTp)?.[0] || "",
