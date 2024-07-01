@@ -2,6 +2,7 @@
 import { Session } from "next-auth";
 import { useCoinStore } from "../_lib/store";
 import Form from "./Form";
+import { useEffect } from "react";
 
 interface NavProps {
   session: Session;
@@ -9,5 +10,12 @@ interface NavProps {
 
 export default function Nav({ session }: NavProps) {
   const resetTime = useCoinStore((state) => state.resetTime);
+  const actions = useCoinStore((state) => state.actions);
+  useEffect(() => {
+    return () => {
+      actions.unmount();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <Form key={resetTime} session={session} />;
 }

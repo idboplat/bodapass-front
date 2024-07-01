@@ -15,6 +15,7 @@ type CoinActions = {
     setState: (mvioTp: string) => void;
     reset: () => void;
     refreshPage: () => void;
+    unmount: () => void;
   };
 };
 
@@ -37,6 +38,11 @@ export const useCoinStore = create<CoinState & CoinActions>()((set) => ({
         resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
       }));
     },
+    unmount: () =>
+      set(() => ({
+        ...initState,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      })),
   },
 }));
 

@@ -15,6 +15,7 @@ type CorpActions = {
     setState: (corpNm: string, corpGrpTp: string) => void;
     reset: () => void;
     refreshPage: () => void;
+    unmount: () => void;
   };
 };
 
@@ -37,6 +38,11 @@ export const useCorpStore = create<CorpState & CorpActions>()((set) => ({
       set(() => ({
         ...initState,
         nonce: 1,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      })),
+    unmount: () =>
+      set(() => ({
+        ...initState,
         resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
       })),
   },

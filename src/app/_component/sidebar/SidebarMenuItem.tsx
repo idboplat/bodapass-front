@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { menuItem } from "./sidebar.css";
+import Link from "next/link";
 
 interface SidebarMenuItemProps {
   icon?: React.ReactNode;
@@ -15,10 +16,10 @@ export default function SidebarMenuItem({ icon, text, href }: SidebarMenuItemPro
 
   return (
     <li className={classNames(menuItem, isActive && "active")}>
-      <a href={href}>
+      <Link href={href}>
         {icon}
         <span>{text}</span>
-      </a>
+      </Link>
     </li>
   );
 }

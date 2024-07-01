@@ -25,6 +25,7 @@ type TransactionActions = {
     }) => void;
     refreshPage: () => void;
     reset: () => void;
+    unmount: () => void;
   };
 };
 
@@ -48,6 +49,12 @@ export const useTransactionStore = create<TransactionState & TransactionActions>
       set(() => ({
         ...initState,
         nonce: 1,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      }));
+    },
+    unmount: () => {
+      set(() => ({
+        ...initState,
         resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
       }));
     },

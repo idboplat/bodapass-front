@@ -21,6 +21,7 @@ type emplActions = {
     ) => void;
     refreshPage: () => void;
     reset: () => void;
+    unmount: () => void;
   };
 };
 
@@ -53,6 +54,11 @@ export const useEmplStore = create<emplState & emplActions>()((set) => ({
         resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
       }));
     },
+    unmount: () =>
+      set(() => ({
+        ...initState,
+        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+      })),
   },
 }));
 
