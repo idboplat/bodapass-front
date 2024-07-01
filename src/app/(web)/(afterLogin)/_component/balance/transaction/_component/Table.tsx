@@ -28,7 +28,11 @@ export default function Table({ session, meta }: TableProps) {
         col.cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
           const { data, rowIndex } = node;
           const isRender = data && rowIndex !== null;
-          return isRender ? <ReqStatus index={rowIndex} data={data} session={session} /> : null;
+          return (
+            isRender && (
+              <ReqStatus svcId={meta.svcId} index={rowIndex} data={data} session={session} />
+            )
+          );
         };
       }
       return col;

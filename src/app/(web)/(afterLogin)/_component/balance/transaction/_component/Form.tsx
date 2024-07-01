@@ -9,6 +9,7 @@ import { btnBox, datePickerWrap, inputWrap, navWrap } from "./nav.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import ReqModal from "./ReqModal";
 import { Session } from "next-auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface FormProps {
   session: Session;
@@ -23,6 +24,8 @@ export default function Form({ session, showReqBtn }: FormProps) {
   const [rqstStatTp, setRqstStatTp] = useState("");
   const actions = useSetTransactionStore();
   const modalStore = useSetModalStore();
+
+  const queryClient = useQueryClient();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +46,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
   const openReqModal = async () => {
     await modalStore.push(ReqModal, { props: { session } });
   };
+
   const today = new Date();
 
   return (

@@ -8,4 +8,8 @@ export const req = style({
   ":hover": {
     backgroundColor: "#cccccc",
   },
+  ":disabled": {
+    backgroundColor: "unset",
+    cursor: "default",
+  },
 });
