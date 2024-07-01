@@ -9,6 +9,7 @@ import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row";
 import * as css from "@/app/_component/modal/modal.css";
+import ApproveView from "./ApproveView";
 
 const ID = "cancelModal";
 
@@ -58,7 +59,7 @@ export default function CancelModal({
           <div className={css.modalHeader}>
             <h3 className={css.modalTitle}>취소요청</h3>
           </div>
-          <p>취소</p>
+          <ApproveView data={data} />
         </div>
         <div className={css.modalBtnBox}>
           <button

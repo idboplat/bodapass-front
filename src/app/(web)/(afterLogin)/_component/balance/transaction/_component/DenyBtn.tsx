@@ -1,10 +1,10 @@
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
+import { modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
+import callTms from "@/model/callTms";
+import { TBW_000100_P03 } from "@/type/api";
 import { useMutation } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row";
-import callTms from "@/model/callTms";
-import { Session } from "next-auth";
-import { TBW_000100_P03 } from "@/type/api";
 
 interface DenyBtnProps {
   session: Session;
@@ -43,12 +43,12 @@ export default function DenyBtn({ session, data, onSuccess }: DenyBtnProps) {
 
   return (
     <button
-      className={modalDefaultBtn}
+      className={modalDenyBtn}
       type="button"
       onClick={() => muation.mutate()}
       disabled={muation.isPending}
     >
-      승인
+      거절
     </button>
   );
 }
