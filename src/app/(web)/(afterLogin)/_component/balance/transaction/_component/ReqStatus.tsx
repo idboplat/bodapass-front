@@ -30,7 +30,7 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
   const onClick = async () => {
     let result: undefined | "deny" | "approve" | "cancel" = undefined;
 
-    if (session.user.corpCd === data["회사 코드"]) {
+    if (session.user.corpCd !== data["회사 코드"]) {
       // G4는 승인, 거절 불가
       if (session.user.corpGrpTp === "G4") return;
       result = await actions.push(ApproveModal, {
@@ -61,12 +61,11 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
     return <span>{STATUS_TEXT[data["상태 구분"]]}</span>;
   }
 
+  // G4는 승인, 거절 불가
+  const G4Granted = session.user.corpCd !== data["회사 코드"] && session.user.corpGrpTp === "G4";
+
   return (
-    <button
-      className={classNames(req)}
-      onClick={onClick}
-      disabled={session.user.corpGrpTp === "G4"}
-    >
+    <button className={classNames(req)} onClick={onClick} disabled={G4Granted}>
       {STATUS_TEXT[data["상태 구분"]]}
     </button>
   );

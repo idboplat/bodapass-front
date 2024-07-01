@@ -61,7 +61,7 @@ export const GRID_400503_COLS: ColDef[] = [
     field: "상태 구분",
     width: 100,
     resizable: true,
-    editable: true,
+    editable: false,
   },
 
   {
