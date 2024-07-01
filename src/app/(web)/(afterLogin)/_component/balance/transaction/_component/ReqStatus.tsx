@@ -6,7 +6,9 @@ import ApproveModal from "./ApproveModal";
 import CancelModal from "./CancelModal";
 import { req } from "./reqStatus.css";
 import { useTransactionStore } from "../_lib/store";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import callTms from "@/model/callTms";
+import { TBW_001000_Q01, TBW_001000_R01 } from "@/type/api";
 
 interface ReqStatusProps {
   session: Session;
@@ -27,6 +29,39 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
   const actions = useSetModalStore();
   const queryClient = useQueryClient();
 
+  const mutationGetRow = useMutation({
+    mutationKey: ["getTableRowData"],
+    mutationFn: async () => {
+      // 단건 조회 API 호출
+      const res = await callTms<TBW_001000_Q01 | TBW_001000_R01>({
+        session,
+        svcId,
+        data: [session.user.corpCd, data.일자.replaceAll("-", ""), data["종목 코드"], "", "", ""],
+        pgSize: 1,
+      });
+
+      const rspnData = res.svcRspnData;
+      if (!rspnData) throw new Error(`${svcId} is null`);
+      return rspnData[0];
+    },
+    onSuccess: (data) => {
+      // 단건 조회 성공 시 상태 변경
+      queryClient.setQueryData<TBW_001000_Q01 | TBW_001000_R01>(
+        [svcId, transactionStore],
+        (prev) => {
+          if (!prev) return prev;
+          const arr = [...prev];
+          arr[index] = data;
+          return arr;
+        },
+      );
+    },
+    onError: (error) => {
+      //재조회 실패 시 페이지 새로고침
+      transactionStore.actions.refreshPage();
+    },
+  });
+
   const onClick = async () => {
     let result: undefined | "deny" | "approve" | "cancel" = undefined;
 
@@ -45,15 +80,7 @@ export default function ReqStatus({ svcId, index, data, session }: ReqStatusProp
     }
 
     if (!!result) {
-      // TODO
-      // 승인 or 거절 or 취소 시 단건 재조회후 상태 변경
-      queryClient.setQueryData<RowData[]>([svcId, transactionStore], (prev) => {
-        if (!prev) return prev;
-        const arr = [...prev];
-        console.log("table Data arr", arr);
-        arr[index];
-        return arr;
-      });
+      mutationGetRow.mutate();
     }
   };
 
