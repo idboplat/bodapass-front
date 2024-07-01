@@ -1,18 +1,17 @@
 import "@/style/global.css";
 import "@/style/globalTheme.css";
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { PropsWithChildren } from "react";
 import Configs from "./_component/config";
+import { getDefaultMetadata } from "./_const/getDefaultMetadata";
 
 const font = Noto_Sans_KR({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Admin Demo",
-};
+export const metadata = getDefaultMetadata();
 
 export const viewport: Viewport = {
   width: "device-width",
