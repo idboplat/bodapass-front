@@ -2,10 +2,25 @@ import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { getPage } from "@web/(afterLogin)/_lib/getPage";
 import { notFound, redirect } from "next/navigation";
 import { G1_PATH_LIST } from "./router";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/app/_const/getDefaultMetadata";
 
 interface PageProps {
   params: {
     page: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const page = getPage(G1_PATH_LIST, params.page);
+
+  if (!page) {
+    notFound();
+  }
+
+  return {
+    ...getDefaultMetadata(),
+    title: page.title,
   };
 }
 

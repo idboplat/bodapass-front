@@ -1,7 +1,9 @@
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { getPage } from "@web/(afterLogin)/_lib/getPage";
 import { notFound, redirect } from "next/navigation";
-import { G2_PATH_LIST } from "@web/(afterLogin)/G2/[page]/router";
+import { G3_PATH_LIST } from "./router";
+import { Metadata } from "next";
+import { getDefaultMetadata } from "@/app/_const/getDefaultMetadata";
 
 interface PageProps {
   params: {
@@ -9,9 +11,22 @@ interface PageProps {
   };
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const page = getPage(G3_PATH_LIST, params.page);
+
+  if (!page) {
+    notFound();
+  }
+
+  return {
+    ...getDefaultMetadata(),
+    title: page.title,
+  };
+}
+
 export default async function Page({ params }: PageProps) {
   const session = await getServerSessionWithOptions();
-  const page = getPage(G2_PATH_LIST, params.page);
+  const page = getPage(G3_PATH_LIST, params.page);
 
   if (session?.user.corpGrpTp !== "G3") {
     redirect("/notAuthorized");
