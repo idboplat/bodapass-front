@@ -36,12 +36,12 @@ export const modalCancelBtn = style([
 export const modalDenyBtn = style([
   modalDefaultBtn,
   {
-    backgroundColor: "#E32428",
+    backgroundColor: "#e5383b",
     ":hover": {
-      backgroundColor: "#990E02",
+      backgroundColor: "#ED4043",
     },
     ":disabled": {
-      background: "#900D09",
+      background: "#B0B0B0",
     },
   },
 ]);
