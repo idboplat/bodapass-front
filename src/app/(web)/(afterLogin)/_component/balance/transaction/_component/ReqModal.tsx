@@ -5,9 +5,13 @@ import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn, modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
+import callTms from "@/model/callTms";
+import { TBW_000100_P01 } from "@/type/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useSetTransactionStore } from "../_lib/store";
 
 const ID = "reqModal";
 
@@ -16,20 +20,33 @@ enum ReqModalInput {
   amount = ID + "Amount",
 }
 
-interface ReqModalProps {}
+interface ReqModalProps {
+  session: Session;
+}
 
-export default function ReqModal({ onClose, onSuccess }: ModalProps<ReqModalProps>) {
+export default function ReqModal({ onClose, onSuccess, session }: ModalProps<ReqModalProps>) {
   const [instCd, setInstCd] = useState("");
-  const [amt, setAmt] = useState("");
+  const [amount, setAmount] = useState("");
 
-  const queryClient = useQueryClient();
+  const actions = useSetTransactionStore();
 
   const muation = useMutation({
     mutationKey: ["TBW_000100_P01"],
-    mutationFn: async () => {},
+    mutationFn: async () => {
+      const TBW_000100_P01Res = await callTms<TBW_000100_P01>({
+        session,
+        svcId: "TBW_000100_P01",
+        data: [session.user.corpCd, instCd, amount.replaceAll(",", "")],
+      });
+      const TBW_000100_P01Data = TBW_000100_P01Res.svcRspnData;
+      if (TBW_000100_P01Data === null) {
+        throw new Error("TBW_000100_P01Data is null");
+      }
+    },
     onSuccess: () => {
-      toast.success("성공");
-      onSuccess(true);
+      toast.success("구매신청이 완료되었습니다.");
+      actions.reset();
+      onClose();
     },
   });
 
@@ -43,7 +60,7 @@ export default function ReqModal({ onClose, onSuccess }: ModalProps<ReqModalProp
       case ReqModalInput.amount:
         const integerStr = deleteIntegerZero(replaceToNumber(value));
         if (integerStr.length > 20) return; // 최대 20자리
-        setAmt(() => addComma(integerStr));
+        setAmount(() => addComma(integerStr));
         break;
     }
   };
@@ -57,37 +74,39 @@ export default function ReqModal({ onClose, onSuccess }: ModalProps<ReqModalProp
             <h3 className={css.modalTitle}>구매 신청</h3>
           </div>
           <div>
-            <div>
-              <label htmlFor={ReqModalInput.instCd}>종목 코드</label>
+            <div className={css.inputBox}>
+              <label htmlFor={ReqModalInput.instCd} className={css.label}>
+                종목 코드
+              </label>
               <DefaultInput
                 id={ReqModalInput.instCd}
                 value={instCd}
                 placeholder="USDT"
                 onChange={onChangeInput}
+                onReset={() => setInstCd("")}
               />
             </div>
-            <div>
-              <label htmlFor={ReqModalInput.amount}>입출고 수량</label>
-              <DefaultInput value={amt} onChange={onChangeInput} />
+            <div className={css.inputBox}>
+              <label htmlFor={ReqModalInput.amount} className={css.label}>
+                입출고 수량
+              </label>
+              <DefaultInput
+                id={ReqModalInput.amount}
+                value={amount}
+                onChange={onChangeInput}
+                onReset={() => setAmount("")}
+              />
             </div>
           </div>
         </div>
         <div className={css.modalBtnBox}>
-          <button
-            className={modalDenyBtn}
-            type="button"
-            onClick={onClose}
-            disabled={muation.isPending}
-          >
-            거절
-          </button>
           <button
             className={modalDefaultBtn}
             type="button"
             onClick={() => muation.mutate()}
             disabled={muation.isPending}
           >
-            승인
+            신청
           </button>
         </div>
       </div>

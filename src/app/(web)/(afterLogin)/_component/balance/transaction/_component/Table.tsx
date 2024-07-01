@@ -4,7 +4,7 @@ import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01, TBW_001000_R01 } from "@/type/api";
-import { Meta } from "@/type/common";
+import { Meta } from "../_const/meta";
 import { useQuery } from "@tanstack/react-query";
 import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";

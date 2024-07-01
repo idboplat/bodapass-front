@@ -29,7 +29,7 @@ export default async function TransactionHome({ session, page }: HomeProps<Trans
   return (
     <div className={css.wrap}>
       <div className={css.title}>{title}</div>
-      <Nav showReqBtn={meta.showReqBtn} />
+      <Nav session={session} showReqBtn={meta.showReqBtn} />
       <Table meta={meta} session={session} />
     </div>
   );

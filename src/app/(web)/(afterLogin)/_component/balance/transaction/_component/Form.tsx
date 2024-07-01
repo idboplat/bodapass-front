@@ -8,12 +8,14 @@ import { useSetTransactionStore } from "../_lib/store";
 import { btnBox, datePickerWrap, inputWrap, navWrap } from "./nav.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import ReqModal from "./ReqModal";
+import { Session } from "next-auth";
 
 interface FormProps {
+  session: Session;
   showReqBtn: boolean;
 }
 
-export default function Form({ showReqBtn }: FormProps) {
+export default function Form({ session, showReqBtn }: FormProps) {
   const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("");
@@ -39,7 +41,7 @@ export default function Form({ showReqBtn }: FormProps) {
   };
 
   const openReqModal = async () => {
-    await modalStore.push(ReqModal, { props: {} });
+    await modalStore.push(ReqModal, { props: { session } });
   };
   const today = new Date();
 

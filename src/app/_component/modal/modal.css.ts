@@ -37,3 +37,16 @@ export const modalBtnBox = style({
 globalStyle(`${modalBtnBox} > button`, {
   width: 100,
 });
+
+export const inputBox = style([
+  {
+    marginBottom: 14,
+  },
+]);
+
+export const label = style([
+  {
+    display: "inline-block",
+    marginBottom: 2,
+  },
+]);
