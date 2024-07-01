@@ -22,7 +22,7 @@ export default function Table({ session }: { session: Session }) {
       const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
         svcId: "TBW_000300_Q01",
-        data: [coinStore.mvioTp], // 입출고 구분
+        data: [session.user.corpCd, coinStore.mvioTp], // 입출고 구분
         pgSize: 20,
       });
       const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];
