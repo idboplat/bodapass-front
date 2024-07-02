@@ -15,6 +15,7 @@ import { RowData } from "../_const/row";
 import { useTransactionStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
+import { CellKeyDownEvent } from "ag-grid-community";
 
 interface TableProps {
   session: Session;
@@ -84,6 +85,15 @@ export default function Table({ session, meta }: TableProps) {
 
   const rowData = transactionStore.nonce === 0 ? [] : data;
 
+  // 클립보드 복사 이벤트
+  // const onCellKeyDown = (params: CellKeyDownEvent) => {
+  //   const keyboardEvent = params.event as KeyboardEvent;
+  //   if (keyboardEvent.ctrlKey && keyboardEvent.key === "c") {
+  //     const cellValue = params.value;
+  //     navigator.clipboard.writeText(cellValue);
+  //   }
+  // };
+
   return (
     <div className={classNames("ag-theme-alpine", tableWrap)}>
       <AgGridReact
@@ -92,6 +102,7 @@ export default function Table({ session, meta }: TableProps) {
         overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
         headerHeight={28}
         rowHeight={28}
+        // onCellKeyDown={onCellKeyDown}
       />
     </div>
   );
