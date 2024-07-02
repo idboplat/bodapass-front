@@ -8,6 +8,7 @@ import CreCorpModal from "./CreCorpModal";
 import { btnWrap, inputWrap, navWrap } from "./nav.css";
 import { Session } from "next-auth";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
+import { CORP_GRP_TP } from "@/type/common";
 
 enum CorpNavForm {
   corpNm = "corpNm",
@@ -33,7 +34,16 @@ export default function Form({ session }: FormProps) {
   //   setDate(() => date);
   // };
 
-  const onChangeSelect = (value: string) => {
+  const corpGrpItemsMap: Record<string, string[]> = {
+    G1: ["*", "메인거래소", "중개사(G2)", "거래소"],
+    G2: ["*", "중개사(G2)", "중개사(G3)", "거래소"],
+    G3: ["*", "중개사(G3)", "거래소"],
+    G4: ["거래소"],
+  };
+
+  const getCorpGrpItems = (value: string): string[] => corpGrpItemsMap[value] || [];
+
+  const onChangeCorpGrpSelect = (value: string) => {
     setCorpGrpValue(() => value);
   };
 
@@ -78,8 +88,8 @@ export default function Form({ session }: FormProps) {
         <div>
           <TextSelect
             value={corpGrpValue}
-            onChange={onChangeSelect}
-            items={["*", "메인거래소", "중개사(G2)", "중개사(G3)", "거래소"]}
+            onChange={onChangeCorpGrpSelect}
+            items={getCorpGrpItems(session.user.corpGrpTp)}
             placeholder="회사 유형"
             style={{
               height: 36,
