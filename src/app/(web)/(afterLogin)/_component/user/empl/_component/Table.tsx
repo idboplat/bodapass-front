@@ -63,7 +63,9 @@ export default function Table({ session }: TableProps) {
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}
-          overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
+          overlayNoRowsTemplate={
+            emplStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
           headerHeight={28}
           rowHeight={28}
         />
