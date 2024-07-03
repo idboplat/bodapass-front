@@ -22,7 +22,7 @@ interface FormProps {
 export default function Form({ session }: FormProps) {
   // const [date, setDate] = useState<[DateType, DateType]>([new Date(), new Date()]);
   const [corpNm, setCorpNm] = useState("");
-  const [corpGrpValue, setCorpGrpValue] = useState("");
+  const [corpGrpValue, setCorpGrpValue] = useState("전체");
 
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
@@ -36,9 +36,9 @@ export default function Form({ session }: FormProps) {
   // };
 
   const corpGrpItemsMap: Record<string, string[]> = {
-    G1: ["*", "메인거래소", "중개사(G2)", "거래소"],
-    G2: ["*", "중개사(G2)", "중개사(G3)", "거래소"],
-    G3: ["*", "중개사(G3)", "거래소"],
+    G1: ["전체", "메인거래소", "중개사(G2)", "거래소"],
+    G2: ["전체", "중개사(G2)", "중개사(G3)", "거래소"],
+    G3: ["전체", "중개사(G3)", "거래소"],
     G4: ["거래소"],
   };
 
@@ -92,7 +92,6 @@ export default function Form({ session }: FormProps) {
             value={corpGrpValue}
             onChange={onChangeCorpGrpSelect}
             items={getCorpGrpItems(session.user.corpGrpTp)}
-            placeholder="회사 유형"
             style={{
               height: 36,
               width: 100,

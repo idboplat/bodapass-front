@@ -20,9 +20,9 @@ interface FormProps {
 export default function Form({ session, showReqBtn }: FormProps) {
   const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [instCd, setInstCd] = useState("");
-  const [mvioTp, setMvioTp] = useState("");
-  const [mvioRmrkTp, setMvioRmrkTp] = useState("");
-  const [rqstStatTp, setRqstStatTp] = useState("");
+  const [mvioTp, setMvioTp] = useState("전체");
+  const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
+  const [rqstStatTp, setRqstStatTp] = useState("전체");
   const actions = useSetTransactionStore();
   const modalStore = useSetModalStore();
 
