@@ -22,7 +22,7 @@ interface FormProps {
 export default function Form({ session }: FormProps) {
   // const [date, setDate] = useState<[DateType, DateType]>([new Date(), new Date()]);
   const [corpNm, setCorpNm] = useState("");
-  const [corpGrpValue, setCorpGrpValue] = useState("");
+  const [corpGrpValue, setCorpGrpValue] = useState("전체");
 
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
@@ -92,7 +92,6 @@ export default function Form({ session }: FormProps) {
             value={corpGrpValue}
             onChange={onChangeCorpGrpSelect}
             items={getCorpGrpItems(session.user.corpGrpTp)}
-            placeholder="회사 유형"
             style={{
               height: 36,
               width: 100,
