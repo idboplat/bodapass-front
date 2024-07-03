@@ -19,9 +19,9 @@ interface ReqStatusProps {
 }
 
 const STATUS_TEXT: Record<string, string> = {
-  REQ: "접수",
+  REQ: "신청",
   APL: "완료",
-  REJ: "거절",
+  REJ: "거부",
   CAN: "취소",
 };
 

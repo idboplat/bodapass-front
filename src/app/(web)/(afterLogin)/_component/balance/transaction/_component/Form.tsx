@@ -102,7 +102,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
           <TextSelect
             value={rqstStatTp}
             onChange={(value: string) => setRqstStatTp(() => value)}
-            items={["전체", "접수", "취소", "거부", "완료"]}
+            items={["전체", "신청", "취소", "거부", "완료"]}
             style={{
               height: 36,
               width: 90,

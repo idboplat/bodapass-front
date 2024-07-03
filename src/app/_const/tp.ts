@@ -23,7 +23,7 @@ export const MVIO_RMRK_ITEM: Entity = [
 
 /** 신청 상태 구분 */
 export const RGST_STAT_ITEM: Entity = [
-  ["REQ", "접수"],
+  ["REQ", "신청"],
   ["CAN", "취소"],
   ["REJ", "거부"],
   ["APL", "완료"],
