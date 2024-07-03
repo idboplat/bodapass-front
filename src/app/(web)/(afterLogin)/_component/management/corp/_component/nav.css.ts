@@ -23,6 +23,10 @@ export const datePickerWrap = style({
   alignItems: "center",
 });
 
+export const selectBoxWrap = style({
+  position: "relative",
+});
+
 export const inputWrap = style({
   display: "flex",
   gap: 10,

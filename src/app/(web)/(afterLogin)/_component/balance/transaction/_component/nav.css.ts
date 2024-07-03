@@ -30,6 +30,10 @@ export const datePickerWrap = style({
   gap: 10,
 });
 
+export const selectBoxWrap = style({
+  position: "relative",
+});
+
 export const btnBox = style({
   display: "flex",
   gap: 10,

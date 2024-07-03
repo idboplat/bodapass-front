@@ -5,9 +5,10 @@ import { useSetModalStore } from "@/app/_lib/modalStore";
 import { ChangeEvent, useState } from "react";
 import { useSetCorpStore } from "../_lib/store";
 import CreCorpModal from "./CreCorpModal";
-import { btnWrap, inputWrap, navWrap } from "./nav.css";
+import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import { Session } from "next-auth";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
+import SelectLabel from "@/app/_component/select/SelectLabel";
 
 enum CorpNavForm {
   corpNm = "corpNm",
@@ -75,12 +76,12 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <div>
+        <div className={selectBoxWrap}>
+          <SelectLabel>회사 유형</SelectLabel>
           <TextSelect
             value={corpGrpValue}
             onChange={onChangeSelect}
-            items={["*", "메인거래소", "중개사(G2)", "중개사(G3)", "거래소"]}
-            placeholder="회사 유형"
+            items={["전체", "메인거래소", "중개사(G2)", "중개사(G3)", "거래소"]}
             style={{
               height: 36,
               width: 100,
