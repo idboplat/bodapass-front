@@ -5,10 +5,10 @@ import EmplHome from "@web/(afterLogin)/_component/user/empl/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
 
 export const G4_PATH_LIST: Path[] = [
-  {
-    category: "운영",
-    pages: [],
-  },
+  // {
+  //   category: "운영",
+  //   pages: [],
+  // },
   {
     category: "사용자",
     pages: [{ title: "관리자 관리", number: "400202", Component: EmplHome }],
