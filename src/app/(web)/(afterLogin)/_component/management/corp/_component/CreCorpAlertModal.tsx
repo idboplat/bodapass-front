@@ -29,13 +29,13 @@ export default function CreCorpAlertModal({
           </div>
           <div className={modalContent}>
             <p>{`사용자 ID : ${id}`}</p>
-            <p>{`패스워드 : ${password}`}</p>
+            <p>{`패스워드  : ${password}`}</p>
           </div>
-          <div className={modalBtnBox}>
-            <button className={modalDefaultBtn} type="button" onClick={onClose}>
-              확인
-            </button>
-          </div>
+        </div>
+        <div className={modalBtnBox}>
+          <button className={modalDefaultBtn} type="button" onClick={onClose}>
+            확인
+          </button>
         </div>
       </div>
     </Modal>
