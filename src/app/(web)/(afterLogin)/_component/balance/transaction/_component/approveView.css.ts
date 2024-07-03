@@ -12,7 +12,7 @@ export const row = style({
   display: "flex",
   borderBottom: "1px solid #ccc",
   selectors: {
-    "&:last-child": {
+    "&:last-of-type": {
       borderBottom: "none",
     },
   },
