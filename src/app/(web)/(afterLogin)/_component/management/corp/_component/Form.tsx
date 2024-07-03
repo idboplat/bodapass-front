@@ -9,7 +9,7 @@ import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import { Session } from "next-auth";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import SelectLabel from "@/app/_component/select/SelectLabel";
-import { CORP_GRP_TP } from "@/type/common";
+import { corpGrpItemsMap, corpGrpTpItemsMap, getCorpGrpTpItems } from "../_const/map";
 
 enum CorpNavForm {
   corpNm = "corpNm",
@@ -27,22 +27,14 @@ export default function Form({ session }: FormProps) {
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
 
-  const openModal = () => {
-    modalAction.push(CreCorpModal, { props: { session } });
+  const openModal = async () => {
+    const corpGrpTpItems = getCorpGrpTpItems(corpGrpItemsMap, session.user.corpGrpTp);
+    await modalAction.push(CreCorpModal, { props: { session, corpGrpTpItems } });
   };
 
   // const onChange = (date: [DateType, DateType]) => {
   //   setDate(() => date);
   // };
-
-  const corpGrpItemsMap: Record<string, string[]> = {
-    G1: ["전체", "메인거래소", "중개사(G2)", "거래소"],
-    G2: ["전체", "중개사(G2)", "중개사(G3)", "거래소"],
-    G3: ["전체", "중개사(G3)", "거래소"],
-    G4: ["거래소"],
-  };
-
-  const getCorpGrpItems = (value: string): string[] => corpGrpItemsMap[value] || [];
 
   const onChangeCorpGrpSelect = (value: string) => {
     setCorpGrpValue(() => value);
@@ -91,7 +83,7 @@ export default function Form({ session }: FormProps) {
           <TextSelect
             value={corpGrpValue}
             onChange={onChangeCorpGrpSelect}
-            items={getCorpGrpItems(session.user.corpGrpTp)}
+            items={getCorpGrpTpItems(corpGrpTpItemsMap, session.user.corpGrpTp)}
             style={{
               height: 36,
               width: 100,

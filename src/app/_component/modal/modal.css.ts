@@ -50,3 +50,9 @@ export const label = style([
     marginBottom: 2,
   },
 ]);
+
+export const modalContent = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 5,
+});

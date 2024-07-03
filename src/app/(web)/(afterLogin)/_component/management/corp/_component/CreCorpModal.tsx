@@ -4,8 +4,7 @@ import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { ModalProps } from "@/app/_lib/modalStore";
-import { CORP_GRP, CORP_GRP_TP } from "@/type/common";
+import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { inputBox, label } from "./creCorpModal.css";
@@ -14,6 +13,10 @@ import { TBW_000000_P01 } from "@/type/api";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { useSetCorpStore } from "../_lib/store";
+import CreCorpAlertModal from "./CreCorpAlertModal";
+import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
+import { selectBoxWrap } from "./nav.css";
+import SelectLabel from "@/app/_component/select/SelectLabel";
 
 const ID = "creCorpModal";
 
@@ -24,23 +27,24 @@ enum CreCorpInput {
   pw = ID + "Pw",
 }
 
-type corpGrpType = "G1" | "G2" | "G3" | "G4";
-
 interface CreCorpModalProps {
   session: Session;
+  corpGrpTpItems: string[];
 }
 
 export default function CreCorpModal({
   onClose,
   onSuccess,
   session,
+  corpGrpTpItems,
 }: ModalProps<CreCorpModalProps>) {
-  const [corpGrpTp, setCorpGrpTp] = useState<corpGrpType | null>(null);
+  const [corpGrpTp, setCorpGrpTp] = useState(corpGrpTpItems[0]);
   const [corpNm, setCorpNm] = useState("");
   const [mastCorpCd, setMastCorpCd] = useState("");
   const [pwCheck] = useState(false);
 
   const actions = useSetCorpStore();
+  const modalAction = useSetModalStore();
 
   const mutation = useMutation({
     mutationKey: ["TBW_000000_P01"],
@@ -54,10 +58,15 @@ export default function CreCorpModal({
       if (TBW_000000_P01Data === null) {
         throw new Error("TBW_000000_P01Data is null");
       }
+      return {
+        id: TBW_000000_P01Data[0].F04,
+        password: TBW_000000_P01Data[0].F05,
+      };
     },
-    onSuccess: () => {
+    onSuccess: async (data) => {
       toast.success("회사가 등록되었습니다.");
       actions.reset();
+      await modalAction.push(CreCorpAlertModal, { props: { ...data } });
       onSuccess(true);
     },
   });
@@ -65,24 +74,13 @@ export default function CreCorpModal({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+      const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
+      setCorpGrpTp(() => item?.[0] || "");
       mutation.mutate();
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       }
-    }
-  };
-
-  const getCorpGrpTpItems = (corpGrpTp: string) => {
-    switch (corpGrpTp) {
-      case "G1":
-        return ["G2", "G4"];
-      case "G2":
-        return ["G3", "G4"];
-      case "G3":
-        return ["G4"];
-      default:
-        return [];
     }
   };
 
@@ -98,7 +96,9 @@ export default function CreCorpModal({
     }
   };
 
-  const onChangeSelect = (value: string) => setCorpGrpTp(() => value as corpGrpType);
+  const onChangeSelect = (value: string) => {
+    setCorpGrpTp(() => value);
+  };
 
   return (
     <Modal id={ID} onClose={onClose}>
@@ -109,15 +109,17 @@ export default function CreCorpModal({
             <h3 className={css.modalTitle}>회사 등록</h3>
           </div>
           <div className={inputBox}>
-            <TextSelect
-              value={corpGrpTp}
-              onChange={onChangeSelect}
-              items={getCorpGrpTpItems("G1")}
-              placeholder="회사그룹 구분"
-              style={{
-                height: 36,
-              }}
-            />
+            <div className={selectBoxWrap}>
+              <SelectLabel>회사 그룹 구분</SelectLabel>
+              <TextSelect
+                value={corpGrpTp}
+                onChange={onChangeSelect}
+                items={corpGrpTpItems}
+                style={{
+                  height: 36,
+                }}
+              />
+            </div>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.corpNm}>
