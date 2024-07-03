@@ -1,22 +1,33 @@
 import { style } from "@vanilla-extract/css";
 
 export const wrap = style({
+  position: "relative",
   marginInline: 75,
+  border: "1px solid #ccc",
+  borderRadius: 3,
+  overflow: "hidden",
 });
 
 export const row = style({
   display: "flex",
-  marginBottom: 10,
+  borderBottom: "1px solid #ccc",
+  selectors: {
+    "&:last-child": {
+      borderBottom: "none",
+    },
+  },
 });
 
 export const label = style({
   fontWeight: 600,
-  textAlign: "right",
+  textAlign: "center",
   width: 120,
-  marginRight: 10,
+  borderRight: "1px solid #ccc",
+  padding: "5px 10px",
 });
 
 export const text = style({
   width: "100%",
   textAlign: "center",
+  padding: "5px 10px",
 });
