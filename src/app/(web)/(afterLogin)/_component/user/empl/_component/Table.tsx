@@ -28,6 +28,7 @@ export default function Table({ session }: TableProps) {
         svcId: "TBW_000001_Q01",
         session,
         data: [
+          session.user.corpCd,
           emplStore.emplId, //사원ID
           emplStore.extnUserId, //입력 사원 ID
           emplStore.emplName, //입력 사원명
@@ -62,7 +63,9 @@ export default function Table({ session }: TableProps) {
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}
-          overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
+          overlayNoRowsTemplate={
+            emplStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
           headerHeight={28}
           rowHeight={28}
         />

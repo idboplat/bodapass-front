@@ -22,7 +22,7 @@ export default function Table({ session }: { session: Session }) {
       const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
         svcId: "TBW_000300_Q01",
-        data: [coinStore.mvioTp], // 입출고 구분
+        data: [session.user.corpCd, coinStore.mvioTp], // 입출고 구분
         pgSize: 20,
       });
       const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];
@@ -52,7 +52,9 @@ export default function Table({ session }: { session: Session }) {
       <AgGridReact
         columnDefs={colDefs}
         rowData={rowData}
-        overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
+        overlayNoRowsTemplate={
+          coinStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+        }
         headerHeight={28}
         rowHeight={28}
       />
