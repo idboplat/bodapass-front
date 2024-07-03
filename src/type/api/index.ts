@@ -9,6 +9,8 @@ export type TBW_000000_P01 = RspnData<{
   F01: string;
   F02: string;
   F03: string;
+  F04: string;
+  F05: string;
 }>;
 
 /** 상품 정보(종목)(코인선물) 조회  */
