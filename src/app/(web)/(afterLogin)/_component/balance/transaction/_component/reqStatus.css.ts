@@ -10,7 +10,7 @@ export const req = style({
     backgroundColor: "#5C83E6",
   },
   ":disabled": {
-    backgroundColor: "unset",
+    background: "#d9e3f4",
     cursor: "default",
   },
 });

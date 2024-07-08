@@ -21,8 +21,8 @@ export const G1_PATH_LIST: Path[] = [
     category: "잔고",
     pages: [
       { title: "발행내역", number: "100501", Component: DeployHome },
-      { title: "GLE 구매 신청 내역(B2B)", number: "100502", Component: TransactionHome },
-      { title: "입출금 내역(B2C)", number: "100503", Component: TransactionHome },
+      { title: "회사 입금 신청 내역", number: "100502", Component: TransactionHome },
+      // { title: "입출금 내역(B2C)", number: "100503", Component: TransactionHome },
     ],
   },
   // {

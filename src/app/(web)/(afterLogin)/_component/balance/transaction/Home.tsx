@@ -17,9 +17,9 @@ export default async function TransactionHome({ session, page }: HomeProps<Trans
 
   const map: Record<string, Meta> = {
     "100502": { cols: GRID_100502_COLS, svcId: "TBW_001000_Q01", showReqBtn: false },
-    "100503": { cols: GRID_100503_COLS, svcId: "TBW_001000_R01", showReqBtn: false },
+    // "100503": { cols: GRID_100503_COLS, svcId: "TBW_001000_R01", showReqBtn: false },
     "200502": { cols: GRID_200502_COLS, svcId: "TBW_001000_Q01", showReqBtn: true },
-    "200503": { cols: GRID_200503_COLS, svcId: "TBW_001000_R01", showReqBtn: false },
+    // "200503": { cols: GRID_200503_COLS, svcId: "TBW_001000_R01", showReqBtn: false },
     "400502": { cols: GRID_400502_COLS, svcId: "TBW_001000_Q01", showReqBtn: true },
     "400503": { cols: GRID_400503_COLS, svcId: "TBW_001000_R01", showReqBtn: false },
   };
