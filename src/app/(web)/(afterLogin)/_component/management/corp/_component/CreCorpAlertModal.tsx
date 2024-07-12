@@ -27,7 +27,7 @@ export default function CreCorpAlertModal({
   const [isCheck, setIsCheck] = useState(false);
 
   const onClickCopy = () => {
-    window.navigator.clipboard.writeText(`사용자 ID : ${id}\n패스워드 : ${password}`);
+    window.navigator.clipboard.writeText(`관리자 ID : ${id}\n패스워드 : ${password}`);
     toast.success("클립보드에 복사 되었습니다.");
     setIsCheck(true);
   };
@@ -41,13 +41,13 @@ export default function CreCorpAlertModal({
           </div>
           <div className={modalContent}>
             <div className={textBox}>
-              <p>{`사용자 ID : ${id}`}</p>
+              <p>{`관리자 ID : ${id}`}</p>
             </div>
             <div className={textBox}>
               <p>{`패스워드  : ${password}`}</p>
             </div>
             <div className={descBox}>
-              <p className="essential">사용자 아이디와 패스워드를 잃어버리지 마세요.</p>
+              <p className="essential">관리자 ID와 패스워드를 잃어버리지 마세요.</p>
             </div>
           </div>
         </div>
