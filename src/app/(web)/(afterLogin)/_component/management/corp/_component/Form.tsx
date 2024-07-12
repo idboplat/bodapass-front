@@ -10,6 +10,7 @@ import { Session } from "next-auth";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import { corpGrpItemsMap, corpGrpTpItemsMap, getCorpGrpTpItems } from "../_const/map";
+import CreCorpAlertModal from "./CreCorpAlertModal";
 
 enum CorpNavForm {
   corpNm = "corpNm",
