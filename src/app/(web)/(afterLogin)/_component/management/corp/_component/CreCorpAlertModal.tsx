@@ -7,10 +7,10 @@ import {
   modalTitle,
   modalContent,
 } from "@/app/_component/modal/modal.css";
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
-import CopyButton from "@/app/_component/btn/CopyBtn";
+import { modalDefaultBtn, modalSaveBtn } from "@/app/_component/modal/modalBtn.css";
 import { descBox, textBox } from "./creCorpAlertModal.css";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ID = "creCorpAlertModal";
 
@@ -24,8 +24,13 @@ export default function CreCorpAlertModal({
   password,
   onClose,
 }: ModalProps<CreCorpAlertModalProps>) {
-  const [isCheckId, setIsCheckId] = useState(false);
-  const [isCheckPw, setIsCheckPw] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
+
+  const onClickCopy = () => {
+    window.navigator.clipboard.writeText(`사용자 ID : ${id}\n패스워드 : ${password}`);
+    toast.success("클립보드에 복사 되었습니다.");
+    setIsCheck(true);
+  };
 
   return (
     <Modal id={ID}>
@@ -37,35 +42,21 @@ export default function CreCorpAlertModal({
           <div className={modalContent}>
             <div className={textBox}>
               <p>{`사용자 ID : ${id}`}</p>
-              <CopyButton
-                size={20}
-                text={id}
-                onClick={() => setIsCheckId(true)}
-                check={isCheckId}
-              />
             </div>
             <div className={textBox}>
               <p>{`패스워드  : ${password}`}</p>
-              <CopyButton
-                size={20}
-                text={id}
-                onClick={() => setIsCheckPw(true)}
-                check={isCheckPw}
-              />
             </div>
             <div className={descBox}>
-              <p className="essential">사용자 아이디와 패스워드를 복사하여 저장해주세요.</p>
+              <p className="essential">사용자 아이디와 패스워드를 잃어버리지 마세요.</p>
             </div>
           </div>
         </div>
         <div className={modalBtnBox}>
-          <button
-            className={modalDefaultBtn}
-            type="button"
-            onClick={onClose}
-            disabled={!isCheckId || !isCheckPw}
-          >
+          <button className={modalDefaultBtn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
+          </button>
+          <button className={modalSaveBtn} type="button" onClick={onClickCopy}>
+            복사
           </button>
         </div>
       </div>

@@ -20,6 +20,7 @@ export const modalDefaultBtn = style([
   },
 ]);
 
+/** 회색버튼 */
 export const modalCancelBtn = style([
   modalDefaultBtn,
   {
@@ -33,12 +34,27 @@ export const modalCancelBtn = style([
   },
 ]);
 
+/** 빨강버튼 */
 export const modalDenyBtn = style([
   modalDefaultBtn,
   {
     backgroundColor: "#e5383b",
     ":hover": {
       backgroundColor: "#ED4043",
+    },
+    ":disabled": {
+      background: "#B0B0B0",
+    },
+  },
+]);
+
+/** 녹색버튼 */
+export const modalSaveBtn = style([
+  modalDefaultBtn,
+  {
+    backgroundColor: "#028a0f",
+    ":hover": {
+      backgroundColor: "#0F971C",
     },
     ":disabled": {
       background: "#B0B0B0",
