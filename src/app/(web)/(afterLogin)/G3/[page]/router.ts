@@ -1,5 +1,5 @@
 import { Path } from "@web/(afterLogin)/_lib/getPage";
-import EmplHome from "@web/(afterLogin)/_component/user/empl/home";
+import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import TransactionHome from "@balance/transaction/Home";
 import CorpHome from "@management/corp/Home";
 
@@ -10,7 +10,7 @@ export const G3_PATH_LIST: Path[] = [
   },
   {
     category: "사용자",
-    pages: [{ title: "관리자 관리", number: "200202", Component: EmplHome }],
+    pages: [{ title: "관리자 관리", number: "200202", Component: AdminHome }],
   },
   // {
   //   category: "로그",
