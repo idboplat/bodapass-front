@@ -188,3 +188,16 @@ export type TBW_002000_Q01 = RspnData<{
   F13: string;
   F14: string;
 }>;
+
+/** 사용자 정보(공통) 조회 */
+export type TBW_000001_S01 = RspnData<{
+  F01: string;
+  F02: string;
+  F03: string;
+  F04: string;
+  F05: string;
+  F06: string;
+  F07: string;
+  F08: string;
+  F09: string;
+}>;

@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { useSetEmplStore } from "../_lib/store";
+import { useSetAdminStore } from "../_lib/store";
 import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
 import { input } from "@web/(beforeLogin)/login/_component/loginForm.css";
 
@@ -33,7 +33,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const pwCheckRef = useRef<HTMLInputElement>(null);
   const [validationPw, setValidationPw] = useState(true);
 
-  const actions = useSetEmplStore();
+  const actions = useSetAdminStore();
   const modalStore = useSetModalStore();
 
   const mutation = useMutation({

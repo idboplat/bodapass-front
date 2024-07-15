@@ -1,15 +1,17 @@
 "use client";
 import { Session } from "next-auth";
-import { useAdminStore } from "../_lib/store";
 import Form from "./Form";
 import { useEffect } from "react";
+import { useClientStore } from "../_lib/store";
 
 interface NavProps {
   session: Session;
 }
+
 export default function Nav({ session }: NavProps) {
-  const resetTime = useAdminStore((state) => state.resetTime);
-  const actions = useAdminStore((state) => state.actions);
+  const resetTime = useClientStore((state) => state.resetTime);
+  const actions = useClientStore((state) => state.actions);
+
   useEffect(() => {
     return () => {
       actions.unmount();

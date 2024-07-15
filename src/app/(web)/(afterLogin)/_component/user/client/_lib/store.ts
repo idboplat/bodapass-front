@@ -2,58 +2,39 @@ import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
-type adminState = {
-  emplId: string;
+type clientState = {
   extnUserId: string;
-  emplName: string;
   date: [DateType, DateType];
   resetTime: string;
   nonce: number;
 };
 
-type adminActions = {
+type clientActions = {
   actions: {
-    setState: (
-      emplId: string,
-      extnUserId: string,
-      emplName: string,
-      date: [DateType, DateType],
-    ) => void;
+    setState: (extnUserId: string, date: [DateType, DateType]) => void;
     refreshPage: () => void;
-    reset: () => void;
     unmount: () => void;
   };
 };
 
-const initState: adminState = {
-  emplId: "",
+const initState: clientState = {
   extnUserId: "",
-  emplName: "",
   date: [null, null],
   resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
   nonce: 0,
 };
 
-export const useAdminStore = create<adminState & adminActions>()((set) => ({
+export const useClientStore = create<clientState & clientActions>((set) => ({
   ...initState,
   actions: {
-    setState: (emplId, extnUserId, emplName, date) => {
+    setState: (extnUserId, date) => {
       set((state) => ({
-        emplId,
         extnUserId,
-        emplName,
         date,
         nonce: state.nonce + 1,
       }));
     },
     refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
-    reset: () => {
-      set(() => ({
-        ...initState,
-        nonce: 1,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
-      }));
-    },
     unmount: () =>
       set(() => ({
         ...initState,
@@ -62,4 +43,4 @@ export const useAdminStore = create<adminState & adminActions>()((set) => ({
   },
 }));
 
-export const useSetAdminStore = () => useStore(useAdminStore, (store) => store.actions);
+export const useSetClientStore = () => useStore(useClientStore, (store) => store.actions);

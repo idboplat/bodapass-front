@@ -1,16 +1,17 @@
 "use client";
-import callTms from "@/model/callTms";
-import { TBW_000001_Q01 } from "@/type/api";
-import { useQuery } from "@tanstack/react-query";
-import PagePagination from "@/app/_component/pagination/PagePagination";
-import { AgGridReact } from "ag-grid-react";
-import classNames from "classnames";
+
 import { Session } from "next-auth";
 import { useState } from "react";
 import { GRID_COLS, RowData } from "../_const/colum";
-import { useAdminStore } from "../_lib/store";
-import { tableWrap } from "./table.css";
+import { useClientStore } from "../_lib/store";
+import { useQuery } from "@tanstack/react-query";
+import callTms from "@/model/callTms";
+import { TBW_000001_S01 } from "@/type/api";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import classNames from "classnames";
+import { AgGridReact } from "ag-grid-react";
+import { tableWrap } from "./table.css";
+import PagePagination from "@/app/_component/pagination/PagePagination";
 
 interface TableProps {
   session: Session;
@@ -19,44 +20,41 @@ interface TableProps {
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState([...GRID_COLS]);
   const [dataId, setDataId] = useState(11);
-  const adminStore = useAdminStore();
+  const clientStore = useClientStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_000001_Q01", adminStore],
+    queryKey: ["TBW_000001_S01", clientStore],
     queryFn: async () => {
-      const res = await callTms<TBW_000001_Q01>({
-        svcId: "TBW_000001_Q01",
+      const res = await callTms<TBW_000001_S01>({
+        svcId: "TBW_000001_S01",
         session,
-        data: [
-          session.user.corpCd,
-          adminStore.emplId, //사원ID
-          adminStore.extnUserId, //입력 사원 ID
-          adminStore.emplName, //입력 사원명
-        ],
+        data: [session.user.corpCd, clientStore.extnUserId],
       });
       const data = res.svcRspnData;
       return data || [];
     },
     select: (data) => {
       const result = data.map<RowData>((item) => ({
-        "관리자 코드": item.F01,
-        "관리자 ID": item.F02,
-        "관리자 명": item.F03,
+        "외부 사용자 ID": item.F02,
+        "접근 유형": item.F03 === "1" ? "사용가능" : "사용제한",
         "회사 코드": item.F04,
         "회사 명": item.F05,
-        생성자: item.F06,
-        "생성 일시": convertToStandardDateTime(item.F07),
+        "주 회사 코드": item.F06,
+        "주 회사 명": item.F07,
+        "생성 작업 ID": item.F08,
+        "생성 작업 일시": convertToStandardDateTime(item.F09),
       }));
       return result;
     },
-    enabled: adminStore.nonce > 0,
+    enabled: clientStore.nonce > 0,
   });
 
   const onClick = (page: number) => {
     setDataId(page);
   };
 
-  const rowData = adminStore.nonce === 0 ? [] : data;
+  const rowData = clientStore.nonce === 0 ? [] : data;
+
   return (
     <>
       <div className={classNames("ag-theme-alpine", tableWrap)}>
@@ -64,7 +62,7 @@ export default function Table({ session }: TableProps) {
           columnDefs={colDefs}
           rowData={rowData}
           overlayNoRowsTemplate={
-            adminStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+            clientStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
           }
           headerHeight={28}
           rowHeight={28}
