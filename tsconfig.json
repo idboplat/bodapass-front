@@ -18,7 +18,7 @@
       }
     ],
     "paths": {
-      "@balance/*": ["./src/app/(web)/(afterLogin)/_component/balance/*"],
+      "@transaction/*": ["./src/app/(web)/(afterLogin)/_component/transaction/*"],
       "@log/*": ["./src/app/(web)/(afterLogin)/_component/log/*"],
       "@management/*": ["./src/app/(web)/(afterLogin)/_component/management/*"],
       "@order/*": ["./src/app/(web)/(afterLogin)/_component/order/*"],

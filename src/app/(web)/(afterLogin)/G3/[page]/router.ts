@@ -1,6 +1,6 @@
 import { Path } from "@web/(afterLogin)/_lib/getPage";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
-import TransactionHome from "@balance/transaction/Home";
+import B2bHome from "@transaction/b2b/_component/Home";
 import CorpHome from "@management/corp/Home";
 
 export const G3_PATH_LIST: Path[] = [
@@ -18,9 +18,6 @@ export const G3_PATH_LIST: Path[] = [
   // },
   {
     category: "잔고",
-    pages: [
-      { title: "회사 입금 신청 내역", number: "200502", Component: TransactionHome },
-      // { title: "입출금 내역(B2C)", number: "200503", Component: TransactionHome },
-    ],
+    pages: [{ title: "회사 입금 신청 내역", number: "200502", Component: B2bHome }],
   },
 ];

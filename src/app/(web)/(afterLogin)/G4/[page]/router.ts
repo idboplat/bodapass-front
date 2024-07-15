@@ -1,5 +1,6 @@
-import DeployHome from "@balance/deploy/Home";
-import TransactionHome from "@balance/transaction/Home";
+import DeployHome from "@transaction/deploy/Home";
+import B2bHome from "@transaction/b2b/_component/Home";
+import B2cHome from "@transaction/b2c/_component/Home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
@@ -23,12 +24,12 @@ export const G4_PATH_LIST: Path[] = [
       {
         title: "회사 입금 신청 내역",
         number: "400502",
-        Component: TransactionHome,
+        Component: B2bHome,
       },
       {
         title: "고객 입출금 신청 내역",
         number: "400503",
-        Component: TransactionHome,
+        Component: B2cHome,
       },
     ],
   },
