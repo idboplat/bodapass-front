@@ -1,7 +1,7 @@
 import DeployHome from "@balance/deploy/Home";
 import TransactionHome from "@balance/transaction/Home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
-import EmplHome from "@web/(afterLogin)/_component/user/empl/home";
+import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
 
 export const G1_PATH_LIST: Path[] = [
@@ -11,7 +11,7 @@ export const G1_PATH_LIST: Path[] = [
   },
   {
     category: "사용자",
-    pages: [{ title: "관리자 관리", number: "100202", Component: EmplHome }],
+    pages: [{ title: "관리자 관리", number: "100202", Component: AdminHome }],
   },
   // {
   //   category: "로그",
