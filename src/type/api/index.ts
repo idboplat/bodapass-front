@@ -121,6 +121,7 @@ export type TBW_000000_R01 = RspnData<{
   F06: string;
   F07: string;
   F08: string;
+  F09: string;
 }>;
 
 /** 그룹 코드(사원)(공통) 조회  */
