@@ -38,8 +38,9 @@ export default function Table({ session }: TableProps) {
         "회사 명": item.F02,
         "회사 유형": convertText(CORP_GRP_ITEM, item.F03),
         "상위 회사 코드": item.F04,
-        생성자: item.F05,
-        "생성 일시": convertToStandardDateTime(item.F06),
+        "상위 회사 명": item.F05,
+        생성자: item.F06,
+        "생성 일시": convertToStandardDateTime(item.F07),
       }));
       return result;
     },

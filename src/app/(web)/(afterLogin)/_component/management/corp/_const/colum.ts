@@ -27,11 +27,17 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
+    field: "상위 회사 명",
+    width: 100,
+    resizable: true,
+    editable: true,
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
+  },
+  {
     field: "생성자",
     width: 180,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
     field: "생성 일시",
