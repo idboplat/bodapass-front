@@ -1,5 +1,6 @@
 import DeployHome from "@balance/deploy/Home";
 import TransactionHome from "@balance/transaction/Home";
+import PnlHome from "@order/pnl/Home";
 import ClientHome from "@user/client/home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
@@ -22,7 +23,11 @@ export const G1_PATH_LIST: Path[] = [
   //   pages: [],
   // },
   {
-    category: "잔고",
+    category: "주문",
+    pages: [{ title: "고객 손익 내역", number: "100404", Component: PnlHome }],
+  },
+  {
+    category: "입출금",
     pages: [
       { title: "발행내역", number: "100501", Component: DeployHome },
       { title: "회사 입금 신청 내역", number: "100502", Component: TransactionHome },
