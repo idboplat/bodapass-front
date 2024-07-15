@@ -42,12 +42,12 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       });
 
       const TBW_002000_Q01Data = TBW_002000_Q01Res.svcRspnData;
-      if (!TBW_002000_Q01Data) throw new Error(`TBW_002000_Q01Data is null`);
+      if (!TBW_002000_Q01Data) throw new Error("TBW_002000_Q01Data is null");
       return TBW_002000_Q01Data[0];
     },
     onSuccess: (data) => {
       // 단건 조회 성공 시 상태 변경
-      queryClient.setQueryData<TBW_001000_Q01>(["TBW_002000_Q01", transactionStore], (prev) => {
+      queryClient.setQueryData<TBW_001000_Q01>(["TBW_001000_Q01", transactionStore], (prev) => {
         if (!prev) return prev;
         const arr = [...prev];
         arr[index] = data;

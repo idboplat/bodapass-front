@@ -12,7 +12,7 @@ export const GRID_400502_COLS: ColDef[] = [
     width: 100,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-start", paddingRight: "7px" },
+    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
     field: "일자",

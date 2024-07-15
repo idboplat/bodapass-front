@@ -1,14 +1,14 @@
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 import { useSetModalStore } from "@/app/_lib/modalStore";
+import callTms from "@/model/callTms";
+import { TBW_001000_R01, TBW_002000_Q01 } from "@/type/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { Session } from "next-auth";
 import { RowData } from "../_const/row.type";
+import { useTransactionClientStore } from "../_lib/store";
 import ApproveModal from "./ApproveModal";
 import { req } from "./reqStatus.css";
-import { useTransactionClientStore } from "../_lib/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import callTms from "@/model/callTms";
-import { TBW_001000_Q01, TBW_002000_Q01 } from "@/type/api";
-import ErrorModal from "@/app/_component/modal/ErrorModal";
 
 interface ReqStatusProps {
   session: Session;
@@ -41,12 +41,12 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       });
 
       const TBW_002000_Q01Data = TBW_002000_Q01Res.svcRspnData;
-      if (!TBW_002000_Q01Data) throw new Error(`TBW_002000_Q01Data is null`);
+      if (!TBW_002000_Q01Data) throw new Error("TBW_002000_Q01Data is null");
       return TBW_002000_Q01Data[0];
     },
     onSuccess: (data) => {
       // 단건 조회 성공 시 상태 변경
-      queryClient.setQueryData<TBW_001000_Q01>(["TBW_002000_Q01", transactionStore], (prev) => {
+      queryClient.setQueryData<TBW_001000_R01>(["TBW_001000_R01", transactionStore], (prev) => {
         if (!prev) return prev;
         const arr = [...prev];
         arr[index] = data;
