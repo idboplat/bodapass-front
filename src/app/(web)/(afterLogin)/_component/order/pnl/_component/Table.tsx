@@ -24,7 +24,7 @@ export default function Table({ session }: TableProps) {
   const { data } = useQuery({
     queryKey: ["TBW_006000_R01", pnlStore],
     queryFn: async () => {
-      const TBW_000000_R01Res = await callTms<TBW_006000_R01>({
+      const TBW_006000_R01Res = await callTms<TBW_006000_R01>({
         session,
         svcId: "TBW_006000_R01",
         data: [
@@ -35,8 +35,8 @@ export default function Table({ session }: TableProps) {
         ],
         pgSize: 20,
       });
-      const TBW_000000_R01Data = TBW_000000_R01Res.svcRspnData || [];
-      return TBW_000000_R01Data;
+      const TBW_006000_R01Data = TBW_006000_R01Res.svcRspnData || [];
+      return TBW_006000_R01Data;
     },
     select: (data) => {
       const result = data.map((item) => ({
