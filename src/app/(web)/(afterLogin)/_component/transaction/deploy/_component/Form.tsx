@@ -15,9 +15,10 @@ import { Session } from "next-auth";
 interface FormProps {
   session: Session;
 }
+const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const date = useCoinStore((state) => state.date);
+  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
   const [mvioTp, setMvioTp] = useState("");
   const actions = useSetCoinStore();
 
@@ -27,20 +28,20 @@ export default function Form({ session }: FormProps) {
     modalAction.push(CreCoinModal, { props: { session } });
   };
 
-  // const onChange = (date: [DateType, DateType]) => {
-  //   actions.setState({ date });
-  // };
-
-  // const onDateBtnClick = (startDate: DateType, endDate: DateType) => {
-  //   actions.setState({ date: [startDate, endDate] });
-  // };
-
-  const onChangeSelect = (value: string) => {
-    setMvioTp(() => value);
+  const onDateChange = (date: [DateType, DateType]) => {
+    setDate(() => date);
   };
+
+  const onDateBtnClick = (startDate: DateType) => {
+    setDate(() => [startDate, today]);
+    actions.setDate(date);
+  };
+
+  // const onChangeSelect = (value: string) => {
+  //   setMvioTp(() => value);
+  // };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (mvioTp === "입고") {
       actions.setState("I");
     } else if (mvioTp === "출고") {
@@ -48,9 +49,10 @@ export default function Form({ session }: FormProps) {
     } else {
       actions.setState("");
     }
+
+    actions.setDate(date);
   };
 
-  const today = new Date();
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       {/* <div className={inputWrap}>
@@ -67,23 +69,23 @@ export default function Form({ session }: FormProps) {
           />
         </div>
       </div> */}
-      {/* <div className={historyFilterwrap}>
+      <div className={historyFilterwrap}>
         <div className={btnWrap}>
-          <DateBtn onClick={() => onDateBtnClick(addDays(today, -1), today)}>1D</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1), today)}>1W</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1), today)}>1M</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -3), today)}>3M</DateBtn>
+          <DateBtn onClick={() => onDateBtnClick(addDays(today, -1))}>1Day</DateBtn>
+          <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1))}>1Week</DateBtn>
+          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1))}>1Month</DateBtn>
+          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -3))}>3Month</DateBtn>
         </div>
         <div>
-          <RangePicker date={date} onChange={onChange} />
+          <RangePicker date={date} onChange={onDateChange} />
         </div>
-      </div> */}
+        <button className={navBtn} type="submit">
+          내역 조회
+        </button>
+      </div>
       <div className={btnWrap}>
         <button className={navBtn} onClick={openModal} type="button">
-          추가발행
-        </button>
-        <button className={navBtn} type="submit">
-          조회
+          USDL 발행
         </button>
       </div>
     </form>

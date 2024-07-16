@@ -27,6 +27,7 @@ export const navBtn = style([
     boxShadow: "rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px",
     transition: "background-color 0.2s ease, color 0.2s ease",
     color: "#fff",
+    alignSelf: "center",
     ":hover": {
       backgroundColor: "#5C83E6",
     },
@@ -37,7 +38,7 @@ export const navBtn = style([
 ]);
 
 export const dateBtn = style({
-  width: 50,
+  minWidth: 70,
   backgroundColor: "#EFEFEF",
   padding: "3px 7px",
   borderRadius: 3,

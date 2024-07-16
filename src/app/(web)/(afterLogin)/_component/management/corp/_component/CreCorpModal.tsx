@@ -165,7 +165,7 @@ export default function CreCorpModal({
           </div> */}
           <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.pw}>
-              관리자 Password를 입력하세요.
+              관리자 Password
             </label>
             <DefaultInput
               id={CreCorpInput.pw}

@@ -19,7 +19,8 @@ const ID = "creCoinModal";
 enum CreCoinInput {
   instCd = ID + "InstCd",
   amount = ID + "Amount",
-  otp = ID + "Otp",
+  // otp = ID + "Otp",
+  adminPw = ID + "AdminPw",
 }
 
 interface CreCoinModalProps {
@@ -31,9 +32,10 @@ export default function CreCoinModal({
   onSuccess,
   session,
 }: ModalProps<CreCoinModalProps>) {
-  const [instCd, setInstCd] = useState("");
+  const [instCd, setInstCd] = useState("USDL");
   const [amount, setAmount] = useState("");
   // const [otp, setOtp] = useState("");
+  const [adminPw, setAdminPw] = useState("");
 
   const actions = useSetCoinStore();
 
@@ -89,7 +91,7 @@ export default function CreCoinModal({
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>코인 추가발행</h3>
+            <h3 className={css.modalTitle}>USDL 발행</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.instCd}>
@@ -99,12 +101,13 @@ export default function CreCoinModal({
               id={CreCoinInput.instCd}
               value={instCd}
               onChange={onChangeInput}
-              onReset={() => setInstCd("")}
+              // onReset={() => setInstCd("")}
+              disabled
             />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.amount}>
-              입출고 수량
+              신규 발생할 USDL 수량 입력
             </label>
             <DefaultInput
               id={CreCoinInput.amount}
@@ -124,10 +127,16 @@ export default function CreCoinModal({
               onReset={() => setOtp("")}
             />
           </div> */}
+          <div className={inputBox}>
+            <label className={label} htmlFor={CreCoinInput.adminPw}>
+              관리자 Password
+            </label>
+            <DefaultInput id={CreCoinInput.adminPw} onChange={onChangeInput} type="password" />
+          </div>
         </div>
         <div className={css.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
-            등록
+            발행
           </button>
         </div>
       </form>
