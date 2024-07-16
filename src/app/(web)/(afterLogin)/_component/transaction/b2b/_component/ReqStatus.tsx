@@ -18,10 +18,10 @@ interface ReqStatusProps {
 }
 
 const STATUS_TEXT: Record<string, string> = {
-  REQ: "신청",
-  APL: "완료",
-  REJ: "거부",
-  CAN: "취소",
+  REQ: "승인 대기",
+  APL: "승인 완료",
+  REJ: "승인 반려",
+  CAN: "신청 취소",
 };
 
 export default function ReqStatus({ index, data, session }: ReqStatusProps) {

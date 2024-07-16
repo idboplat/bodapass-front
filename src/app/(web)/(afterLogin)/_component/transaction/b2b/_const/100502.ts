@@ -72,7 +72,7 @@ export const GRID_100502_COLS: ColDef[] = [
   },
 
   {
-    field: "작업자",
+    field: "취급인",
     width: 180,
     resizable: true,
     editable: true,
@@ -84,7 +84,7 @@ export const GRID_100502_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "수정자",
+    field: "수정인",
     width: 180,
     resizable: true,
     editable: true,

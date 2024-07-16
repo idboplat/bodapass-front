@@ -108,6 +108,9 @@ export default function Form({ session, showReqBtn }: FormProps) {
             }}
           />
         </div>
+        <button className={navBtn} type="submit">
+          조회
+        </button>
       </div>
       <div className={btnBox}>
         {showReqBtn && (
@@ -115,9 +118,6 @@ export default function Form({ session, showReqBtn }: FormProps) {
             구매 신청
           </button>
         )}
-        <button className={navBtn} type="submit">
-          조회
-        </button>
       </div>
     </form>
   );

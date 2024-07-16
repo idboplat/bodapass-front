@@ -75,9 +75,9 @@ export default function Table({ session, meta }: TableProps) {
         수량: item.F09,
         "잔고 수량": item.F10,
         "상태 구분": item.F11,
-        작업자: item.F12,
+        취급인: item.F12,
         "생성 일시": convertToStandardDateTime(item.F13),
-        수정자: item.F14,
+        수정인: item.F14,
         "수정 일시": convertToStandardDateTime(item.F15),
       }));
       return rowData;
