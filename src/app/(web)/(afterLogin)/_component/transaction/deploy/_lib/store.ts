@@ -13,6 +13,7 @@ type CoinActions = {
   actions: {
     setState: (mvioTp: string) => void;
     setPage: (page: number) => void;
+    setDate: (date: [DateType, DateType]) => void;
     reset: () => void;
     refreshPage: () => void;
     unmount: () => void;
@@ -32,6 +33,7 @@ export const useCoinStore = create<CoinState & CoinActions>()((set) => ({
   actions: {
     setState: (mvioTp) => set((state) => ({ mvioTp, nonce: state.nonce + 1 })),
     setPage: (page) => set((state) => ({ page, nonce: state.nonce + 1 })),
+    setDate: (date) => set((state) => ({ date, nonce: state.nonce + 1 })),
     refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
     reset: () => {
       set(() => ({
