@@ -15,7 +15,7 @@ interface PaginationProps {
   /** 페이지당 아이템 수
    *  @default - 20
    */
-  pageSize?: number;
+  pgSize?: number;
   /**
    * Pagination 버튼 수
    * @default - 10
@@ -26,11 +26,11 @@ interface PaginationProps {
 export default function PagePagination({
   currentPage,
   totalCnt,
-  pageSize = 20,
+  pgSize = 15,
   groupSize = 10,
   onChange,
 }: PaginationProps) {
-  const maxPage = Math.ceil(totalCnt / pageSize); //마지막 페이지
+  const maxPage = Math.ceil(totalCnt / pgSize); //마지막 페이지
 
   //현재 페이지 그룹이 몇번째 그룹인지
   const skip = Math.floor(currentPage / groupSize - 0.01);
@@ -51,7 +51,7 @@ export default function PagePagination({
 
   const disabledFirst = currentPage <= 1;
   const disabledPrev = 1 > start - groupSize;
-  const disabledNext = start + groupSize >= maxPage;
+  const disabledNext = start + groupSize > maxPage;
   const disabledLast = currentPage >= maxPage;
 
   return (

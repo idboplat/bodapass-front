@@ -1,5 +1,4 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type PnlState = {
@@ -7,12 +6,14 @@ type PnlState = {
   instCd: string;
   mvioTp: string;
   nonce: number;
-  resetTime: string;
+  resetTime: number;
+  page: number;
 };
 
 type PnlActions = {
   actions: {
     setState: (state: { mvioDd: DateType; instCd: string; mvioTp: string }) => void;
+    setPage: (page: number) => void;
     reset: () => void;
     refreshPage: () => void;
     unmount: () => void;
@@ -24,7 +25,8 @@ const initState: PnlState = {
   instCd: "",
   mvioTp: "",
   nonce: 0,
-  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+  resetTime: Date.now(),
+  page: 1,
 };
 
 export const usePnlStore = create<PnlState & PnlActions>()((set) => ({
@@ -33,17 +35,18 @@ export const usePnlStore = create<PnlState & PnlActions>()((set) => ({
     setState: (newState) => {
       set((state) => ({ ...newState, nonce: state.nonce + 1 }));
     },
+    setPage: (page) => set((state) => ({ page, nonce: state.nonce + 1 })),
     refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
     reset: () =>
       set(() => ({
         ...initState,
         nonce: 1,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+        resetTime: Date.now(),
       })),
     unmount: () =>
       set(() => ({
         ...initState,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+        resetTime: Date.now(),
       })),
   },
 }));

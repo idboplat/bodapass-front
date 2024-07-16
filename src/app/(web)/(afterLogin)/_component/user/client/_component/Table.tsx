@@ -13,13 +13,15 @@ import { AgGridReact } from "ag-grid-react";
 import { tableWrap } from "./table.css";
 import PagePagination from "@/app/_component/pagination/PagePagination";
 
+const PAGE_SIZE = 20;
+
 interface TableProps {
   session: Session;
 }
 
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState([...GRID_COLS]);
-  const [dataId, setDataId] = useState(11);
+  const [total, setTotal] = useState(-1);
   const clientStore = useClientStore();
 
   const { data } = useQuery({
@@ -29,9 +31,12 @@ export default function Table({ session }: TableProps) {
         svcId: "TBW_000001_S01",
         session,
         data: [session.user.corpCd, clientStore.extnUserId],
+        pgSize: PAGE_SIZE,
+        pgSn: clientStore.page,
       });
-      const data = res.svcRspnData;
-      return data || [];
+      setTotal(() => res.svcTotRecCnt);
+      const data = res.svcRspnData || [];
+      return data;
     },
     select: (data) => {
       const result = data.map<RowData>((item) => ({
@@ -49,10 +54,6 @@ export default function Table({ session }: TableProps) {
     enabled: clientStore.nonce > 0,
   });
 
-  const onClick = (page: number) => {
-    setDataId(page);
-  };
-
   const rowData = clientStore.nonce === 0 ? [] : data;
 
   return (
@@ -68,13 +69,15 @@ export default function Table({ session }: TableProps) {
           rowHeight={28}
         />
       </div>
-      <PagePagination
-        currentCount={dataId}
-        count={1000}
-        pageSize={10}
-        length={10}
-        onChange={onClick}
-      />
+      {total !== -1 && (
+        <PagePagination
+          currentPage={clientStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={clientStore.actions.setPage}
+        />
+      )}
     </>
   );
 }

@@ -46,7 +46,7 @@ export interface CallTmsArg {
   /** @default pgSize - 15 */
   pgSize?: number;
   /** @default pgSn - 1 */
-  pageSn?: number;
+  pgSn?: number;
   /** csv 다운로드 여부 */
   downYn?: boolean;
   /** instanceOf를 통해 분기처리 가능 */
@@ -74,13 +74,13 @@ export const genarateBody = ({
   session,
   downYn,
   data,
-  pageSn,
+  pgSn,
 }: {
   svcId: string;
   pgSize?: number;
   session: Session | null;
   downYn?: boolean;
-  pageSn?: number;
+  pgSn?: number;
   data: any[];
 }) => {
   /** YYYYMMDDHHmmssSSS */
@@ -93,7 +93,7 @@ export const genarateBody = ({
     svcMdtyYn: true,
     svcCsvDownYn: downYn || false,
     svcRqstPageSize: pgSize ?? 15, //default 15
-    svcRqstPageSn: pageSn || 1,
+    svcRqstPageSn: pgSn || 1,
     svcRqstData: [argumentCustom(data)], // svcRqstData 배열 초기화
   };
 
@@ -115,7 +115,7 @@ const callTms = async <T extends RspnData<any>>({
   data,
   pgSize,
   downYn,
-  pageSn,
+  pgSn,
   ignore,
 }: CallTmsArg) => {
   const body = genarateBody({
@@ -124,7 +124,7 @@ const callTms = async <T extends RspnData<any>>({
     session,
     downYn,
     data,
-    pageSn,
+    pgSn: pgSn,
   });
 
   const jsonBody = JSON.stringify(body);

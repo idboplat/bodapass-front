@@ -10,9 +10,13 @@ import { Session } from "next-auth";
 import { TBW_000300_Q01 } from "@/type/api";
 import { useCoinStore } from "../_lib/store";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
+import PagePagination from "@/app/_component/pagination/PagePagination";
+
+const PAGE_SIZE = 20;
 
 export default function Table({ session }: { session: Session }) {
   const [colDefs] = useState([...GRID_COLS]);
+  const [total, setTotal] = useState(-1);
   const coinStore = useCoinStore();
 
   const { data } = useQuery({
@@ -22,8 +26,11 @@ export default function Table({ session }: { session: Session }) {
         session,
         svcId: "TBW_000300_Q01",
         data: [session.user.corpCd, coinStore.mvioTp], // 입출고 구분
-        pgSize: 20,
+        pgSize: PAGE_SIZE,
+        pgSn: coinStore.page,
       });
+
+      setTotal(() => TBW_000300_Q01Res.svcTotRecCnt);
       const TBW_000300_Q01Data = TBW_000300_Q01Res.svcRspnData || [];
       return TBW_000300_Q01Data;
     },
@@ -47,16 +54,27 @@ export default function Table({ session }: { session: Session }) {
   const rowData = coinStore.nonce === 0 ? [] : data;
 
   return (
-    <div className={classNames("ag-theme-alpine", tableWrap)}>
-      <AgGridReact
-        columnDefs={colDefs}
-        rowData={rowData}
-        overlayNoRowsTemplate={
-          coinStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
-        }
-        headerHeight={28}
-        rowHeight={28}
-      />
-    </div>
+    <>
+      <div className={classNames("ag-theme-alpine", tableWrap)}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={
+            coinStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
+          headerHeight={28}
+          rowHeight={28}
+        />
+      </div>
+      {total !== -1 && (
+        <PagePagination
+          currentPage={coinStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={coinStore.actions.setPage}
+        />
+      )}
+    </>
   );
 }

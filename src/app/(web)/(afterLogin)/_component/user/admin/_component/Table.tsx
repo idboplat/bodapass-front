@@ -12,13 +12,15 @@ import { useAdminStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 
+const PAGE_SIZE = 20;
+
 interface TableProps {
   session: Session;
 }
 
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState([...GRID_COLS]);
-  const [dataId, setDataId] = useState(11);
+  const [total, setTotal] = useState(-1);
   const adminStore = useAdminStore();
 
   const { data } = useQuery({
@@ -33,12 +35,15 @@ export default function Table({ session }: TableProps) {
           adminStore.extnUserId, //입력 사원 ID
           adminStore.emplName, //입력 사원명
         ],
+        pgSize: PAGE_SIZE,
+        pgSn: adminStore.page,
       });
-      const data = res.svcRspnData;
-      return data || [];
+      setTotal(() => res.svcTotRecCnt);
+      const data = res.svcRspnData || [];
+      return data;
     },
     select: (data) => {
-      const result = data.map<RowData>((item) => ({
+      const rowData = data.map<RowData>((item) => ({
         "관리자 코드": item.F01,
         "관리자 ID": item.F02,
         "관리자 명": item.F03,
@@ -47,16 +52,13 @@ export default function Table({ session }: TableProps) {
         생성자: item.F06,
         "생성 일시": convertToStandardDateTime(item.F07),
       }));
-      return result;
+      return rowData;
     },
     enabled: adminStore.nonce > 0,
   });
 
-  const onClick = (page: number) => {
-    setDataId(page);
-  };
-
   const rowData = adminStore.nonce === 0 ? [] : data;
+
   return (
     <>
       <div className={classNames("ag-theme-alpine", tableWrap)}>
@@ -70,13 +72,15 @@ export default function Table({ session }: TableProps) {
           rowHeight={28}
         />
       </div>
-      <PagePagination
-        currentCount={dataId}
-        count={1000}
-        pageSize={10}
-        length={10}
-        onChange={onClick}
-      />
+      {total !== -1 && (
+        <PagePagination
+          currentPage={adminStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={adminStore.actions.setPage}
+        />
+      )}
     </>
   );
 }

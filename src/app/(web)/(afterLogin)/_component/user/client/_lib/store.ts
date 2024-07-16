@@ -1,17 +1,18 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type clientState = {
   extnUserId: string;
   date: [DateType, DateType];
-  resetTime: string;
   nonce: number;
+  resetTime: number;
+  page: number;
 };
 
 type clientActions = {
   actions: {
     setState: (extnUserId: string, date: [DateType, DateType]) => void;
+    setPage: (page: number) => void;
     refreshPage: () => void;
     unmount: () => void;
   };
@@ -20,8 +21,9 @@ type clientActions = {
 const initState: clientState = {
   extnUserId: "",
   date: [null, null],
-  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
   nonce: 0,
+  resetTime: Date.now(),
+  page: 1,
 };
 
 export const useClientStore = create<clientState & clientActions>((set) => ({
@@ -34,11 +36,12 @@ export const useClientStore = create<clientState & clientActions>((set) => ({
         nonce: state.nonce + 1,
       }));
     },
+    setPage: (page) => set((state) => ({ page, nonce: state.nonce + 1 })),
     refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
     unmount: () =>
       set(() => ({
         ...initState,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+        resetTime: Date.now(),
       })),
   },
 }));

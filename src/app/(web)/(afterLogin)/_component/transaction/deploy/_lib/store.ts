@@ -1,18 +1,18 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { form } from "@web/(beforeLogin)/login/_component/loginForm.css";
-import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type CoinState = {
   date: [DateType, DateType];
   mvioTp: string;
   nonce: number;
-  resetTime: string;
+  resetTime: number;
+  page: number;
 };
 
 type CoinActions = {
   actions: {
     setState: (mvioTp: string) => void;
+    setPage: (page: number) => void;
     reset: () => void;
     refreshPage: () => void;
     unmount: () => void;
@@ -23,25 +23,27 @@ const initState: CoinState = {
   date: [null, null],
   mvioTp: "",
   nonce: 0,
-  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+  resetTime: Date.now(),
+  page: 1,
 };
 
 export const useCoinStore = create<CoinState & CoinActions>()((set) => ({
   ...initState,
   actions: {
     setState: (mvioTp) => set((state) => ({ mvioTp, nonce: state.nonce + 1 })),
+    setPage: (page) => set((state) => ({ page, nonce: state.nonce + 1 })),
     refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
     reset: () => {
       set(() => ({
         ...initState,
         nonce: 1,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+        resetTime: Date.now(),
       }));
     },
     unmount: () =>
       set(() => ({
         ...initState,
-        resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+        resetTime: Date.now(),
       })),
   },
 }));
