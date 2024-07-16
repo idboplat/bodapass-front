@@ -80,6 +80,9 @@ export default function Form({ session }: FormProps) {
               onReset={() => setEmplName(() => "")}
             />
           </div>
+          <button type="submit" className={navBtn}>
+            조회
+          </button>
         </div>
         {/* <div className={datePickerWrap}>
           <div>등록일</div>
@@ -88,10 +91,7 @@ export default function Form({ session }: FormProps) {
       </div>
       <div className={btnWrap}>
         <button type="button" className={navBtn} onClick={openModal}>
-          사원 등록
-        </button>
-        <button type="submit" className={navBtn}>
-          조회
+          관리자 생성
         </button>
       </div>
     </form>

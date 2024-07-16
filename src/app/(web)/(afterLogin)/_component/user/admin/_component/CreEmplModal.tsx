@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useSetAdminStore } from "../_lib/store";
 import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
 import { input } from "@web/(beforeLogin)/login/_component/loginForm.css";
+import { checkEnglishNumericSpecial, checkKoreanEnglishNumericSpecial } from "@/app/_lib/regexp";
 
 const ID = "creEmplModal";
 
@@ -22,6 +23,7 @@ enum CreEmplInput {
   emplName = ID + "EmplName",
   pw = ID + "Pw",
   pwCheck = ID + "PwCheck",
+  adminPw = ID + "AdminPw",
 }
 
 interface CreEmplModalProps {
@@ -66,11 +68,19 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   const handleSubmit = async (e: any) => {
     try {
       e.preventDefault();
-      const emplName = e.target[CreEmplInput.emplName].value;
-      const extnUserId = e.target[CreEmplInput.extnUserId].value;
-      const pw = e.target[CreEmplInput.pw].value;
+      const extnUserId = e.target[CreEmplInput.extnUserId].value.trim();
+      const emplName = e.target[CreEmplInput.emplName].value.trim();
+      const pw = e.target[CreEmplInput.pw].value.trim();
+      const adminPw = e.target[CreEmplInput.pw].value;
 
+      if (!checkEnglishNumericSpecial(extnUserId))
+        throw new Error("관리자 ID는 영문, 숫자, 특수문자만 입력 가능합니다.");
+      if (!checkKoreanEnglishNumericSpecial(emplName))
+        throw new Error("신규 관리자 명은 한글, 영문, 숫자, 특수문자만 입력 가능합니다.");
       if (pw === "") throw new Error("비밀번호를 입력해주세요.");
+      if (!checkEnglishNumericSpecial(pw) || pw.length < 7)
+        throw new Error("비밀번호는 영문, 숫자, 특수문자만 입력 가능하며 7자리 이상이어야 합니다.");
+
       mutation.mutate([session.user.corpCd, extnUserId.trim(), emplName.trim(), pw]);
     } catch (error) {
       if (error instanceof Error) {
@@ -85,19 +95,25 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>사원등록</h3>
+            <h3 className={css.modalTitle}>관리자 생성</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.extnUserId}>
-              사원 ID
+              관리자 ID
             </label>
-            <DefaultInput id={CreEmplInput.extnUserId} />
+            <DefaultInput
+              id={CreEmplInput.extnUserId}
+              placeholder="영문, 숫자, 특수문자만 입력 가능합니다."
+            />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.emplName}>
-              신규 사원명
+              신규 관리자 명
             </label>
-            <DefaultInput id={CreEmplInput.emplName} />
+            <DefaultInput
+              id={CreEmplInput.emplName}
+              placeholder="한글, 영문, 숫자, 특수문자만 입력 가능합니다."
+            />
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.pw}>
@@ -108,6 +124,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
               type={"password"}
               inputRef={pwRef}
               onChange={checkPw}
+              placeholder="영문, 숫자, 특수문자만 입력 가능하며 7자 이상이어야 합니다."
             />
           </div>
           <div className={inputBox}>
@@ -122,6 +139,12 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             />
             <div className={pwCheckBox}>{!validationPw ? "비밀번호가 일치하지 않습니다." : ""}</div>
           </div>
+          <div className={inputBox}>
+            <label className={label} htmlFor={CreEmplInput.pw}>
+              관리자 Password
+            </label>
+            <DefaultInput id={CreEmplInput.adminPw} type="password" />
+          </div>
         </div>
         <div className={css.modalBtnBox}>
           <button
@@ -129,7 +152,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             type="submit"
             disabled={validationPw === false || mutation.isPending}
           >
-            등록
+            관리자 생성
           </button>
         </div>
       </form>
