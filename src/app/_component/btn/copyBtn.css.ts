@@ -2,9 +2,10 @@ import { style } from "@vanilla-extract/css";
 
 export const btn = style({
   display: "inline-block",
-  transition: "background-color 0.3s",
+  // transition: "background-color 0.3s",
+  color: "#759cff",
   ":hover": {
-    backgroundColor: "#f0f0f0",
+    // backgroundColor: "#f0f0f0",
   },
   ":disabled": {
     cursor: "default",

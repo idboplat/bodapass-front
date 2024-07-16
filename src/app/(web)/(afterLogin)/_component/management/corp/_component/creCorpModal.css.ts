@@ -1,9 +1,13 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const inputBox = style([
   {
     marginBottom: 14,
   },
+]);
+
+export const duplicateCheckInput = style([
+  { display: "flex", justifyContent: "space-between", gap: 10 },
 ]);
 
 export const checkBoxDiv = style([

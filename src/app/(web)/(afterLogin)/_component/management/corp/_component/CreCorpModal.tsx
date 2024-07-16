@@ -7,7 +7,7 @@ import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { inputBox, label } from "./creCorpModal.css";
+import { duplicateCheckInput, inputBox, label } from "./creCorpModal.css";
 import callTms from "@/model/callTms";
 import { TBW_000000_P01 } from "@/type/api";
 import { Session } from "next-auth";
@@ -17,6 +17,9 @@ import CreCorpAlertModal from "./CreCorpAlertModal";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { selectBoxWrap } from "./nav.css";
 import SelectLabel from "@/app/_component/select/SelectLabel";
+import { navBtn } from "@/app/_component/btn/btn.css";
+import { checkKoreanEnglishNumeric } from "@/app/_lib/regexp";
+import ErrorModal from "@/app/_component/modal/ErrorModal";
 
 const ID = "creCorpModal";
 
@@ -41,7 +44,9 @@ export default function CreCorpModal({
   const [corpGrpTp, setCorpGrpTp] = useState(corpGrpTpItems[0]);
   const [corpNm, setCorpNm] = useState("");
   const [mastCorpCd, setMastCorpCd] = useState("");
+  const [pw, setPw] = useState("");
   const [pwCheck] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(true);
 
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
@@ -74,12 +79,16 @@ export default function CreCorpModal({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
+      if (!checkKoreanEnglishNumeric(corpNm)) {
+        throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
+      }
       const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
       setCorpGrpTp(() => item?.[0] || "");
+      setPw(() => pw.trim());
       mutation.mutate();
     } catch (error) {
       if (error instanceof Error) {
-        console.error(error.message);
+        modalAction.push(ErrorModal, { props: { error } });
       }
     }
   };
@@ -90,8 +99,11 @@ export default function CreCorpModal({
       case CreCorpInput.corpNm:
         setCorpNm(() => value);
         break;
-      case CreCorpInput.mastCorpCd:
-        setMastCorpCd(() => value);
+      // case CreCorpInput.mastCorpCd:
+      //   setMastCorpCd(() => value);
+      //   break;
+      case CreCorpInput.pw:
+        setPw(() => value);
         break;
     }
   };
@@ -106,7 +118,7 @@ export default function CreCorpModal({
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>회사 등록</h3>
+            <h3 className={css.modalTitle}>회사 생성</h3>
           </div>
           <div className={inputBox}>
             <div className={selectBoxWrap}>
@@ -125,13 +137,21 @@ export default function CreCorpModal({
             <label className={label} htmlFor={CreCorpInput.corpNm}>
               회사명
             </label>
-            <DefaultInput
-              id={CreCorpInput.corpNm}
-              value={corpNm}
-              onChange={onChangeInput}
-              onReset={() => setCorpNm("")}
-            />
+            <div className={duplicateCheckInput}>
+              <DefaultInput
+                id={CreCorpInput.corpNm}
+                value={corpNm}
+                onChange={onChangeInput}
+                onReset={() => setCorpNm("")}
+                style={{ width: "100%" }}
+                placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
+              />
+              <button type="button" className={navBtn} disabled={!isDuplicate}>
+                중복체크
+              </button>
+            </div>
           </div>
+
           {/* <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.mastCorpCd}>
               주 회사 코드
@@ -143,20 +163,20 @@ export default function CreCorpModal({
               onReset={() => setMastCorpCd("")}
             />
           </div> */}
-          {/* <div className={inputBox}>
+          <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.pw}>
-              Main 관리자 비밀번호
+              관리자 Password를 입력하세요.
             </label>
             <DefaultInput
               id={CreCorpInput.pw}
               onChange={onChangeInput}
               type={pwCheck ? "text" : "password"}
             />
-          </div> */}
+          </div>
         </div>
         <div className={css.modalBtnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
-            등록
+            회사 생성
           </button>
         </div>
       </form>

@@ -91,6 +91,9 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
+        <button type="submit" className={navBtn}>
+          조회
+        </button>
       </div>
       {/* <div className={historyFilterwrap}>
         <div className={btnWrap}>
@@ -107,9 +110,6 @@ export default function Form({ session }: FormProps) {
       <div className={btnWrap}>
         <button type="button" className={navBtn} onClick={openModal}>
           회사 생성
-        </button>
-        <button type="submit" className={navBtn}>
-          조회
         </button>
       </div>
     </form>

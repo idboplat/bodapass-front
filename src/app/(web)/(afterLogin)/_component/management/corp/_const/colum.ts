@@ -34,7 +34,7 @@ export const GRID_COLS: ColDef[] = [
     cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
   },
   {
-    field: "생성자",
+    field: "생성인",
     width: 180,
     resizable: true,
     editable: true,
@@ -42,6 +42,12 @@ export const GRID_COLS: ColDef[] = [
   {
     field: "생성 일시",
     width: 220,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "Account",
+    width: 180,
     resizable: true,
     editable: true,
   },

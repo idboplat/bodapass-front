@@ -162,3 +162,8 @@ export const convertToStandardDateTime = (dateString: string) => {
   // 최종 형식으로 변환된 문자열을 반환합니다.
   return `${formattedDate} ${formattedTime}`;
 };
+
+/** 한글, 영어, 숫자만 입력 가능한 정규표현식 */
+export const checkKoreanEnglishNumeric = (string: string): boolean => {
+  return /^[가-힣a-zA-Z0-9]+$/.test(string);
+};
