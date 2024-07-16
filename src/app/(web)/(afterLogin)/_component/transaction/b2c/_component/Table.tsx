@@ -16,6 +16,9 @@ import { useTransactionClientStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
 import { CellKeyDownEvent } from "ag-grid-community";
+import PagePagination from "@/app/_component/pagination/PagePagination";
+
+const PAGE_SIZE = 20;
 
 interface TableProps {
   session: Session;
@@ -23,6 +26,7 @@ interface TableProps {
 }
 
 export default function Table({ session, meta }: TableProps) {
+  const [total, setTotal] = useState(-1);
   const [colDefs] = useState(
     meta.cols.map((col) => {
       if (col.field === "상태 구분") {
@@ -52,8 +56,10 @@ export default function Table({ session, meta }: TableProps) {
           transactionStore.mvioRmrkTp,
           transactionStore.rqstStatTp,
         ],
-        pgSize: 20,
+        pgSn: transactionStore.page,
+        pgSize: PAGE_SIZE,
       });
+      setTotal(() => res.svcTotRecCnt);
       const data = res.svcRspnData || [];
       return data;
     },
@@ -92,17 +98,27 @@ export default function Table({ session, meta }: TableProps) {
   // };
 
   return (
-    <div className={classNames("ag-theme-alpine", tableWrap)}>
-      <AgGridReact
-        columnDefs={colDefs}
-        rowData={rowData}
-        overlayNoRowsTemplate={
-          transactionStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
-        }
-        headerHeight={28}
-        rowHeight={28}
-        // onCellKeyDown={onCellKeyDown}
-      />
-    </div>
+    <>
+      <div className={classNames("ag-theme-alpine", tableWrap)}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={
+            transactionStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
+          headerHeight={28}
+          rowHeight={28}
+          // onCellKeyDown={onCellKeyDown}
+        />
+      </div>
+      {total !== -1 && (
+        <PagePagination
+          currentPage={transactionStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          onChange={transactionStore.actions.setPage}
+        />
+      )}
+    </>
   );
 }

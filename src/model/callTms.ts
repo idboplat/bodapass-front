@@ -21,8 +21,12 @@ export interface TmsRspnList<T> {
   svcErrYn: boolean;
   svcRspnCd: string;
   svcRspnMsg: string;
+  /** 현재 페이지 건수 */
   svcRspnPageSize: number;
+  /** 0이면 다음 페이지 없음 */
   svcNextPageSn: number;
+  /** 전체 조회 건수 */
+  svcTotRecCnt: number;
   svcRspnData: T;
 }
 
@@ -41,6 +45,8 @@ export interface CallTmsArg {
   data: string[];
   /** @default pgSize - 15 */
   pgSize?: number;
+  /** @default pgSn - 1 */
+  pgSn?: number;
   /** csv 다운로드 여부 */
   downYn?: boolean;
   /** instanceOf를 통해 분기처리 가능 */
@@ -68,11 +74,13 @@ export const genarateBody = ({
   session,
   downYn,
   data,
+  pgSn,
 }: {
   svcId: string;
   pgSize?: number;
   session: Session | null;
   downYn?: boolean;
+  pgSn?: number;
   data: any[];
 }) => {
   /** YYYYMMDDHHmmssSSS */
@@ -85,7 +93,7 @@ export const genarateBody = ({
     svcMdtyYn: true,
     svcCsvDownYn: downYn || false,
     svcRqstPageSize: pgSize ?? 15, //default 15
-    svcRqstPageSn: 1,
+    svcRqstPageSn: pgSn || 1,
     svcRqstData: [argumentCustom(data)], // svcRqstData 배열 초기화
   };
 
@@ -107,6 +115,7 @@ const callTms = async <T extends RspnData<any>>({
   data,
   pgSize,
   downYn,
+  pgSn,
   ignore,
 }: CallTmsArg) => {
   const body = genarateBody({
@@ -115,6 +124,7 @@ const callTms = async <T extends RspnData<any>>({
     session,
     downYn,
     data,
+    pgSn: pgSn,
   });
 
   const jsonBody = JSON.stringify(body);

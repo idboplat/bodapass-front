@@ -1,6 +1,4 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { format } from "date-fns";
-import { formatInTimeZone } from "date-fns-tz";
 import { create, useStore } from "zustand";
 
 type TransactionCorpState = {
@@ -11,7 +9,8 @@ type TransactionCorpState = {
   mvioRmrkTp: string;
   rqstStatTp: string;
   nonce: number;
-  resetTime: string;
+  resetTime: number;
+  page: number;
 };
 
 type TransactionCorpActions = {
@@ -24,6 +23,7 @@ type TransactionCorpActions = {
       rqstStatTp: string; //신청상태구분
     }) => void;
     refreshPage: () => void;
+    setPage: (page: number) => void;
     reset: () => void;
     unmount: () => void;
   };
@@ -37,7 +37,8 @@ const initState: TransactionCorpState = {
   mvioRmrkTp: "",
   rqstStatTp: "",
   nonce: 0,
-  resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+  resetTime: Date.now(),
+  page: 1,
 };
 
 export const useTransactionCorpStore = create<TransactionCorpState & TransactionCorpActions>()(
@@ -45,18 +46,19 @@ export const useTransactionCorpStore = create<TransactionCorpState & Transaction
     ...initState,
     actions: {
       setState: (newState) => set((state) => ({ ...newState, nonce: state.nonce + 1 })),
-      refreshPage: () => set((state) => ({ ...state, nonce: state.nonce + 1 })),
+      setPage: (page) => set((state) => ({ page, nonce: state.nonce + 1 })),
+      refreshPage: () => set((state) => ({ nonce: state.nonce + 1 })),
       reset: () => {
         set(() => ({
           ...initState,
           nonce: 1,
-          resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+          resetTime: Date.now(),
         }));
       },
       unmount: () => {
         set(() => ({
           ...initState,
-          resetTime: formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS"),
+          resetTime: Date.now(),
         }));
       },
     },

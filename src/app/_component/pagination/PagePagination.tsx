@@ -8,62 +8,63 @@ import {
 } from "react-icons/md";
 
 interface PaginationProps {
-  currentCount: number;
+  currentPage: number;
   onChange: (page: number) => void;
   /** 최대 아이템 수 */
-  count: number;
-  /** 페이지당 아이템 수 */
-  pageSize: number;
+  totalCnt: number;
+  /** 페이지당 아이템 수
+   *  @default - 20
+   */
+  pgSize?: number;
   /**
    * Pagination 버튼 수
+   * @default - 10
    */
-  length: number;
+  groupSize?: number;
 }
 
 export default function PagePagination({
-  currentCount,
-  count,
-  pageSize,
-  length,
+  currentPage,
+  totalCnt,
+  pgSize = 15,
+  groupSize = 10,
   onChange,
 }: PaginationProps) {
-  const currentPage = Math.ceil(currentCount / pageSize); //현재 페이지
-  const pageCount = Math.ceil(count / pageSize); //마지막 페이지
-  //페이지당 데이터수
-  const pagerPerLength = Math.ceil(pageCount / length);
-  //현재 페이지가 몇번째 페이지 그룹에 있는지
-  const skip = Math.floor((currentPage - 1) / pagerPerLength);
-  //현재 페이지 그룹의 시작 페이지
-  const start = skip * length + 1;
+  const maxPage = Math.ceil(totalCnt / pgSize); //마지막 페이지
 
-  const paginationArr = Array.from({ length }, (_, index) => {
+  //현재 페이지 그룹이 몇번째 그룹인지
+  const skip = Math.floor(currentPage / groupSize - 0.01);
+  //현재 페이지 그룹의 시작 페이지
+  const start = skip * groupSize + 1;
+
+  const paginationArr = Array.from({ length: groupSize }, (_, index) => {
     const num = start + index;
-    return num > count ? null : num;
+    // 첫 페이지는 무조건 보여준다.
+    if (num === 1) return 1;
+    // 마지막 페이지를 넘어가면 null
+    return num > maxPage ? null : num;
   });
 
-  const onClickPage = (page: number) => onChange(page * pageSize);
+  const onClickPage = (page: number) => onChange(page);
   const onClickFirst = () => onChange(1);
-  const onClickPrev = () => onChange(length * pageSize * (skip - 1) + pagerPerLength);
-  const onClickNext = () => onChange(length * pageSize * (skip + 1) + pagerPerLength);
-  const onClickLast = () => onChange(count);
+  const onClickLast = () => onChange(maxPage);
 
   const disabledFirst = currentPage <= 1;
-  const disabledPrev = start < pagerPerLength;
-  const disabledNext = start + pagerPerLength > pageCount;
-  const disabledLast = currentPage >= pageCount;
+  const disabledPrev = 1 > start - groupSize;
+  const disabledNext = start + groupSize > maxPage;
+  const disabledLast = currentPage >= maxPage;
 
   return (
     <div className={wrap}>
       <button onClick={onClickFirst} disabled={disabledFirst}>
         <ArrowFirst size={24} />
       </button>
-      <button onClick={onClickPrev} disabled={disabledPrev}>
+      <button onClick={() => onClickPage(start - groupSize)} disabled={disabledPrev}>
         <ArrowLeft size={24} />
       </button>
       <ol>
         {paginationArr.map((num) => {
           const disabledCurrent = currentPage === num;
-
           if (num === null) return null;
           return (
             <li key={"pagination" + num}>
@@ -78,7 +79,7 @@ export default function PagePagination({
           );
         })}
       </ol>
-      <button onClick={onClickNext} disabled={disabledNext}>
+      <button onClick={() => onClickPage(start + groupSize)} disabled={disabledNext}>
         <ArrowRight size={24} />
       </button>
       <button onClick={onClickLast} disabled={disabledLast}>

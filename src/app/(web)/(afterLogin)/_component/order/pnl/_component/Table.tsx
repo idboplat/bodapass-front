@@ -12,6 +12,9 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { usePnlStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
+import PagePagination from "@/app/_component/pagination/PagePagination";
+
+const PAGE_SIZE = 20;
 
 interface TableProps {
   session: Session;
@@ -19,6 +22,7 @@ interface TableProps {
 
 export default function Table({ session }: TableProps) {
   const [colDefs] = useState([...GRID_COLS]);
+  const [total, setTotal] = useState(-1);
   const pnlStore = usePnlStore();
 
   const { data } = useQuery({
@@ -33,8 +37,10 @@ export default function Table({ session }: TableProps) {
           pnlStore.instCd,
           pnlStore.mvioTp,
         ],
-        pgSize: 20,
+        pgSize: PAGE_SIZE,
+        pgSn: pnlStore.page,
       });
+      setTotal(() => TBW_006000_R01Res.svcTotRecCnt);
       const TBW_006000_R01Data = TBW_006000_R01Res.svcRspnData || [];
       return TBW_006000_R01Data;
     },
@@ -68,16 +74,27 @@ export default function Table({ session }: TableProps) {
   const rowData = pnlStore.nonce === 0 ? [] : data;
 
   return (
-    <div className={classNames("ag-theme-alpine", tableWrap)}>
-      <AgGridReact
-        columnDefs={colDefs}
-        rowData={rowData}
-        overlayNoRowsTemplate={
-          pnlStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
-        }
-        headerHeight={28}
-        rowHeight={28}
-      />
-    </div>
+    <>
+      <div className={classNames("ag-theme-alpine", tableWrap)}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={
+            pnlStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
+          headerHeight={28}
+          rowHeight={28}
+        />
+      </div>
+      {total !== -1 && (
+        <PagePagination
+          currentPage={pnlStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={pnlStore.actions.setPage}
+        />
+      )}
+    </>
   );
 }

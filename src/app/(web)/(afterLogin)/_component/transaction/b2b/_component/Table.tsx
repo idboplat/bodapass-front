@@ -1,4 +1,5 @@
 "use client";
+import PagePagination from "@/app/_component/pagination/PagePagination";
 import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, convertText } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
@@ -10,12 +11,13 @@ import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
+import { Meta } from "../_const/meta";
 import { RowData } from "../_const/row.type";
 import { useTransactionCorpStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
-import { CellKeyDownEvent } from "ag-grid-community";
-import { Meta } from "../_const/meta";
+
+const PAGE_SIZE = 20;
 
 interface TableProps {
   session: Session;
@@ -23,6 +25,7 @@ interface TableProps {
 }
 
 export default function Table({ session, meta }: TableProps) {
+  const [total, setTotal] = useState(-1);
   const [colDefs] = useState(
     meta.cols.map((col) => {
       if (col.field === "상태 구분") {
@@ -52,13 +55,15 @@ export default function Table({ session, meta }: TableProps) {
           transactionStore.mvioRmrkTp,
           transactionStore.rqstStatTp,
         ],
-        pgSize: 20,
+        pgSize: PAGE_SIZE,
+        pgSn: transactionStore.page,
       });
+      setTotal(() => res.svcTotRecCnt);
       const data = res.svcRspnData || [];
       return data;
     },
     select: (data) => {
-      const result = data.map((item) => ({
+      const rowData = data.map((item) => ({
         "회사 코드": item.F01,
         회사: item.F02,
         일자: stringToDate(item.F03),
@@ -75,7 +80,7 @@ export default function Table({ session, meta }: TableProps) {
         수정자: item.F14,
         "수정 일시": convertToStandardDateTime(item.F15),
       }));
-      return result;
+      return rowData;
     },
     enabled: transactionStore.nonce > 0,
   });
@@ -92,17 +97,27 @@ export default function Table({ session, meta }: TableProps) {
   // };
 
   return (
-    <div className={classNames("ag-theme-alpine", tableWrap)}>
-      <AgGridReact
-        columnDefs={colDefs}
-        rowData={rowData}
-        overlayNoRowsTemplate={
-          transactionStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
-        }
-        headerHeight={28}
-        rowHeight={28}
-        // onCellKeyDown={onCellKeyDown}
-      />
-    </div>
+    <>
+      <div className={classNames("ag-theme-alpine", tableWrap)}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={
+            transactionStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
+          headerHeight={28}
+          rowHeight={28}
+          // onCellKeyDown={onCellKeyDown}
+        />
+      </div>
+      {total !== -1 && (
+        <PagePagination
+          currentPage={transactionStore.page}
+          totalCnt={total}
+          pgSize={20}
+          onChange={transactionStore.actions.setPage}
+        />
+      )}
+    </>
   );
 }
