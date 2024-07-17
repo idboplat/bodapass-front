@@ -1,4 +1,4 @@
-import { navWrap, btnWrap } from "./nav.css";
+import { navWrap, btnWrap, inputWrap } from "./nav.css";
 import { useSetCoinStore } from "../_lib/store";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
@@ -31,8 +31,8 @@ export default function Form({ session }: FormProps) {
   };
 
   const onDateBtnClick = (startDate: DateType) => {
+    actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
-    actions.setState({ date });
   };
 
   // const onChangeSelect = (value: string) => {
@@ -49,7 +49,8 @@ export default function Form({ session }: FormProps) {
 
   return (
     <form className={navWrap} onSubmit={onSubmit}>
-      {/* <div className={inputWrap}>
+      <div className={inputWrap}>
+        {/* <div className={inputWrap}>
         <div>
           <TextSelect
             value={mvioTp}
@@ -63,7 +64,11 @@ export default function Form({ session }: FormProps) {
           />
         </div>
       </div> */}
-      <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
+        <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
+        <button className={navBtn} type="submit">
+          조회
+        </button>
+      </div>
       <div className={btnWrap}>
         <button className={navBtn} onClick={openModal} type="button">
           USDL 발행

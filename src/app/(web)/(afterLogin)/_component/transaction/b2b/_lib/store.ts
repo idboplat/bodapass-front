@@ -15,13 +15,7 @@ type TransactionCorpState = {
 
 type TransactionCorpActions = {
   actions: {
-    setState: (state: {
-      mvioDd: Date | null; //입출고일자
-      instCd: string;
-      mvioTp: string; //입출고
-      mvioRmrkTp: string; //매매손익
-      rqstStatTp: string; //신청상태구분
-    }) => void;
+    setState: (newState: Partial<TransactionCorpState>) => void;
     refreshPage: () => void;
     setPage: (page: number) => void;
     reset: () => void;
