@@ -1,8 +1,5 @@
-import DateBtn from "@/app/_component/btn/DateBtn";
-import { navWrap, historyFilterwrap, btnWrap } from "./nav.css";
+import { navWrap, btnWrap } from "./nav.css";
 import { useSetCoinStore } from "../_lib/store";
-import RangePicker from "@/app/_component/datepicker/RangePicker";
-import { addDays, addMonths, addWeeks } from "date-fns";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -11,6 +8,7 @@ import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useState } from "react";
 import { Session } from "next-auth";
+import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 
 interface FormProps {
   session: Session;
@@ -65,20 +63,7 @@ export default function Form({ session }: FormProps) {
           />
         </div>
       </div> */}
-      <div className={historyFilterwrap}>
-        <div className={btnWrap}>
-          <DateBtn onClick={() => onDateBtnClick(addDays(today, -1))}>1Day</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1))}>1Week</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1))}>1Month</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -3))}>3Month</DateBtn>
-        </div>
-        <div>
-          <RangePicker date={date} onChange={onDateChange} />
-        </div>
-        <button className={navBtn} type="submit">
-          내역 조회
-        </button>
-      </div>
+      <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
       <div className={btnWrap}>
         <button className={navBtn} onClick={openModal} type="button">
           USDL 발행
