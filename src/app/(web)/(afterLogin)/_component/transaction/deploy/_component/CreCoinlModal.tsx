@@ -107,7 +107,7 @@ export default function CreCoinModal({
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.amount}>
-              신규 발생할 USDL 수량 입력
+              신규 발행할 USDL 수량 입력
             </label>
             <DefaultInput
               id={CreCoinInput.amount}
