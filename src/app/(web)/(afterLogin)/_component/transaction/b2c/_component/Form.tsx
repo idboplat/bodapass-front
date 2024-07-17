@@ -102,12 +102,11 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-      </div>
-      <div className={btnBox}>
         <button className={navBtn} type="submit">
           조회
         </button>
       </div>
+      <div className={btnBox}></div>
     </form>
   );
 }
