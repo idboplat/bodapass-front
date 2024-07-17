@@ -11,6 +11,7 @@ import { Session } from "next-auth";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { useIsFetching } from "@tanstack/react-query";
 
 interface FormProps {
   session: Session;
@@ -25,6 +26,9 @@ export default function Form({ session, showReqBtn }: FormProps) {
   const [mvioTp, setMvioTp] = useState("전체");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
   const [rqstStatTp, setRqstStatTp] = useState("전체");
+
+  const isFetching = useIsFetching({ queryKey: ["TBW_001000_Q01"] });
+
   const actions = useSetTransactionCorpStore();
   const modalStore = useSetModalStore();
 
@@ -106,7 +110,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
             }}
           />
         </div>
-        <button className={navBtn} type="submit">
+        <button className={navBtn} type="submit" disabled={isFetching > 0}>
           조회
         </button>
       </div>

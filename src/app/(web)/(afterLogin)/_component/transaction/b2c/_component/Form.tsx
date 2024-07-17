@@ -8,7 +8,7 @@ import { useSetTransactionClientStore } from "../_lib/store";
 import { btnBox, datePickerWrap, selectBoxWrap, inputWrap, navWrap } from "./nav.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { Session } from "next-auth";
-import { useQueryClient } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 
@@ -23,6 +23,9 @@ export default function Form({ session }: FormProps) {
   const [mvioTp, setMvioTp] = useState("전체");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
   const [rqstStatTp, setRqstStatTp] = useState("전체");
+
+  const isFetching = useIsFetching({ queryKey: ["TBW_001000_R01"] });
+
   const actions = useSetTransactionClientStore();
   const modalStore = useSetModalStore();
 
@@ -99,7 +102,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button className={navBtn} type="submit">
+        <button className={navBtn} type="submit" disabled={isFetching > 0}>
           조회
         </button>
       </div>

@@ -9,6 +9,7 @@ import CreEmplModal from "./CreEmplModal";
 
 import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 import { Session } from "next-auth";
+import { useIsFetching } from "@tanstack/react-query";
 
 const ID = "adminNavForm";
 
@@ -27,16 +28,14 @@ export default function Form({ session }: FormProps) {
   const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
   const [date, setDate] = useState<[DateType, DateType]>([null, null]);
-  const actions = useSetAdminStore();
 
+  const isFetching = useIsFetching({ queryKey: ["TBW_000001_Q01"] });
+
+  const actions = useSetAdminStore();
   const modalAction = useSetModalStore();
 
   const openModal = () => {
     modalAction.push(CreEmplModal, { props: { session } });
-  };
-
-  const onDateChange = (date: [DateType, DateType]) => {
-    setDate(() => date);
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +79,7 @@ export default function Form({ session }: FormProps) {
               onReset={() => setEmplName(() => "")}
             />
           </div>
-          <button type="submit" className={navBtn}>
+          <button type="submit" className={navBtn} disabled={isFetching > 0}>
             조회
           </button>
         </div>

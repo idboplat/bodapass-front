@@ -5,6 +5,7 @@ import { navBtn } from "@/app/_component/btn/btn.css";
 import { useState } from "react";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { useSetClientStore } from "../_lib/store";
+import { useIsFetching } from "@tanstack/react-query";
 
 const ID = "clientNavForm";
 
@@ -22,9 +23,7 @@ export default function Form({ session }: FormProps) {
   const [date, setDate] = useState<[DateType, DateType]>([null, null]);
   const actions = useSetClientStore();
 
-  const onDateChange = (date: [DateType, DateType]) => {
-    setDate(() => date);
-  };
+  const isFetching = useIsFetching({ queryKey: ["TBW_000001_S01"] });
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -54,7 +53,7 @@ export default function Form({ session }: FormProps) {
               onReset={() => setExtnUserId(() => "")}
             />
           </div>
-          <button type="submit" className={navBtn}>
+          <button type="submit" className={navBtn} disabled={isFetching > 0}>
             조회
           </button>
         </div>

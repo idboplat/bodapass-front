@@ -9,6 +9,7 @@ import TextSelect from "@/app/_component/select/TextSelect";
 import { useState } from "react";
 import { Session } from "next-auth";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
+import { useIsFetching } from "@tanstack/react-query";
 
 interface FormProps {
   session: Session;
@@ -17,9 +18,10 @@ const today = new Date();
 
 export default function Form({ session }: FormProps) {
   const [date, setDate] = useState<[DateType, DateType]>([null, null]);
-  // const [mvioTp, setMvioTp] = useState("");
-  const actions = useSetCoinStore();
 
+  const isFetching = useIsFetching({ queryKey: ["TBW_000300_Q01"] });
+
+  const actions = useSetCoinStore();
   const modalAction = useSetModalStore();
 
   const openModal = () => {
@@ -65,7 +67,7 @@ export default function Form({ session }: FormProps) {
         </div>
       </div> */}
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
-        <button className={navBtn} type="submit">
+        <button className={navBtn} type="submit" disabled={isFetching > 0}>
           조회
         </button>
       </div>

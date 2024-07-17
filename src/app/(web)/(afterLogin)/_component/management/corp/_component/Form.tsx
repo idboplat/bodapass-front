@@ -1,4 +1,4 @@
-import { navBtn } from "@/app/_component/btn/btn.css";
+import { navBtn, processBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -10,6 +10,7 @@ import { Session } from "next-auth";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import { corpGrpItemsMap, corpGrpTpItemsMap, getCorpGrpTpItems } from "../_const/map";
+import { useIsFetching } from "@tanstack/react-query";
 
 enum CorpNavForm {
   corpNm = "corpNm",
@@ -23,6 +24,8 @@ export default function Form({ session }: FormProps) {
   // const [date, setDate] = useState<[DateType, DateType]>([new Date(), new Date()]);
   const [corpNm, setCorpNm] = useState("");
   const [corpGrpValue, setCorpGrpValue] = useState("전체");
+
+  const isFetching = useIsFetching({ queryKey: ["TBW_000000_R01"] });
 
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
@@ -91,7 +94,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button type="submit" className={navBtn}>
+        <button type="submit" className={navBtn} disabled={isFetching > 0}>
           조회
         </button>
       </div>
@@ -108,7 +111,7 @@ export default function Form({ session }: FormProps) {
         </div>
       </div> */}
       <div className={btnWrap}>
-        <button type="button" className={navBtn} onClick={openModal}>
+        <button type="button" className={processBtn} onClick={openModal}>
           회사 생성
         </button>
       </div>
