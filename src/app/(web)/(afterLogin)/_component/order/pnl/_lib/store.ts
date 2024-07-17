@@ -2,7 +2,6 @@ import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { create, useStore } from "zustand";
 
 type PnlState = {
-  mvioDd: DateType;
   instCd: string;
   mvioTp: string;
   nonce: number;
@@ -22,7 +21,6 @@ type PnlActions = {
 };
 
 const initState: PnlState = {
-  mvioDd: null,
   instCd: "",
   mvioTp: "",
   nonce: 0,

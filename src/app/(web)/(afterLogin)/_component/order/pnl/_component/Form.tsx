@@ -1,5 +1,5 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
-import DatePicker, { DateType } from "@/app/_component/datepicker/DatePicker";
+import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
@@ -59,7 +59,7 @@ export default function Form({ session }: FormProps) {
   };
 
   const onDateBtnClick = (startDate: DateType) => {
-    actions.setState({ mvioDd: startDate, date: [startDate, today] });
+    actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
   };
 
