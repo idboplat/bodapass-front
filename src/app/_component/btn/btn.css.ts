@@ -20,14 +20,15 @@ export const defaultBtn = style([
 
 export const navBtn = style([
   {
+    height: 36,
     minWidth: 80,
     backgroundColor: "#759cff",
     padding: "3px 7px",
     borderRadius: 3,
     boxShadow: "rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px",
     transition: "background-color 0.2s ease, color 0.2s ease",
+    textAlign: "center",
     color: "#fff",
-    alignSelf: "center",
     ":hover": {
       backgroundColor: "#5C83E6",
     },
