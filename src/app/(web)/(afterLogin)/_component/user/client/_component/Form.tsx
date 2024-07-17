@@ -54,17 +54,16 @@ export default function Form({ session }: FormProps) {
               onReset={() => setExtnUserId(() => "")}
             />
           </div>
+          <button type="submit" className={navBtn}>
+            조회
+          </button>
         </div>
         {/* <div className={datePickerWrap}>
       <div>등록일</div>
       <RangePicker date={date} onChange={onDateChange} />
     </div> */}
       </div>
-      <div className={btnWrap}>
-        <button type="submit" className={navBtn}>
-          조회
-        </button>
-      </div>
+      <div className={btnWrap}></div>
     </form>
   );
 }
