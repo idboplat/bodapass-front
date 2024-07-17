@@ -10,21 +10,21 @@ import { useSetModalStore } from "@/app/_lib/modalStore";
 import { Session } from "next-auth";
 import { useQueryClient } from "@tanstack/react-query";
 import SelectLabel from "@/app/_component/select/SelectLabel";
+import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 
 interface FormProps {
   session: Session;
 }
+const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const [mvioDd, setMvioDd] = useState<DateType>(null);
+  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
   const [rqstStatTp, setRqstStatTp] = useState("전체");
   const actions = useSetTransactionClientStore();
   const modalStore = useSetModalStore();
-
-  const queryClient = useQueryClient();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,25 +34,22 @@ export default function Form({ session }: FormProps) {
       mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
       rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
       instCd,
-      mvioDd,
+      date,
     });
   };
 
-  const onChangeDatePicker = (date: DateType) => {
-    setMvioDd(() => date);
+  const onDateChange = (date: [DateType, DateType]) => {
+    setDate(() => date);
   };
 
+  const onDateBtnClick = (startDate: DateType) => {
+    actions.setState({ date: [startDate, today] });
+    setDate(() => [startDate, today]);
+  };
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>
-        <div className={datePickerWrap}>
-          <DatePicker
-            style={{ width: 216 }}
-            startDate={mvioDd}
-            onChange={onChangeDatePicker}
-            placeholder="일자"
-          />
-        </div>
+        <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
           <LabelInput
             label="종목 코드"

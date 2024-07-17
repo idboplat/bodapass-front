@@ -50,7 +50,7 @@ export default function Table({ session, meta }: TableProps) {
         svcId: "TBW_001000_R01",
         data: [
           session.user.corpCd,
-          dateToString(transactionStore.mvioDd),
+          dateToString(transactionStore.date[0]),
           transactionStore.instCd,
           transactionStore.mvioTp,
           transactionStore.mvioRmrkTp,
