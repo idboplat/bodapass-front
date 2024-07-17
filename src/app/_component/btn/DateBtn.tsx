@@ -8,7 +8,7 @@ export default function DateBtn({
   onClick: () => void;
 }) {
   return (
-    <button className={dateBtn} onClick={onClick}>
+    <button className={dateBtn} onClick={onClick} type="button">
       {children}
     </button>
   );

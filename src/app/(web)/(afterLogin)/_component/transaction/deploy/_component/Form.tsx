@@ -1,8 +1,8 @@
 import DateBtn from "@/app/_component/btn/DateBtn";
-import { navWrap, historyFilterwrap, btnWrap, inputWrap } from "./nav.css";
-import { useCoinStore, useSetCoinStore } from "../_lib/store";
+import { navWrap, historyFilterwrap, btnWrap } from "./nav.css";
+import { useSetCoinStore } from "../_lib/store";
 import RangePicker from "@/app/_component/datepicker/RangePicker";
-import { addDays, addMonths, addWeeks, set } from "date-fns";
+import { addDays, addMonths, addWeeks } from "date-fns";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -19,7 +19,7 @@ const today = new Date();
 
 export default function Form({ session }: FormProps) {
   const [date, setDate] = useState<[DateType, DateType]>([null, null]);
-  const [mvioTp, setMvioTp] = useState("");
+  // const [mvioTp, setMvioTp] = useState("");
   const actions = useSetCoinStore();
 
   const modalAction = useSetModalStore();
@@ -34,23 +34,19 @@ export default function Form({ session }: FormProps) {
 
   const onDateBtnClick = (startDate: DateType) => {
     setDate(() => [startDate, today]);
-    actions.setDate(date);
+    actions.setState({ date });
   };
 
   // const onChangeSelect = (value: string) => {
   //   setMvioTp(() => value);
   // };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (mvioTp === "입고") {
-      actions.setState("I");
-    } else if (mvioTp === "출고") {
-      actions.setState("O");
-    } else {
-      actions.setState("");
-    }
 
-    actions.setDate(date);
+    actions.setState({
+      date,
+    });
   };
 
   return (
