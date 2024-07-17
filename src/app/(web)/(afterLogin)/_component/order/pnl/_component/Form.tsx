@@ -7,8 +7,9 @@ import { findEntity, MVIO_TP_ITEM } from "@/app/_const/tp";
 import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
 import { usePnlCorpStore } from "../_lib/store";
-import { btnWrap, datePickerWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import { useIsFetching } from "@tanstack/react-query";
+import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 
 enum PnlNavForm {
   instCd = "instCd",
@@ -18,8 +19,10 @@ interface FormProps {
   session: Session;
 }
 
+const today = new Date();
+
 export default function Form({ session }: FormProps) {
-  const [mvioDd, setMvioDd] = useState<DateType>(null);
+  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
 
@@ -37,10 +40,6 @@ export default function Form({ session }: FormProps) {
     }
   };
 
-  const onChangeDatePicker = (date: DateType) => {
-    setMvioDd(() => date);
-  };
-
   const onChangeSelect = (value: string) => {
     setMvioTp(() => value);
   };
@@ -51,23 +50,23 @@ export default function Form({ session }: FormProps) {
     actions.setState({
       mvioTp: findEntity(MVIO_TP_ITEM, mvioTp)?.[0] || "",
       instCd,
-      mvioDd,
+      date,
     });
   };
 
-  const today = new Date();
+  const onDateChange = (date: [DateType, DateType]) => {
+    setDate(() => date);
+  };
+
+  const onDateBtnClick = (startDate: DateType) => {
+    actions.setState({ mvioDd: startDate, date: [startDate, today] });
+    setDate(() => [startDate, today]);
+  };
 
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>
-        <div className={datePickerWrap}>
-          <DatePicker
-            style={{ width: 216 }}
-            startDate={mvioDd}
-            onChange={onChangeDatePicker}
-            placeholder="일자"
-          />
-        </div>
+        <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
           <LabelInput
             label="종목 코드"
@@ -97,18 +96,6 @@ export default function Form({ session }: FormProps) {
           조회
         </button>
       </div>
-      {/* <div className={historyFilterwrap}>
-        <div className={btnWrap}>
-          <DateBtn onClick={() => onDateBtnClick(addDays(today, -1), today)}>1D</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1), today)}>1W</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1), today)}>1M</DateBtn>
-          <DateBtn onClick={() => onDateBtnClick(addMonths(today, -3), today)}>3M</DateBtn>
-        </div>
-        <div className={datePickerWrap}>
-          <div>등록일</div>
-          <RangePicker date={date} onChange={onChange} />
-        </div>
-      </div> */}
       <div className={btnWrap}></div>
     </form>
   );

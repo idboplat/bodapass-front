@@ -33,7 +33,7 @@ export default function Table({ session }: TableProps) {
         svcId: "TBW_006000_R01",
         data: [
           session.user.corpCd,
-          dateToString(pnlStore.mvioDd),
+          dateToString(pnlStore.date[0]),
           pnlStore.instCd,
           pnlStore.mvioTp,
         ],

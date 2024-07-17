@@ -8,11 +8,12 @@ type PnlState = {
   nonce: number;
   resetTime: number;
   page: number;
+  date: [DateType, DateType];
 };
 
 type PnlActions = {
   actions: {
-    setState: (state: { mvioDd: DateType; instCd: string; mvioTp: string }) => void;
+    setState: (newState: Partial<PnlState>) => void;
     setPage: (page: number) => void;
     reset: () => void;
     refreshPage: () => void;
@@ -27,6 +28,7 @@ const initState: PnlState = {
   nonce: 0,
   resetTime: Date.now(),
   page: 1,
+  date: [null, null],
 };
 
 export const usePnlStore = create<PnlState & PnlActions>()((set) => ({
