@@ -4,13 +4,11 @@ import TextSelect from "@/app/_component/select/TextSelect";
 import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
-import { btnBox, datePickerWrap, selectBoxWrap, inputWrap, navWrap } from "./nav.css";
+import { btnBox, selectBoxWrap, inputWrap, navWrap } from "./nav.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import ReqModal from "./ReqModal";
 import { Session } from "next-auth";
-import { useQueryClient } from "@tanstack/react-query";
 import SelectLabel from "@/app/_component/select/SelectLabel";
-import RangePicker from "@/app/_component/datepicker/RangePicker";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 
@@ -22,7 +20,6 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session, showReqBtn }: FormProps) {
-  // const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [date, setDate] = useState<[DateType, DateType]>([null, null]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
@@ -39,7 +36,6 @@ export default function Form({ session, showReqBtn }: FormProps) {
       mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
       rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
       instCd,
-      mvioDd: date[0],
       date,
     });
   };
@@ -53,7 +49,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
   };
 
   const onDateBtnClick = (startDate: DateType) => {
-    actions.setState({ mvioDd: startDate });
+    actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
   };
 

@@ -3,7 +3,6 @@ import { create, useStore } from "zustand";
 
 type TransactionCorpState = {
   date: [DateType, DateType];
-  mvioDd: Date | null;
   instCd: string;
   mvioTp: string;
   mvioRmrkTp: string;
@@ -25,7 +24,6 @@ type TransactionCorpActions = {
 
 const initState: TransactionCorpState = {
   date: [null, null],
-  mvioDd: null,
   instCd: "",
   mvioTp: "",
   mvioRmrkTp: "",
