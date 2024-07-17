@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const historyFilterwrap = style({
   display: "flex",
-  gap: 30,
+  gap: 10,
 });
 
 export const btnWrap = style({

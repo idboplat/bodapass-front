@@ -1,4 +1,3 @@
-import { navBtn } from "../btn/btn.css";
 import DateBtn from "../btn/DateBtn";
 import { DateType } from "../datepicker/DatePicker";
 import RangePicker from "../datepicker/RangePicker";
@@ -25,9 +24,6 @@ export default function HistoryFilter({ date, onDateChange, onDateBtnClick }: Hi
       <div>
         <RangePicker date={date} onChange={onDateChange} />
       </div>
-      <button className={navBtn} type="submit">
-        내역 조회
-      </button>
     </div>
   );
 }
