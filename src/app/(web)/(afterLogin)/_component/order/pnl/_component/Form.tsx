@@ -8,6 +8,7 @@ import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
 import { usePnlCorpStore } from "../_lib/store";
 import { btnWrap, datePickerWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import { useIsFetching } from "@tanstack/react-query";
 
 enum PnlNavForm {
   instCd = "instCd",
@@ -21,6 +22,8 @@ export default function Form({ session }: FormProps) {
   const [mvioDd, setMvioDd] = useState<DateType>(null);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
+
+  const isFetching = useIsFetching({ queryKey: ["TBW_006000_R01"] });
 
   const actions = usePnlCorpStore();
 
@@ -90,6 +93,9 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
+        <button type="submit" className={navBtn} disabled={isFetching > 0}>
+          조회
+        </button>
       </div>
       {/* <div className={historyFilterwrap}>
         <div className={btnWrap}>
@@ -103,11 +109,7 @@ export default function Form({ session }: FormProps) {
           <RangePicker date={date} onChange={onChange} />
         </div>
       </div> */}
-      <div className={btnWrap}>
-        <button type="submit" className={navBtn}>
-          조회
-        </button>
-      </div>
+      <div className={btnWrap}></div>
     </form>
   );
 }
