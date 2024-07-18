@@ -49,6 +49,7 @@ export default function Form({ session }: FormProps) {
     actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
   };
+
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>

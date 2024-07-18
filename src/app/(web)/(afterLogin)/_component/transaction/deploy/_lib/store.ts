@@ -3,7 +3,7 @@ import { create, useStore } from "zustand";
 
 export type CoinState = {
   date: [DateType, DateType];
-  mvioTp: string;
+  mvioTp: string; //입출구분
   nonce: number;
   resetTime: number;
   page: number;
@@ -11,7 +11,7 @@ export type CoinState = {
 
 type CoinActions = {
   actions: {
-    setState: (newState: { date: [DateType, DateType] }) => void;
+    setState: (newState: Partial<CoinState>) => void;
     setPage: (page: number) => void;
     reset: () => void;
     refreshPage: () => void;
