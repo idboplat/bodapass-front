@@ -1,4 +1,4 @@
-import { navBtn, processBtn } from "@/app/_component/btn/btn.css";
+import { navBtn } from "@/app/_component/btn/btn.css";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -111,7 +111,7 @@ export default function Form({ session }: FormProps) {
         </div>
       </div> */}
       <div className={btnWrap}>
-        <button type="button" className={processBtn} onClick={openModal}>
+        <button type="button" onClick={openModal}>
           회사 생성
         </button>
       </div>
