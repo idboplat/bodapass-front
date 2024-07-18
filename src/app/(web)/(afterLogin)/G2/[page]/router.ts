@@ -1,4 +1,6 @@
+import PnlHome from "@order/pnl/Home";
 import B2bHome from "@transaction/b2b/_component/Home";
+import ClientHome from "@user/client/home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
@@ -10,12 +12,19 @@ export const G2_PATH_LIST: Path[] = [
   },
   {
     category: "사용자",
-    pages: [{ title: "관리자 관리", number: "200202", Component: AdminHome }],
+    pages: [
+      { title: "고객 관리", number: "200201", Component: ClientHome },
+      { title: "관리자 관리", number: "200202", Component: AdminHome },
+    ],
   },
   // {
   //   category: "로그",
   //   pages: [],
   // },
+  {
+    category: "주문",
+    pages: [{ title: "고객 손익 내역", number: "200404", Component: PnlHome }],
+  },
   {
     category: "잔고",
     pages: [{ title: "회사 입금 신청 내역", number: "200502", Component: B2bHome }],

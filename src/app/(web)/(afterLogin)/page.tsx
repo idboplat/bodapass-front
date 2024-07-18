@@ -8,6 +8,7 @@ export default async function Page() {
 
   const corpGrpTp = session.user.corpGrpTp;
 
+  // 로그인 후 시작페이지 설정
   if (corpGrpTp === "G1") {
     redirect("/G1/100101");
   }
@@ -15,7 +16,7 @@ export default async function Page() {
     redirect("/G2/200101");
   }
   if (corpGrpTp === "G3") {
-    redirect("/G3/300101");
+    redirect("/G3/200101");
   }
   if (corpGrpTp === "G4") {
     redirect("/G4/400201");

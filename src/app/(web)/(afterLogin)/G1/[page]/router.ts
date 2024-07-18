@@ -14,7 +14,7 @@ export const G1_PATH_LIST: Path[] = [
   {
     category: "사용자",
     pages: [
-      { title: "사용자 관리", number: "100201", Component: ClientHome },
+      { title: "고객 관리", number: "100201", Component: ClientHome },
       { title: "관리자 관리", number: "100202", Component: AdminHome },
     ],
   },
