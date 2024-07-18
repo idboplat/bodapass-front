@@ -5,8 +5,9 @@ export enum Column {
   "수량" = 180,
 }
 
-export const COLUMN_SIZE = {
-  sm: 180,
+type ColumnSizeType = "sm" | "md" | "lg" | "xl" | "2xl";
+export const COLUMN_SIZE: Record<ColumnSizeType, number> = {
+  sm: 80,
   md: 180,
   lg: 180,
   xl: 180,

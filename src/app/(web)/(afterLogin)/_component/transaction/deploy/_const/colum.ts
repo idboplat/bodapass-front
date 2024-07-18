@@ -1,4 +1,4 @@
-import { COLUMN_STYLE } from "@/app/_const/cols";
+import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
 import { addComma } from "@/app/_lib/regexp";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 
@@ -17,7 +17,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "일련번호",
-    width: 120,
+    width: COLUMN_SIZE.sm,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.right,
