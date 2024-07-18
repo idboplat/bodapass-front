@@ -11,6 +11,7 @@ import { TBW_000300_Q01 } from "@/type/api";
 import { useCoinStore } from "../_lib/store";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import PagePagination from "@/app/_component/pagination/PagePagination";
+import { dateToString } from "@/app/_lib/dateFormatter";
 
 const PAGE_SIZE = 20;
 
@@ -25,7 +26,12 @@ export default function Table({ session }: { session: Session }) {
       const TBW_000300_Q01Res = await callTms<TBW_000300_Q01>({
         session,
         svcId: "TBW_000300_Q01",
-        data: [session.user.corpCd, coinStore.mvioTp], // 입출고 구분
+        data: [
+          session.user.corpCd,
+          coinStore.mvioTp,
+          dateToString(coinStore.date[0]),
+          dateToString(coinStore.date[1]),
+        ],
         pgSize: PAGE_SIZE,
         pgSn: coinStore.page,
       });

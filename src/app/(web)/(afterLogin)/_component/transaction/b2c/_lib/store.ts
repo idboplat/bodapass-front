@@ -4,9 +4,9 @@ import { create, useStore } from "zustand";
 type TransactionClientState = {
   date: [DateType, DateType];
   instCd: string;
-  mvioTp: string;
-  mvioRmrkTp: string;
-  rqstStatTp: string;
+  mvioTp: string; //입출고
+  mvioRmrkTp: string; //매매손익
+  rqstStatTp: string; //신청상태구분
   nonce: number;
   resetTime: number;
   page: number;
@@ -14,7 +14,7 @@ type TransactionClientState = {
 
 type TransactionClientActions = {
   actions: {
-    setState: (newStae: Partial<TransactionClientState>) => void;
+    setState: (newState: Partial<TransactionClientState>) => void;
     refreshPage: () => void;
     setPage: (page: number) => void;
     reset: () => void;
