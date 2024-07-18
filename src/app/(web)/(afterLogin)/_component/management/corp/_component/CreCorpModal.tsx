@@ -26,8 +26,7 @@ const ID = "creCorpModal";
 enum CreCorpInput {
   corpGrpTp = ID + "Type",
   corpNm = ID + "CorpNm",
-  mastCorpCd = ID + "MastCorpCd",
-  pw = ID + "Pw",
+  adminPw = ID + "AdminPw",
 }
 
 interface CreCorpModalProps {
@@ -43,21 +42,24 @@ export default function CreCorpModal({
 }: ModalProps<CreCorpModalProps>) {
   const [corpGrpTp, setCorpGrpTp] = useState(corpGrpTpItems[0]);
   const [corpNm, setCorpNm] = useState("");
-  const [mastCorpCd, setMastCorpCd] = useState("");
-  const [pw, setPw] = useState("");
-  const [pwCheck] = useState(false);
-  const [isDuplicate, setIsDuplicate] = useState(true);
 
   const actions = useSetCorpStore();
   const modalAction = useSetModalStore();
 
   const mutation = useMutation({
     mutationKey: ["TBW_000000_P01"],
-    mutationFn: async () => {
+    mutationFn: async (arg: { adminPw: string; tp: string }) => {
+      if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
+      if (!checkKoreanEnglishNumeric(corpNm)) {
+        throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
+      }
+      if (!arg.tp) {
+        throw new Error("회사 그룹 구분을 선택해주세요");
+      }
       const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
         session,
         svcId: "TBW_000000_P01",
-        data: [corpNm.trim(), corpGrpTp || "", session.user.corpCd],
+        data: [corpNm.trim(), corpGrpTp || "", session.user.corpCd, arg.adminPw],
       });
       const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
       if (TBW_000000_P01Data === null) {
@@ -76,21 +78,13 @@ export default function CreCorpModal({
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault();
-      if (!checkKoreanEnglishNumeric(corpNm)) {
-        throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
-      }
-      const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
-      setCorpGrpTp(() => item?.[0] || "");
-      setPw(() => pw.trim());
-      mutation.mutate();
-    } catch (error) {
-      if (error instanceof Error) {
-        modalAction.push(ErrorModal, { props: { error } });
-      }
-    }
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
+    const grpTp = item?.[0] || "";
+    const adminPw = e.target?.[CreCorpInput.adminPw]?.value;
+    mutation.mutate({ adminPw, tp: grpTp });
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,12 +92,6 @@ export default function CreCorpModal({
     switch (id) {
       case CreCorpInput.corpNm:
         setCorpNm(() => value);
-        break;
-      // case CreCorpInput.mastCorpCd:
-      //   setMastCorpCd(() => value);
-      //   break;
-      case CreCorpInput.pw:
-        setPw(() => value);
         break;
     }
   };
@@ -137,19 +125,14 @@ export default function CreCorpModal({
             <label className={label} htmlFor={CreCorpInput.corpNm}>
               회사명
             </label>
-            <div className={duplicateCheckInput}>
-              <DefaultInput
-                id={CreCorpInput.corpNm}
-                value={corpNm}
-                onChange={onChangeInput}
-                onReset={() => setCorpNm("")}
-                style={{ width: "100%" }}
-                placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
-              />
-              <button type="button" className={navBtn} disabled={!isDuplicate}>
-                중복체크
-              </button>
-            </div>
+            <DefaultInput
+              id={CreCorpInput.corpNm}
+              value={corpNm}
+              onChange={onChangeInput}
+              onReset={() => setCorpNm("")}
+              style={{ width: "100%" }}
+              placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
+            />
           </div>
 
           {/* <div className={inputBox}>
@@ -164,14 +147,10 @@ export default function CreCorpModal({
             />
           </div> */}
           <div className={inputBox}>
-            <label className={label} htmlFor={CreCorpInput.pw}>
+            <label className={label} htmlFor={CreCorpInput.adminPw}>
               관리자 Password
             </label>
-            <DefaultInput
-              id={CreCorpInput.pw}
-              onChange={onChangeInput}
-              type={pwCheck ? "text" : "password"}
-            />
+            <DefaultInput id={CreCorpInput.adminPw} onChange={onChangeInput} type={"password"} />
           </div>
         </div>
         <div className={css.modalBtnBox}>
