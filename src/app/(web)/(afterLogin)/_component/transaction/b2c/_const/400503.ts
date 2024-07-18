@@ -1,3 +1,4 @@
+import { COLUMN_STYLE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";
 
 export const GRID_400503_COLS: ColDef[] = [
@@ -12,14 +13,14 @@ export const GRID_400503_COLS: ColDef[] = [
     width: 120,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-end", paddingRight: "7px" },
+    cellStyle: COLUMN_STYLE.right,
   },
   {
     field: "사용자 ID",
     width: 120,
     resizable: true,
     editable: false,
-    cellStyle: { justifyContent: "flex-start", paddingRight: "7px" },
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "종목 코드",
@@ -44,7 +45,7 @@ export const GRID_400503_COLS: ColDef[] = [
     width: 180,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-end", paddingRight: "7px" },
+    cellStyle: COLUMN_STYLE.right,
   },
   {
     field: "상태 구분",
@@ -61,7 +62,7 @@ export const GRID_400503_COLS: ColDef[] = [
   },
   {
     field: "생성 일시",
-    width: 220,
+    width: 180,
     resizable: true,
     editable: true,
   },
@@ -73,7 +74,7 @@ export const GRID_400503_COLS: ColDef[] = [
   },
   {
     field: "수정 일시",
-    width: 220,
+    width: 180,
     resizable: true,
     editable: true,
   },

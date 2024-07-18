@@ -1,3 +1,4 @@
+import { COLUMN_STYLE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";
 
 export const GRID_COLS: ColDef[] = [
@@ -12,7 +13,7 @@ export const GRID_COLS: ColDef[] = [
     width: 100,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "회사 유형",
@@ -31,7 +32,7 @@ export const GRID_COLS: ColDef[] = [
     width: 100,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "생성인",
@@ -41,7 +42,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "생성 일시",
-    width: 220,
+    width: 180,
     resizable: true,
     editable: true,
   },

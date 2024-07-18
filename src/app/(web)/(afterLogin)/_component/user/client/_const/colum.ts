@@ -1,3 +1,4 @@
+import { COLUMN_STYLE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";
 
 export type RowData = {
@@ -17,7 +18,7 @@ export const GRID_COLS: ColDef[] = [
     width: 180,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-start", paddingLeft: "7px" },
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "접근 유형",

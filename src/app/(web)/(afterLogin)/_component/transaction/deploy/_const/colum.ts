@@ -1,3 +1,4 @@
+import { COLUMN_STYLE } from "@/app/_const/cols";
 import { addComma } from "@/app/_lib/regexp";
 import { ColDef, ValueFormatterParams } from "ag-grid-community";
 
@@ -19,7 +20,7 @@ export const GRID_COLS: ColDef[] = [
     width: 120,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-end", paddingRight: "7px" },
+    cellStyle: COLUMN_STYLE.right,
   },
   {
     field: "종목",
@@ -32,7 +33,7 @@ export const GRID_COLS: ColDef[] = [
     width: 180,
     resizable: true,
     editable: true,
-    cellStyle: { justifyContent: "flex-end", paddingRight: "7px" },
+    cellStyle: COLUMN_STYLE.right,
   },
   {
     field: "작업자",
@@ -42,7 +43,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "생성 일시",
-    width: 220,
+    width: 180,
     resizable: true,
     editable: true,
   },
@@ -54,7 +55,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "수정 일시",
-    width: 220,
+    width: 180,
     resizable: true,
     editable: true,
   },
