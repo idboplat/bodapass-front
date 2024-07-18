@@ -47,7 +47,6 @@ export default function Table({ session }: TableProps) {
         "상위 회사 명": item.F05,
         생성인: item.F06,
         "생성 일시": convertToStandardDateTime(item.F07),
-        Account: "",
       }));
       return result;
     },

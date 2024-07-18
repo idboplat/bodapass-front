@@ -46,10 +46,4 @@ export const GRID_COLS: ColDef[] = [
     resizable: true,
     editable: true,
   },
-  {
-    field: "Account",
-    width: 180,
-    resizable: true,
-    editable: true,
-  },
 ];
