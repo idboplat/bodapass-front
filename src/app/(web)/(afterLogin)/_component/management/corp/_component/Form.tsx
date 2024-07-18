@@ -111,7 +111,7 @@ export default function Form({ session }: FormProps) {
         </div>
       </div> */}
       <div className={btnWrap}>
-        <button type="button" onClick={openModal}>
+        <button type="button" onClick={openModal} className={navBtn}>
           회사 생성
         </button>
       </div>
