@@ -27,7 +27,10 @@ export default function CreCorpAlertModal({
   onClose,
 }: ModalProps<CreCorpAlertModalProps>) {
   const [isCheck, setIsCheck] = useState(false);
-
+  const onClickCopy = () => {
+    window.navigator.clipboard.writeText(`관리자 ID : ${id}\n패스워드 : ${password}`);
+    toast.success("클립보드에 복사 되었습니다.");
+  };
   return (
     <Modal id={ID}>
       <div className={modalCenterContent} style={{ width: 400 }}>
@@ -38,11 +41,9 @@ export default function CreCorpAlertModal({
           <div className={modalContent}>
             <div className={textBox}>
               <p>{`회사 ID : ${id}`}</p>
-              <CopyButton text={id} />
             </div>
             <div className={textBox}>
               <p>{`패스워드  : ${password}`}</p>
-              <CopyButton text={password} />
             </div>
             <div className={descBox}>
               <CheckBox value={isCheck} onClick={() => setIsCheck(() => !isCheck)} />
@@ -53,6 +54,9 @@ export default function CreCorpAlertModal({
         <div className={modalBtnBox}>
           <button className={modalDefaultBtn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
+          </button>
+          <button className={modalSaveBtn} type="button" onClick={onClickCopy}>
+            복사
           </button>
         </div>
       </div>

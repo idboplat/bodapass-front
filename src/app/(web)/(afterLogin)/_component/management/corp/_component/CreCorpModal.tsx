@@ -48,18 +48,18 @@ export default function CreCorpModal({
 
   const mutation = useMutation({
     mutationKey: ["TBW_000000_P01"],
-    mutationFn: async (arg: { adminPw: string; tp: string }) => {
+    mutationFn: async (arg: { adminPw: string; grpTp: string }) => {
       if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
       if (!checkKoreanEnglishNumeric(corpNm)) {
         throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
       }
-      if (!arg.tp) {
+      if (!arg.grpTp) {
         throw new Error("회사 그룹 구분을 선택해주세요");
       }
       const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
         session,
         svcId: "TBW_000000_P01",
-        data: [corpNm.trim(), corpGrpTp || "", session.user.corpCd, arg.adminPw],
+        data: [corpNm.trim(), arg.grpTp, session.user.corpCd, arg.adminPw],
       });
       const TBW_000000_P01Data = TBW_000000_P01Res.svcRspnData;
       if (TBW_000000_P01Data === null) {
@@ -84,7 +84,7 @@ export default function CreCorpModal({
     const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
     const grpTp = item?.[0] || "";
     const adminPw = e.target?.[CreCorpInput.adminPw]?.value;
-    mutation.mutate({ adminPw, tp: grpTp });
+    mutation.mutate({ adminPw, grpTp: grpTp });
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

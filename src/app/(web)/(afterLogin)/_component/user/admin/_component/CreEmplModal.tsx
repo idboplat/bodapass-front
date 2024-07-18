@@ -40,11 +40,31 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   const mutation = useMutation({
     mutationKey: ["TBW_000010_P01"],
-    mutationFn: async (data: string[]) => {
+    mutationFn: async (arg: {
+      extnUserId: string;
+      emplName: string;
+      pw: string;
+      adminPw: string;
+    }) => {
+      if (!checkEnglishNumericSpecial(arg.extnUserId))
+        throw new Error("관리자 ID는 영문, 숫자, 특수문자만 입력 가능합니다.");
+      if (!checkKoreanEnglishNumericSpecial(arg.emplName))
+        throw new Error("신규 관리자 명은 한글, 영문, 숫자, 특수문자만 입력 가능합니다.");
+      if (arg.pw === "") throw new Error("비밀번호를 입력해주세요.");
+      if (!checkEnglishNumericSpecial(arg.pw) || arg.pw.length < 7)
+        throw new Error("비밀번호는 영문, 숫자, 특수문자만 입력 가능하며 7자리 이상이어야 합니다.");
+      if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
+
       const TBW_000010_P01Res = await callTms<TBW_000010_P01>({
         session,
         svcId: "TBW_000010_P01",
-        data,
+        data: [
+          session.user.corpCd.trim(),
+          arg.extnUserId.trim(),
+          arg.emplName.trim(),
+          arg.pw,
+          arg.adminPw,
+        ],
       });
       const TBW_000010_P01Data = TBW_000010_P01Res.svcRspnData;
       if (TBW_000010_P01Data === null) {
@@ -71,17 +91,10 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
       const extnUserId = e.target[CreEmplInput.extnUserId].value.trim();
       const emplName = e.target[CreEmplInput.emplName].value.trim();
       const pw = e.target[CreEmplInput.pw].value.trim();
-      const adminPw = e.target[CreEmplInput.pw].value;
+      const adminPw = e.target[CreEmplInput.adminPw].value;
 
-      if (!checkEnglishNumericSpecial(extnUserId))
-        throw new Error("관리자 ID는 영문, 숫자, 특수문자만 입력 가능합니다.");
-      if (!checkKoreanEnglishNumericSpecial(emplName))
-        throw new Error("신규 관리자 명은 한글, 영문, 숫자, 특수문자만 입력 가능합니다.");
-      if (pw === "") throw new Error("비밀번호를 입력해주세요.");
-      if (!checkEnglishNumericSpecial(pw) || pw.length < 7)
-        throw new Error("비밀번호는 영문, 숫자, 특수문자만 입력 가능하며 7자리 이상이어야 합니다.");
-
-      mutation.mutate([session.user.corpCd, extnUserId.trim(), emplName.trim(), pw]);
+      // mutation.mutate([session.user.corpCd, extnUserId.trim(), emplName.trim(), pw, adminPw]);
+      mutation.mutate({ extnUserId, emplName, pw, adminPw });
     } catch (error) {
       if (error instanceof Error) {
         await modalStore.push(ErrorModal, { props: { error } });
