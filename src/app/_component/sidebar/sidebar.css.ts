@@ -40,7 +40,7 @@ export const sidebar = style([
 ]);
 
 export const menuItem = style({
-  marginLeft: 10,
+  paddingLeft: 10,
   borderRadius: 2,
   transition: "color 0.2s ease",
   color: "#5E5E5E",
@@ -51,7 +51,6 @@ export const menuItem = style({
     "&.active ": {
       fontWeight: 500,
       color: "#1C1C1C",
-      backgroundColor: "#f9f9f9",
     },
   },
 });
