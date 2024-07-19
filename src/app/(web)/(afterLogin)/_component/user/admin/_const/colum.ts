@@ -1,4 +1,4 @@
-import { COLUMN_STYLE } from "@/app/_const/cols";
+import { COLUMN_STYLE, COLUMN_SIZE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";
 
 export type RowData = {
@@ -14,46 +14,46 @@ export type RowData = {
 export const GRID_COLS: ColDef[] = [
   {
     field: "관리자 코드",
-    width: 140,
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
   },
   {
     field: "관리자 ID",
-    width: 120,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "관리자 명",
-    width: 120,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "회사 코드",
-    width: 100,
+    width: COLUMN_SIZE.md,
     resizable: true,
     editable: true,
   },
   {
     field: "회사 명",
-    width: 100,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
   },
   {
     field: "생성자",
-    width: 180,
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "생성 일시",
-    width: 180,
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
   },
