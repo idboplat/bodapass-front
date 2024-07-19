@@ -8,8 +8,8 @@ export type RowData = {
   "회사 명": string;
   "주 회사 코드": string;
   "주 회사 명": string;
-  "생성 작업 ID": string;
-  "생성 작업 일시": string;
+  생성인: string;
+  "생성 일시": string;
 };
 
 export const GRID_COLS: ColDef[] = [
@@ -51,13 +51,13 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "생성 작업 ID",
+    field: "생성인",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
   },
   {
-    field: "생성 작업 일시",
+    field: "생성 일시",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,

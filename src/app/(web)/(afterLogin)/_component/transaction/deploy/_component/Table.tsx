@@ -47,9 +47,9 @@ export default function Table({ session }: { session: Session }) {
         일련번호: item.F03,
         종목: item.F04,
         수량: item.F06,
-        작업자: item.F07,
+        취급인: item.F07,
         "생성 일시": convertToStandardDateTime(item.F08),
-        수정자: item.F09,
+        수정인: item.F09,
         "수정 일시": convertToStandardDateTime(item.F10),
       }));
       return result;

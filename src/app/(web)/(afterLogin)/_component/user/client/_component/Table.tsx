@@ -46,8 +46,8 @@ export default function Table({ session }: TableProps) {
         "회사 명": item.F05,
         "주 회사 코드": item.F06,
         "주 회사 명": item.F07,
-        "생성 작업 ID": item.F08,
-        "생성 작업 일시": convertToStandardDateTime(item.F09),
+        생성인: item.F08,
+        "생성 일시": convertToStandardDateTime(item.F09),
       }));
       return result;
     },
