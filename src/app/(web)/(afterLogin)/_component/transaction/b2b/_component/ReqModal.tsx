@@ -25,7 +25,7 @@ interface ReqModalProps {
 }
 
 export default function ReqModal({ onClose, onSuccess, session }: ModalProps<ReqModalProps>) {
-  const [instCd, setInstCd] = useState("");
+  const [instCd, setInstCd] = useState("USDL");
   const [amount, setAmount] = useState("");
 
   const actions = useSetTransactionCorpStore();
@@ -71,7 +71,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
         <ModalCloseBtn onClose={onClose} />
         <div>
           <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>구매 신청</h3>
+            <h3 className={css.modalTitle}>USDL 신청</h3>
           </div>
           <div>
             <div className={css.inputBox}>
@@ -81,14 +81,15 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
               <DefaultInput
                 id={ReqModalInput.instCd}
                 value={instCd}
-                placeholder="USDT"
-                onChange={onChangeInput}
-                onReset={() => setInstCd("")}
+                disabled={true}
+                // placeholder="USDT"
+                // onChange={onChangeInput}
+                // onReset={() => setInstCd("")}
               />
             </div>
             <div className={css.inputBox}>
               <label htmlFor={ReqModalInput.amount} className={css.label}>
-                입출고 수량
+                신청 수량
               </label>
               <DefaultInput
                 id={ReqModalInput.amount}
