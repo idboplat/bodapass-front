@@ -84,7 +84,7 @@ export default function CreCorpModal({
     const item = findEntity(CORP_GRP_ITEM, corpGrpTp);
     const grpTp = item?.[0] || "";
     const adminPw = e.target?.[CreCorpInput.adminPw]?.value;
-    mutation.mutate({ adminPw, grpTp: grpTp });
+    mutation.mutate({ adminPw, grpTp });
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {

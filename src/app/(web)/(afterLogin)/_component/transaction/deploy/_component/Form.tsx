@@ -68,7 +68,7 @@ export default function Form({ session }: FormProps) {
       </div> */}
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <button className={navBtn} type="submit" disabled={isFetching > 0}>
-          조회
+          내역 조회
         </button>
       </div>
       <div className={btnWrap}>

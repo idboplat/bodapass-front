@@ -62,9 +62,9 @@ export default function Table({ session }: TableProps) {
         "체결 일자": item.F13,
         "체결 번호": item.F14,
         "인덱스 체결 계좌 번호": item.F15,
-        작업자: item.F16,
+        취급인: item.F16,
         "생성 일시": convertToStandardDateTime(item.F17),
-        수정자: item.F18,
+        수정인: item.F18,
         "수정 일시": convertToStandardDateTime(item.F19),
       }));
       return result;

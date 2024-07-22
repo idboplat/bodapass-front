@@ -4,6 +4,8 @@ import B2cHome from "@transaction/b2c/_component/Home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
+import PnlHome from "@order/pnl/Home";
+import ClientHome from "@user/client/home";
 
 export const G4_PATH_LIST: Path[] = [
   // {
@@ -12,12 +14,19 @@ export const G4_PATH_LIST: Path[] = [
   // },
   {
     category: "사용자",
-    pages: [{ title: "관리자 관리", number: "400202", Component: AdminHome }],
+    pages: [
+      { title: "고객 관리", number: "400201", Component: ClientHome },
+      { title: "관리자 관리", number: "400202", Component: AdminHome },
+    ],
   },
   // {
   //   category: "로그",
   //   pages: [],
   // },
+  {
+    category: "주문",
+    pages: [{ title: "고객 손익 내역", number: "400404", Component: PnlHome }],
+  },
   {
     category: "잔고",
     pages: [

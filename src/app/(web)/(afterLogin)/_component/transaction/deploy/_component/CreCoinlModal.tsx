@@ -5,7 +5,6 @@ import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
 import { inputBox, label } from "./creCoinModal.css";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import { TBW_000300_P01 } from "@/type/api";
@@ -13,13 +12,13 @@ import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { useSetCoinStore } from "../_lib/store";
+import { useState } from "react";
 
 const ID = "creCoinModal";
 
 enum CreCoinInput {
   instCd = ID + "InstCd",
   amount = ID + "Amount",
-  // otp = ID + "Otp",
   adminPw = ID + "AdminPw",
 }
 
@@ -32,20 +31,20 @@ export default function CreCoinModal({
   onSuccess,
   session,
 }: ModalProps<CreCoinModalProps>) {
-  const [instCd, setInstCd] = useState("USDL");
   const [amount, setAmount] = useState("");
-  // const [otp, setOtp] = useState("");
-  const [adminPw, setAdminPw] = useState("");
 
   const actions = useSetCoinStore();
 
   const mutation = useMutation({
     mutationKey: ["TBW_000300_P01"],
-    mutationFn: async () => {
+    mutationFn: async (arg: { amount: string; adminPw: string }) => {
+      if (!arg.amount) throw new Error("발행할 USDL 수량을 입력해주세요.");
+      if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
+
       const TBW_000300_P01Res = await callTms<TBW_000300_P01>({
         session,
         svcId: "TBW_000300_P01",
-        data: [session.user.corpCd, instCd, amount.replaceAll(",", "")],
+        data: [session.user.corpCd, "USDL", arg.amount.replaceAll(",", ""), arg.adminPw],
       });
       const TBW_000300_P01Data = TBW_000300_P01Res.svcRspnData;
       if (TBW_000300_P01Data === null) {
@@ -59,10 +58,12 @@ export default function CreCoinModal({
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: any) => {
     try {
       e.preventDefault();
-      mutation.mutate();
+      const amount = e.target?.[CreCoinInput.amount]?.value;
+      const adminPw = e.target?.[CreCoinInput.adminPw]?.value;
+      mutation.mutate({ amount, adminPw });
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -74,9 +75,6 @@ export default function CreCoinModal({
     const { id, value } = e.target;
 
     switch (id) {
-      case CreCoinInput.instCd:
-        setInstCd(() => value);
-        break;
       case CreCoinInput.amount:
         const integerStr = deleteIntegerZero(replaceToNumber(value));
         if (integerStr.length > 20) return; // 최대 20자리
@@ -99,9 +97,8 @@ export default function CreCoinModal({
             </label>
             <DefaultInput
               id={CreCoinInput.instCd}
-              value={instCd}
+              value={"USDL"}
               onChange={onChangeInput}
-              // onReset={() => setInstCd("")}
               disabled
             />
           </div>
