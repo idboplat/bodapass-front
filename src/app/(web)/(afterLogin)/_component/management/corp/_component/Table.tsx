@@ -9,7 +9,7 @@ import callTms from "@/model/callTms";
 import { TBW_000000_R01 } from "@/type/api";
 import { Session } from "next-auth";
 import { useCorpStore } from "../_lib/store";
-import { CORP_GRP_ITEM, convertText } from "@/app/_const/tp";
+import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import PagePagination from "@/app/_component/pagination/PagePagination";
 
@@ -30,7 +30,11 @@ export default function Table({ session }: TableProps) {
       const TBW_000000_R01Res = await callTms<TBW_000000_R01>({
         session,
         svcId: "TBW_000000_R01",
-        data: [session.user.corpCd, corpStore.corpNm, corpStore.corpGrpTp || ""],
+        data: [
+          session.user.corpCd,
+          corpStore.corpNm,
+          findEntity(CORP_GRP_ITEM, corpStore.corpGrpTp)?.[0] || "",
+        ],
         pgSize: PAGE_SIZE,
         pgSn: corpStore.page,
       });
@@ -42,7 +46,7 @@ export default function Table({ session }: TableProps) {
       const result = data.map((item) => ({
         "회사 코드": item.F01,
         "회사 명": item.F02,
-        "회사 유형": convertText(CORP_GRP_ITEM, item.F03),
+        "회사 유형": findEntity(CORP_GRP_ITEM, item.F03)?.[1],
         "상위 회사 코드": item.F04,
         "상위 회사 명": item.F05,
         생성인: item.F06,

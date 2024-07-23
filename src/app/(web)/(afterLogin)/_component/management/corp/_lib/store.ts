@@ -5,7 +5,7 @@ import { create, useStore } from "zustand";
 type CorpState = {
   date: [DateType, DateType];
   corpNm: string;
-  corpGrpTp: string | null;
+  corpGrpTp: string;
   nonce: number;
   resetTime: number;
   page: number;
@@ -24,7 +24,7 @@ type CorpActions = {
 const initState: CorpState = {
   date: [null, null],
   corpNm: "",
-  corpGrpTp: null,
+  corpGrpTp: "",
   nonce: 0,
   resetTime: Date.now(),
   page: 1,

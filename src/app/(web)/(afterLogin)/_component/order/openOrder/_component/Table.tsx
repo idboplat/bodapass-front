@@ -1,5 +1,5 @@
 "use client";
-import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, convertText } from "@/app/_const/tp";
+import { BYSL_TP_ITEM, findEntity } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
@@ -36,7 +36,7 @@ export default function Table({ session }: TableProps) {
           openOrderStore.instCd,
           dateToString(openOrderStore.date[0]),
           dateToString(openOrderStore.date[1]),
-          openOrderStore.byslTp,
+          findEntity(BYSL_TP_ITEM, openOrderStore.byslTp)?.[0] || "",
         ],
         pgSize: PAGE_SIZE,
         pgSn: openOrderStore.page,
@@ -59,7 +59,7 @@ export default function Table({ session }: TableProps) {
         "주문 상태 구분": item.F10,
         "주문 구분": item.F11,
         "호가 구분": item.F12,
-        "매수매도 구분": item.F13,
+        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F13)?.[1],
         "주문 가격 구분": item.F14,
         "체결 조건 구분": item.F15,
         "조건 가격": item.F16,

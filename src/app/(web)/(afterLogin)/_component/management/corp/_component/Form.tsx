@@ -60,8 +60,7 @@ export default function Form({ session }: FormProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const item = findEntity(CORP_GRP_ITEM, corpGrpValue);
-    actions.setState(corpNm, item?.[0] || "");
+    actions.setState(corpNm, corpGrpValue);
   };
 
   const today = new Date();

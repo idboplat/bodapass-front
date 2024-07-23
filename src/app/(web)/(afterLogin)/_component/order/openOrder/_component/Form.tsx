@@ -3,7 +3,6 @@ import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { BYSL_TP_ITEM, findEntity, MVIO_TP_ITEM } from "@/app/_const/tp";
 import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
 import { useSetOpenOrderStore } from "../_lib/store";
@@ -49,7 +48,7 @@ export default function Form({ session }: FormProps) {
     e.preventDefault();
 
     actions.setState({
-      byslTp: findEntity(BYSL_TP_ITEM, byslTp)?.[0] || "",
+      byslTp,
       instCd,
       date,
     });
