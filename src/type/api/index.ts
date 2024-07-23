@@ -227,3 +227,48 @@ export type TBW_000001_S01 = RspnData<{
   F08: string;
   F09: string;
 }>;
+
+/** 미체결 내역 조회 */
+export type TBW_006000_Q01 = RspnData<{
+  F01: string;
+  F02: string;
+  F03: string;
+  F04: string;
+  F05: string;
+  F06: string;
+  F07: string;
+  F08: string;
+  F09: string;
+  F10: string;
+  F11: string;
+  F12: string;
+  F13: string;
+  F14: string;
+  F15: string;
+  F16: string;
+  F17: string;
+  F18: string;
+  F19: string;
+  F20: string;
+  F21: string;
+  F22: string;
+  F23: string;
+  F24: string;
+  F25: string;
+  F26: string;
+  F27: string;
+  F28: string;
+  F29: string;
+  F30: string;
+  F31: string;
+  F32: string;
+  F33: string;
+  F34: string;
+  F35: string;
+  F36: string;
+  F37: string;
+  F38: string;
+  F39: string;
+  F40: string;
+  F41: string;
+}>;

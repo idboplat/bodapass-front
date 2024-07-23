@@ -5,6 +5,7 @@ import ClientHome from "@user/client/home";
 import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
 import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
+import OpenOrderHome from "@order/openOrder/Home";
 
 export const G1_PATH_LIST: Path[] = [
   {
@@ -24,7 +25,12 @@ export const G1_PATH_LIST: Path[] = [
   // },
   {
     category: "주문",
-    pages: [{ title: "고객 손익 내역", number: "100404", Component: PnlHome }],
+    pages: [
+      { title: "미체결 내역", number: "100401", Component: OpenOrderHome },
+      { title: "주문 내역", number: "100402", Component: PnlHome },
+      { title: "체결 내역", number: "100403", Component: PnlHome },
+      { title: "고객 손익 내역", number: "100404", Component: PnlHome },
+    ],
   },
   {
     category: "입출금",

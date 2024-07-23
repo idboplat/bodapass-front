@@ -4,6 +4,7 @@ import B2bHome from "@transaction/b2b/_component/Home";
 import CorpHome from "@management/corp/Home";
 import PnlHome from "@order/pnl/Home";
 import ClientHome from "@user/client/home";
+import OpenOrderHome from "@order/openOrder/Home";
 
 export const G3_PATH_LIST: Path[] = [
   {
@@ -23,7 +24,12 @@ export const G3_PATH_LIST: Path[] = [
   // },
   {
     category: "주문",
-    pages: [{ title: "고객 손익 내역", number: "200404", Component: PnlHome }],
+    pages: [
+      { title: "미체결 내역", number: "200401", Component: OpenOrderHome },
+      { title: "주문 내역", number: "200402", Component: PnlHome },
+      { title: "체결 내역", number: "200403", Component: PnlHome },
+      { title: "고객 손익 내역", number: "200404", Component: PnlHome },
+    ],
   },
   {
     category: "잔고",
