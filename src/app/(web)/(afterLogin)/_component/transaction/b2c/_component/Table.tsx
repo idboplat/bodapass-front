@@ -1,5 +1,11 @@
 "use client";
-import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, convertText } from "@/app/_const/tp";
+import {
+  MVIO_RMRK_ITEM,
+  MVIO_TP_ITEM,
+  RGST_STAT_ITEM,
+  convertText,
+  findEntity,
+} from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
@@ -51,9 +57,9 @@ export default function Table({ session, meta }: TableProps) {
         data: [
           session.user.corpCd,
           transactionStore.instCd,
-          transactionStore.mvioTp,
-          transactionStore.mvioRmrkTp,
-          transactionStore.rqstStatTp,
+          findEntity(MVIO_TP_ITEM, transactionStore.mvioTp)?.[0] || "",
+          findEntity(MVIO_RMRK_ITEM, transactionStore.mvioRmrkTp)?.[0] || "",
+          findEntity(RGST_STAT_ITEM, transactionStore.rqstStatTp)?.[0] || "",
           dateToString(transactionStore.date[0]),
           dateToString(transactionStore.date[1]),
         ],
@@ -72,8 +78,8 @@ export default function Table({ session, meta }: TableProps) {
         계좌번호: item.F04,
         "사용자 ID": item.F05,
         "종목 코드": item.F06,
-        "입출 구분": convertText(MVIO_TP_ITEM, item.F07),
-        "적요 구분": convertText(MVIO_RMRK_ITEM, item.F08),
+        "입출 구분": findEntity(MVIO_TP_ITEM, item.F07)?.[1] || "",
+        "적요 구분": findEntity(MVIO_RMRK_ITEM, item.F08)?.[1] || "",
         수량: item.F09,
         "잔고 수량": item.F10,
         "상태 구분": item.F11,

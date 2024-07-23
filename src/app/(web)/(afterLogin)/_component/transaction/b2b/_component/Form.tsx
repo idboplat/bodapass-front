@@ -1,17 +1,16 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
+import { DateType } from "@/app/_component/datepicker/DatePicker";
+import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import LabelInput from "@/app/_component/input/LabelInput";
+import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
+import { useSetModalStore } from "@/app/_lib/modalStore";
+import { useIsFetching } from "@tanstack/react-query";
+import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
-import { btnBox, selectBoxWrap, inputWrap, navWrap } from "./nav.css";
-import { useSetModalStore } from "@/app/_lib/modalStore";
+import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import ReqModal from "./ReqModal";
-import { Session } from "next-auth";
-import SelectLabel from "@/app/_component/select/SelectLabel";
-import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
-import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { useIsFetching } from "@tanstack/react-query";
 
 interface FormProps {
   session: Session;
@@ -36,9 +35,9 @@ export default function Form({ session, showReqBtn }: FormProps) {
     e.preventDefault();
 
     actions.setState({
-      mvioTp: findEntity(MVIO_TP_ITEM, mvioTp)?.[0] || "",
-      mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
-      rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
+      mvioTp,
+      mvioRmrkTp,
+      rqstStatTp,
       instCd,
       date,
     });

@@ -33,9 +33,9 @@ export default function Form({ session }: FormProps) {
     e.preventDefault();
 
     actions.setState({
-      mvioTp: findEntity(MVIO_TP_ITEM, mvioTp)?.[0] || "",
-      mvioRmrkTp: findEntity(MVIO_RMRK_ITEM, mvioRmrkTp)?.[0] || "",
-      rqstStatTp: findEntity(RGST_STAT_ITEM, rqstStatTp)?.[0] || "",
+      mvioTp,
+      mvioRmrkTp,
+      rqstStatTp,
       instCd,
       date,
     });
