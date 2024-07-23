@@ -29,10 +29,12 @@ export const RGST_STAT_ITEM: Entity = [
   ["APL", "완료"],
 ];
 
+/** 매수매도 구분 */
+export const BYSL_TP_ITEM: Entity = [
+  ["1", "매수"],
+  ["2", "매도"],
+];
+
 export const findEntity = (entity: Entity, value: string) => {
   return entity.find(([tp, text]) => tp === value || text === value);
-};
-
-export const convertText = (entity: Entity, value: string) => {
-  return Object.fromEntries(entity)[value] || value;
 };
