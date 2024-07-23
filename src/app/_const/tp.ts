@@ -14,6 +14,12 @@ export const MVIO_TP_ITEM: Entity = [
   ["O", "출고"],
 ];
 
+/** 매도매수 구분 */
+export const BYSL_TP_ITEM: Entity = [
+  ["b", "매도"],
+  ["s", "매수"],
+];
+
 /**  입출고 적요 구분 */
 export const MVIO_RMRK_ITEM: Entity = [
   ["1", "매매손익"],

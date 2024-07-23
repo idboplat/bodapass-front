@@ -272,3 +272,9 @@ export type TBW_006000_Q01 = RspnData<{
   F40: string;
   F41: string;
 }>;
+
+/** 주문 내역 조회 */
+export type TBW_006000_Q02 = RspnData<{}>;
+
+/** 체결 내역 조회 */
+export type TBW_006000_Q03 = RspnData<{}>;
