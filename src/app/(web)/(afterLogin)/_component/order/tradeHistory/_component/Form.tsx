@@ -26,7 +26,7 @@ export default function Form({ session }: FormProps) {
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
 
-  const isFetching = useIsFetching({ queryKey: ["TBW_006000_R01"] });
+  const isFetching = useIsFetching({ queryKey: ["TBW_006000_Q03"] });
 
   const actions = useSetOrderHistory();
 

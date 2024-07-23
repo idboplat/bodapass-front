@@ -3,7 +3,7 @@ import PagePagination from "@/app/_component/pagination/PagePagination";
 import { BYSL_TP_ITEM, findEntity } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import callTms from "@/model/callTms";
-import { TBW_006000_Q02 } from "@/type/api";
+import { TBW_006000_Q03 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
@@ -25,11 +25,11 @@ export default function Table({ session }: TableProps) {
   const orderHistoryStore = useOrderHistoryStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_006000_Q02", orderHistoryStore],
+    queryKey: ["TBW_006000_Q03", orderHistoryStore],
     queryFn: async () => {
-      const TBW_006000_R01Res = await callTms<TBW_006000_Q02>({
+      const TBW_006000_R01Res = await callTms<TBW_006000_Q03>({
         session,
-        svcId: "TBW_006000_Q02",
+        svcId: "TBW_006000_Q03",
         data: [
           session.user.corpCd,
           orderHistoryStore.instCd,
