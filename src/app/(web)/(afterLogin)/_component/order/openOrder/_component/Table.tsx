@@ -59,7 +59,7 @@ export default function Table({ session }: TableProps) {
         "주문 상태 구분": item.F10,
         "주문 구분": item.F11,
         "호가 구분": item.F12,
-        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F13)?.[1],
+        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F13)?.[1] || "",
         "주문 가격 구분": item.F14,
         "체결 조건 구분": item.F15,
         "조건 가격": item.F16,
