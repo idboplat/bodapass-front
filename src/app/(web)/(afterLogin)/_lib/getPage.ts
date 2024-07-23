@@ -1,6 +1,11 @@
 import { HomeProps } from "@/type/common";
+import { ComponentType } from "react";
 
-export type Page = { title: string; number: string; Component: React.FC<HomeProps<any>> };
+export type Page = {
+  title: string;
+  number: string;
+  Component: ComponentType<HomeProps<any>>;
+};
 export type Path = { category: string; pages: Page[] };
 export type ClientPath = { category: string; pages: Omit<Page, "Component">[] };
 
