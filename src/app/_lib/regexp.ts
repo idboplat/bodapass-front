@@ -165,7 +165,7 @@ export const convertToStandardDateTime = (dateString: string) => {
 
 /** 영문, 숫자, 특수문자만 입력 가능한 정규표현식 */
 export const checkEnglishNumericSpecial = (string: string): boolean => {
-  return /^[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]+$/.test(string);
+  return /^[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/.test(string);
 };
 
 /** 한글, 영문, 숫자만 입력 가능한 정규표현식 */
@@ -175,5 +175,5 @@ export const checkKoreanEnglishNumeric = (string: string): boolean => {
 
 /** 한글, 영문, 숫자, 특수문자만 입력 가능한 정규표현식 */
 export const checkKoreanEnglishNumericSpecial = (string: string): boolean => {
-  return /^[가-힣a-zA-Z0-9!@#$%^&*(),.?":{}|<>]+$/.test(string);
+  return /^[가-힣a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/.test(string);
 };
