@@ -36,7 +36,7 @@ export default function DenyBtn({ session, data, onSuccess }: DenyBtnProps) {
       return TBW_000100_P03Data[0].F01;
     },
     onSuccess: () => {
-      toast.success("거절 되었습니다.");
+      toast.success("반려 되었습니다.");
       onSuccess("deny");
     },
   });
@@ -48,7 +48,7 @@ export default function DenyBtn({ session, data, onSuccess }: DenyBtnProps) {
       onClick={() => muation.mutate()}
       disabled={muation.isPending}
     >
-      거절
+      반려
     </button>
   );
 }

@@ -59,7 +59,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     let result: undefined | "deny" | "approve" | "cancel";
 
     if (session.user.corpCd !== data["회사 코드"]) {
-      // G4는 승인, 거절 불가
+      // G4는 승인, 반려 불가
       result = await actions.push(ApproveModal, {
         props: { session, data },
         id: "approveModal",
