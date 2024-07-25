@@ -9,6 +9,12 @@ export const useLogoutMutation = () => {
     mutationKey: ["logout"],
     mutationFn: async () => {
       await signOut({ redirect: false, callbackUrl: "/login" });
+    },
+    onError: () => {
+      // default error handler override
+    },
+    onSettled: () => {
+      // 성공하든 실패하든 로그아웃 처리
       action.logout();
       window.location.href = "/login";
     },

@@ -1,50 +1,51 @@
 "use client";
-import { SESSION_STORAGE_KEY, useSetApp } from "@/app/_lib/appStore";
+import { SESSION_STORAGE_KEY, useApp } from "@/app/_lib/appStore";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { btn } from "./sessionTime.css";
+import { useStore } from "zustand";
 
-const Time = 3600;
+const TIME = 60 * 60; // 단위 초
 
 interface SessionTimeProps {
   session: Session;
 }
 
 export default function SessionTime({}: SessionTimeProps) {
-  const [remain, setRemain] = useState(Time);
-  const actions = useSetApp();
-
+  const [now, setNow] = useState(Date.now());
+  const app = useApp();
+  const appStore = useStore(app);
   const mutateLogout = useLogoutMutation();
 
-  const resetTime = () => {
-    setRemain(() => Time);
-    actions.refresh(); //로컬스토리지 변경
-  };
+  // loginTime이 0이되면 now로 대신 계산
+  const loginTime = new Date(appStore.session).getTime() || now;
+  const past = Math.floor((now - loginTime) / 1000); // 지난 초
+  const remain = TIME - past; // 남은 초
 
   useEffect(() => {
-    if (remain < 0) return;
-    if (remain === 0) {
-      return mutateLogout.mutate();
-    }
+    if (appStore.session === "guest") return;
 
-    const interval = setInterval(() => {
-      setRemain((pre) => (pre > -1 ? pre - 1 : -1));
+    const timer = setTimeout(() => {
+      if (remain <= 0) {
+        console.log("로그아웃");
+        return mutateLogout.mutate();
+      }
+      setNow(() => Date.now());
     }, 1000);
 
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remain]);
+    return () => clearTimeout(timer);
+  }, [remain, appStore.session, mutateLogout]);
 
   useEffect(() => {
+    // 로컬스토리지 변경사항 동기화
     const syncTimer = (e: StorageEvent) => {
       if (e.key !== SESSION_STORAGE_KEY) return;
-      setRemain(() => Time);
+      appStore.actions.refresh(); //로컬스토리지 변경
     };
     window.addEventListener("storage", syncTimer);
     return () => window.removeEventListener("storage", syncTimer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [appStore.actions]);
 
   const addPad = (num: number) => num.toString().padStart(2, "0");
   const min = addPad(Math.floor(remain / 60));
@@ -56,7 +57,7 @@ export default function SessionTime({}: SessionTimeProps) {
       <span>
         <time>{timeFormat}</time>
       </span>
-      <button className={btn} onClick={resetTime}>
+      <button className={btn} onClick={appStore.actions.refresh}>
         연장하기
       </button>
     </>

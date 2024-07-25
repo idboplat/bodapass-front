@@ -21,6 +21,7 @@ export default function App({ session, children }: AppProps) {
   useEffect(() => {
     const syncStore = (e: StorageEvent) => {
       if (e.key === SESSION_STORAGE_KEY) {
+        // 로그아웃시 새로고침
         const oldV = e.oldValue !== "guest";
         const newV = e.newValue === "guest";
 
