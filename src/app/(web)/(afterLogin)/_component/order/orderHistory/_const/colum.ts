@@ -95,6 +95,12 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
+    field: "레버리지 크기",
+    width: COLUMN_SIZE.md,
+    resizable: true,
+    editable: true,
+  },
+  {
     field: "조건 가격",
     width: COLUMN_SIZE.xl,
     resizable: true,
