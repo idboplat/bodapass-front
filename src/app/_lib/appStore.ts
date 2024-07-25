@@ -40,7 +40,12 @@ export const createAppStore = (initState: State) => {
         set(() => ({ session: "guest" }));
       },
       refresh: () => get().actions.login(),
-      toggleSidebar: () => set((pre) => ({ sidebar: !pre.sidebar })),
+      toggleSidebar: () =>
+        set((pre) => {
+          const maxAge = 60 * 60 * 24 * 365; // 1년
+          document.cookie = `sidebar=${!pre.sidebar}; Max-Age=${maxAge}`;
+          return { sidebar: !pre.sidebar };
+        }),
     },
   }));
 };

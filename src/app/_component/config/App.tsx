@@ -1,20 +1,21 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { AppContext, SESSION_STORAGE_KEY, createAppStore } from "../../_lib/appStore";
+import { AppContext, createAppStore, SESSION_STORAGE_KEY } from "../../_lib/appStore";
 import { Session } from "next-auth";
 import { formatISO } from "date-fns";
 
 interface AppProps {
   children: React.ReactNode;
   session: Session | null;
+  sidebar: boolean;
 }
 
-export default function App({ session, children }: AppProps) {
+export default function App({ session, sidebar, children }: AppProps) {
   const store = useRef(
     createAppStore({
       session: !!session ? formatISO(new Date()) : "guest",
       theme: "light",
-      sidebar: true,
+      sidebar,
     }),
   );
 

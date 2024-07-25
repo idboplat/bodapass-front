@@ -7,14 +7,17 @@ import Hotkeys from "./Hotkeys";
 import NextAuth from "./NextAuth";
 import ReactQuery from "./ReactQuery";
 import ToastBox from "./ToastBox";
+import { cookies } from "next/headers";
 
 const ModalContainer = dynamic(() => import("../modal/ModalContainer"), { ssr: false });
 
 export default async function Configs({ children }: PropsWithChildren) {
+  const cookieStore = cookies();
+  const sidebar = cookieStore.get("sidebar")?.value !== "false";
   const session = await getServerSessionWithOptions();
 
   return (
-    <App session={session}>
+    <App session={session} sidebar={sidebar}>
       <NextAuth>
         <Hotkeys>
           <ReactQuery>
