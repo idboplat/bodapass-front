@@ -166,16 +166,22 @@ export const convertToStandardDateTime = (dateString: string) => {
 };
 
 /** 영문, 숫자, 특수문자만 입력 가능한 정규표현식 */
-export const checkEnglishNumericSpecial = (string: string): boolean => {
+export const checkEnNumSp = (string: string): boolean => {
   return /^[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/.test(string);
 };
 
 /** 한글, 영문, 숫자만 입력 가능한 정규표현식 */
-export const checkKoreanEnglishNumeric = (string: string): boolean => {
+export const checkKorEnNum = (string: string): boolean => {
   return /^[가-힣a-zA-Z0-9]+$/.test(string);
 };
 
+/** 한글, 영문, 숫자, 언더바(_), 공백만 입력 가능한 정규표현식 */
+// 회사명에서 사용
+export const checkCorpNm = (string: string): boolean => {
+  return /^[가-힣a-zA-Z0-9_ ]+$/.test(string);
+};
+
 /** 한글, 영문, 숫자, 특수문자만 입력 가능한 정규표현식 */
-export const checkKoreanEnglishNumericSpecial = (string: string): boolean => {
+export const checkKorEnNumSp = (string: string): boolean => {
   return /^[가-힣a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/.test(string);
 };

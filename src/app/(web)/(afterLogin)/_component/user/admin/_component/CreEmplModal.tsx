@@ -13,7 +13,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSetAdminStore } from "../_lib/store";
 import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
-import { checkEnglishNumericSpecial } from "@/app/_lib/regexp";
+import { checkEnNumSp } from "@/app/_lib/regexp";
 
 const ID = "creEmplModal";
 
@@ -48,7 +48,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
       if (arg.extnUserId.length > 50) throw new Error("관리자 ID는 50자리 이하로 입력해주세요.");
       if (arg.emplName.length > 50) throw new Error("신규 관리자 명은 50자리 이하로 입력해주세요.");
       if (!arg.pw) throw new Error("비밀번호를 입력해주세요.");
-      if (!checkEnglishNumericSpecial(arg.pw) || arg.pw.length < 7)
+      if (!checkEnNumSp(arg.pw) || arg.pw.length < 7)
         throw new Error("비밀번호는 영문, 숫자, 특수문자만 입력 가능하며 7자리 이상이어야 합니다.");
       if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
 

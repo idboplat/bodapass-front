@@ -18,7 +18,7 @@ import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { selectBoxWrap } from "./nav.css";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import { navBtn } from "@/app/_component/btn/btn.css";
-import { checkKoreanEnglishNumeric } from "@/app/_lib/regexp";
+import { checkCorpNm, checkKorEnNum } from "@/app/_lib/regexp";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 
 const ID = "creCorpModal";
@@ -50,7 +50,7 @@ export default function CreCorpModal({
     mutationKey: ["TBW_000000_P01"],
     mutationFn: async (arg: { adminPw: string; grpTp: string }) => {
       if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
-      if (!checkKoreanEnglishNumeric(corpNm)) {
+      if (!checkCorpNm(corpNm)) {
         throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
       }
       if (!arg.grpTp) {
