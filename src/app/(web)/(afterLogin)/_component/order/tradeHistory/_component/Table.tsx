@@ -12,7 +12,7 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useOrderHistoryStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
-import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 
 const PAGE_SIZE = 20;
 
@@ -48,9 +48,9 @@ export default function Table({ session }: TableProps) {
     select: (data) => {
       const result = data.map((item) => ({
         "회사 코드": item.F01,
-        "체결 일자": convertToStandardDateTime(item.F02),
+        "체결 일자": stringToDate(item.F02),
         "체결 일련번호": item.F03,
-        "주문 일자": convertToStandardDateTime(item.F04),
+        "주문 일자": stringToDate(item.F04),
         "주문 일련번호": item.F05,
         "계좌 번호": item.F06,
         "종목 코드": item.F07,
@@ -62,18 +62,18 @@ export default function Table({ session }: TableProps) {
         "청산 손익": item.F13,
         "고객 수수료": item.F14,
         "체결 일시": convertToStandardDateTime(item.F15),
-        "전문 일자": convertToStandardDateTime(item.F16),
+        "전문 일자": stringToDate(item.F16),
         "전문 일련번호": item.F17,
         "매칭엔진 ID": item.F18,
         "외부 계좌 번호": item.F19,
         "외부 체결 그룹 번호": item.F20,
         "외부 체결 번호": item.F21,
         "외부 주문 번호": item.F22,
-        "MAKER 주문 번호": item.F23,
+        "MAKER 주문 여부": item.F23,
         "생성 작업 ID": item.F24,
         "생성 작업 일시": convertToStandardDateTime(item.F25),
         "변경 작업 ID": item.F26,
-        "변경 작업 일사": convertToStandardDateTime(item.F27),
+        "변경 작업 일시": convertToStandardDateTime(item.F27),
       }));
       return result;
     },

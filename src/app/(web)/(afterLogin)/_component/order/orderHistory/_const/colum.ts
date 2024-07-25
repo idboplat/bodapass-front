@@ -77,7 +77,7 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "매도매수 구분",
+    field: "매수매도 구분",
     width: COLUMN_SIZE.md,
     resizable: true,
     editable: true,

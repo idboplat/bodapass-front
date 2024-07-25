@@ -1,6 +1,8 @@
 import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
+import { FieldNames } from "@/type/api";
 import { ColDef } from "ag-grid-community";
 
+export type RowData = Record<FieldNames, string>;
 export const GRID_COLS: ColDef[] = [
   {
     field: "회사 코드",
@@ -84,7 +86,6 @@ export const GRID_COLS: ColDef[] = [
     resizable: true,
     editable: true,
   },
-  ///
   {
     field: "주문 가격 구분",
     width: COLUMN_SIZE.md,
