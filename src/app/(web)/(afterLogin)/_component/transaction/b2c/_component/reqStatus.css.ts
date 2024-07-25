@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const req = style({
   backgroundColor: "#759cff",
-  padding: "1px 10px",
+  padding: "2px 10px",
   borderRadius: 3,
   color: "#fff",
   transition: "background-color 0.2s ease",

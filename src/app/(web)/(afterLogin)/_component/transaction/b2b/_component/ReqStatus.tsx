@@ -10,19 +10,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01, TBW_002000_Q01 } from "@/type/api";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
+import { findEntity, RGST_STAT_ITEM } from "@/app/_const/tp";
 
 interface ReqStatusProps {
   session: Session;
   data: RowData;
   index: number;
 }
-
-const STATUS_TEXT: Record<string, string> = {
-  REQ: "승인 대기",
-  APL: "승인 완료",
-  REJ: "승인 반려",
-  CAN: "신청 취소",
-};
 
 export default function ReqStatus({ index, data, session }: ReqStatusProps) {
   const transactionStore = useTransactionCorpStore();
@@ -82,13 +76,15 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     }
   };
 
+  const status = findEntity(RGST_STAT_ITEM, data["상태 구분"])?.[1];
+
   if (data["상태 구분"] !== "REQ") {
-    return <span>{STATUS_TEXT[data["상태 구분"]]}</span>;
+    return <span>{status}</span>;
   }
 
   return (
     <button type="button" className={classNames(req)} onClick={onClick}>
-      {STATUS_TEXT[data["상태 구분"]]}
+      {status}
     </button>
   );
 }

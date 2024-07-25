@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
-import { useOpenOrderStore, useSetOpenOrderStore } from "../_lib/store";
+import { useOpenOrderStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
 import PagePagination from "@/app/_component/pagination/PagePagination";
 
@@ -26,7 +26,7 @@ export default function Table({ session }: TableProps) {
   const openOrderStore = useOpenOrderStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_006000_Q01", useSetOpenOrderStore],
+    queryKey: ["TBW_006000_Q01", openOrderStore],
     queryFn: async () => {
       const TBW_006000_Q01Res = await callTms<TBW_006000_Q01>({
         session,

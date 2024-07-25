@@ -4,7 +4,6 @@ import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import LabelInput from "@/app/_component/input/LabelInput";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
-import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { useIsFetching } from "@tanstack/react-query";
 import { Session } from "next-auth";
@@ -81,7 +80,7 @@ export default function Form({ session }: FormProps) {
           <SelectLabel>적요 구분</SelectLabel>
           <TextSelect
             value={mvioRmrkTp}
-            onChange={(value: string) => setMvioRmrkTp(() => value)}
+            onChange={(value) => setMvioRmrkTp(() => value)}
             items={["전체", "매매손익", "매매 수수료", "입출고"]}
             style={{
               height: 36,
@@ -94,8 +93,8 @@ export default function Form({ session }: FormProps) {
           <SelectLabel>상태 구분</SelectLabel>
           <TextSelect
             value={rqstStatTp}
-            onChange={(value: string) => setRqstStatTp(() => value)}
-            items={["전체", "신청", "취소", "거부", "완료"]}
+            onChange={(value) => setRqstStatTp(() => value)}
+            items={["전체", "승인 대기", "신청 취소", "승인 반려", "승인 완료"]}
             style={{
               height: 36,
               width: 90,

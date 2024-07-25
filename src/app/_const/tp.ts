@@ -23,10 +23,10 @@ export const MVIO_RMRK_ITEM: Entity = [
 
 /** 신청 상태 구분 */
 export const RGST_STAT_ITEM: Entity = [
-  ["REQ", "신청"],
-  ["CAN", "취소"],
-  ["REJ", "거부"],
-  ["APL", "완료"],
+  ["REQ", "승인 대기"],
+  ["CAN", "신청 취소"],
+  ["REJ", "승인 반려"],
+  ["APL", "승인 완료"],
 ];
 
 /** 매수매도 구분 */

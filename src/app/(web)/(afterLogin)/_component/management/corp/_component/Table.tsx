@@ -46,7 +46,7 @@ export default function Table({ session }: TableProps) {
       const result = data.map((item) => ({
         "회사 코드": item.F01,
         "회사 명": item.F02,
-        "회사 유형": findEntity(CORP_GRP_ITEM, item.F03)?.[1],
+        "회사 유형": findEntity(CORP_GRP_ITEM, item.F03)?.[1] || "",
         "상위 회사 코드": item.F04,
         "상위 회사 명": item.F05,
         생성인: item.F06,

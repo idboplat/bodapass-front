@@ -9,19 +9,13 @@ import { RowData } from "../_const/row.type";
 import { useTransactionClientStore } from "../_lib/store";
 import ApproveModal from "./ApproveModal";
 import { req } from "./reqStatus.css";
+import { findEntity, RGST_STAT_ITEM } from "@/app/_const/tp";
 
 interface ReqStatusProps {
   session: Session;
   data: RowData;
   index: number;
 }
-
-const STATUS_TEXT: Record<string, string> = {
-  REQ: "신청",
-  APL: "완료",
-  REJ: "거부",
-  CAN: "취소",
-};
 
 export default function ReqStatus({ index, data, session }: ReqStatusProps) {
   const transactionStore = useTransactionClientStore();
@@ -92,13 +86,15 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     }
   };
 
+  const status = findEntity(RGST_STAT_ITEM, data["상태 구분"])?.[1];
+
   if (data["상태 구분"] !== "REQ") {
-    return <span>{STATUS_TEXT[data["상태 구분"]]}</span>;
+    return <span>{status}</span>;
   }
 
   return (
     <button type="button" className={classNames(req)} onClick={onClick}>
-      {STATUS_TEXT[data["상태 구분"]]}
+      {status}
     </button>
   );
 }

@@ -7,7 +7,6 @@ import { useSetCorpStore } from "../_lib/store";
 import CreCorpModal from "./CreCorpModal";
 import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import { Session } from "next-auth";
-import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import { corpGrpItemsMap, corpGrpTpItemsMap, getCorpGrpTpItems } from "../_const/map";
 import { useIsFetching } from "@tanstack/react-query";
