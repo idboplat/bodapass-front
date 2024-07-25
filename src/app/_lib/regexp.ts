@@ -113,6 +113,7 @@ export const stringToDateTime = (inputString: string) => {
 
 /** YYYY-MM-DD 형식으로 변환 */
 export const stringToDate = (inputString: string) => {
+  if (inputString === "" || inputString === " ") return inputString;
   const formattedDate = `${inputString.slice(0, 4)}-${inputString.slice(4, 6)}-${inputString.slice(
     6,
     8,
@@ -124,6 +125,7 @@ export const stringToDate = (inputString: string) => {
 /**ex) 27-JUN-24 04.12.45.283920 PM ->  2024-06-27 16:12:45 */
 export const convertToStandardDateTime = (dateString: string) => {
   // 주어진 문자열에서 날짜와 시간을 분리합니다.
+  if (dateString === "" || dateString === " ") return dateString;
   const [datePart, timePart, period] = dateString.split(" ");
 
   // 날짜 부분을 분리하여 년, 월, 일로 나눕니다.

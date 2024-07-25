@@ -3,6 +3,7 @@ import type { RspnData } from "@/model/callTms";
 export type Filler = "";
 export type FillerRspnData = RspnData<{ F01: Filler }>;
 export type StringRspnData = RspnData<{ F01: string }>;
+export type FieldNames = `F${number}`;
 
 /** 회사 등록 */
 export type TBW_000000_P01 = RspnData<{
@@ -229,10 +230,10 @@ export type TBW_000001_S01 = RspnData<{
 }>;
 
 /** 미체결 내역 조회 */
-export type TBW_006000_Q01 = RspnData<Record<string, string>>;
+export type TBW_006000_Q01 = RspnData<Record<FieldNames, string>>;
 
 /** 주문 내역 조회 */
-export type TBW_006000_Q02 = RspnData<Record<string, string>>;
+export type TBW_006000_Q02 = RspnData<Record<FieldNames, string>>;
 
 /** 체결 내역 조회 */
-export type TBW_006000_Q03 = RspnData<Record<string, string>>;
+export type TBW_006000_Q03 = RspnData<Record<FieldNames, string>>;

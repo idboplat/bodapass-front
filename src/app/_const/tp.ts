@@ -31,8 +31,8 @@ export const RGST_STAT_ITEM: Entity = [
 
 /** 매수매도 구분 */
 export const BYSL_TP_ITEM: Entity = [
-  ["1", "매수"],
-  ["2", "매도"],
+  ["B", "매수"],
+  ["S", "매도"],
 ];
 
 export const findEntity = (entity: Entity, value: string) => {

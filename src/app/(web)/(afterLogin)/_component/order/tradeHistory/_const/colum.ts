@@ -152,7 +152,7 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "증거금 가격",
+    field: "생성 작업 일시",
     width: COLUMN_SIZE.md,
     resizable: true,
     editable: true,

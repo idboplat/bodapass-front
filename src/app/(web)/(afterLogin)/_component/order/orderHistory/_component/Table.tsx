@@ -12,7 +12,7 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useTradeHistoryStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
-import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 
 const PAGE_SIZE = 20;
 
@@ -48,13 +48,13 @@ export default function Table({ session }: TableProps) {
     select: (data) => {
       const result = data.map((item) => ({
         "회사 코드": item.F01,
-        "주문 일자": convertToStandardDateTime(item.F02),
+        "주문 일자": stringToDate(item.F02),
         "주문 일련번호": item.F03,
         "계좌 번호": item.F04,
         "종목 코드": item.F05,
-        "원 주문 일자": convertToStandardDateTime(item.F06),
+        "원 주문 일자": stringToDate(item.F06),
         "원 주문 일련번호": item.F07,
-        "최초 주문 일자": convertToStandardDateTime(item.F08),
+        "최초 주문 일자": stringToDate(item.F08),
         "최초 주문 일련번호": item.F09,
         "주문 상태 구분": item.F10,
         "주문 구분": item.F11,
@@ -74,11 +74,11 @@ export default function Table({ session }: TableProps) {
         "가격 종목 코드": item.F25,
         "수수료 종목 코드": item.F26,
         "주문 만기 구분": item.F27,
-        "주문 만기 일자": convertToStandardDateTime(item.F28),
+        "주문 만기 일자": item.F28,
         "주문 종료 여부": item.F29,
         "체결 종료 여부": item.F30,
         "주문 접수 일시": convertToStandardDateTime(item.F31),
-        "전문 일자": convertToStandardDateTime(item.F32),
+        "전문 일자": stringToDate(item.F32),
         "전문 일련번호": item.F33,
         "외부 계좌 번호": item.F34,
         "외부 주문 번호": item.F35,
