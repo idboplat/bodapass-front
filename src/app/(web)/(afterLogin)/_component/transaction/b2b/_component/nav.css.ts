@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const navWrap = style({
   display: "flex",
@@ -38,4 +38,17 @@ export const btnBox = style({
   display: "flex",
   gap: 10,
   alignItems: "center",
+});
+
+export const viewWrap = style({
+  whiteSpace: "nowrap",
+  marginRight: 10,
+});
+
+export const viewTitle = style({
+  fontWeight: 500,
+});
+
+globalStyle(`${viewWrap} > span`, {
+  verticalAlign: "middle",
 });

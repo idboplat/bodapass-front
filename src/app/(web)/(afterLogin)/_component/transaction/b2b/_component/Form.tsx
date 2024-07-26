@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
 import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import ReqModal from "./ReqModal";
+import BalanceViewer from "./BalanceViewer";
 
 interface FormProps {
   session: Session;
@@ -58,6 +59,7 @@ export default function Form({ session, showReqBtn }: FormProps) {
 
   return (
     <form className={navWrap} onSubmit={onSubmit}>
+      <BalanceViewer session={session} />
       <div className={inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
