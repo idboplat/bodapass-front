@@ -13,5 +13,5 @@ export const placeHolder = style({
   position: "relative",
   borderRadius: 3,
   display: "inline-block",
-  verticalAlign: "middle",
+  verticalAlign: "bottom",
 });

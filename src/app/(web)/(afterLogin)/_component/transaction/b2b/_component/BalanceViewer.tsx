@@ -24,12 +24,12 @@ export default function BalanceViewer({ session }: { session: Session }) {
     },
   });
 
-  const balance = data ? data[0].F01 : "";
+  const balance = data ? parseFloat(data[0].F01).toFixed(2) : "";
 
   return (
     <div className={css.viewWrap}>
       <span>회사 보유잔고 : </span>
-      {isLoading ? <PlaceHolder style={{ width: 100, height: 14 }} /> : <span>{balance}</span>}
+      {isLoading ? <PlaceHolder style={{ width: 80, height: 20 }} /> : <span>{balance}</span>}
       <span> USDL</span>
     </div>
   );
