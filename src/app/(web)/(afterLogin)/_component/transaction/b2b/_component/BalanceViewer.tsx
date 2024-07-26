@@ -28,7 +28,7 @@ export default function BalanceViewer({ session }: { session: Session }) {
 
   return (
     <div className={css.viewWrap}>
-      <span className={css.viewTitle}>보유잔고 : </span>
+      <span>회사 보유잔고 : </span>
       {isLoading ? <PlaceHolder style={{ width: 100, height: 14 }} /> : <span>{balance}</span>}
       <span> USDL</span>
     </div>

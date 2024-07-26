@@ -5,6 +5,7 @@ export const navWrap = style({
   justifyContent: "space-between",
   alignItems: "center",
   height: 120,
+  gap: 10,
 });
 
 export const historyFilterwrap = style({
@@ -42,10 +43,7 @@ export const btnBox = style({
 
 export const viewWrap = style({
   whiteSpace: "nowrap",
-  marginRight: 10,
-});
-
-export const viewTitle = style({
+  fontSize: 16,
   fontWeight: 500,
 });
 

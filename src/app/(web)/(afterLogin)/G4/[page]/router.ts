@@ -36,7 +36,7 @@ export const G4_PATH_LIST: Path[] = [
     ],
   },
   {
-    category: "잔고",
+    category: "입출금",
     pages: [
       {
         title: "회사 입금 신청 내역",

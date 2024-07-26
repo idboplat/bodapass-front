@@ -5,6 +5,7 @@ export const navWrap = style({
   justifyContent: "space-between",
   alignItems: "center",
   height: 120,
+  gap: 10,
 });
 
 export const leftWrap = style({
