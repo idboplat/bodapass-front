@@ -12,4 +12,6 @@ export const placeHolder = style({
   backgroundSize: "800px 104px",
   position: "relative",
   borderRadius: 3,
+  display: "inline-block",
+  verticalAlign: "bottom",
 });

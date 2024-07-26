@@ -1,10 +1,11 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const navWrap = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
   height: 120,
+  gap: 10,
 });
 
 export const historyFilterwrap = style({
@@ -38,4 +39,14 @@ export const btnBox = style({
   display: "flex",
   gap: 10,
   alignItems: "center",
+});
+
+export const viewWrap = style({
+  whiteSpace: "nowrap",
+  fontSize: 16,
+  fontWeight: 500,
+});
+
+globalStyle(`${viewWrap} > span`, {
+  verticalAlign: "middle",
 });

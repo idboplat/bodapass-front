@@ -237,3 +237,8 @@ export type TBW_006000_Q02 = RspnData<Record<FieldNames, string>>;
 
 /** 체결 내역 조회 */
 export type TBW_006000_Q03 = RspnData<Record<FieldNames, string>>;
+
+/** 계좌 잔고(코인선물) 출고가능 수량 조회 */
+export type TBW_002000_S02 = RspnData<{
+  F01: string;
+}>;
