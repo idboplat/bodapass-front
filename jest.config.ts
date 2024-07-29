@@ -9,10 +9,11 @@ const createJestConfig = nextJest({
 
 // Add any custom config to be passed to Jest
 const config: Config = {
+  // Add more setup options before each test is run
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFiles: ["<rootDir>/jest.polyfills.js"],
   coverageProvider: "v8",
   testEnvironment: "jsdom",
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     "^@transaction/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/transaction/$1",
     "^@log/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/log/$1",
@@ -24,8 +25,20 @@ const config: Config = {
     "^@api/(.*)$": "<rootDir>/src/app/api/$1",
     "^@/(.*)$": "<rootDir>/src/$1",
     "^/(.*)$": "<rootDir>/$1",
+    "^next/navigation$": "<rootDir>/src/__test__/__mock__/next/navigation.ts",
+  },
+  // silent: false, // true: 콘솔로그를 끈다.
+  testEnvironmentOptions: {
+    // https://github.com/mswjs/msw/issues/1786/
+    customExportConditions: [""],
   },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config);
+// https://stackoverflow.com/questions/75261877/jest-encountered-an-unexpected-token-with-next-js-and-typescript-when-using-crea
+const customCofig = async () => ({
+  ...(await createJestConfig(config)()),
+  transformIgnorePatterns: ["/node_modules/(?!uuid)/"],
+});
+
+export default customCofig;
