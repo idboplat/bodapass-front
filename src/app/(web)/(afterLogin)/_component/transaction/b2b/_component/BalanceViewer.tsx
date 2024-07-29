@@ -5,12 +5,9 @@ import { TBW_002000_S02 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import * as css from "./nav.css";
-import { useTransactionCorpStore } from "../_lib/store";
 import PlaceHolder from "@/app/_component/loading/Placeholder";
 
 export default function BalanceViewer({ session }: { session: Session }) {
-  const transactionStore = useTransactionCorpStore();
-
   const { data, isLoading } = useQuery({
     queryKey: ["TBW_002000_S02"],
     queryFn: async () => {
