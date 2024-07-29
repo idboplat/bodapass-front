@@ -5,7 +5,7 @@ import LabelInput from "@/app/_component/input/LabelInput";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
-import { useIsFetching } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
@@ -32,6 +32,8 @@ export default function Form({ session, showReqBtn }: FormProps) {
   const actions = useSetTransactionCorpStore();
   const modalStore = useSetModalStore();
 
+  const queryClient = useQueryClient();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -42,6 +44,8 @@ export default function Form({ session, showReqBtn }: FormProps) {
       instCd,
       date,
     });
+
+    queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
   };
 
   const openReqModal = async () => {
