@@ -12,6 +12,7 @@ const config: Config = {
   // Add more setup options before each test is run
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   setupFiles: ["<rootDir>/jest.polyfills.js"],
+  testMatch: ["**/?(*.)+(test).[jt]s?(x)"], // 테스트 파일 패턴 설정
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   moduleNameMapper: {
