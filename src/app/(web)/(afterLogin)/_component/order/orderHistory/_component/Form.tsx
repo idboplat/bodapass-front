@@ -9,6 +9,7 @@ import { useSetTradeHistory } from "../_lib/store";
 import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import { useIsFetching } from "@tanstack/react-query";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
+import { addDays } from "date-fns";
 
 enum TradeHistoryForm {
   instCd = "instCd",
@@ -21,7 +22,7 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
+  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
 

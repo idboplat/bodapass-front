@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useSetTransactionClientStore } from "../_lib/store";
 import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import BalanceViewer from "@transaction/b2b/_component/BalanceViewer";
+import { addDays } from "date-fns";
 
 interface FormProps {
   session: Session;
@@ -18,7 +19,7 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
+  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
   const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
