@@ -1,5 +1,5 @@
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
 import { Session } from "next-auth";
@@ -13,6 +13,8 @@ interface ApproveBtnProps {
 }
 
 export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps) {
+  const queryClient = useQueryClient();
+
   const muation = useMutation({
     mutationKey: ["TBW_000200_P04"],
     mutationFn: async () => {
@@ -29,6 +31,7 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
     },
     onSuccess: () => {
       toast.success("승인 되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
       onSuccess("approve");
     },
   });

@@ -5,11 +5,12 @@ import LabelInput from "@/app/_component/input/LabelInput";
 import SelectLabel from "@/app/_component/select/SelectLabel";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
-import { useIsFetching } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionClientStore } from "../_lib/store";
 import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import BalanceViewer from "@transaction/b2b/_component/BalanceViewer";
 
 interface FormProps {
   session: Session;
@@ -28,6 +29,8 @@ export default function Form({ session }: FormProps) {
   const actions = useSetTransactionClientStore();
   const modalStore = useSetModalStore();
 
+  const queryClient = useQueryClient();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -38,6 +41,7 @@ export default function Form({ session }: FormProps) {
       instCd,
       date,
     });
+    queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
   };
 
   const onDateChange = (date: [DateType, DateType]) => {
@@ -51,6 +55,7 @@ export default function Form({ session }: FormProps) {
 
   return (
     <form className={navWrap} onSubmit={onSubmit}>
+      <BalanceViewer session={session} />
       <div className={inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
