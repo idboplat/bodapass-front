@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Session } from "next-auth";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import { useIsFetching } from "@tanstack/react-query";
+import { addDays } from "date-fns";
 
 interface FormProps {
   session: Session;
@@ -17,7 +18,7 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
+  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000300_Q01"] });
 
