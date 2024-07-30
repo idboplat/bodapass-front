@@ -48,8 +48,8 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
         return arr;
       });
 
-      if (data.F11 === "REQ") {
-        // 상태가 REQ일 경우 잔고 재조회
+      if (data.F11 === "APL") {
+        // 상태가 APL일 경우 잔고 재조회
         queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
       }
     },
