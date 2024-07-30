@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
 import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import ReqModal from "./ReqModal";
-import BalanceViewer from "./BalanceViewer";
+import BalanceViewer from "@transaction/_component/BalanceViewer";
 import { addDays } from "date-fns";
 
 interface FormProps {

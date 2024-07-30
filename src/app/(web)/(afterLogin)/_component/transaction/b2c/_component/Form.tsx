@@ -10,7 +10,7 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionClientStore } from "../_lib/store";
 import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
-import BalanceViewer from "@transaction/b2b/_component/BalanceViewer";
+import BalanceViewer from "@transaction/_component/BalanceViewer";
 import { addDays } from "date-fns";
 
 interface FormProps {

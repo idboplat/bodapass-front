@@ -63,8 +63,14 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
           F14: data.F14,
           F15: data.F15,
         };
+
         return arr;
       });
+
+      if (data.F11 === "REQ") {
+        // 상태가 REQ일 경우 잔고 재조회
+        queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
+      }
     },
     onError: async (error) => {
       //재조회 실패 시 페이지 새로고침

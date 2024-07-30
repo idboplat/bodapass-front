@@ -1,10 +1,9 @@
 "use client";
-
 import callTms from "@/model/callTms";
 import { TBW_002000_S02 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
-import * as css from "./nav.css";
+import * as css from "../b2b/_component/nav.css";
 import PlaceHolder from "@/app/_component/loading/Placeholder";
 
 export default function BalanceViewer({ session }: { session: Session }) {
