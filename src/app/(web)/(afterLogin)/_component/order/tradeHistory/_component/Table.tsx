@@ -48,31 +48,35 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        "주문 일시": convertToStandardDateTime(item.F01),
+        "체결 일시": convertToStandardDateTime(item.F01),
         "회사 코드": item.F02,
         회사: item.F03,
         "계좌 번호": item.F04,
         "사용자 ID": item.F05,
         종목: item.F06,
         레버리지: item.F07,
-        "주문 구분": findEntity(AKPRC_TP, item.F08)?.[1] || "",
-        "주문 가격 구분": findEntity(ORDR_PRC_TP, item.F09)?.[1] || "",
-        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F10)?.[1] || "",
-        "주문 가격": sortDecimal({
-          decimalLength: parseInt(item.F17),
-          num: item.F11,
-          requireComma: true,
-        }),
-        "주문 수량": sortDecimal({
-          decimalLength: parseInt(item.F18),
-          num: item.F12,
+        "매수/매도": findEntity(BYSL_TP_ITEM, item.F08)?.[1] || "",
+        체결가: sortDecimal({
+          decimalLength: parseInt(item.F14),
+          num: item.F09,
           requireComma: true,
         }),
         "체결 수량": sortDecimal({
-          decimalLength: parseInt(item.F18),
-          num: item.F13,
+          decimalLength: parseInt(item.F15),
+          num: item.F10,
           requireComma: true,
         }),
+        진입가: sortDecimal({
+          decimalLength: parseInt(item.F14),
+          num: item.F11,
+          requireComma: true,
+        }),
+        수수료: sortDecimal({
+          decimalLength: parseInt(item.F15),
+          num: item.F12,
+          requireComma: true,
+        }),
+        손익: item.F13,
         "가격 소수점": item.F17,
         "수량 소수점": item.F18,
       }));

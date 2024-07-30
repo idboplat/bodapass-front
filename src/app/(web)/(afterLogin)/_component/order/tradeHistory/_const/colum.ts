@@ -3,7 +3,7 @@ import { ColDef } from "ag-grid-community";
 
 export const GRID_COLS: ColDef[] = [
   {
-    field: "주문 일시",
+    field: "체결 일시",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
@@ -37,32 +37,13 @@ export const GRID_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.right,
   },
   {
-    field: "주문 구분",
-    width: COLUMN_SIZE.sm,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "주문 가격 구분",
-    width: COLUMN_SIZE.sm,
-    resizable: true,
-    editable: true,
-  },
-  {
     field: "매수/매도",
-    width: COLUMN_SIZE.md,
+    width: COLUMN_SIZE.sm,
     resizable: true,
     editable: true,
   },
   {
-    field: "주문 가격",
-    width: COLUMN_SIZE.xl,
-    resizable: true,
-    editable: true,
-    cellStyle: COLUMN_STYLE.right,
-  },
-  {
-    field: "주문 수량",
+    field: "체결가",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
@@ -70,6 +51,27 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "체결 수량",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
+  },
+  {
+    field: "진입가",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
+  },
+  {
+    field: "수수료",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
+  },
+  {
+    field: "손익",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
