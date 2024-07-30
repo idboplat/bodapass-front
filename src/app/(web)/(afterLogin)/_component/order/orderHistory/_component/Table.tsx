@@ -57,7 +57,7 @@ export default function Table({ session }: TableProps) {
         레버리지: item.F07,
         "주문 구분": findEntity(AKPRC_TP, item.F08)?.[1] || "",
         "주문 가격 구분": findEntity(ORDR_PRC_TP, item.F09)?.[1] || "",
-        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F10)?.[1] || "",
+        "매수/매도": findEntity(BYSL_TP_ITEM, item.F10)?.[1] || "",
         "주문 가격": sortDecimal({
           decimalLength: parseInt(item.F17),
           num: item.F11,
