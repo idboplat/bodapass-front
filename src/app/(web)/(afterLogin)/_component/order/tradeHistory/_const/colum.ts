@@ -10,7 +10,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "회사",
-    width: COLUMN_SIZE.md,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.left,
@@ -38,7 +38,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "매수/매도",
-    width: COLUMN_SIZE.sm,
+    width: COLUMN_SIZE.md,
     resizable: true,
     editable: true,
   },
