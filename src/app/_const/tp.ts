@@ -35,6 +35,21 @@ export const BYSL_TP_ITEM: Entity = [
   ["S", "매도"],
 ];
 
+/** 호가 구분 */
+export const AKPRC_TP: Entity = [
+  ["N", "신규"],
+  ["M", "정정"],
+  ["C", "취소"],
+];
+
+/** 주문 가격 구분 */
+export const ORDR_PRC_TP: Entity = [
+  ["LM", "지정가"],
+  ["MK", "시장가"],
+  ["SL", "스탑리밋"],
+  ["SM", "스탑마켓"],
+];
+
 export const findEntity = (entity: Entity, value: string) => {
   return entity.find(([tp, text]) => tp === value || text === value);
 };
