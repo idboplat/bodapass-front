@@ -35,9 +35,9 @@ export default function Table({ session }: TableProps) {
         data: [
           session.user.corpCd,
           orderHistoryStore.instCd,
-          findEntity(BYSL_TP_ITEM, orderHistoryStore.mvioTp)?.[0] || "",
           dateToString(orderHistoryStore.date[0]),
           dateToString(orderHistoryStore.date[1]),
+          findEntity(BYSL_TP_ITEM, orderHistoryStore.mvioTp)?.[0] || "",
         ],
         pgSize: PAGE_SIZE,
         pgSn: orderHistoryStore.page,
