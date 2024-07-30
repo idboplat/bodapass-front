@@ -1,6 +1,6 @@
 "use client";
 import PagePagination from "@/app/_component/pagination/PagePagination";
-import { BYSL_TP_ITEM, findEntity } from "@/app/_const/tp";
+import { AKPRC_TP, BYSL_TP_ITEM, findEntity, ORDR_PRC_TP } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import callTms from "@/model/callTms";
 import { TBW_006000_Q02 } from "@/type/api";
@@ -12,7 +12,8 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useTradeHistoryStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
-import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
+import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
 
@@ -47,48 +48,33 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        "회사 코드": item.F01,
-        "주문 일자": stringToDate(item.F02),
-        "주문 일련번호": item.F03,
+        "주문 일시": convertToStandardDateTime(item.F01),
+        "회사 코드": item.F02,
+        회사: item.F03,
         "계좌 번호": item.F04,
-        "종목 코드": item.F05,
-        "원 주문 일자": stringToDate(item.F06),
-        "원 주문 일련번호": item.F07,
-        "최초 주문 일자": stringToDate(item.F08),
-        "최초 주문 일련번호": item.F09,
-        "주문 상태 구분": item.F10,
-        "주문 구분": item.F11,
-        "호가 구분": item.F12,
-        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F13)?.[1] || "",
-        "주문 가격 구분": item.F14,
-        "체결 조건 구분": item.F15,
-        "레버리지 크기": item.F16,
-        "조건 가격": item.F17,
-        "주문 가격": item.F18,
-        "주문 수량": item.F19,
-        "정정 수량": item.F20,
-        "취소 수량": item.F21,
-        "체결 수량": item.F22,
-        "주문 잔량": item.F23,
-        "취소 확인 수량": item.F24,
-        "증거금 가격": item.F25,
-        "가격 종목 코드": item.F26,
-        "수수료 종목 코드": item.F27,
-        "주문 만기 구분": item.F28,
-        "주문 만기 일자": item.F29,
-        "주문 종료 여부": item.F30,
-        "체결 종료 여부": item.F31,
-        "주문 접수 일시": convertToStandardDateTime(item.F32),
-        "전문 일자": stringToDate(item.F33),
-        "전문 일련번호": item.F34,
-        "외부 계좌 번호": item.F35,
-        "외부 주문 번호": item.F36,
-        "외부 원 주문 번호": item.F37,
-        "거부 사유": item.F38,
-        "생성 작업 ID": item.F39,
-        "생성 작업 일시": convertToStandardDateTime(item.F40),
-        "변경 작업 ID": item.F41,
-        "변경 작업 일시": convertToStandardDateTime(item.F42),
+        "사용자 ID": item.F05,
+        종목: item.F06,
+        레버리지: item.F07,
+        "주문 구분": findEntity(AKPRC_TP, item.F08)?.[1] || "",
+        "주문 가격 구분": findEntity(ORDR_PRC_TP, item.F09)?.[1] || "",
+        "매수매도 구분": findEntity(BYSL_TP_ITEM, item.F10)?.[1] || "",
+        "주문 가격": sortDecimal({
+          decimalLength: parseInt(item.F17),
+          num: item.F11,
+          requireComma: true,
+        }),
+        "주문 수량": sortDecimal({
+          decimalLength: parseInt(item.F18),
+          num: item.F12,
+          requireComma: true,
+        }),
+        "체결 수량": sortDecimal({
+          decimalLength: parseInt(item.F18),
+          num: item.F13,
+          requireComma: true,
+        }),
+        "가격 소수점": item.F17,
+        "수량 소수점": item.F18,
       }));
       return result;
     },
