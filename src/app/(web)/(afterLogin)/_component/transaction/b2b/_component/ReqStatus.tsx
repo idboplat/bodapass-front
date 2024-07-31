@@ -44,7 +44,26 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       queryClient.setQueryData<TBW_001000_Q01>(["TBW_001000_Q01", transactionStore], (prev) => {
         if (!prev) return prev;
         const arr = [...prev];
-        arr[index] = data;
+        // data.F05 외부 사용자 ID 제외
+        // arr[index].F07 입출고 적요 구분 유지
+        // arr[index]를 새로운 객체로 대체, 불변성 유지
+        arr[index] = {
+          F01: data.F01, // 생성 작업 일시
+          F02: data.F02, // 생성 작업 ID
+          F03: data.F03, // 회사 코드
+          F04: data.F04, // 회사 명
+          F05: data.F06, // 종목 코드
+          F06: data.F07, // 입출고 구분
+          F07: arr[index].F07, // 입출고 적요 구분
+          F08: data.F08, // 입출고 수량
+          F09: data.F12, // 입출고 일자
+          F10: data.F13, // 입출고 일련번호
+          F11: data.F11, // 계좌번호
+          F12: data.F09, // 잔고 수량
+          F13: data.F10, // 신청 상태 구분
+          F14: data.F14, // 변경 작업 일시
+          F15: data.F15, // 변경 작업 ID
+        };
         return arr;
       });
 

@@ -1,11 +1,10 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type TransactionCorpState = {
   date: [DateType, DateType];
   instCd: string;
-  mvioTp: string;
-  mvioRmrkTp: string;
   rqstStatTp: string;
   nonce: number;
   resetTime: number;
@@ -23,10 +22,8 @@ type TransactionCorpActions = {
 };
 
 const initState: TransactionCorpState = {
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
   instCd: "",
-  mvioTp: "",
-  mvioRmrkTp: "",
   rqstStatTp: "",
   nonce: 0,
   resetTime: Date.now(),

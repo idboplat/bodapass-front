@@ -106,10 +106,6 @@ export type TBW_000300_Q01 = RspnData<{
   F04: string;
   F05: string;
   F06: string;
-  F07: string;
-  F08: string;
-  F09: string;
-  F10: string;
 }>;
 
 /** 그룹 코드(회사)(공통) 조회  */

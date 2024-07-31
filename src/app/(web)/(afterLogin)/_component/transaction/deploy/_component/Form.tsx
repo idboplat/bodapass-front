@@ -4,8 +4,6 @@ import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import CreCoinModal from "./CreCoinlModal";
-import LabelInput from "@/app/_component/input/LabelInput";
-import TextSelect from "@/app/_component/select/TextSelect";
 import { useState } from "react";
 import { Session } from "next-auth";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
@@ -38,10 +36,6 @@ export default function Form({ session }: FormProps) {
     setDate(() => [startDate, today]);
   };
 
-  // const onChangeSelect = (value: string) => {
-  //   setMvioTp(() => value);
-  // };
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -53,20 +47,6 @@ export default function Form({ session }: FormProps) {
   return (
     <form className={navWrap} onSubmit={onSubmit}>
       <div className={inputWrap}>
-        {/* <div className={inputWrap}>
-        <div>
-          <TextSelect
-            value={mvioTp}
-            onChange={onChangeSelect}
-            items={["*", "입고", "출고"]}
-            placeholder="입출고 구분"
-            style={{
-              height: 36,
-              width: 120,
-            }}
-          />
-        </div>
-      </div> */}
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <button className={navBtn} type="submit" disabled={isFetching > 0}>
           내역 조회
