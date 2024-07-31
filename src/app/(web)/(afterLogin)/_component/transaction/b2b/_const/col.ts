@@ -3,7 +3,13 @@ import { ColDef } from "ag-grid-community";
 
 export const GRID_COLS: ColDef[] = [
   {
-    field: "발행 일시",
+    field: "신청 일시",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "신청자",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
@@ -16,9 +22,10 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "회사 명",
-    width: COLUMN_SIZE.md,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "종목",
@@ -34,7 +41,19 @@ export const GRID_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.right,
   },
   {
-    field: "발행자",
+    field: "신청 상태",
+    width: COLUMN_SIZE.md,
+    resizable: true,
+    editable: false,
+  },
+  {
+    field: "처리 일시",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "처리자",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,

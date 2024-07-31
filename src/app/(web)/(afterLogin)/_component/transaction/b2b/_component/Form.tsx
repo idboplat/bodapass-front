@@ -24,8 +24,6 @@ const today = new Date();
 export default function Form({ session, showReqBtn }: FormProps) {
   const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
   const [instCd, setInstCd] = useState("");
-  const [mvioTp, setMvioTp] = useState("전체");
-  const [mvioRmrkTp, setMvioRmrkTp] = useState("전체");
   const [rqstStatTp, setRqstStatTp] = useState("전체");
 
   const isFetching = useIsFetching({ queryKey: ["TBW_001000_Q01"] });
@@ -39,8 +37,6 @@ export default function Form({ session, showReqBtn }: FormProps) {
     e.preventDefault();
 
     actions.setState({
-      mvioTp,
-      mvioRmrkTp,
       rqstStatTp,
       instCd,
       date,
@@ -75,32 +71,6 @@ export default function Form({ session, showReqBtn }: FormProps) {
             onChange={(e) => setInstCd(() => e.target.value)}
             onReset={() => setInstCd(() => "")}
             style={{ width: 120 }}
-          />
-        </div>
-        <div className={selectBoxWrap}>
-          <SelectLabel>입출 구분</SelectLabel>
-          <TextSelect
-            value={mvioTp}
-            onChange={(value: string) => setMvioTp(() => value)}
-            items={["전체", "입고", "출고"]}
-            style={{
-              height: 36,
-              width: 90,
-              textAlign: "center",
-            }}
-          />
-        </div>
-        <div className={selectBoxWrap}>
-          <SelectLabel>적요 구분</SelectLabel>
-          <TextSelect
-            value={mvioRmrkTp}
-            onChange={(value: string) => setMvioRmrkTp(() => value)}
-            items={["전체", "매매손익", "매매 수수료", "입출고"]}
-            style={{
-              height: 36,
-              width: 90,
-              textAlign: "center",
-            }}
           />
         </div>
         <div className={selectBoxWrap}>

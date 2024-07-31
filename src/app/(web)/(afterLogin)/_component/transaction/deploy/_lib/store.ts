@@ -1,9 +1,9 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 export type CoinState = {
   date: [DateType, DateType];
-  mvioTp: string; //입출구분
   nonce: number;
   resetTime: number;
   page: number;
@@ -20,8 +20,7 @@ type CoinActions = {
 };
 
 const initState: CoinState = {
-  date: [null, null],
-  mvioTp: "",
+  date: [addDays(new Date(), -1), new Date()],
   nonce: 0,
   resetTime: Date.now(),
   page: 1,

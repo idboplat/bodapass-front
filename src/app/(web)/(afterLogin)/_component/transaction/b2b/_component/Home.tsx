@@ -1,7 +1,5 @@
 import { HomeProps } from "@/type/common";
-import { GRID_100502_COLS } from "../_const/100502";
-import { GRID_200502_COLS } from "../_const/200502";
-import { GRID_400502_COLS } from "../_const/400502";
+import { GRID_COLS } from "../_const/col";
 import { Meta } from "../_const/meta";
 import * as css from "./home.css";
 import Nav from "./Nav";
@@ -13,9 +11,9 @@ export default async function B2bHome({ session, page }: HomeProps<B2bHomeProps>
   const title = page.number + " " + page.title;
 
   const map: Record<string, Meta> = {
-    "100502": { cols: GRID_100502_COLS, showReqBtn: false },
-    "200502": { cols: GRID_200502_COLS, showReqBtn: true },
-    "400502": { cols: GRID_400502_COLS, showReqBtn: true },
+    "100502": { cols: GRID_COLS, showReqBtn: false },
+    "200502": { cols: GRID_COLS, showReqBtn: true },
+    "400502": { cols: GRID_COLS, showReqBtn: true },
   };
 
   const meta = map[page.number];

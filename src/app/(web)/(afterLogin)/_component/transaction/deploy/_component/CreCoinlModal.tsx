@@ -53,7 +53,7 @@ export default function CreCoinModal({
     },
     onSuccess: () => {
       toast.success("코인이 발행되었습니다.");
-      actions.reset();
+      actions.refreshPage();
       onSuccess(true);
     },
   });

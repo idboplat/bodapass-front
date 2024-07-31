@@ -1,17 +1,17 @@
 "use client";
-import { AgGridReact } from "ag-grid-react";
-import { useState } from "react";
-import { GRID_COLS } from "../_const/colum";
-import { tableWrap } from "./table.css";
-import classNames from "classnames";
-import { useQuery } from "@tanstack/react-query";
-import callTms from "@/model/callTms";
-import { Session } from "next-auth";
-import { TBW_000300_Q01 } from "@/type/api";
-import { useCoinStore } from "../_lib/store";
-import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import PagePagination from "@/app/_component/pagination/PagePagination";
 import { dateToString } from "@/app/_lib/dateFormatter";
+import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import callTms from "@/model/callTms";
+import { TBW_000300_Q01 } from "@/type/api";
+import { useQuery } from "@tanstack/react-query";
+import { AgGridReact } from "ag-grid-react";
+import classNames from "classnames";
+import { Session } from "next-auth";
+import { useState } from "react";
+import { GRID_COLS } from "../_const/colum";
+import { useCoinStore } from "../_lib/store";
+import { tableWrap } from "./table.css";
 
 const PAGE_SIZE = 20;
 
@@ -28,7 +28,6 @@ export default function Table({ session }: { session: Session }) {
         svcId: "TBW_000300_Q01",
         data: [
           session.user.corpCd,
-          coinStore.mvioTp,
           dateToString(coinStore.date[0]),
           dateToString(coinStore.date[1]),
         ],
@@ -42,15 +41,12 @@ export default function Table({ session }: { session: Session }) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        "회사 코드": item.F01,
-        일자: stringToDate(item.F02),
-        일련번호: item.F03,
+        "발행 일시": convertToStandardDateTime(item.F01),
+        "회사 코드": item.F02,
+        "회사 명": item.F03,
         종목: item.F04,
-        수량: item.F06,
-        취급인: item.F07,
-        "생성 일시": convertToStandardDateTime(item.F08),
-        수정인: item.F09,
-        "수정 일시": convertToStandardDateTime(item.F10),
+        수량: item.F05,
+        발행자: item.F06,
       }));
       return result;
     },
