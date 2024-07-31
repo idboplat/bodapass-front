@@ -12,6 +12,7 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useCoinStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
+import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
 
@@ -45,7 +46,7 @@ export default function Table({ session }: { session: Session }) {
         "회사 코드": item.F02,
         "회사 명": item.F03,
         종목: item.F04,
-        수량: item.F05,
+        수량: sortDecimal({ num: item.F05, decimalLength: 2, requireComma: true }),
         발행자: item.F06,
       }));
       return result;
