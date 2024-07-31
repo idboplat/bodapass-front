@@ -16,6 +16,7 @@ import { RowData } from "../_const/row.type";
 import { useTransactionClientStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
 import { tableWrap } from "./table.css";
+import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
 
@@ -71,7 +72,7 @@ export default function Table({ session, meta }: TableProps) {
         "사용자 ID": item.F05,
         종목: item.F06,
         "입/출": findEntity(MVIO_TP_ITEM, item.F07)?.[1] || "",
-        수량: item.F08,
+        수량: sortDecimal({ num: item.F08, decimalLength: 2, requireComma: true }),
         "잔고 수량": item.F09,
         "신청 상태": findEntity(RGST_STAT_ITEM, item.F10)?.[1] || "",
         "계좌 번호": item.F11,
