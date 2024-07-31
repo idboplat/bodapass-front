@@ -50,7 +50,7 @@ export default function Table({ session }: TableProps) {
         "관리자 명": item.F04,
         "회사 코드": item.F05,
         "회사 명": item.F06,
-        생성자: item.F07,
+        생성인: item.F07,
         "변경 작업 ID": item.F08,
         "변경 작업 일시": convertToStandardDateTime(item.F09),
       }));

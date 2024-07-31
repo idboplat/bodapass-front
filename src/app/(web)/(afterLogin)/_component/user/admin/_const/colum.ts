@@ -8,7 +8,7 @@ export type RowData = {
   "관리자 명": string;
   "회사 코드": string;
   "회사 명": string;
-  생성자: string;
+  생성인: string;
   "변경 작업 ID": string;
   "변경 작업 일시": string;
 };
@@ -53,7 +53,7 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "생성자",
+    field: "생성인",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
