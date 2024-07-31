@@ -40,14 +40,15 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map<RowData>((item) => ({
-        "외부 사용자 ID": item.F02,
-        "접근 유형": item.F03 === "1" ? "사용가능" : "사용제한",
-        "회사 코드": item.F04,
-        "회사 명": item.F05,
-        "주 회사 코드": item.F06,
-        "주 회사 명": item.F07,
-        생성인: item.F08,
-        "생성 일시": convertToStandardDateTime(item.F09),
+        "생성 일시": convertToStandardDateTime(item.F01),
+        // "사용자 ID" : item.F02,
+        "사용자 ID": item.F03,
+        "접근 유형": item.F04 === "1" ? "사용가능" : "사용제한",
+        "회사 코드": item.F05,
+        "회사 명": item.F06,
+        "상위 회사 코드": item.F07,
+        "상위 회사 명": item.F08,
+        생성인: item.F09,
       }));
       return result;
     },
