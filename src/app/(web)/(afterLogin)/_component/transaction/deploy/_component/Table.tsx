@@ -47,7 +47,7 @@ export default function Table({ session }: { session: Session }) {
         "회사 명": item.F03,
         종목: item.F04,
         수량: sortDecimal({ num: item.F05, decimalLength: 2, requireComma: true }),
-        발행자: item.F06,
+        발행인: item.F06,
       }));
       return result;
     },
