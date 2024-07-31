@@ -11,7 +11,6 @@ import { modalDefaultBtn, modalSaveBtn } from "@/app/_component/modal/modalBtn.c
 import { descBox, textBox } from "./creCorpAlertModal.css";
 import { useState } from "react";
 import { toast } from "sonner";
-import CopyButton from "@/app/_component/btn/CopyBtn";
 import CheckBox from "@/app/_component/input/CheckBox";
 
 const ID = "creCorpAlertModal";
@@ -40,14 +39,14 @@ export default function CreCorpAlertModal({
           </div>
           <div className={modalContent}>
             <div className={textBox}>
-              <p>{`회사 ID : ${id}`}</p>
+              <p>{`관리자 ID : ${id}`}</p>
             </div>
             <div className={textBox}>
-              <p>{`패스워드  : ${password}`}</p>
+              <p>{`비밀번호 : ${password}`}</p>
             </div>
             <div className={descBox}>
               <CheckBox value={isCheck} onClick={() => setIsCheck(() => !isCheck)} />
-              <p>회사 ID와 패스워드를 확인하시고, G2 관리자에게 전달하시기 바랍니다.</p>
+              <p>관리자 ID와 비밀번호를 확인하시고, G2 관리자에게 전달하시기 바랍니다.</p>
             </div>
           </div>
         </div>

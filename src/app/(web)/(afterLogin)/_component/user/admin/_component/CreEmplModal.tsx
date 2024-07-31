@@ -115,7 +115,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.emplName}>
-              신규 관리자 명
+              관리자 명
             </label>
             <DefaultInput id={CreEmplInput.emplName} />
           </div>
