@@ -70,7 +70,7 @@ export default function Table({ session, meta }: TableProps) {
         종목: item.F05,
         "입출고 구분": findEntity(MVIO_TP_ITEM, item.F06)?.[1] || "",
         "입출고 적요 구분": findEntity(MVIO_RMRK_ITEM, item.F07)?.[1] || "",
-        "입출고 수량": item.F08,
+        수량: item.F08,
         "입출고 일자": stringToDate(item.F09),
         "입출고 일련번호": item.F10,
         "계좌 번호": item.F11,
