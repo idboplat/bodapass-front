@@ -188,7 +188,6 @@ export type TBW_002000_Q01 = RspnData<{
   F12: string;
   F13: string;
   F14: string;
-  F15: string;
 }>;
 
 export type TBW_006000_R01 = RspnData<{
