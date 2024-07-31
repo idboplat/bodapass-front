@@ -1,5 +1,5 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { formatInTimeZone } from "date-fns-tz";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type CorpState = {
@@ -22,7 +22,7 @@ type CorpActions = {
 };
 
 const initState: CorpState = {
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
   corpNm: "",
   corpGrpTp: "",
   nonce: 0,

@@ -1,4 +1,5 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type adminState = {
@@ -30,7 +31,7 @@ const initState: adminState = {
   emplId: "",
   extnUserId: "",
   emplName: "",
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
   resetTime: Date.now(),
   nonce: 0,
   page: 1,

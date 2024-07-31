@@ -1,4 +1,5 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type clientState = {
@@ -20,7 +21,7 @@ type clientActions = {
 
 const initState: clientState = {
   extnUserId: "",
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
   nonce: 0,
   resetTime: Date.now(),
   page: 1,

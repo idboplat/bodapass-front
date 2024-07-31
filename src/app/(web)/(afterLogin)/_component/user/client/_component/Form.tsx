@@ -6,6 +6,7 @@ import { useState } from "react";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { useSetClientStore } from "../_lib/store";
 import { useIsFetching } from "@tanstack/react-query";
+import { addDays } from "date-fns";
 
 const ID = "clientNavForm";
 
@@ -20,7 +21,7 @@ interface FormProps {
 
 export default function Form({ session }: FormProps) {
   const [extnUserId, setExtnUserId] = useState("");
-  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
+  const [date, setDate] = useState<[DateType, DateType]>([addDays(new Date(), -1), new Date()]);
   const actions = useSetClientStore();
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000001_S01"] });

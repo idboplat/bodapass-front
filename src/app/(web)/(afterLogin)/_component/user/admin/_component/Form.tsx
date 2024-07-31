@@ -10,6 +10,7 @@ import CreEmplModal from "./CreEmplModal";
 import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 import { Session } from "next-auth";
 import { useIsFetching } from "@tanstack/react-query";
+import { addDays } from "date-fns";
 
 const ID = "adminNavForm";
 
@@ -27,7 +28,7 @@ export default function Form({ session }: FormProps) {
   const [emplId, setEmplId] = useState("");
   const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
-  const [date, setDate] = useState<[DateType, DateType]>([null, null]);
+  const [date, setDate] = useState<[DateType, DateType]>([addDays(new Date(), -1), new Date()]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000001_Q01"] });
 
