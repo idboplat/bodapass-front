@@ -50,7 +50,7 @@ export default function Table({ session }: TableProps) {
       const result = data.map((item) => ({
         "체결 일시": convertToStandardDateTime(item.F01),
         "회사 코드": item.F02,
-        회사: item.F03,
+        "회사 명": item.F03,
         "계좌 번호": item.F04,
         "사용자 ID": item.F05,
         종목: item.F06,

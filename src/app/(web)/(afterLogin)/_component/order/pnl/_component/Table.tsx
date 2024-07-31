@@ -1,7 +1,7 @@
 "use client";
 import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
-import { convertToStandardDateTime } from "@/app/_lib/regexp";
+import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
 import { TBW_006000_R01 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
@@ -47,25 +47,16 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const result = data.map((item) => ({
-        "회사 코드": item.F01,
-        일자: item.F02,
-        일련번호: item.F03,
+        "손익 일시": convertToStandardDateTime(item.F01),
+        "회사 코드": item.F02,
+        "회사 명": item.F03,
         "계좌 번호": item.F04,
         "사용자 ID": item.F05,
-        "종목 코드": item.F06,
-        "입출 구분": findEntity(MVIO_TP_ITEM, item.F07)?.[1] || "",
-        "적요 구분": findEntity(MVIO_RMRK_ITEM, item.F08)?.[1] || "",
-        수량: item.F09,
-        "잔고 수량": item.F10,
-        "신청 상태 구분": findEntity(RGST_STAT_ITEM, item.F11)?.[1] || "",
-        "인덱스 체결 회사 코드": item.F12,
-        "체결 일자": item.F13,
-        "체결 번호": item.F14,
-        "인덱스 체결 계좌 번호": item.F15,
-        취급인: item.F16,
-        "생성 일시": convertToStandardDateTime(item.F17),
-        수정인: item.F18,
-        "수정 일시": convertToStandardDateTime(item.F19),
+        종목: item.F06,
+        "적요 구분": findEntity(MVIO_RMRK_ITEM, item.F07)?.[1] || "",
+        수량: item.F08,
+        "체결 일자": stringToDate(item.F09),
+        "체결 번호": item.F10,
       }));
       return result;
     },

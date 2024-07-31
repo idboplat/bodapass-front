@@ -1,4 +1,5 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type OrderHistoryState = {
@@ -26,7 +27,7 @@ const initState: OrderHistoryState = {
   nonce: 0,
   resetTime: Date.now(),
   page: 1,
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
 };
 
 export const useOrderHistoryStore = create<OrderHistoryState & OrderHistoryActions>()((set) => ({

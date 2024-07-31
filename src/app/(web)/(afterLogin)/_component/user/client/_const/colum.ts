@@ -14,6 +14,12 @@ export type RowData = {
 
 export const GRID_COLS: ColDef[] = [
   {
+    field: "생성 일시",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+  },
+  {
     field: "외부 사용자 ID",
     width: COLUMN_SIZE.xl,
     resizable: true,
@@ -52,12 +58,6 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "생성인",
-    width: COLUMN_SIZE.xl,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "생성 일시",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,

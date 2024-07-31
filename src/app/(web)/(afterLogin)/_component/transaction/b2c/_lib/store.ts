@@ -1,11 +1,11 @@
 import { DateType } from "@/app/_component/datepicker/DatePicker";
+import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
 type TransactionClientState = {
   date: [DateType, DateType];
   instCd: string;
   mvioTp: string; //입출고
-  mvioRmrkTp: string; //매매손익
   rqstStatTp: string; //신청상태구분
   nonce: number;
   resetTime: number;
@@ -23,10 +23,9 @@ type TransactionClientActions = {
 };
 
 const initState: TransactionClientState = {
-  date: [null, null],
+  date: [addDays(new Date(), -1), new Date()],
   instCd: "",
   mvioTp: "",
-  mvioRmrkTp: "",
   rqstStatTp: "",
   nonce: 0,
   resetTime: Date.now(),
