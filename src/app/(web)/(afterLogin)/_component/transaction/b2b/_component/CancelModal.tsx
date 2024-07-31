@@ -33,8 +33,8 @@ export default function CancelModal({
         data: [
           session.user.corpCd,
           data["회사 코드"], //입출고 회사 코드
-          data.일자.replaceAll("-", ""), //입출고 일자
-          data.일련번호, //입출고 일련번호
+          data["입출고 일자"].replaceAll("-", ""), //입출고 일자
+          data["입출고 일련번호"], //입출고 일련번호
         ],
       });
 

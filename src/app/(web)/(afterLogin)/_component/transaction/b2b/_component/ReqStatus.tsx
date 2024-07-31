@@ -10,7 +10,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
 import { TBW_001000_Q01, TBW_002000_Q01 } from "@/type/api";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
-import { findEntity, RGST_STAT_ITEM } from "@/app/_const/tp";
 
 interface ReqStatusProps {
   session: Session;
@@ -31,7 +30,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       const TBW_002000_Q01Res = await callTms<TBW_002000_Q01>({
         session,
         svcId: "TBW_002000_Q01",
-        data: [data["회사 코드"], data.일자.replaceAll("-", ""), data.일련번호],
+        data: [data["회사 코드"], data["입출고 일자"].replaceAll("-", ""), data["입출고 구분"]],
         pgSize: 1,
       });
 
@@ -100,15 +99,13 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     }
   };
 
-  const status = findEntity(RGST_STAT_ITEM, data["상태 구분"])?.[1];
-
-  if (data["상태 구분"] !== "REQ") {
-    return <span>{status}</span>;
+  if (data["신청 상태"] !== "승인 대기") {
+    return <span>{data["신청 상태"]}</span>;
   }
 
   return (
     <button type="button" className={classNames(req)} onClick={onClick}>
-      {status}
+      {data["신청 상태"]}
     </button>
   );
 }

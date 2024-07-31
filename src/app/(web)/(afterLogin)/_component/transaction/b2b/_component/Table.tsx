@@ -64,7 +64,7 @@ export default function Table({ session, meta }: TableProps) {
     select: (data) => {
       const rowData = data.map((item) => ({
         "신청 일시": convertToStandardDateTime(item.F01),
-        선청자: item.F02,
+        신청자: item.F02,
         "회사 코드": item.F03,
         "회사 명": item.F04,
         종목: item.F05,
@@ -75,7 +75,7 @@ export default function Table({ session, meta }: TableProps) {
         "입출고 일련번호": item.F10,
         "계좌 번호": item.F11,
         "잔고 수량": item.F12,
-        "신청 상태": item.F13,
+        "신청 상태": findEntity(RGST_STAT_ITEM, item.F13)?.[1] || "",
         "처리 일시": convertToStandardDateTime(item.F14),
         처리자: item.F15,
       }));

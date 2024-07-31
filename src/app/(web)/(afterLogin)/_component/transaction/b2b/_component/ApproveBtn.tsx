@@ -21,8 +21,8 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
         data: [
           session.user.corpCd, //회사 코드
           data["회사 코드"], //신청 회사 코드
-          data.일자.replaceAll("-", ""), //신청 입출고 일자
-          data.일련번호, //신청 입출고 일련번호
+          data["입출고 일자"].replaceAll("-", ""), //신청 입출고 일자
+          data["입출고 일련번호"], //신청 입출고 일련번호
         ],
       });
       return TBW_000100_P04Res.svcRspnData;
