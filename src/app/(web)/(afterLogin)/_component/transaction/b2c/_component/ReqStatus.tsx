@@ -72,15 +72,13 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     }
   };
 
-  const status = findEntity(RGST_STAT_ITEM, data["신청 상태"])?.[1];
-
-  if (data["신청 상태"] !== "REQ") {
-    return <span>{status}</span>;
+  if (data["신청 상태"] !== "승인 대기") {
+    return <span>{data["신청 상태"]}</span>;
   }
 
   return (
     <button type="button" className={classNames(req)} onClick={onClick}>
-      {status}
+      {data["신청 상태"]}
     </button>
   );
 }

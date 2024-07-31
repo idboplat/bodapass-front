@@ -7,13 +7,11 @@ interface ApproveViewProps {
 }
 
 export default function ApproveView({ data }: ApproveViewProps) {
-  const mvioDd = format(new Date(data["입출고 일자"]), "yyyy년MM월dd일");
-  const creWrkDtm = format(new Date(data["신청 일시"]), "yyyy년MM월dd일 HH시mm분ss초");
   return (
     <div className={wrap}>
       <div className={row}>
         <div className={label}>일자</div>
-        <div className={text}>{mvioDd}</div>
+        <div className={text}>{data["입출고 일자"]}</div>
       </div>
       <div className={row}>
         <div className={label}>일련번호</div>
@@ -45,7 +43,7 @@ export default function ApproveView({ data }: ApproveViewProps) {
       </div>
       <div className={row}>
         <div className={label}>생성일시</div>
-        <div className={text}>{creWrkDtm}</div>
+        <div className={text}>{data["신청 일시"]}</div>
       </div>
     </div>
   );
