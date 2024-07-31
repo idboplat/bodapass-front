@@ -31,7 +31,7 @@ export default function Table({ session }: TableProps) {
         session,
         data: [
           session.user.corpCd,
-          adminStore.emplId, //사원ID
+          session.user.id, //사원 ID
           adminStore.extnUserId, //입력 사원 ID
           adminStore.emplName, //입력 사원명
         ],
@@ -44,13 +44,15 @@ export default function Table({ session }: TableProps) {
     },
     select: (data) => {
       const rowData = data.map<RowData>((item) => ({
-        "관리자 코드": item.F01,
-        "관리자 ID": item.F02,
-        "관리자 명": item.F03,
-        "회사 코드": item.F04,
-        "회사 명": item.F05,
-        생성인: item.F06,
-        "생성 일시": convertToStandardDateTime(item.F07),
+        "생성 일시": convertToStandardDateTime(item.F01),
+        "관리자 코드": item.F02,
+        "관리자 ID": item.F03,
+        "관리자 명": item.F04,
+        "회사 코드": item.F05,
+        "회사 명": item.F06,
+        생성자: item.F07,
+        "변경 작업 ID": item.F08,
+        "변경 작업 일시": convertToStandardDateTime(item.F09),
       }));
       return rowData;
     },

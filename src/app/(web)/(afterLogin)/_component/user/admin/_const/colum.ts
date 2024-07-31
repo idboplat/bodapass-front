@@ -2,13 +2,15 @@ import { COLUMN_STYLE, COLUMN_SIZE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";
 
 export type RowData = {
+  "생성 일시": string;
   "관리자 코드": string;
   "관리자 ID": string;
   "관리자 명": string;
   "회사 코드": string;
   "회사 명": string;
-  생성인: string;
-  "생성 일시": string;
+  생성자: string;
+  "변경 작업 ID": string;
+  "변경 작업 일시": string;
 };
 
 export const GRID_COLS: ColDef[] = [

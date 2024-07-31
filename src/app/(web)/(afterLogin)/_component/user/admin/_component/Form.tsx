@@ -1,16 +1,14 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
+import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import { useSetModalStore } from "@/app/_lib/modalStore";
-import { DateType } from "@/app/_component/datepicker/DatePicker";
-import RangePicker from "@/app/_component/datepicker/RangePicker";
 import { useState } from "react";
 import { useSetAdminStore } from "../_lib/store";
 import CreEmplModal from "./CreEmplModal";
-
-import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
-import { Session } from "next-auth";
 import { useIsFetching } from "@tanstack/react-query";
 import { addDays } from "date-fns";
+import { Session } from "next-auth";
+import { btnWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 
 const ID = "adminNavForm";
 
@@ -25,7 +23,6 @@ interface FormProps {
 }
 
 export default function Form({ session }: FormProps) {
-  const [emplId, setEmplId] = useState("");
   const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
   const [date, setDate] = useState<[DateType, DateType]>([addDays(new Date(), -1), new Date()]);
@@ -53,7 +50,7 @@ export default function Form({ session }: FormProps) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    actions.setState(emplId, extnUserId, emplName, date);
+    actions.setState({ extnUserId, emplName, date });
   };
 
   return (

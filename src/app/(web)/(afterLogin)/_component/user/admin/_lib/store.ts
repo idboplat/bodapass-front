@@ -2,8 +2,7 @@ import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
 
-type adminState = {
-  emplId: string;
+type AdminState = {
   extnUserId: string;
   emplName: string;
   date: [DateType, DateType];
@@ -12,14 +11,9 @@ type adminState = {
   page: number;
 };
 
-type adminActions = {
+type AdminActions = {
   actions: {
-    setState: (
-      emplId: string,
-      extnUserId: string,
-      emplName: string,
-      date: [DateType, DateType],
-    ) => void;
+    setState: (newState: Partial<AdminState>) => void;
     setPage: (page: number) => void;
     refreshPage: () => void;
     reset: () => void;
@@ -27,8 +21,7 @@ type adminActions = {
   };
 };
 
-const initState: adminState = {
-  emplId: "",
+const initState: AdminState = {
   extnUserId: "",
   emplName: "",
   date: [addDays(new Date(), -1), new Date()],
@@ -37,15 +30,14 @@ const initState: adminState = {
   page: 1,
 };
 
-export const useAdminStore = create<adminState & adminActions>()((set) => ({
+export const useAdminStore = create<AdminState & AdminActions>()((set) => ({
   ...initState,
   actions: {
-    setState: (emplId, extnUserId, emplName, date) => {
+    setState: (newState) => {
       set((state) => ({
-        emplId,
-        extnUserId,
-        emplName,
-        date,
+        extnUserId: newState.extnUserId,
+        emplName: newState.emplName,
+        date: newState.date,
         nonce: state.nonce + 1,
       }));
     },
