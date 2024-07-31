@@ -24,7 +24,7 @@ export const GRID_400503_COLS: ColDef[] = [
   },
   {
     field: "사용자 ID",
-    width: COLUMN_SIZE.lg,
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: false,
     cellStyle: COLUMN_STYLE.left,
