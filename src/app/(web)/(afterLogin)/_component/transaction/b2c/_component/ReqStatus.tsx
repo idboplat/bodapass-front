@@ -43,27 +43,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       queryClient.setQueryData<TBW_001000_R01>(["TBW_001000_R01", transactionStore], (prev) => {
         if (!prev) return prev;
         const arr = [...prev];
-        // data.F02 회사명 제외
-        // arr[index].F05 외부사용자ID 유지
-        // arr[index]를 새로운 객체로 대체, 불변성 유지
-        arr[index] = {
-          F01: data.F01,
-          F02: data.F03,
-          F03: data.F04,
-          F04: data.F05,
-          F05: arr[index].F05,
-          F06: data.F06,
-          F07: data.F07,
-          F08: data.F08,
-          F09: data.F09,
-          F10: data.F10,
-          F11: data.F11,
-          F12: data.F12,
-          F13: data.F13,
-          F14: data.F14,
-          F15: data.F15,
-        };
-
+        arr[index] = data;
         return arr;
       });
 

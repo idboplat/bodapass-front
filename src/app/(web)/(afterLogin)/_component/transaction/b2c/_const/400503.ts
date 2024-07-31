@@ -3,17 +3,24 @@ import { ColDef } from "ag-grid-community";
 
 export const GRID_400503_COLS: ColDef[] = [
   {
-    field: "일자",
-    width: COLUMN_SIZE.md,
+    field: "신청 일시",
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
   },
   {
-    field: "일련번호",
-    width: COLUMN_SIZE.sm,
+    field: "회사 코드",
+    width: COLUMN_SIZE.md,
     resizable: true,
-    editable: true,
-    cellStyle: COLUMN_STYLE.right,
+    editable: false,
+    cellStyle: COLUMN_STYLE.left,
+  },
+  {
+    field: "회사 명",
+    width: COLUMN_SIZE.md,
+    resizable: true,
+    editable: false,
+    cellStyle: COLUMN_STYLE.left,
   },
   {
     field: "사용자 ID",
@@ -23,19 +30,13 @@ export const GRID_400503_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.left,
   },
   {
-    field: "종목 코드",
+    field: "종목",
     width: COLUMN_SIZE.sm,
     resizable: true,
     editable: true,
   },
   {
-    field: "입출 구분",
-    width: COLUMN_SIZE.md,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "적요 구분",
+    field: "입/출",
     width: COLUMN_SIZE.md,
     resizable: true,
     editable: true,
@@ -48,32 +49,20 @@ export const GRID_400503_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.right,
   },
   {
-    field: "상태 구분",
+    field: "신청 상태",
     width: COLUMN_SIZE.md,
+    resizable: true,
+    editable: true,
+  },
+  {
+    field: "처리 일시",
+    width: COLUMN_SIZE.xl,
     resizable: true,
     editable: false,
   },
 
   {
-    field: "취급인",
-    width: COLUMN_SIZE.xl,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "생성 일시",
-    width: COLUMN_SIZE.xl,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "수정인",
-    width: COLUMN_SIZE.xl,
-    resizable: true,
-    editable: true,
-  },
-  {
-    field: "수정 일시",
+    field: "처리자",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
