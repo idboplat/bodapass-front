@@ -29,7 +29,7 @@ export default function Table({ session, meta }: TableProps) {
   const [total, setTotal] = useState(-1);
   const [colDefs] = useState(
     meta.cols.map((col) => {
-      if (col.field === "상태 구분") {
+      if (col.field === "신청 상태") {
         col.cellRenderer = ({ node }: ICellRendererParams<RowData, undefined, undefined>) => {
           const { data, rowIndex } = node;
           const isRender = data && rowIndex !== null;
