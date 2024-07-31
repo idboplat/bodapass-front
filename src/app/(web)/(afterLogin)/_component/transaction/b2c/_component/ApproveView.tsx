@@ -7,8 +7,8 @@ interface ApproveViewProps {
 }
 
 export default function ApproveView({ data }: ApproveViewProps) {
-  const mvioDd = format(new Date(data.일자), "yyyy년MM월dd일");
-  const creWrkDtm = format(new Date(data["생성 일시"]), "yyyy년MM월dd일 HH시mm분ss초");
+  const mvioDd = format(new Date(data["입출고 일자"]), "yyyy년MM월dd일");
+  const creWrkDtm = format(new Date(data["신청 일시"]), "yyyy년MM월dd일 HH시mm분ss초");
   return (
     <div className={wrap}>
       <div className={row}>
@@ -18,7 +18,7 @@ export default function ApproveView({ data }: ApproveViewProps) {
       <div className={row}>
         <div className={label}>일련번호</div>
         <div className={text} style={{ textAlign: "right" }}>
-          {data.일련번호}
+          {data["입출고 일련번호"]}
         </div>
       </div>
       <div className={row}>
@@ -27,7 +27,7 @@ export default function ApproveView({ data }: ApproveViewProps) {
       </div>
       <div className={row}>
         <div className={label}>종목 코드</div>
-        <div className={text}>{data["종목 코드"]}</div>
+        <div className={text}>{data.종목}</div>
       </div>
       <div className={row}>
         <div className={label}>수량</div>
@@ -36,8 +36,8 @@ export default function ApproveView({ data }: ApproveViewProps) {
         </div>
       </div>
       <div className={row}>
-        <div className={label}>취급인</div>
-        <div className={text}>{data.취급인}</div>
+        <div className={label}>작업자</div>
+        <div className={text}>{data.신청자}</div>
       </div>
       <div className={row}>
         <div className={label}>생성일시</div>

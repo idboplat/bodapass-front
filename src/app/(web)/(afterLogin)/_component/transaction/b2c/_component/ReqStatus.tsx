@@ -30,7 +30,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       const TBW_002000_Q01Res = await callTms<TBW_002000_Q01>({
         session,
         svcId: "TBW_002000_Q01",
-        data: [data["회사 코드"], data.일자.replaceAll("-", ""), data.일련번호],
+        data: [data["회사 코드"], data["입출고 일자"], data["입출고 일련번호"]],
         pgSize: 1,
       });
 
@@ -72,9 +72,9 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     }
   };
 
-  const status = findEntity(RGST_STAT_ITEM, data["상태 구분"])?.[1];
+  const status = findEntity(RGST_STAT_ITEM, data["신청 상태"])?.[1];
 
-  if (data["상태 구분"] !== "REQ") {
+  if (data["신청 상태"] !== "REQ") {
     return <span>{status}</span>;
   }
 
