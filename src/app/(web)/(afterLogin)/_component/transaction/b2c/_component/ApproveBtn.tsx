@@ -21,7 +21,7 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
         session,
         data: [
           data["회사 코드"], //신청 회사 코드
-          data["입출고 일자"], //신청 입출고 일자
+          data["입출고 일자"].replaceAll("-", ""), //신청 입출고 일자
           data["입출고 일련번호"], //신청 입출고 일련번호
         ],
       });
