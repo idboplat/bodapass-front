@@ -9,7 +9,6 @@ import { RowData } from "../_const/row.type";
 import { useTransactionClientStore } from "../_lib/store";
 import ApproveModal from "./ApproveModal";
 import { req } from "./reqStatus.css";
-import { findEntity, RGST_STAT_ITEM } from "@/app/_const/tp";
 
 interface ReqStatusProps {
   session: Session;
@@ -56,6 +55,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       //재조회 실패 시 페이지 새로고침
       await modalStore.push(ErrorModal, { props: { error } });
       transactionStore.actions.refreshPage();
+      queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] }); // 잔고 재조회
     },
   });
 
