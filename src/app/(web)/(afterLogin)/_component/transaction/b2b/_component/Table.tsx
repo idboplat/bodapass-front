@@ -66,7 +66,7 @@ export default function Table({ session, meta }: TableProps) {
     select: (data) => {
       const rowData = data.map((item) => ({
         "회사 코드": item.F01,
-        회사: item.F02,
+        "회사 명": item.F02,
         일자: stringToDate(item.F03),
         일련번호: item.F04,
         계좌번호: item.F05,
