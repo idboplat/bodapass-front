@@ -66,7 +66,7 @@ export default function Table({ session, meta }: TableProps) {
     select: (data) => {
       const result = data.map((item) => ({
         "신청 일시": convertToStandardDateTime(item.F01),
-        신청자: item.F02,
+        신청인: item.F02,
         "회사 코드": item.F03,
         "회사 명": item.F04,
         "사용자 ID": item.F05,
@@ -78,8 +78,8 @@ export default function Table({ session, meta }: TableProps) {
         "계좌 번호": item.F11,
         "입출고 일자": stringToDate(item.F12),
         "입출고 일련번호": item.F13,
-        "처리 일시": convertToStandardDateTime(item.F14),
-        처리자: item.F15,
+        "승인 일시": convertToStandardDateTime(item.F14),
+        승인인: item.F15,
       }));
       return result;
     },

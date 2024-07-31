@@ -9,7 +9,7 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "신청자",
+    field: "신청인",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
@@ -47,13 +47,13 @@ export const GRID_COLS: ColDef[] = [
     editable: false,
   },
   {
-    field: "처리 일시",
+    field: "승인 일시",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
   },
   {
-    field: "처리자",
+    field: "승인인",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,

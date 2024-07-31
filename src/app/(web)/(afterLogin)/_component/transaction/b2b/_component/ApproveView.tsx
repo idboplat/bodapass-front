@@ -34,7 +34,7 @@ export default function ApproveView({ data }: ApproveViewProps) {
       </div>
       <div className={row}>
         <div className={label}>작업자</div>
-        <div className={text}>{data["신청자"]}</div>
+        <div className={text}>{data["신청인"]}</div>
       </div>
       <div className={row}>
         <div className={label}>생성일시</div>

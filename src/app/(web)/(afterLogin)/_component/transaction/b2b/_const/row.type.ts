@@ -1,6 +1,6 @@
 export type RowData = {
   "신청 일시": string;
-  신청자: string;
+  신청인: string;
   "회사 코드": string;
   "회사 명": string;
   종목: string;
@@ -12,6 +12,6 @@ export type RowData = {
   "계좌 번호": string;
   "잔고 수량": string;
   "신청 상태": string;
-  "처리 일시": string;
-  처리자: string;
+  "승인 일시": string;
+  승인인: string;
 };

@@ -53,7 +53,7 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "생성인",
+    field: "생성자",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
