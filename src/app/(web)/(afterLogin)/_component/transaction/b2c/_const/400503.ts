@@ -17,7 +17,7 @@ export const GRID_400503_COLS: ColDef[] = [
   },
   {
     field: "회사 명",
-    width: COLUMN_SIZE.md,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: false,
     cellStyle: COLUMN_STYLE.left,
