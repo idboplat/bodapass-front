@@ -30,7 +30,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       const TBW_002000_Q01Res = await callTms<TBW_002000_Q01>({
         session,
         svcId: "TBW_002000_Q01",
-        data: [data["회사 코드"], data["입출고 일자"].replaceAll("-", ""), data["입출고 구분"]],
+        data: [data["회사 코드"], data["입출고 일자"].replaceAll("-", ""), data["입출고 일련번호"]],
         pgSize: 1,
       });
 
@@ -75,6 +75,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
       //재조회 실패 시 페이지 새로고침
       await modalStore.push(ErrorModal, { props: { error } });
       transactionStore.actions.refreshPage();
+      queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] }); // 잔고 재조회
     },
   });
 
