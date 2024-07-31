@@ -11,6 +11,12 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
+    field: "회사 코드",
+    width: COLUMN_SIZE.md,
+    resizable: true,
+    editable: true,
+  },
+  {
     field: "회사",
     width: COLUMN_SIZE.lg,
     resizable: true,
