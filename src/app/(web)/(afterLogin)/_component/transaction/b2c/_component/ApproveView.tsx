@@ -30,6 +30,10 @@ export default function ApproveView({ data }: ApproveViewProps) {
         <div className={text}>{data.종목}</div>
       </div>
       <div className={row}>
+        <div className={label}>입출 구분</div>
+        <div className={text}>{data["입/출"]}</div>
+      </div>
+      <div className={row}>
         <div className={label}>수량</div>
         <div className={text} style={{ textAlign: "right" }}>
           {data.수량}
