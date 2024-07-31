@@ -32,12 +32,12 @@ export const icon = style({
 
 export const content = style({
   maxHeight: 0,
-  transition: "max-height 0.2s linear",
+  transition: "max-height 0.35s cubic-bezier(1, 0, 0, 1);",
   overflow: "hidden",
 
   selectors: {
     "&.show": {
-      maxHeight: "100dvh",
+      maxHeight: "100lvh",
     },
   },
 });

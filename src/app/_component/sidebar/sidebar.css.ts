@@ -39,6 +39,16 @@ export const sidebar = style([
   },
 ]);
 
+export const menuList = style({
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    width: 5,
+  },
+  "::-webkit-scrollbar-track": {
+    background: "none",
+  },
+});
+
 export const menuItem = style({
   paddingLeft: 10,
   borderRadius: 2,
