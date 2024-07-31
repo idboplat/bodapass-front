@@ -4,7 +4,7 @@ import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import * as css from "@/app/_component/modal/modal.css";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { inputBox, label } from "./creCoinModal.css";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import { TBW_000300_P01 } from "@/type/api";
@@ -32,6 +32,7 @@ export default function CreCoinModal({
   session,
 }: ModalProps<CreCoinModalProps>) {
   const [amount, setAmount] = useState("");
+  const queryClient = useQueryClient();
 
   const actions = useSetCoinStore();
 
@@ -55,6 +56,7 @@ export default function CreCoinModal({
       toast.success("코인이 발행되었습니다.");
       actions.refreshPage();
       onSuccess(true);
+      queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
     },
   });
 

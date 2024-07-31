@@ -1,3 +1,4 @@
+import { flexCenter } from "@/style/var";
 import { style } from "@vanilla-extract/css";
 
 export const navWrap = style({
@@ -14,7 +15,6 @@ export const historyFilterwrap = style({
 });
 
 export const btnWrap = style({
-  marginLeft: "auto",
   display: "flex",
   gap: 10,
 });

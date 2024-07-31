@@ -7,8 +7,9 @@ import CreCoinModal from "./CreCoinlModal";
 import { useState } from "react";
 import { Session } from "next-auth";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
-import { useIsFetching } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { addDays } from "date-fns";
+import BalanceViewer from "@transaction/_component/BalanceViewer";
 
 interface FormProps {
   session: Session;
@@ -16,6 +17,7 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session }: FormProps) {
+  const queryClient = useQueryClient();
   const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000300_Q01"] });
@@ -42,10 +44,12 @@ export default function Form({ session }: FormProps) {
     actions.setState({
       date,
     });
+    queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
   };
 
   return (
     <form className={navWrap} onSubmit={onSubmit}>
+      <BalanceViewer session={session} />
       <div className={inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <button className={navBtn} type="submit" disabled={isFetching > 0}>
