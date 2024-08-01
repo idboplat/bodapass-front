@@ -39,9 +39,8 @@ export default function CreCoinModal({
   const mutation = useMutation({
     mutationKey: ["TBW_000300_P01"],
     mutationFn: async (arg: { amount: string; adminPw: string }) => {
-      if (!arg.amount) throw new Error("발행할 USDL 수량을 입력해주세요.");
+      if (!arg.amount || arg.amount === "0") throw new Error("발행할 USDL 수량을 입력해주세요.");
       if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
-
       const TBW_000300_P01Res = await callTms<TBW_000300_P01>({
         session,
         svcId: "TBW_000300_P01",
@@ -53,7 +52,7 @@ export default function CreCoinModal({
       }
     },
     onSuccess: () => {
-      toast.success("코인이 발행되었습니다.");
+      toast.success("USDL이 발행되었습니다.");
       actions.refreshPage();
       onSuccess(true);
       queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });

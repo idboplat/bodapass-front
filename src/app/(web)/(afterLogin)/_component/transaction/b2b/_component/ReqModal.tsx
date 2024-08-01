@@ -32,7 +32,9 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
 
   const muation = useMutation({
     mutationKey: ["TBW_000100_P01"],
-    mutationFn: async () => {
+    mutationFn: async ({ instCd, amount }: { instCd: string; amount: string }) => {
+      if (!amount || amount === "0") throw new Error("신청할 USDL 수량을 입력해주세요.");
+      if (!instCd) throw new Error("종목 코드를 입력해주세요.");
       const TBW_000100_P01Res = await callTms<TBW_000100_P01>({
         session,
         svcId: "TBW_000100_P01",
@@ -44,7 +46,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
       }
     },
     onSuccess: () => {
-      toast.success("구매신청이 완료되었습니다.");
+      toast.success("USDL 신청이 완료되었습니다.");
       actions.reset();
       onClose();
     },
@@ -104,7 +106,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
           <button
             className={modalDefaultBtn}
             type="button"
-            onClick={() => muation.mutate()}
+            onClick={() => muation.mutate({ amount, instCd })}
             disabled={muation.isPending}
           >
             신청

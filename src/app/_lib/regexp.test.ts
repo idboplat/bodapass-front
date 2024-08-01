@@ -68,4 +68,19 @@ describe("정규표현식 테스트", () => {
     expect(module.addComma("123456789")).toBe("123,456,789");
     expect(module.addComma("1234567890")).toBe("1,234,567,890");
   });
+
+  test("회사명 테스트", () => {
+    expect(module.checkCorpNm(" ")).toBe(true);
+    expect(module.checkCorpNm("")).toBe(false);
+  });
+
+  test("비밀번호 테스트", () => {
+    expect(module.checkPassword(" ")).toBe(false);
+    expect(module.checkPassword("")).toBe(false);
+  });
+
+  test("영문, 숫자, 특수문자 입력 테스트", () => {
+    expect(module.checkEnNumSp(" ")).toBe(false);
+    expect(module.checkEnNumSp("")).toBe(false);
+  });
 });

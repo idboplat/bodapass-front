@@ -47,13 +47,14 @@ export default function CreCorpModal({
   const mutation = useMutation({
     mutationKey: ["TBW_000000_P01"],
     mutationFn: async (arg: { adminPw: string; grpTp: string }) => {
-      if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
-      if (!checkCorpNm(corpNm)) {
-        throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
-      }
       if (!arg.grpTp) {
         throw new Error("회사 그룹 구분을 선택해주세요");
       }
+      if (!checkCorpNm(corpNm.trim())) {
+        // 공백만 입력한 경우 안되게 trim 적용
+        throw new Error("회사명은 한글, 영문, 숫자만 입력 가능합니다.");
+      }
+      if (!arg.adminPw) throw new Error("관리자 Password를 입력해주세요.");
       const TBW_000000_P01Res = await callTms<TBW_000000_P01>({
         session,
         svcId: "TBW_000000_P01",
@@ -69,7 +70,7 @@ export default function CreCorpModal({
       };
     },
     onSuccess: async (data) => {
-      toast.success("회사가 등록되었습니다.");
+      toast.success("회사가 생성되었습니다.");
       actions.reset();
       await modalAction.push(CreCorpAlertModal, { props: { ...data } });
       onSuccess(true);
