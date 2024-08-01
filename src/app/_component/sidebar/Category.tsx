@@ -3,13 +3,14 @@ import Accordion from "../accordion/Accordion";
 import SidebarMenuItem from "./SidebarMenuItem";
 import { useState } from "react";
 import SubCategory from "./SubCategory";
+import { Session } from "next-auth";
 
 interface CategoryProps {
-  corpTp: string;
+  session: Session;
   path: ClientPath;
 }
 
-export default function Category({ path, corpTp }: CategoryProps) {
+export default function Category({ path, session }: CategoryProps) {
   const [isShow, setIsShow] = useState(true);
 
   const toggleShow = () => setIsShow((pre) => !pre);
@@ -18,13 +19,14 @@ export default function Category({ path, corpTp }: CategoryProps) {
     <Accordion title={path.category} isShow={isShow} onClick={toggleShow}>
       {path.pages.map((page) => {
         if ("category" in page) {
-          return <SubCategory key={page.category} path={page} corpTp={corpTp} />;
+          return <SubCategory key={page.category} path={page} session={session} />;
         } else {
           return (
             <SidebarMenuItem
               key={page.title}
               text={page.title}
-              href={`/${corpTp}/${page.number}`}
+              href={`/${session.user.corpGrpTp}/${page.number}`}
+              session={session}
             />
           );
         }

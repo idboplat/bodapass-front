@@ -66,6 +66,8 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
         // 상태가 APL일 경우 잔고 재조회
         queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
       }
+      // 입금 신청 내역 재조회
+      queryClient.invalidateQueries({ queryKey: ["TBW_001000_Q03"] });
     },
     onError: async (error) => {
       //재조회 실패 시 페이지 새로고침

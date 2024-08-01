@@ -55,6 +55,7 @@ export default function CreCoinModal({
       toast.success("USDL이 발행되었습니다.");
       actions.refreshPage();
       onSuccess(true);
+      // 잔고 재조회
       queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
     },
   });

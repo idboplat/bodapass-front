@@ -39,8 +39,10 @@ export default function Form({ session }: FormProps) {
       instCd,
       date,
     });
-
+    // 잔고 재조회
     queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
+    // 입금 신청 내역 재조회
+    queryClient.invalidateQueries({ queryKey: ["TBW_001000_Q03"] });
   };
   const onDateChange = (date: [DateType, DateType]) => {
     setDate(() => date);

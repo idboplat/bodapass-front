@@ -54,6 +54,7 @@ export const menuItem = style({
   borderRadius: 2,
   transition: "color 0.2s ease",
   color: "#5E5E5E",
+
   selectors: {
     "&:hover": {
       color: "#1C1C1C",
@@ -74,6 +75,10 @@ globalStyle(`${menuItem} > a`, {
 
 globalStyle(`${menuItem}.active > a`, {
   cursor: "default",
+});
+
+globalStyle(`${menuItem} > a > span`, {
+  position: "relative",
 });
 
 export const logoutBox = style([

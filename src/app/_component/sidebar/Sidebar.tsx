@@ -23,7 +23,7 @@ export default function Sidebar({ pathList, session }: SidebarProps) {
   return (
     <div className={classNames(layout, isSidebarToggle && "show")}>
       <aside className={classNames(sidebar, isSidebarToggle && "show")}>
-        <SidebarMenuList pathList={pathList} corpTp={session.user.corpGrpTp} />
+        <SidebarMenuList pathList={pathList} session={session} />
         <div className={logoutBox}>
           <SidebarLogoutBtn />
         </div>
