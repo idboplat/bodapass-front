@@ -6,7 +6,7 @@ export type RowData = {
   종목: string;
   "입출고 구분": string;
   "입출고 적요 구분": string;
-  "입출고 수량": string;
+  수량: string;
   "입출고 일자": string;
   "입출고 일련번호": string;
   "계좌 번호": string;
