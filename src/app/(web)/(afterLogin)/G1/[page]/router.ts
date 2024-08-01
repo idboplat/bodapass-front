@@ -40,8 +40,8 @@ export const G1_PATH_LIST: Path[] = [
     pages: [
       { title: "발행내역", number: "100501", Component: DeployHome },
       {
-        category: "입금 신청 내역",
-        pages: [{ title: "위탁 입금", number: "100512", Component: B2bConsignHome }],
+        category: "회사 입금 신청 내역",
+        pages: [{ title: "위탁 입금 신청 내역", number: "100512", Component: B2bConsignHome }],
       },
     ],
   },
