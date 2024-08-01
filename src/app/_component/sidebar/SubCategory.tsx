@@ -1,21 +1,20 @@
 import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
-import Accordion from "../accordion/Accordion";
+import Accordion2 from "../accordion/Accordion2";
 import SidebarMenuItem from "./SidebarMenuItem";
 import { useState } from "react";
-import SubCategory from "./SubCategory";
 
 interface CategoryProps {
   corpTp: string;
   path: ClientPath;
 }
 
-export default function Category({ path, corpTp }: CategoryProps) {
+export default function SubCategory({ path, corpTp }: CategoryProps) {
   const [isShow, setIsShow] = useState(true);
 
   const toggleShow = () => setIsShow((pre) => !pre);
 
   return (
-    <Accordion title={path.category} isShow={isShow} onClick={toggleShow}>
+    <Accordion2 title={path.category} isShow={isShow} onClick={toggleShow}>
       {path.pages.map((page) => {
         if ("category" in page) {
           return <SubCategory key={page.category} path={page} corpTp={corpTp} />;
@@ -29,6 +28,6 @@ export default function Category({ path, corpTp }: CategoryProps) {
           );
         }
       })}
-    </Accordion>
+    </Accordion2>
   );
 }

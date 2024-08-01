@@ -37,8 +37,13 @@ export const G2_PATH_LIST: Path[] = [
   {
     category: "입출금",
     pages: [
-      { title: "당사 입금 신청 내역", number: "200502", Component: B2bHome },
-      { title: "위탁 입금 신청 내역", number: "200512", Component: B2bConsignHome },
+      {
+        category: "입금 신청 내역",
+        pages: [
+          { title: "당사 입금", number: "200502", Component: B2bHome },
+          { title: "위탁 입금", number: "200512", Component: B2bConsignHome },
+        ],
+      },
     ],
   },
   // {

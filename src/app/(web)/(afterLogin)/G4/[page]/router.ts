@@ -39,14 +39,19 @@ export const G4_PATH_LIST: Path[] = [
     category: "입출금",
     pages: [
       {
-        title: "당사 입금 신청 내역",
-        number: "400502",
-        Component: B2bHome,
-      },
-      {
-        title: "고객 입출금 신청 내역",
-        number: "400503",
-        Component: B2cHome,
+        category: "입금 신청 내역",
+        pages: [
+          {
+            title: "당사 입금 신청 내역",
+            number: "400502",
+            Component: B2bHome,
+          },
+          {
+            title: "고객 입출금 신청 내역",
+            number: "400503",
+            Component: B2cHome,
+          },
+        ],
       },
     ],
   },

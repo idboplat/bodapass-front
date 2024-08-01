@@ -6,37 +6,62 @@ export type Page = {
   number: string;
   Component: ComponentType<HomeProps<any>>;
 };
-export type Path = { category: string; pages: Page[] };
-export type ClientPath = { category: string; pages: Omit<Page, "Component">[] };
+export type Path = { category: string; pages: (Page | Path)[] };
+export type ClientPath = { category: string; pages: (Omit<Page, "Component"> | ClientPath)[] };
 
+/** 모든 페이지 번호를 가져온다 */
 export const getAllPageNm = (pathList: Path[]) => {
-  return pathList.flatMap((path) => {
-    return Object.values(path.pages)
-      .flat()
-      .map((page) => page.number);
-  });
-};
+  let result: string[] = [];
 
-export const getPage = (pathList: Path[], pageNm: string) => {
-  for (const path of pathList) {
-    for (const page of path.pages) {
-      if (page.number === pageNm) {
-        return page;
+  function traversePages(pages: (Path | Page)[]): void {
+    for (const page of pages) {
+      if ("category" in page) {
+        traversePages(page.pages);
+      } else {
+        result.push(page.number);
       }
     }
   }
 
-  return null; // 해당 number가 없는 경우 null 반환
+  traversePages(pathList);
+  return result;
+};
+
+/** 페이지 번호에 해당하는 페이지 정보 조회 */
+export const getPage = (pathList: (Path | Page)[], pageNm: string): Page | null => {
+  let result: Page | null = null;
+
+  function traversePages(pages: (Path | Page)[]): void {
+    for (const page of pages) {
+      if ("category" in page) {
+        traversePages(page.pages);
+      } else if (page.number === pageNm) {
+        result = page;
+      }
+    }
+  }
+
+  traversePages(pathList);
+  return result;
 };
 
 /** component가 client에 노출되지 않도록 제거 */
-export const getClientPathList = (pathList: Path[]): ClientPath[] => {
-  return pathList.map((path) => {
-    return {
-      category: path.category,
-      pages: path.pages.map((page) => {
-        return { title: page.title, number: page.number };
-      }),
-    };
-  });
+export const getClientPathList = (paths: Path[]) => {
+  function traversePages(pages: (Page | Path)[]) {
+    const result: (Omit<Page, "Component"> | ClientPath)[] = [];
+
+    for (const page of pages) {
+      if ("category" in page) {
+        const pages = traversePages(page.pages);
+        result.push({ category: page.category, pages });
+      } else {
+        const { title, number } = page;
+        result.push({ title, number });
+      }
+    }
+
+    return result;
+  }
+
+  return traversePages(paths) as ClientPath[];
 };

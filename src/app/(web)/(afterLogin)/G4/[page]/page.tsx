@@ -36,5 +36,5 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  return <page.Component page={page} session={session} />;
+  return page.Component && <page.Component page={page} session={session} />;
 }
