@@ -29,7 +29,7 @@ export default function ApproveView({ data }: ApproveViewProps) {
       <div className={row}>
         <div className={label}>수량</div>
         <div className={text} style={{ textAlign: "right" }}>
-          {data["입출고 수량"]}
+          {data.수량}
         </div>
       </div>
       <div className={row}>
