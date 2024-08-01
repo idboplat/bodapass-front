@@ -29,6 +29,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
   const [amount, setAmount] = useState("");
 
   const actions = useSetTransactionCorpStore();
+  const queryClient = useQueryClient();
 
   const muation = useMutation({
     mutationKey: ["TBW_000100_P01"],
@@ -47,6 +48,8 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
     },
     onSuccess: () => {
       toast.success("USDL 신청이 완료되었습니다.");
+      // 입금 신청 내역 재조회
+      queryClient.invalidateQueries({ queryKey: ["TBW_001000_Q03"] });
       actions.reset();
       onClose();
     },
