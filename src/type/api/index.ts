@@ -134,8 +134,27 @@ export type TBW_000001_Q01 = RspnData<{
   F09: string;
 }>;
 
-/** 계좌 입출고(코인선물) 내역 조회  */
+/** 당사 입금 신청 내역(B2B) 조회  */
 export type TBW_001000_Q01 = RspnData<{
+  F01: string;
+  F02: string;
+  F03: string;
+  F04: string;
+  F05: string;
+  F06: string;
+  F07: string;
+  F08: string;
+  F09: string;
+  F10: string;
+  F11: string;
+  F12: string;
+  F13: string;
+  F14: string;
+  F15: string;
+}>;
+
+/** 위탁 입금 신청 내역(B2B) 조회  */
+export type TBW_001000_Q02 = RspnData<{
   F01: string;
   F02: string;
   F03: string;

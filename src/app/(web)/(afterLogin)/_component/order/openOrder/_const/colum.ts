@@ -64,7 +64,7 @@ export const GRID_COLS: ColDef[] = [
   },
   {
     field: "주문 가격",
-    width: COLUMN_SIZE.xl,
+    width: COLUMN_SIZE.lg,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.right,

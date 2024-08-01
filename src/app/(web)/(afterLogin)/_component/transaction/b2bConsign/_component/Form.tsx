@@ -9,8 +9,7 @@ import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
-import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
-import ReqModal from "./ReqModal";
+import { inputWrap, navWrap, selectBoxWrap } from "./nav.css";
 import BalanceViewer from "@transaction/_component/BalanceViewer";
 import { addDays } from "date-fns";
 
@@ -43,11 +42,6 @@ export default function Form({ session }: FormProps) {
 
     queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
   };
-
-  const openReqModal = async () => {
-    await modalStore.push(ReqModal, { props: { session } });
-  };
-
   const onDateChange = (date: [DateType, DateType]) => {
     setDate(() => date);
   };
@@ -87,11 +81,6 @@ export default function Form({ session }: FormProps) {
         </div>
         <button className={navBtn} type="submit" disabled={isFetching > 0}>
           조회
-        </button>
-      </div>
-      <div className={btnBox}>
-        <button type="button" onClick={openReqModal} className={navBtn}>
-          구매 신청
         </button>
       </div>
     </form>

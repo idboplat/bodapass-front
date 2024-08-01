@@ -7,6 +7,7 @@ import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
 import { Path } from "@web/(afterLogin)/_lib/getPage";
 import TradeHistoryHome from "@order/tradeHistory/Home";
 import OrderHistoryHome from "@order/orderHistory/Home";
+import B2bConsignHome from "@transaction/b2bConsign/_component/Home";
 
 export const G2_PATH_LIST: Path[] = [
   {
@@ -35,7 +36,10 @@ export const G2_PATH_LIST: Path[] = [
   },
   {
     category: "입출금",
-    pages: [{ title: "회사 입금 신청 내역", number: "200502", Component: B2bHome }],
+    pages: [
+      { title: "당사 입금 신청 내역", number: "200502", Component: B2bHome },
+      { title: "위탁 입금 신청 내역", number: "200512", Component: B2bConsignHome },
+    ],
   },
   // {
   //   category: "현황",

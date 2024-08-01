@@ -4,7 +4,7 @@ import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
-import { TBW_001000_Q01 } from "@/type/api";
+import { TBW_001000_Q02 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
 import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -42,11 +42,11 @@ export default function Table({ session }: TableProps) {
   const transactionStore = useTransactionCorpStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_001000_Q01", transactionStore],
+    queryKey: ["TBW_001000_Q02", transactionStore],
     queryFn: async () => {
-      const res = await callTms<TBW_001000_Q01>({
+      const res = await callTms<TBW_001000_Q02>({
         session,
-        svcId: "TBW_001000_Q01",
+        svcId: "TBW_001000_Q02",
         data: [
           session.user.corpCd,
           transactionStore.instCd,

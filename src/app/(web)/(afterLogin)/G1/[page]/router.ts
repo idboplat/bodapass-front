@@ -8,6 +8,7 @@ import { Path } from "@web/(afterLogin)/_lib/getPage";
 import OpenOrderHome from "@order/openOrder/Home";
 import TradeHistoryHome from "@order/tradeHistory/Home";
 import OrderHistoryHome from "@order/orderHistory/Home";
+import B2bConsignHome from "@transaction/b2bConsign/_component/Home";
 
 export const G1_PATH_LIST: Path[] = [
   {
@@ -38,7 +39,7 @@ export const G1_PATH_LIST: Path[] = [
     category: "입출금",
     pages: [
       { title: "발행내역", number: "100501", Component: DeployHome },
-      { title: "회사 입금 신청 내역", number: "100502", Component: B2bHome },
+      { title: "위탁 입금 신청 내역", number: "100512", Component: B2bConsignHome },
     ],
   },
   // {

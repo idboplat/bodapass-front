@@ -8,7 +8,7 @@ import { req } from "./reqStatus.css";
 import { useTransactionCorpStore } from "../_lib/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
-import { TBW_001000_Q01, TBW_002000_Q01 } from "@/type/api";
+import { TBW_001000_Q02, TBW_002000_Q01 } from "@/type/api";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 
 interface ReqStatusProps {
@@ -40,7 +40,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
     },
     onSuccess: (data) => {
       // 단건 조회 성공 시 상태 변경
-      queryClient.setQueryData<TBW_001000_Q01>(["TBW_001000_Q01", transactionStore], (prev) => {
+      queryClient.setQueryData<TBW_001000_Q02>(["TBW_001000_Q02", transactionStore], (prev) => {
         if (!prev) return prev;
         const arr = [...prev]; // 불변성 유지
         arr[index] = {
@@ -77,13 +77,12 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
   });
 
   const onClick = async () => {
-    let result: undefined | "cancel";
+    let result: undefined | "deny" | "approve";
 
-    result = await actions.push(CancelModal, {
+    result = await actions.push(ApproveModal, {
       props: { session, data },
-      id: "cancelModal",
+      id: "approveModal",
     });
-
     if (!!result) {
       mutationGetRow.mutate();
     }

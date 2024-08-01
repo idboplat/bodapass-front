@@ -3,9 +3,9 @@ import * as css from "./home.css";
 import Nav from "./Nav";
 import Table from "./Table";
 
-interface B2bHomeProps {}
+interface B2bConsignHomeProps {}
 
-export default async function B2bHome({ session, page }: HomeProps<B2bHomeProps>) {
+export default async function B2bConsignHome({ session, page }: HomeProps<B2bConsignHomeProps>) {
   const title = page.number + " " + page.title;
 
   if (!page.number) {
