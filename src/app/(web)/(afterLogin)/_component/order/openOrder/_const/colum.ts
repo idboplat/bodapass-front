@@ -1,8 +1,22 @@
 import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
-import { FieldNames } from "@/type/api";
+
 import { ColDef } from "ag-grid-community";
 
-export type RowData = Record<FieldNames, string>;
+export type RowData = {
+  "주문 일시": string;
+  "회사 코드": string;
+  "회사 명": string;
+  "사용자 ID": string;
+  종목: string;
+  레버리지: string;
+  "주문 구분": string;
+  "주문 가격 구분": string;
+  "매수/매도": string;
+  "주문 가격": string;
+  "주문 수량": string;
+  "체결 수량": string;
+};
+
 export const GRID_COLS: ColDef[] = [
   {
     field: "주문 일시",
