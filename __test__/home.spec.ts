@@ -11,8 +11,13 @@ test.beforeAll(async () => {
   });
 });
 
+test.describe.configure({ mode: "serial" }); // 모든 테스트를 직렬로 실행
+
 test.describe("홈 페이지 테스트", () => {
   test("로그인 테스트", async ({ browser }) => {
+    await fs.writeFile(STORAGE_PATH, "{}", "utf-8");
+    console.log("세션 초기화");
+
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto("/");
