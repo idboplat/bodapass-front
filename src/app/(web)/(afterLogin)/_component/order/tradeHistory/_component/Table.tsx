@@ -38,6 +38,7 @@ export default function Table({ session }: TableProps) {
           dateToString(orderHistoryStore.date[0]),
           dateToString(orderHistoryStore.date[1]),
           findEntity(BYSL_TP_ITEM, orderHistoryStore.mvioTp)?.[0] || "",
+          "KRW",
         ],
         pgSize: PAGE_SIZE,
         pgSn: orderHistoryStore.page,
@@ -83,6 +84,7 @@ export default function Table({ session }: TableProps) {
         }),
         "가격 소수점": item.F17,
         "수량 소수점": item.F18,
+        환율: item.F20,
       }));
       return result;
     },

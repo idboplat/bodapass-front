@@ -37,6 +37,7 @@ export default function Table({ session }: TableProps) {
           findEntity(MVIO_TP_ITEM, pnlStore.mvioTp)?.[0] || "",
           dateToString(pnlStore.date[0]),
           dateToString(pnlStore.date[1]),
+          "KRW",
         ],
         pgSize: PAGE_SIZE,
         pgSn: pnlStore.page,
@@ -57,6 +58,7 @@ export default function Table({ session }: TableProps) {
         수량: item.F08,
         "체결 일자": stringToDate(item.F09),
         "체결 번호": item.F10,
+        환율: item.F11,
       }));
       return result;
     },

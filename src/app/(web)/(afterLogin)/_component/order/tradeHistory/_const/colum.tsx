@@ -1,5 +1,25 @@
 import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
-import { ColDef } from "ag-grid-community";
+import ExchangRateInfo from "@web/(afterLogin)/_component/ExchangeRateInfo";
+import { ColDef, ICellRendererParams } from "ag-grid-community";
+
+type RowData = {
+  "체결 일시": string;
+  "회사 코드": string;
+  "회사 명": string;
+  "계좌 번호": string;
+  "사용자 ID": string;
+  종목: string;
+  레버리지: string;
+  "매수/매도": string;
+  체결가: string;
+  "체결 수량": string;
+  진입가: string;
+  수수료: string;
+  손익: string;
+  "가격 소수점": string;
+  "수량 소수점": string;
+  환율: string;
+};
 
 export const GRID_COLS: ColDef[] = [
   {
@@ -77,10 +97,21 @@ export const GRID_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.right,
   },
   {
-    field: "손익",
+    field: "손익 USDL(≒ KRW)",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.right,
+    cellRenderer: (arg: ICellRendererParams<RowData, undefined, undefined>) => {
+      const profit = arg.data?.손익;
+      const exchRate = arg.data?.환율;
+      console.log("profit", profit);
+      console.log("exchRate", exchRate);
+      if (!profit || !exchRate) return null;
+      return <ExchangRateInfo num={profit} decimalLength={2} exchRate={exchRate} />;
+    },
+    cellRendererParams: {
+      decimalLength: 2,
+    },
   },
 ];

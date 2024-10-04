@@ -75,7 +75,7 @@ export type TBW_001000_R01 = StringRspn<15>;
 export type TBW_002000_Q01 = StringRspn<14>;
 
 /** 고객 손익 내역 조회(관리자) */
-export type TBW_006000_R01 = StringRspn<19>;
+export type TBW_006000_R01 = StringRspn<12>;
 
 /** 사용자 정보(공통) 조회 */
 export type TBW_000001_S01 = StringRspn<9>;
@@ -87,10 +87,10 @@ export type TBW_006000_Q01 = StringRspn<18>;
 export type TBW_006000_Q02 = StringRspn<18>;
 
 /** 체결 내역 조회 */
-export type TBW_006000_Q03 = StringRspn<19>;
+export type TBW_006000_Q03 = StringRspn<20>;
 
 /** 계좌 잔고(코인선물) 출고가능 수량 조회 */
-export type TBW_002000_S02 = StringRspn<1>;
+export type TBW_002000_S02 = StringRspn<2>;
 
 /** 입출금 신청 내역 존재 유무 조회 */
 export type TBW_001000_Q03 = StringRspn<3>;
