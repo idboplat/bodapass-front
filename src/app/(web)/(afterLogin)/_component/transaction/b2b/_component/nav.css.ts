@@ -42,11 +42,19 @@ export const btnBox = style({
 });
 
 export const viewWrap = style({
-  whiteSpace: "nowrap",
+  display: "flex",
   fontSize: 16,
   fontWeight: 500,
+  whiteSpace: "nowrap",
 });
 
-globalStyle(`${viewWrap} > span`, {
-  verticalAlign: "middle",
+globalStyle(`${viewWrap} > div`, {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-end",
+});
+
+globalStyle(`${viewWrap} sub`, {
+  fontSize: 14,
+  color: "#555",
 });

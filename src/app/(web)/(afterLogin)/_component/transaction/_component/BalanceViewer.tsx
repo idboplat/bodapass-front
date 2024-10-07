@@ -22,7 +22,6 @@ export default function BalanceViewer({ session }: { session: Session }) {
   });
 
   const balance = data ? parseFloat(data[0].F01).toFixed(2) : "";
-  const exchangeRate = data ? parseFloat(data[0].F02) : "";
 
   const price = data ? parseFloat(data[0].F01) * parseFloat(data[0].F02) : "";
   const convertedPrice = sortDecimal({
@@ -31,17 +30,16 @@ export default function BalanceViewer({ session }: { session: Session }) {
     requireComma: true,
   });
 
-  console.log("exchangeRate", exchangeRate);
   return (
     <div className={css.viewWrap}>
       <span>회사 보유잔고 : </span>
       {isLoading ? (
-        <PlaceHolder style={{ width: 80, height: 20 }} />
+        <PlaceHolder style={{ width: 180, height: 20, marginLeft: 7 }} />
       ) : (
-        <>
-          <span>{balance}</span> <span> USDL</span>
-          <span>(≒ {convertedPrice}) </span>
-        </>
+        <div>
+          <span>{balance} USDL</span>
+          <sub>≒ {convertedPrice} KRW</sub>
+        </div>
       )}
     </div>
   );
