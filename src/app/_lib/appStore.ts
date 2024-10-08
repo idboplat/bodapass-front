@@ -7,6 +7,7 @@ export const SESSION_STORAGE_KEY = "auth-session";
 type State = {
   session: string;
   theme: "light" | "dark";
+  fiat: string;
   sidebar: boolean;
 };
 
@@ -16,6 +17,7 @@ type Action = {
     login: () => void;
     refresh: () => void;
     toggleSidebar: () => void;
+    setFiat: (string: string) => void;
   };
 };
 
@@ -45,6 +47,12 @@ export const createAppStore = (initState: State) => {
           const maxAge = 60 * 60 * 24 * 365; // 1년
           document.cookie = `sidebar=${!pre.sidebar}; Max-Age=${maxAge}`;
           return { sidebar: !pre.sidebar };
+        }),
+      setFiat: (newFiat) =>
+        set(() => {
+          const fiat = newFiat === "KRW" ? "KRW" : "USD";
+          document.cookie = `fiat=${fiat}; Max-Age=${60 * 60 * 24 * 365}`;
+          return { fiat };
         }),
     },
   }));

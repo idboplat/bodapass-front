@@ -14,10 +14,11 @@ const ModalContainer = dynamic(() => import("../modal/ModalContainer"), { ssr: f
 export default async function Configs({ children }: PropsWithChildren) {
   const cookieStore = cookies();
   const sidebar = cookieStore.get("sidebar")?.value !== "false";
+  const fiat = cookieStore.get("fiat")?.value as string | undefined;
   const session = await getServerSessionWithOptions();
 
   return (
-    <App session={session} sidebar={sidebar}>
+    <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <NextAuth>
         <Hotkeys>
           <ReactQuery>

@@ -8,12 +8,15 @@ import { useQuery } from "@tanstack/react-query";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
-import { useState } from "react";
-import { GRID_COLS } from "../_const/colum";
+import { useMemo, useState } from "react";
 import { usePnlStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
 import PagePagination from "@/app/_component/pagination/PagePagination";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
+import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
+import { ColDef } from "ag-grid-community";
+import { useApp } from "@/app/_lib/appStore";
+import { useStore } from "zustand";
 
 const PAGE_SIZE = 20;
 
@@ -22,12 +25,13 @@ interface TableProps {
 }
 
 export default function Table({ session }: TableProps) {
-  const [colDefs] = useState([...GRID_COLS]);
+  const app = useApp();
+  const fiat = useStore(app, (store) => store.fiat);
   const [total, setTotal] = useState(-1);
   const pnlStore = usePnlStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_006000_R01", pnlStore],
+    queryKey: ["TBW_006000_R01", pnlStore, fiat],
     queryFn: async () => {
       const TBW_006000_R01Res = await callTms<TBW_006000_R01>({
         session,
@@ -38,7 +42,7 @@ export default function Table({ session }: TableProps) {
           findEntity(MVIO_TP_ITEM, pnlStore.mvioTp)?.[0] || "",
           dateToString(pnlStore.date[0]),
           dateToString(pnlStore.date[1]),
-          "KRW",
+          fiat,
         ],
         pgSize: PAGE_SIZE,
         pgSn: pnlStore.page,
@@ -57,7 +61,7 @@ export default function Table({ session }: TableProps) {
         종목: item.F06,
         "적요 구분": findEntity(MVIO_RMRK_ITEM, item.F07)?.[1] || "",
         수량: item.F08,
-        "수량(KRW)": sortDecimal({
+        법정화폐수량: sortDecimal({
           num: (parseFloat(item.F08) * parseFloat(item.F11)).toString(),
           decimalLength: 0,
           requireComma: true,
@@ -65,12 +69,89 @@ export default function Table({ session }: TableProps) {
         "체결 일자": stringToDate(item.F09),
         "체결 번호": item.F10,
         환율: item.F11,
-        화폐단위: "KRW",
       }));
       return result;
     },
     enabled: pnlStore.nonce > 0,
   });
+
+  const colDefs = useMemo<ColDef[]>(() => {
+    return [
+      {
+        field: "손익 일시",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "회사 코드",
+        width: COLUMN_SIZE.sm,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "회사 명",
+        width: COLUMN_SIZE.lg,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.left,
+      },
+      {
+        field: "계좌 번호",
+        width: COLUMN_SIZE.lg,
+        resizable: true,
+        editable: true,
+      },
+
+      {
+        field: "사용자 ID",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.left,
+      },
+      {
+        field: "종목",
+        width: COLUMN_SIZE.sm,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "적요 구분",
+        width: COLUMN_SIZE.md,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "수량",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "법정화폐수량",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+        headerValueGetter: () => `수량 (${fiat})`,
+      },
+      {
+        field: "체결 일자",
+        width: COLUMN_SIZE.md,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "체결 번호",
+        width: COLUMN_SIZE.sm,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+    ];
+  }, [fiat]);
 
   const rowData = pnlStore.nonce === 0 ? [] : data;
 

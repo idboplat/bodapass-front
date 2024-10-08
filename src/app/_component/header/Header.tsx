@@ -3,6 +3,7 @@ import SidebarToggle from "../sidebar/SidebarToggle";
 import dynamic from "next/dynamic";
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { redirect } from "next/navigation";
+import FiatButton from "./FiatButton";
 
 const SessionTime = dynamic(() => import("./SessionTime"), { ssr: false });
 
@@ -22,6 +23,7 @@ export default async function Header() {
         </div>
         <div>
           <SessionTime session={session} />
+          <FiatButton />
         </div>
       </div>
     </header>

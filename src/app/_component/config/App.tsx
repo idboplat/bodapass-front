@@ -8,14 +8,16 @@ interface AppProps {
   children: React.ReactNode;
   session: Session | null;
   sidebar: boolean;
+  fiat: string;
 }
 
-export default function App({ session, sidebar, children }: AppProps) {
+export default function App({ session, sidebar, children, fiat }: AppProps) {
   const store = useRef(
     createAppStore({
       session: !!session ? formatISO(new Date()) : "guest",
       theme: "light",
       sidebar,
+      fiat,
     }),
   );
 

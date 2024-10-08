@@ -11,7 +11,7 @@ export const fixed = style([
     width: "100%",
     display: "flex",
     alignItems: "center",
-    padding: "0 10px",
+    padding: "0 20px",
     backgroundColor: "#fff",
     boxShadow: "rgba(17, 17, 26, 0.1) 0px 1px 0px",
     justifyContent: "space-between",
