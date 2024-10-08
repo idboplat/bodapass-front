@@ -77,9 +77,19 @@ export default function Table({ session }: TableProps) {
           num: item.F12,
           requireComma: true,
         }),
+        "수수료(KRW)": sortDecimal({
+          num: (parseFloat(item.F12) * parseFloat(item.F20)).toString(),
+          decimalLength: 0,
+          requireComma: true,
+        }),
         손익: sortDecimal({
           decimalLength: 2,
           num: item.F13,
+          requireComma: true,
+        }),
+        "손익(KRW)": sortDecimal({
+          num: (parseFloat(item.F13) * parseFloat(item.F20)).toString(),
+          decimalLength: 0,
           requireComma: true,
         }),
         "가격 소수점": item.F17,

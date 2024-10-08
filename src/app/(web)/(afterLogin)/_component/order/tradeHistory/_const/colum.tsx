@@ -97,21 +97,24 @@ export const GRID_COLS: ColDef[] = [
     cellStyle: COLUMN_STYLE.right,
   },
   {
-    field: "손익 USDL(≒ KRW)",
+    field: "수수료(KRW)",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.right,
-    cellRenderer: (arg: ICellRendererParams<RowData, undefined, undefined>) => {
-      const profit = arg.data?.손익;
-      const exchRate = arg.data?.환율;
-      console.log("profit", profit);
-      console.log("exchRate", exchRate);
-      if (!profit || !exchRate) return null;
-      return <ExchangRateInfo num={profit} decimalLength={2} exchRate={exchRate} />;
-    },
-    cellRendererParams: {
-      decimalLength: 2,
-    },
+  },
+  {
+    field: "손익",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
+  },
+  {
+    field: "손익(KRW)",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
   },
 ];

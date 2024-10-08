@@ -26,7 +26,7 @@ export default function BalanceViewer({ session }: { session: Session }) {
   const price = data ? parseFloat(data[0].F01) * parseFloat(data[0].F02) : "";
   const convertedPrice = sortDecimal({
     num: price.toString(),
-    decimalLength: 2,
+    decimalLength: 0,
     requireComma: true,
   });
 

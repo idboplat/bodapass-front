@@ -63,21 +63,46 @@ export const GRID_COLS: ColDef[] = [
     editable: true,
   },
   {
-    field: "수량 USDL(≒ KRW)",
+    field: "수량",
     width: COLUMN_SIZE.xl,
     resizable: true,
     editable: true,
     cellStyle: COLUMN_STYLE.right,
-    cellRenderer: (arg: ICellRendererParams<RowData, undefined, undefined>) => {
-      const qty = arg.data?.수량;
-      const exchRate = arg.data?.환율;
-      if (!qty || !exchRate) return null;
-      return <ExchangRateInfo num={qty} decimalLength={2} exchRate={exchRate} />;
-    },
-    cellRendererParams: {
-      decimalLength: 2,
-    },
+    // cellRenderer: (arg: ICellRendererParams<RowData, undefined, undefined>) => {
+    //   const qty = arg.data?.수량;
+    //   const exchRate = arg.data?.환율;
+    //   if (!qty || !exchRate) return null;
+    //   return <ExchangRateInfo num={qty} decimalLength={2} exchRate={exchRate} />;
+    // },
+    // cellRendererParams: {
+    //   decimalLength: 2,
+    // },
   },
+  {
+    field: "수량(KRW)",
+    width: COLUMN_SIZE.xl,
+    resizable: true,
+    editable: true,
+    cellStyle: COLUMN_STYLE.right,
+  },
+  // {
+  //   field: "법정화폐수량",
+  //   width: COLUMN_SIZE.md,
+  //   resizable: true,
+  //   editable: true,
+  //   // valueGetter: (params) => ,
+  //   headerValueGetter: (params: any) => {
+  //     console.log("params", params);
+  //     return "ffff";
+  //     // return params.data["법정화폐수량"] + params.data.화폐단위;
+  //   },
+  //   headerComponentParams: {},
+  //   // headerComponent: (params: any) => {
+  //   //   console.log("params", params.api);
+  //   //   // params.data["법정화폐수량"] + params.data.화폐단위
+  //   //   return <></>;
+  //   // },
+  // },
   {
     field: "체결 일자",
     width: COLUMN_SIZE.md,

@@ -13,6 +13,7 @@ import { GRID_COLS } from "../_const/colum";
 import { usePnlStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
 import PagePagination from "@/app/_component/pagination/PagePagination";
+import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
 
@@ -56,9 +57,15 @@ export default function Table({ session }: TableProps) {
         종목: item.F06,
         "적요 구분": findEntity(MVIO_RMRK_ITEM, item.F07)?.[1] || "",
         수량: item.F08,
+        "수량(KRW)": sortDecimal({
+          num: (parseFloat(item.F08) * parseFloat(item.F11)).toString(),
+          decimalLength: 0,
+          requireComma: true,
+        }),
         "체결 일자": stringToDate(item.F09),
         "체결 번호": item.F10,
         환율: item.F11,
+        화폐단위: "KRW",
       }));
       return result;
     },
