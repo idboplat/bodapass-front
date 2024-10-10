@@ -8,12 +8,15 @@ import { useQuery } from "@tanstack/react-query";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
-import { useState } from "react";
-import { GRID_COLS } from "../_const/colum";
+import { useMemo, useState } from "react";
 import { useOrderHistoryStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
+import { ColDef } from "ag-grid-community";
+import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
+import { useStore } from "zustand";
+import { useApp } from "@/app/_lib/appStore";
 
 const PAGE_SIZE = 20;
 
@@ -22,12 +25,13 @@ interface TableProps {
 }
 
 export default function Table({ session }: TableProps) {
-  const [colDefs] = useState([...GRID_COLS]);
+  const app = useApp();
+  const fiat = useStore(app, (store) => store.fiat);
   const [total, setTotal] = useState(-1);
   const orderHistoryStore = useOrderHistoryStore();
 
   const { data } = useQuery({
-    queryKey: ["TBW_006000_Q03", orderHistoryStore],
+    queryKey: ["TBW_006000_Q03", orderHistoryStore, fiat],
     queryFn: async () => {
       const TBW_006000_R01Res = await callTms<TBW_006000_Q03>({
         session,
@@ -38,7 +42,7 @@ export default function Table({ session }: TableProps) {
           dateToString(orderHistoryStore.date[0]),
           dateToString(orderHistoryStore.date[1]),
           findEntity(BYSL_TP_ITEM, orderHistoryStore.mvioTp)?.[0] || "",
-          "KRW",
+          fiat,
         ],
         pgSize: PAGE_SIZE,
         pgSn: orderHistoryStore.page,
@@ -77,7 +81,7 @@ export default function Table({ session }: TableProps) {
           num: item.F12,
           requireComma: true,
         }),
-        "수수료(KRW)": sortDecimal({
+        법정화폐수수료: sortDecimal({
           num: (parseFloat(item.F12) * parseFloat(item.F20)).toString(),
           decimalLength: 0,
           requireComma: true,
@@ -87,7 +91,7 @@ export default function Table({ session }: TableProps) {
           num: item.F13,
           requireComma: true,
         }),
-        "손익(KRW)": sortDecimal({
+        법정화폐손익: sortDecimal({
           num: (parseFloat(item.F13) * parseFloat(item.F20)).toString(),
           decimalLength: 0,
           requireComma: true,
@@ -100,6 +104,108 @@ export default function Table({ session }: TableProps) {
     },
     enabled: orderHistoryStore.nonce > 0,
   });
+
+  const colDefs = useMemo<ColDef[]>(() => {
+    return [
+      {
+        field: "체결 일시",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "회사 코드",
+        width: COLUMN_SIZE.md,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "회사 명",
+        width: COLUMN_SIZE.lg,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.left,
+      },
+      {
+        field: "사용자 ID",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.left,
+      },
+      {
+        field: "종목",
+        width: COLUMN_SIZE.sm,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.left,
+      },
+      {
+        field: "레버리지",
+        width: COLUMN_SIZE.sm,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "매수/매도",
+        width: COLUMN_SIZE.md,
+        resizable: true,
+        editable: true,
+      },
+      {
+        field: "체결가",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "체결 수량",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "진입가",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "수수료",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "법정화폐수수료",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+        headerValueGetter: () => `수수료 (${fiat})`,
+      },
+      {
+        field: "손익",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+      },
+      {
+        field: "법정화폐손익",
+        width: COLUMN_SIZE.xl,
+        resizable: true,
+        editable: true,
+        cellStyle: COLUMN_STYLE.right,
+        headerValueGetter: () => `손익 (${fiat})`,
+      },
+    ];
+  }, [fiat]);
 
   const rowData = orderHistoryStore.nonce === 0 ? [] : data;
 
