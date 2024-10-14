@@ -22,12 +22,13 @@ describe("정규표현식 테스트", () => {
   test("소수인지 검증하는 정규표현식", () => {
     expect(module.checkIsDecimal("0.123")).toBe(true);
     expect(module.checkIsDecimal("0")).toBe(true);
-    expect(module.checkIsDecimal(".123")).toBe(false);
-    expect(module.checkIsDecimal("123.")).toBe(false);
     expect(module.checkIsDecimal("123..")).toBe(false);
     expect(module.checkIsDecimal("123..1")).toBe(false);
     expect(module.checkIsDecimal("123.456.")).toBe(false);
     expect(module.checkIsDecimal("123.456.789")).toBe(false);
+
+    // expect(module.checkIsDecimal(".123")).toBe(true); // 해당 케이스가 true이면 숫자가 모두 지울 수 없어서 예외
+    // expect(module.checkIsDecimal("123.")).toBe(true); // 해당 케이스가 true이면 소수점이 입력이 안되서 예외
   });
 
   test("소수점 길이 검증", () => {

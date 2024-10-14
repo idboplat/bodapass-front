@@ -15,7 +15,7 @@ export const replaceToTelNumber = (string: string): string => {
 
 /** 소수인지 검증하는 정규표현식 */
 export const checkIsDecimal = (string: string): boolean => {
-  return /^\d+(\.\d+)?$/.test(string);
+  return /^\d*\.?\d*$/.test(string);
 };
 
 /**
