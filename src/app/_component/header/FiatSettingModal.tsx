@@ -31,11 +31,6 @@ export default function FiatSettingModal({
                   KRW - 대한민국 원화
                 </button>
               </li>
-              <li className={item}>
-                <button className={button} onClick={() => onClick("USD")}>
-                  USD - 미국 달러
-                </button>
-              </li>
             </ul>
           </div>
         </div>
