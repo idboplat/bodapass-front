@@ -92,9 +92,9 @@ export default function Form({ session }: FormProps) {
         </button>
       </div>
       <div className={btnBox}>
-        <button type="button" onClick={openReqModal} className={navBtn}>
+        {/* <button type="button" onClick={openReqModal} className={navBtn}>
           구매 신청
-        </button>
+        </button> */}
       </div>
     </form>
   );
