@@ -1,9 +1,8 @@
 import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
-import Accordion from "../accordion/Accordion";
 import SidebarMenuItem from "./SidebarMenuItem";
 import { useState } from "react";
-import SubCategory from "./SubCategory";
 import { Session } from "next-auth";
+import { NavLink } from "@mantine/core";
 
 interface CategoryProps {
   session: Session;
@@ -16,10 +15,10 @@ export default function Category({ path, session }: CategoryProps) {
   const toggleShow = () => setIsShow((pre) => !pre);
 
   return (
-    <Accordion title={path.category} isShow={isShow} onClick={toggleShow}>
+    <NavLink label={path.category} opened={isShow} onClick={toggleShow}>
       {path.pages.map((page) => {
         if ("category" in page) {
-          return <SubCategory key={page.category} path={page} session={session} />;
+          return <Category key={page.category} path={page} session={session} />;
         } else {
           return (
             <SidebarMenuItem
@@ -31,6 +30,6 @@ export default function Category({ path, session }: CategoryProps) {
           );
         }
       })}
-    </Accordion>
+    </NavLink>
   );
 }

@@ -1,10 +1,7 @@
 // css 순서변경 금지
 import "@/style/agGrid.css";
 import "@/style/datepicker.css";
-import * as css from "./layout.css";
 
-import Header from "@/app/_component/header/Header";
-import Sidebar from "@/app/_component/sidebar/Sidebar";
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { notFound, redirect } from "next/navigation";
 import { PropsWithChildren } from "react";
@@ -12,6 +9,7 @@ import { G1_PATH_LIST } from "./G1/[page]/router";
 import { G2_PATH_LIST } from "./G2/[page]/router";
 import { G4_PATH_LIST } from "./G4/[page]/router";
 import { Path, getClientPathList } from "./_lib/getPage";
+import LayoutClient from "./layout.client";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await getServerSessionWithOptions();
@@ -32,12 +30,8 @@ export default async function Layout({ children }: PropsWithChildren) {
   const clientPath = getClientPathList(pathMap[session.user.corpGrpTp]);
 
   return (
-    <div className={css.col}>
-      <Header />
-      <div className={css.row}>
-        <Sidebar pathList={clientPath} session={session} />
-        {children}
-      </div>
-    </div>
+    <LayoutClient clientPath={clientPath} session={session}>
+      {children}
+    </LayoutClient>
   );
 }

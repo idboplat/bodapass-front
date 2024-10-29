@@ -8,6 +8,7 @@ import callTms from "@/model/callTms";
 import { Session } from "next-auth";
 import { TBW_001000_Q03 } from "@/type/api";
 import Badge from "./Badge";
+import { NavLink } from "@mantine/core";
 
 interface SidebarMenuItemProps {
   icon?: React.ReactNode;
@@ -44,14 +45,13 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
   });
 
   return (
-    <li className={classNames(menuItem, isActive && "active")}>
-      <Link href={href}>
-        {icon}
-        <span>
-          {text}
-          {data?.[text] && <Badge />}
-        </span>
-      </Link>
-    </li>
+    <NavLink
+      className={classNames(isActive && "active")}
+      component={Link}
+      href={href}
+      label={text}
+      leftSection={icon}
+      rightSection={data?.[text] && <Badge />}
+    />
   );
 }

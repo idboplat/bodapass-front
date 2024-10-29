@@ -1,15 +1,13 @@
+import "@/style/global.scss";
+import "@/style/theme.scss";
 import "@/style/global.css";
 import "@/style/globalTheme.css";
+
 import type { Viewport } from "next";
-import { Noto_Sans_KR } from "next/font/google";
 import { PropsWithChildren } from "react";
 import Configs from "./_component/config";
 import { getDefaultMetadata } from "./_const/getDefaultMetadata";
-
-const font = Noto_Sans_KR({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-});
+import { ColorSchemeScript } from "@mantine/core";
 
 export const metadata = getDefaultMetadata();
 
@@ -23,9 +21,19 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="ko" color-theme="light">
-      <body className={font.className}>
-        <Configs>{children}</Configs>
+    // https://github.com/mantinedev/mantine/issues/7008
+    <html lang="ko" suppressHydrationWarning>
+      <head>
+        <ColorSchemeScript defaultColorScheme="light" />
+        {/* Pretendard Font */}
+        <link
+          rel="stylesheet"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+      </head>
+      <body>
+        <Configs defaultColorScheme="light">{children}</Configs>
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import dynamic from "next/dynamic";
-import { PropsWithChildren } from "react";
 import App from "./App";
 import Devtools from "./Devtools";
 import Hotkeys from "./Hotkeys";
@@ -8,10 +7,16 @@ import NextAuth from "./NextAuth";
 import ReactQuery from "./ReactQuery";
 import ToastBox from "./ToastBox";
 import { cookies } from "next/headers";
+import MantineProvider from "./MantineProvider";
 
 const ModalContainer = dynamic(() => import("../modal/ModalContainer"), { ssr: false });
 
-export default async function Configs({ children }: PropsWithChildren) {
+interface ConfigsProps {
+  defaultColorScheme: "light" | "dark";
+  children: React.ReactNode;
+}
+
+export default async function Configs({ children, defaultColorScheme }: ConfigsProps) {
   const cookieStore = cookies();
   const sidebar = cookieStore.get("sidebar")?.value !== "false";
   const fiat = cookieStore.get("fiat")?.value as string | undefined;
@@ -22,10 +27,12 @@ export default async function Configs({ children }: PropsWithChildren) {
       <NextAuth>
         <Hotkeys>
           <ReactQuery>
-            {children}
-            <Devtools />
-            <ModalContainer />
-            <ToastBox />
+            <MantineProvider defaultColorScheme={defaultColorScheme}>
+              {children}
+              <Devtools />
+              <ModalContainer />
+              <ToastBox />
+            </MantineProvider>
           </ReactQuery>
         </Hotkeys>
       </NextAuth>

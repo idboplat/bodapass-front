@@ -1,31 +1,41 @@
 import { fixed, title, wrap } from "./header.css";
-import SidebarToggle from "../sidebar/SidebarToggle";
 import dynamic from "next/dynamic";
-import { getServerSessionWithOptions } from "@/model/nextAuth";
-import { redirect } from "next/navigation";
 import FiatButton from "./FiatButton";
+import { Session } from "next-auth";
+import { AppShellHeader, Burger, Flex, Text } from "@mantine/core";
 
 const SessionTime = dynamic(() => import("./SessionTime"), { ssr: false });
 
-export default async function Header() {
-  const session = await getServerSessionWithOptions();
+interface HeaderProps {
+  session: Session;
+  isShowNav: boolean;
+  toggleNav: () => void;
+}
 
-  if (!session) {
-    redirect("/login");
-  }
-
+export default function Header({ session, toggleNav }: HeaderProps) {
   return (
-    <header className={wrap}>
-      <div className={fixed}>
-        <div>
-          <SidebarToggle />
-          <h1 className={title}>GLE Admin</h1>
-        </div>
-        <div>
+    <AppShellHeader>
+      <Flex
+        mx={8}
+        style={(theme) => ({
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          height: "100%",
+          color: theme.colors.dark[9],
+        })}
+      >
+        <Flex style={{ alignItems: "center" }}>
+          <Burger opened={false} onClick={toggleNav} size="sm" mr={4} />
+          <Text component="h1" style={{ fontSize: 16 }}>
+            Logo
+          </Text>
+        </Flex>
+        <Flex style={{ alignItems: "center" }}>
           <SessionTime session={session} />
           <FiatButton />
-        </div>
-      </div>
-    </header>
+        </Flex>
+      </Flex>
+    </AppShellHeader>
   );
 }

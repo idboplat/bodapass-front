@@ -1,5 +1,10 @@
 import { CSSPropertiesWithVars } from "@/type/vanillaExtract";
 import { calc } from "@vanilla-extract/css-utils";
+import { theme } from "./theme";
+import { themeToVars } from "@mantine/vanilla-extract";
+
+// https://mantine.dev/styles/vanilla-extract/
+export const vars = themeToVars(theme);
 
 export const BEZIER_CURVE = "cubic-bezier(0.23, 1, 0.32, 1)";
 export const BOX_SHADOW = "0px 1px 2px 0 rgba(56, 52, 52, 0.4)";

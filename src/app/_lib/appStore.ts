@@ -45,13 +45,13 @@ export const createAppStore = (initState: State) => {
       toggleSidebar: () =>
         set((pre) => {
           const maxAge = 60 * 60 * 24 * 365; // 1년
-          document.cookie = `sidebar=${!pre.sidebar}; Max-Age=${maxAge} Path=/;`;
+          document.cookie = `sidebar=${!pre.sidebar}; Max-Age=${maxAge}; Path=/;`;
           return { sidebar: !pre.sidebar };
         }),
       setFiat: (newFiat) =>
         set(() => {
           const fiat = newFiat === "KRW" ? "KRW" : "USD";
-          document.cookie = `fiat=${fiat}; Max-Age=${60 * 60 * 24 * 365} Path=/;`;
+          document.cookie = `fiat=${fiat}; Max-Age=${60 * 60 * 24 * 365}; Path=/;`;
           return { fiat };
         }),
     },

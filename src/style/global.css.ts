@@ -1,14 +1,14 @@
 import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("*", {
-  margin: 0,
-  padding: 0,
+  // margin: 0,
+  // padding: 0,
   border: "none",
-  boxSizing: "border-box",
-  color: "inherit",
-  fontFamily: "inherit",
-  fontSize: "inherit",
-  fontWeight: "inherit",
+  // boxSizing: "border-box",
+  // color: "inherit",
+  // fontFamily: "inherit",
+  // fontSize: "inherit",
+  // fontWeight: "inherit",
 });
 
 globalStyle("::-webkit-scrollbar", {
@@ -32,10 +32,10 @@ globalStyle("::-webkit-scrollbar-button", {
 });
 
 globalStyle("html, body", {
-  fontSize: 14, //root font size
+  // fontSize: 14, //root font size
   minWidth: 1280,
   minHeight: 720,
-  letterSpacing: "-0.05em",
+  // letterSpacing: "-0.05em",
   margin: 0,
   padding: 0,
 });
