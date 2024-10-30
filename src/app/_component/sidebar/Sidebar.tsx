@@ -15,7 +15,7 @@ interface SidebarProps {
 }
 export default function Sidebar({ pathList, session }: SidebarProps) {
   return (
-    <AppShellNavbar p="sm">
+    <AppShellNavbar p="xs">
       <SidebarMenuList pathList={pathList} session={session} />
       <Center>
         <SidebarLogoutBtn />

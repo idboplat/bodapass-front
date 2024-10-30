@@ -1,6 +1,6 @@
-import { useHotkeys } from "react-hotkeys-hook";
-import { light, btn } from "./toggleBtn.css";
+import { getHotkeyHandler } from "@mantine/hooks";
 import classNames from "classnames";
+import { btn, light } from "./toggleBtn.css";
 
 interface ToggleBtnProps {
   id?: string;
@@ -19,15 +19,15 @@ export default function ToggleBtn({
   activeColor,
   disabled,
 }: ToggleBtnProps) {
-  const labelRef = useHotkeys<HTMLLabelElement>("enter", () => {
+  const enterPress = () => {
     if (!disabled) onClick();
-  });
+  };
 
   return (
     <label
       tabIndex={0}
       className={classNames(btn, value && "active", disabled && "disabled")}
-      ref={labelRef}
+      onKeyDown={getHotkeyHandler([["enter", enterPress]])}
       style={{ "--toggleBtn-bgColor": activeColor, ...style } as React.CSSProperties}
     >
       <input

@@ -1,3 +1,4 @@
+import { vars } from "@/style/var";
 import { globalStyle, style } from "@vanilla-extract/css";
 
 export const menuList = style({
@@ -11,36 +12,50 @@ export const menuList = style({
   },
 });
 
-export const menuItem = style({
-  paddingLeft: 10,
-  borderRadius: 2,
-  transition: "color 0.2s ease",
-  color: "#5E5E5E",
+// export const menuItem = style({
+//   paddingLeft: 10,
+//   borderRadius: 2,
+//   transition: "color 0.2s ease",
+//   color: "#5E5E5E",
 
+//   selectors: {
+//     "&:hover": {
+//       color: "#1C1C1C",
+//     },
+//     "&.active ": {
+//       fontWeight: 500,
+//       color: "#1C1C1C",
+//     },
+//   },
+// });
+
+// globalStyle(`${menuItem} > a`, {
+//   display: "flex",
+//   alignItems: "center",
+//   padding: "6px 10px",
+//   gap: 6,
+// });
+
+// globalStyle(`${menuItem}.active > a`, {
+//   cursor: "default",
+// });
+
+// globalStyle(`${menuItem} > a > span`, {
+//   position: "relative",
+// });
+
+export const category = style({
+  fontWeight: 500,
+  transition: "color 0.2s ease, background-color 0.2s ease",
   selectors: {
     "&:hover": {
-      color: "#1C1C1C",
+      backgroundColor: vars.colors.gray[2],
     },
-    "&.active ": {
-      fontWeight: 500,
-      color: "#1C1C1C",
+    "&[data-active='true']": {
+      // color: "red",
+      backgroundColor: "unset",
     },
   },
-});
-
-globalStyle(`${menuItem} > a`, {
-  display: "flex",
-  alignItems: "center",
-  padding: "6px 10px",
-  gap: 6,
-});
-
-globalStyle(`${menuItem}.active > a`, {
-  cursor: "default",
-});
-
-globalStyle(`${menuItem} > a > span`, {
-  position: "relative",
 });
 
 export const logoutBtn = style({

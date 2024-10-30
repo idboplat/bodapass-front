@@ -1,6 +1,5 @@
-import { flexCenter } from "@/style/var";
+import { flexCenter, vars } from "@/style/var";
 import { style } from "@vanilla-extract/css";
-import { global } from "@/style/globalTheme.css";
 
 export const form = style({
   display: "flex",
@@ -44,7 +43,7 @@ export const btnBox = style([
 export const loginBtn = style({
   width: "100%",
   height: 40,
-  backgroundColor: global.blueDefault,
+  backgroundColor: vars.colors.blue[5],
   padding: "7px 0",
   fontWeight: 600,
   fontSize: 16,
@@ -53,9 +52,9 @@ export const loginBtn = style({
   borderRadius: 3,
   transition: "background-color 0.2s ease, color 0.2s ease",
   ":hover": {
-    backgroundColor: global.blueHover,
+    backgroundColor: vars.colors.blue[7],
   },
   ":disabled": {
-    backgroundColor: global.blueDisabled,
+    backgroundColor: vars.colors.blue[2],
   },
 });

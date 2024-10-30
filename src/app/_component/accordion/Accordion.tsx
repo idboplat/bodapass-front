@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import { SlArrowDown } from "react-icons/sl";
 import * as css from "./accordion.css";
-import { useHotkeys } from "react-hotkeys-hook";
+import { getHotkeyHandler } from "@mantine/hooks";
 
 interface AccordionProps {
   isShow: boolean;
@@ -13,16 +13,9 @@ interface AccordionProps {
 }
 
 export default function Accordion({ isShow, onClick, title, children, style }: AccordionProps) {
-  const ref = useHotkeys<HTMLDivElement>("enter", onClick);
-
   return (
-    <div className={css.accordion} style={style}>
-      <div
-        ref={ref}
-        className={classNames(css.titleBox, isShow && "show")}
-        onClick={onClick}
-        tabIndex={0}
-      >
+    <div className={css.accordion} style={style} onKeyDown={getHotkeyHandler([["enter", onClick]])}>
+      <div className={classNames(css.titleBox, isShow && "show")} onClick={onClick} tabIndex={0}>
         <span className={css.title}>{title}</span>
         <SlArrowDown className={classNames(css.icon, isShow && "show")} size={10} />
       </div>

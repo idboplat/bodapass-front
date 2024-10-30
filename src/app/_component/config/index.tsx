@@ -2,7 +2,6 @@ import { getServerSessionWithOptions } from "@/model/nextAuth";
 import dynamic from "next/dynamic";
 import App from "./App";
 import Devtools from "./Devtools";
-import Hotkeys from "./Hotkeys";
 import NextAuth from "./NextAuth";
 import ReactQuery from "./ReactQuery";
 import ToastBox from "./ToastBox";
@@ -25,16 +24,14 @@ export default async function Configs({ children, defaultColorScheme }: ConfigsP
   return (
     <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <NextAuth>
-        <Hotkeys>
-          <ReactQuery>
-            <MantineProvider defaultColorScheme={defaultColorScheme}>
-              {children}
-              <Devtools />
-              <ModalContainer />
-              <ToastBox />
-            </MantineProvider>
-          </ReactQuery>
-        </Hotkeys>
+        <ReactQuery>
+          <MantineProvider defaultColorScheme={defaultColorScheme}>
+            {children}
+            <Devtools />
+            <ModalContainer />
+            <ToastBox />
+          </MantineProvider>
+        </ReactQuery>
       </NextAuth>
     </App>
   );

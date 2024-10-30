@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
-import { menuItem } from "./sidebar.css";
+// import { menuItem } from "./sidebar.css";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
@@ -47,6 +47,7 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
   return (
     <NavLink
       className={classNames(isActive && "active")}
+      active={isActive}
       component={Link}
       href={href}
       label={text}

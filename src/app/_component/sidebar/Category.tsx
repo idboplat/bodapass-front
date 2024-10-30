@@ -3,6 +3,7 @@ import SidebarMenuItem from "./SidebarMenuItem";
 import { useState } from "react";
 import { Session } from "next-auth";
 import { NavLink } from "@mantine/core";
+import { category } from "./sidebar.css";
 
 interface CategoryProps {
   session: Session;
@@ -15,7 +16,14 @@ export default function Category({ path, session }: CategoryProps) {
   const toggleShow = () => setIsShow((pre) => !pre);
 
   return (
-    <NavLink label={path.category} opened={isShow} onClick={toggleShow}>
+    <NavLink
+      label={path.category}
+      className={category}
+      opened={isShow}
+      onClick={toggleShow}
+      childrenOffset="xs"
+      active={isShow}
+    >
       {path.pages.map((page) => {
         if ("category" in page) {
           return <Category key={page.category} path={page} session={session} />;

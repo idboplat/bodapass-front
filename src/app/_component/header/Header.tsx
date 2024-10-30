@@ -1,4 +1,3 @@
-import { fixed, title, wrap } from "./header.css";
 import dynamic from "next/dynamic";
 import FiatButton from "./FiatButton";
 import { Session } from "next-auth";
@@ -28,7 +27,7 @@ export default function Header({ session, toggleNav }: HeaderProps) {
         <Flex style={{ alignItems: "center" }}>
           <Burger opened={false} onClick={toggleNav} size="sm" mr={4} />
           <Text component="h1" style={{ fontSize: 16 }}>
-            Logo
+            GLE Admin
           </Text>
         </Flex>
         <Flex style={{ alignItems: "center" }}>

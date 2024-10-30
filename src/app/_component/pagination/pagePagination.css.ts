@@ -1,6 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { flexCenter } from "@/style/var";
-import { global } from "@/style/globalTheme.css";
+import { flexCenter, vars } from "@/style/var";
 
 export const wrap = style({
   padding: "10px 0",
@@ -28,9 +27,9 @@ globalStyle(`${wrap} > ol >li > button`, {
 });
 
 globalStyle(`${wrap} > ol > li> button.active`, {
-  border: `1px solid ${global.blueActive}`,
+  border: `1px solid ${vars.colors.blue[5]}`,
   borderRadius: 5,
-  color: global.blueActive,
+  color: vars.colors.blue[7],
   cursor: "default",
 });
 
