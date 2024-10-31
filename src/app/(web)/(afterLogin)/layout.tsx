@@ -1,5 +1,5 @@
 // css 순서변경 금지
-import "@/style/agGrid.css";
+import "@/style/agGrid.scss";
 import "@/style/datepicker.css";
 
 import { getServerSessionWithOptions } from "@/model/nextAuth";

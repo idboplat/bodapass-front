@@ -48,18 +48,17 @@ export const zIndex = {
   },
 };
 
-export const BREAK_POINT = { sm: 640, md: 768, lg: 1024, xl: 1280, "2xl": 1536, full: 1900 };
-
-type ResponsiveArgs = Partial<Record<keyof typeof BREAK_POINT, CSSPropertiesWithVars>>;
+type ResponsiveArgs = Partial<Record<keyof typeof vars.breakpoints, CSSPropertiesWithVars>>;
 export const responsive = (styles: ResponsiveArgs) => {
   const mediaStyle: Record<string, CSSPropertiesWithVars> = {};
+  const breakpoints = vars.breakpoints;
 
-  for (const _key in BREAK_POINT) {
-    const key = _key as keyof typeof BREAK_POINT;
+  for (const _key in breakpoints) {
+    const key = _key as keyof typeof vars.breakpoints;
     const style = styles[key];
 
     if (style) {
-      mediaStyle[`screen and (min-width: ${BREAK_POINT[key]}px)`] = style;
+      mediaStyle[`screen and (min-width: ${breakpoints[key]}px)`] = style;
     }
   }
 

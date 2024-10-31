@@ -9,6 +9,7 @@ import { Session } from "next-auth";
 import { TBW_001000_Q03 } from "@/type/api";
 import Badge from "./Badge";
 import { NavLink } from "@mantine/core";
+import { link } from "./sidebar.css";
 
 interface SidebarMenuItemProps {
   icon?: React.ReactNode;
@@ -46,7 +47,9 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
 
   return (
     <NavLink
-      className={classNames(isActive && "active")}
+      classNames={{
+        root: link,
+      }}
       active={isActive}
       component={Link}
       href={href}

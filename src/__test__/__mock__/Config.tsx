@@ -4,8 +4,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import App from "@/app/_component/config/App";
 import ToastBox from "@/app/_component/config/ToastBox";
-import Hotkeys from "@/app/_component/config/Hotkeys";
 import ModalContainer from "@/app/_component/modal/ModalContainer";
+import { MantineProvider } from "@mantine/core";
+import { theme } from "@/style/theme";
 
 const createTestQueryClient = () =>
   new QueryClient({
@@ -26,13 +27,13 @@ export function renderWithClient(ui: React.ReactElement, initialProps: InitialPr
   const testQueryClient = createTestQueryClient();
   const { rerender, ...result } = render(
     <App {...initialProps}>
-      <Hotkeys>
-        <QueryClientProvider client={testQueryClient}>
+      <QueryClientProvider client={testQueryClient}>
+        <MantineProvider theme={theme}>
           {ui}
           <ModalContainer />
           <ToastBox />
-        </QueryClientProvider>
-      </Hotkeys>
+        </MantineProvider>
+      </QueryClientProvider>
     </App>,
   );
   return {

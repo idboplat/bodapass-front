@@ -18,7 +18,10 @@ export default function Category({ path, session }: CategoryProps) {
   return (
     <NavLink
       label={path.category}
-      className={category}
+      classNames={{
+        root: category,
+      }}
+      // className={classNames(category, module.category)}
       opened={isShow}
       onClick={toggleShow}
       childrenOffset="xs"

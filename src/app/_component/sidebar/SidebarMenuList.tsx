@@ -1,6 +1,5 @@
 import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
 import Category from "./Category";
-// import { menuList } from "./sidebar.css";
 import { Session } from "next-auth";
 import { Stack } from "@mantine/core";
 

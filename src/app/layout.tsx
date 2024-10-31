@@ -1,6 +1,5 @@
 import "@/style/global.scss";
 import "@/style/theme.scss";
-import "@/style/global.css";
 
 import type { Viewport } from "next";
 import { PropsWithChildren } from "react";

@@ -45,6 +45,7 @@ export const menuList = style({
 // });
 
 export const category = style({
+  color: "orange",
   fontWeight: 500,
   transition: "color 0.2s ease, background-color 0.2s ease",
   selectors: {
@@ -54,6 +55,23 @@ export const category = style({
     "&[data-active='true']": {
       // color: "red",
       backgroundColor: "unset",
+    },
+  },
+});
+
+export const link = style({
+  color: "red",
+  selectors: {
+    "&::after": {
+      display: "block",
+      content: "",
+      borderBottom: `2px solid ${vars.colors.blue[8]}`,
+      transform: "scaleX(0)",
+      transformOrigin: "0% 50%",
+      transition: "transform 0.2s ease-in-out",
+    },
+    "&:hover::after": {
+      transform: "scaleX(1)",
     },
   },
 });
