@@ -12,7 +12,7 @@ import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useOpenOrderStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;

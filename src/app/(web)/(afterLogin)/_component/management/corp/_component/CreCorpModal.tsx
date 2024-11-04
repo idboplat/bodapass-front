@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
@@ -18,6 +18,7 @@ import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { selectBoxWrap } from "./nav.css";
 import LabelSelect from "@/app/_component/select/LabelSelect";
 import { checkCorpNm } from "@/app/_lib/regexp";
+import classNames from "classnames";
 
 const ID = "creCorpModal";
 
@@ -101,11 +102,11 @@ export default function CreCorpModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={css.modalCenterContent}>
+      <form onSubmit={handleSubmit} className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>회사 생성</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>회사 생성</h3>
           </div>
           <div className={inputBox}>
             <div className={selectBoxWrap}>
@@ -152,7 +153,7 @@ export default function CreCorpModal({
             <DefaultInput id={CreCorpInput.adminPw} onChange={onChangeInput} type={"password"} />
           </div>
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
             회사 생성
           </button>

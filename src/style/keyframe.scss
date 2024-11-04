@@ -1,11 +1,4 @@
-@mixin keyframe($name) {
-  @keyframes #{$name} {
-    @content;
-  }
-}
-
-// fadeIn 애니메이션
-@include keyframe(fadeIn) {
+@keyframes fadeIn {
   from {
     opacity: 0;
     visibility: hidden;
@@ -31,18 +24,6 @@
   0% {
     opacity: 0;
     transform: translateY(-4px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// openModal 애니메이션
-@keyframes openModal {
-  0% {
-    opacity: 0;
-    transform: translateY(28px);
   }
   100% {
     opacity: 1;

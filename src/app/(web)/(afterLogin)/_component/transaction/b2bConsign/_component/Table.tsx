@@ -1,5 +1,5 @@
 "use client";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { MVIO_RMRK_ITEM, MVIO_TP_ITEM, RGST_STAT_ITEM, findEntity } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime, stringToDate } from "@/app/_lib/regexp";

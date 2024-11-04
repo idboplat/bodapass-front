@@ -1,17 +1,12 @@
 import Modal from "@/app/_component/modal/Modal";
 import { ModalProps } from "@/app/_lib/modalStore";
-import {
-  modalBtnBox,
-  modalCenterContent,
-  modalHeader,
-  modalTitle,
-  modalContent,
-} from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { modalDefaultBtn, modalSaveBtn } from "@/app/_component/modal/modalBtn.css";
 import { descBox, textBox } from "./creCorpAlertModal.css";
 import { useState } from "react";
 import { toast } from "sonner";
 import CheckBox from "@/app/_component/input/CheckBox";
+import classNames from "classnames";
 
 const ID = "creCorpAlertModal";
 
@@ -32,12 +27,12 @@ export default function CreCorpAlertModal({
   };
   return (
     <Modal id={ID}>
-      <div className={modalCenterContent} style={{ width: 400 }}>
+      <div className={classNames(module.content, "ceneter")} style={{ width: 400 }}>
         <div>
-          <div className={modalHeader}>
-            <h3 className={modalTitle}>회사 생성</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>회사 생성</h3>
           </div>
-          <div className={modalContent}>
+          <div className={module.stack}>
             <div className={textBox}>
               <p>{`관리자 ID : ${id}`}</p>
             </div>
@@ -50,7 +45,7 @@ export default function CreCorpAlertModal({
             </div>
           </div>
         </div>
-        <div className={modalBtnBox}>
+        <div className={module.btnBox}>
           <button className={modalDefaultBtn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
           </button>

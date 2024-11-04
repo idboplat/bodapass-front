@@ -8,8 +8,9 @@ import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import ApproveView from "./ApproveView";
+import classNames from "classnames";
 
 const ID = "cancelModal";
 
@@ -52,21 +53,26 @@ export default function CancelModal({
     },
   });
 
+  const onClick = () => {
+    if (mutation.isPending) return;
+    mutation.mutate();
+  };
+
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={css.modalCenterContent}>
+      <div className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>취소요청</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>취소요청</h3>
           </div>
           <ApproveView data={data} />
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button
             className={modalDenyBtn}
             type="button"
-            onClick={() => mutation.mutate()}
+            onClick={onClick}
             disabled={mutation.isPending}
           >
             취소

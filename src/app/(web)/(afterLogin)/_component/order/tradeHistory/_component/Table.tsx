@@ -1,5 +1,5 @@
 "use client";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { AKPRC_TP, BYSL_TP_ITEM, findEntity, ORDR_PRC_TP } from "@/app/_const/tp";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import callTms from "@/model/callTms";

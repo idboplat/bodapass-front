@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { useCorpStore } from "../_lib/store";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 
 const PAGE_SIZE = 20;
 

@@ -11,7 +11,7 @@ import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import classNames from "classnames";
 import { AgGridReact } from "ag-grid-react";
 import { tableWrap } from "./table.css";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 
 const PAGE_SIZE = 20;
 

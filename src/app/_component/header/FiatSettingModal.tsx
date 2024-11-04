@@ -1,9 +1,10 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "../modal/Modal";
-import * as css from "../modal/modal.css";
+import module from "../modal/Modal.module.scss";
 import { modalDefaultBtn } from "../modal/modalBtn.css";
 import ModalCloseBtn from "../modal/ModalCloseBtn";
 import { item, list, button } from "./fiatSettingModal.css";
+import classNames from "classnames";
 
 export const ID = "fiatSettingModal";
 
@@ -18,11 +19,11 @@ export default function FiatSettingModal({
   };
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={css.modalCenterContent}>
+      <div className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>화폐 단위를 선택하세요</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>화폐 단위를 선택하세요</h3>
           </div>
           <div>
             <ul className={list}>
@@ -34,7 +35,7 @@ export default function FiatSettingModal({
             </ul>
           </div>
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button className={modalDefaultBtn} type="button" onClick={onClose}>
             확인
           </button>

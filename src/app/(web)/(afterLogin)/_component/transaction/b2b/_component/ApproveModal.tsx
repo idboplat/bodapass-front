@@ -6,7 +6,8 @@ import { RowData } from "../_const/row.type";
 import ApproveBtn from "./ApproveBtn";
 import ApproveView from "./ApproveView";
 import DenyBtn from "./DenyBtn";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
+import classNames from "classnames";
 
 const ID = "approveModal";
 
@@ -23,15 +24,15 @@ export default function ApproveModal({
 }: ModalProps<ApproveModalProps>) {
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={css.modalCenterContent}>
+      <div className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>요청승인</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>요청승인</h3>
           </div>
           <ApproveView data={data} />
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <DenyBtn session={session} data={data} onSuccess={onSuccess} />
           <ApproveBtn session={session} data={data} onSuccess={onSuccess} />
         </div>

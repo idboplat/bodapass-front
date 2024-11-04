@@ -2,7 +2,7 @@
 import callTms from "@/model/callTms";
 import { TBW_000001_Q01 } from "@/type/api";
 import { useQuery } from "@tanstack/react-query";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";

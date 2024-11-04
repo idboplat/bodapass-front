@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { modalDefaultBtn, modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
@@ -12,6 +12,7 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSetTransactionCorpStore } from "../_lib/store";
+import classNames from "classnames";
 
 const ID = "reqModal";
 
@@ -72,15 +73,15 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={css.modalCenterContent}>
+      <div className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>USDL 신청</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>USDL 신청</h3>
           </div>
           <div>
-            <div className={css.inputBox}>
-              <label htmlFor={ReqModalInput.instCd} className={css.label}>
+            <div className={module.inputBox}>
+              <label htmlFor={ReqModalInput.instCd} className={module.label}>
                 종목 코드
               </label>
               <DefaultInput
@@ -92,8 +93,8 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
                 // onReset={() => setInstCd("")}
               />
             </div>
-            <div className={css.inputBox}>
-              <label htmlFor={ReqModalInput.amount} className={css.label}>
+            <div className={module.inputBox}>
+              <label htmlFor={ReqModalInput.amount} className={module.label}>
                 신청 수량
               </label>
               <DefaultInput
@@ -105,7 +106,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
             </div>
           </div>
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button
             className={modalDefaultBtn}
             type="button"

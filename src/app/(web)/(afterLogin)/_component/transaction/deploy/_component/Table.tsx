@@ -1,5 +1,5 @@
 "use client";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { dateToString } from "@/app/_lib/dateFormatter";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";

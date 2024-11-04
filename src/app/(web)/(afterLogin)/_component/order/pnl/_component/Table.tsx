@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { useMemo, useState } from "react";
 import { usePnlStore } from "../_lib/store";
 import { tableWrap } from "./table.css";
-import PagePagination from "@/app/_component/pagination/PagePagination";
+import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 import { COLUMN_SIZE, COLUMN_STYLE } from "@/app/_const/cols";
 import { ColDef } from "ag-grid-community";

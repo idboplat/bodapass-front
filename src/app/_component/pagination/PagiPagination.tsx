@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { wrap } from "./pagePagination.css";
+import module from "./PagiPagination.module.scss";
 import {
   MdOutlineKeyboardDoubleArrowRight as ArrowLast,
   MdOutlineKeyboardDoubleArrowLeft as ArrowFirst,
@@ -55,7 +55,7 @@ export default function PagePagination({
   const disabledLast = currentPage >= maxPage;
 
   return (
-    <div className={wrap}>
+    <div className={module.wrap}>
       <button onClick={onClickFirst} disabled={disabledFirst}>
         <ArrowFirst size={24} />
       </button>

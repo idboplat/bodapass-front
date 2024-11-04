@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import { Session } from "next-auth";
 import { toast } from "sonner";
 import { useSetCoinStore } from "../_lib/store";
 import { useState } from "react";
+import classNames from "classnames";
 
 const ID = "creCoinModal";
 
@@ -87,11 +88,15 @@ export default function CreCoinModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={css.modalCenterContent} style={{ width: 450 }}>
+      <form
+        onSubmit={handleSubmit}
+        className={classNames(module.content, "center")}
+        style={{ width: 450 }}
+      >
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>USDL 발행</h3>
+          <div className={module.header}>
+            <h3 className={module.titled}>USDL 발행</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreCoinInput.instCd}>
@@ -133,7 +138,7 @@ export default function CreCoinModal({
             <DefaultInput id={CreCoinInput.adminPw} onChange={onChangeInput} type="password" />
           </div>
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
             발행
           </button>

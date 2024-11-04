@@ -1,3 +1,7 @@
+/* 
+ * 해당 파일은 @mixin,  @function을 정의한 파일입니다.
+ */
+
 @use "sass:math";
 
 @function rem($value) {
@@ -30,13 +34,13 @@
   }
 }
 
-@mixin smaller-than($breakpoint) {
+@mixin min-width($breakpoint) {
   @media (max-width: $breakpoint) {
     @content;
   }
 }
 
-@mixin larger-than($breakpoint) {
+@mixin max-width($breakpoint) {
   @media (min-width: $breakpoint) {
     @content;
   }
@@ -53,4 +57,16 @@
   [dir="ltr"] & {
     @content;
   }
+}
+
+@mixin text-line($line-count, $line-height) {
+  overflow: hidden;
+  white-space: pre-line;
+  // text-overflow: ellipsis;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-count;
+  line-height: $line-height;
+  height: #{$line-height * $line-count}em;
 }

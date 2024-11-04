@@ -2,7 +2,7 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import * as css from "@/app/_component/modal/modal.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useSetAdminStore } from "../_lib/store";
 import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
 import { checkEnNumSp } from "@/app/_lib/regexp";
+import classNames from "classnames";
 
 const ID = "creEmplModal";
 
@@ -104,11 +105,11 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={css.modalCenterContent}>
+      <form onSubmit={handleSubmit} className={classNames(module.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.modalHeader}>
-            <h3 className={css.modalTitle}>관리자 생성</h3>
+          <div className={module.header}>
+            <h3 className={module.title}>관리자 생성</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.extnUserId}>
@@ -153,7 +154,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             <DefaultInput id={CreEmplInput.adminPw} type="password" />
           </div>
         </div>
-        <div className={css.modalBtnBox}>
+        <div className={module.btnBox}>
           <button
             className={modalDefaultBtn}
             type="submit"
