@@ -1,7 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
-import classNames from "classnames";
-// import { menuItem } from "./sidebar.css";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
@@ -9,7 +6,8 @@ import { Session } from "next-auth";
 import { TBW_001000_Q03 } from "@/type/api";
 import Badge from "./Badge";
 import { NavLink } from "@mantine/core";
-import { link } from "./sidebar.css";
+import module from "./Sidebar.module.scss";
+import { usePathname } from "next/navigation";
 
 interface SidebarMenuItemProps {
   icon?: React.ReactNode;
@@ -48,14 +46,23 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
   return (
     <NavLink
       classNames={{
-        root: link,
+        root: module.link,
+      }}
+      styles={{
+        label: {
+          position: "relative",
+        },
       }}
       active={isActive}
       component={Link}
       href={href}
-      label={text}
+      label={
+        <>
+          {text}
+          {data?.[text] && <Badge />}
+        </>
+      }
       leftSection={icon}
-      rightSection={data?.[text] && <Badge />}
     />
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import OutsideClickHandler from "react-outside-click-handler";
-import { absolute, arrow, item, list, selected, wrap } from "./textSelect.css";
+import module from "./TextSelect.module.scss";
 import classNames from "classnames";
 
 interface TextSelectProps {
@@ -38,19 +38,19 @@ export default function TextSelect({
 
   return (
     <OutsideClickHandler onOutsideClick={onClose}>
-      <div className={wrap} style={style}>
-        <div className={selected} onClick={onToggle}>
+      <div className={module.wrap} style={style}>
+        <div className={module.selected} onClick={onToggle}>
           <span>{selectedItem}</span>
           <IoMdArrowDropdown
-            className={classNames(arrow, isShow && "show")}
+            className={classNames(module.arrow, isShow && "show")}
             size={14}
             color="#919492"
           />
         </div>
-        <div className={classNames(absolute, isShow && "show")}>
-          <ul className={list} onClick={handleChange}>
+        <div className={classNames(module.absolute, isShow && "show")}>
+          <ul className={module.list} onClick={handleChange}>
             {items.map((text) => (
-              <li key={text} className={item} data-value={text}>
+              <li key={text} className={module.item} data-value={text}>
                 {text}
               </li>
             ))}

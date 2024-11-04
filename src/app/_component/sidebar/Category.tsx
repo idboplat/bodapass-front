@@ -3,7 +3,7 @@ import SidebarMenuItem from "./SidebarMenuItem";
 import { useState } from "react";
 import { Session } from "next-auth";
 import { NavLink } from "@mantine/core";
-import { category } from "./sidebar.css";
+import module from "./Sidebar.module.scss";
 
 interface CategoryProps {
   session: Session;
@@ -19,9 +19,8 @@ export default function Category({ path, session }: CategoryProps) {
     <NavLink
       label={path.category}
       classNames={{
-        root: category,
+        root: module.category,
       }}
-      // className={classNames(category, module.category)}
       opened={isShow}
       onClick={toggleShow}
       childrenOffset="xs"

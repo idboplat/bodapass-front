@@ -1,9 +1,5 @@
 "use client";
-import { useApp } from "@/app/_lib/appStore";
 import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
-import classNames from "classnames";
-import { useHotkeys } from "react-hotkeys-hook";
-import { useStore } from "zustand";
 import SidebarLogoutBtn from "./SidebarLogoutBtn";
 import SidebarMenuList from "./SidebarMenuList";
 import { Session } from "next-auth";

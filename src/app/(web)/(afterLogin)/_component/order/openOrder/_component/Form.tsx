@@ -1,7 +1,7 @@
 import { navBtn } from "@/app/_component/btn/btn.css";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
-import SelectLabel from "@/app/_component/select/SelectLabel";
+import LabelSelect from "@/app/_component/select/LabelSelect";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
@@ -81,7 +81,7 @@ export default function Form({ session }: FormProps) {
           />
         </div>
         <div className={selectBoxWrap}>
-          <SelectLabel>매수매도 구분</SelectLabel>
+          <LabelSelect>매수매도 구분</LabelSelect>
           <TextSelect
             value={byslTp}
             onChange={onChangeSelect}

@@ -1,0 +1,51 @@
+@mixin keyframe($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// fadeIn 애니메이션
+@include keyframe(fadeIn) {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// placeholderShimmer 애니메이션
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+// openMenu 애니메이션
+@keyframes openMenu {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// openModal 애니메이션
+@keyframes openModal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

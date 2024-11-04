@@ -16,7 +16,7 @@ import { useSetCorpStore } from "../_lib/store";
 import CreCorpAlertModal from "./CreCorpAlertModal";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
 import { selectBoxWrap } from "./nav.css";
-import SelectLabel from "@/app/_component/select/SelectLabel";
+import LabelSelect from "@/app/_component/select/LabelSelect";
 import { checkCorpNm } from "@/app/_lib/regexp";
 
 const ID = "creCorpModal";
@@ -109,7 +109,7 @@ export default function CreCorpModal({
           </div>
           <div className={inputBox}>
             <div className={selectBoxWrap}>
-              <SelectLabel>회사 유형</SelectLabel>
+              <LabelSelect>회사 유형</LabelSelect>
               <TextSelect
                 value={corpGrpTp}
                 onChange={onChangeSelect}
