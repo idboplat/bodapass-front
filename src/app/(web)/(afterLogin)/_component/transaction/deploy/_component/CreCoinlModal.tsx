@@ -2,7 +2,6 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import module from "@/app/_component/modal/Modal.module.scss";
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { inputBox, label } from "./creCoinModal.css";
@@ -139,7 +138,7 @@ export default function CreCoinModal({
           </div>
         </div>
         <div className={module.btnBox}>
-          <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
+          <button className={module.btn} type="submit" disabled={mutation.isPending}>
             발행
           </button>
         </div>

@@ -1,6 +1,5 @@
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import { modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000100_P02 } from "@/type/api";
@@ -65,7 +64,7 @@ export default function CancelModal({
         </div>
         <div className={module.btnBox}>
           <button
-            className={modalDenyBtn}
+            className={classNames(module.btn, "deny")}
             type="button"
             onClick={() => mutation.mutate()}
             disabled={mutation.isPending}

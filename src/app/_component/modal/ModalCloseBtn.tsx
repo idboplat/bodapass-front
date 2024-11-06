@@ -1,9 +1,10 @@
 import { IoCloseOutline } from "react-icons/io5";
-import { button } from "./modalCloseBtn.css";
+import module from "./ModalCloseBtn.module.scss";
+import classNames from "classnames";
 
 export default function ModalCloseBtn({ onClose }: { onClose: () => void }) {
   return (
-    <button className={button} type="button" onClick={onClose}>
+    <button className={classNames(module.button, "active")} type="button" onClick={onClose}>
       <IoCloseOutline size={28} />
     </button>
   );

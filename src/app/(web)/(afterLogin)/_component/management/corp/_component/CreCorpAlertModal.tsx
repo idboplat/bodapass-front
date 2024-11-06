@@ -1,7 +1,6 @@
 import Modal from "@/app/_component/modal/Modal";
 import { ModalProps } from "@/app/_lib/modalStore";
 import module from "@/app/_component/modal/Modal.module.scss";
-import { modalDefaultBtn, modalSaveBtn } from "@/app/_component/modal/modalBtn.css";
 import { descBox, textBox } from "./creCorpAlertModal.css";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -46,10 +45,10 @@ export default function CreCorpAlertModal({
           </div>
         </div>
         <div className={module.btnBox}>
-          <button className={modalDefaultBtn} type="button" onClick={onClose} disabled={!isCheck}>
+          <button className={module.btn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
           </button>
-          <button className={modalSaveBtn} type="button" onClick={onClickCopy}>
+          <button className={classNames(module.btn, "save")} type="button" onClick={onClickCopy}>
             복사
           </button>
         </div>

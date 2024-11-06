@@ -1,9 +1,9 @@
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import callTms from "@/model/callTms";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
+import module from "@/app/_component/modal/Modal.module.scss";
 
 interface ApproveBtnProps {
   session: Session;
@@ -13,7 +13,6 @@ interface ApproveBtnProps {
 
 export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps) {
   const muation = useMutation({
-    mutationKey: ["TBW_000100_P04"],
     mutationFn: async () => {
       const TBW_000100_P04Res = await callTms({
         svcId: "TBW_000100_P04",
@@ -33,13 +32,13 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
     },
   });
 
+  const onClick = () => {
+    if (muation.isPending) return;
+    muation.mutate();
+  };
+
   return (
-    <button
-      className={modalDefaultBtn}
-      type="button"
-      onClick={() => muation.mutate()}
-      disabled={muation.isPending}
-    >
+    <button className={module.btn} type="button" onClick={onClick} disabled={muation.isPending}>
       승인
     </button>
   );

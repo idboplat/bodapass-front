@@ -1,7 +1,6 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
 import module from "./Modal.module.scss";
-import { modalCancelBtn, modalDefaultBtn } from "./modalBtn.css";
 import classNames from "classnames";
 
 const ID = "confirmModal";
@@ -27,10 +26,10 @@ export default function ConfirmModal({
           <p>{content}</p>
         </div>
         <div className={module.btnBox}>
-          <button className={modalCancelBtn} type="button" onClick={onClose}>
+          <button className={classNames(module.btn, "cancel")} type="button" onClick={onClose}>
             취소
           </button>
-          <button className={modalDefaultBtn} type="button" onClick={() => onSuccess(true)}>
+          <button className={module.btn} type="button" onClick={() => onSuccess(true)}>
             확인
           </button>
         </div>

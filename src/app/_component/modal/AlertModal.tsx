@@ -1,7 +1,6 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
 import module from "./Modal.module.scss";
-import { modalDefaultBtn } from "./modalBtn.css";
 import classNames from "classnames";
 
 export const ID = "alertModal";
@@ -26,7 +25,7 @@ export default function AlertModal({
           <p>{content}</p>
         </div>
         <div className={module.btnBox}>
-          <button className={modalDefaultBtn} type="button" onClick={onClose}>
+          <button className={module.btn} type="button" onClick={onClose}>
             확인
           </button>
         </div>

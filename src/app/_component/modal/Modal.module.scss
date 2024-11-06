@@ -44,17 +44,6 @@
   font-weight: 500;
 }
 
-.btnBox {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 14px;
-  margin-top: 14px;
-
-  & > button {
-    width: 100px;
-  }
-}
-
 .inputBox {
   margin-bottom: 14px;
 }
@@ -67,4 +56,62 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.btnBox {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 14px;
+  margin-top: 14px;
+
+  & > button {
+    width: 100px;
+  }
+}
+
+.btn {
+  // 기본 버튼
+  background-color: var(--mantine-color-blue-5);
+  width: 100px;
+  padding: 7px 0px;
+  border-radius: 3px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #fff;
+
+  &:hover {
+    background-color: var(--mantine-color-blue-7);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  :global(.cancel) {
+    // 취소 버튼
+    background-color: var(--mantine-color-gray-5);
+
+    &:hover {
+      background-color: var(--mantine-color-gray-7);
+    }
+  }
+
+  :global(.deny) {
+    // 거부 버튼
+    background-color: #e5383b;
+
+    &:hover {
+      background-color: #ed4043;
+    }
+  }
+
+  :global(.save) {
+    // 저장 버튼
+    background-color: #028a0f;
+
+    &:hover {
+      background-color: #0f971c;
+    }
+  }
 }

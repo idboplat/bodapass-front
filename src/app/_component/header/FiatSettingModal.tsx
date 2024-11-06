@@ -1,7 +1,6 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "../modal/Modal";
 import module from "../modal/Modal.module.scss";
-import { modalDefaultBtn } from "../modal/modalBtn.css";
 import ModalCloseBtn from "../modal/ModalCloseBtn";
 import { item, list, button } from "./fiatSettingModal.css";
 import classNames from "classnames";
@@ -17,6 +16,7 @@ export default function FiatSettingModal({
   const onClick = (value: string) => {
     onSuccess(value);
   };
+
   return (
     <Modal id={ID} onClose={onClose}>
       <div className={classNames(module.content, "center")}>
@@ -36,7 +36,7 @@ export default function FiatSettingModal({
           </div>
         </div>
         <div className={module.btnBox}>
-          <button className={modalDefaultBtn} type="button" onClick={onClose}>
+          <button className={module.btn} type="button" onClick={onClose}>
             확인
           </button>
         </div>

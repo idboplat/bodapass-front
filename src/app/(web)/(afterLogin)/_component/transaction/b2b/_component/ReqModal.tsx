@@ -2,7 +2,6 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import module from "@/app/_component/modal/Modal.module.scss";
-import { modalDefaultBtn, modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
@@ -108,7 +107,7 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
         </div>
         <div className={module.btnBox}>
           <button
-            className={modalDefaultBtn}
+            className={module.btn}
             type="button"
             onClick={() => muation.mutate({ amount, instCd })}
             disabled={muation.isPending}

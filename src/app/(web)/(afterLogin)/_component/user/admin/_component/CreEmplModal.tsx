@@ -3,7 +3,6 @@ import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import module from "@/app/_component/modal/Modal.module.scss";
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000010_P01 } from "@/type/api";
@@ -156,7 +155,7 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
         </div>
         <div className={module.btnBox}>
           <button
-            className={modalDefaultBtn}
+            className={module.btn}
             type="submit"
             disabled={validationPw === false || mutation.isPending}
           >

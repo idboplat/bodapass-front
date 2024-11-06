@@ -2,7 +2,6 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import module from "@/app/_component/modal/Modal.module.scss";
-import { modalDefaultBtn } from "@/app/_component/modal/modalBtn.css";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
@@ -154,7 +153,7 @@ export default function CreCorpModal({
           </div>
         </div>
         <div className={module.btnBox}>
-          <button className={modalDefaultBtn} type="submit" disabled={mutation.isPending}>
+          <button className={module.btn} type="submit" disabled={mutation.isPending}>
             회사 생성
           </button>
         </div>
