@@ -1,4 +1,4 @@
-import { navBtn } from "@/app/_component/btn/btn.css";
+import module from "@/app/_component/btn/Btn.module.scss";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import LabelSelect from "@/app/_component/select/LabelSelect";
@@ -93,7 +93,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button type="submit" className={navBtn} disabled={isFetching > 0}>
+        <button type="submit" className={module.navBtn} disabled={isFetching > 0}>
           조회
         </button>
       </div>

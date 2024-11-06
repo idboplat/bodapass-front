@@ -1,0 +1,51 @@
+.btn {
+  background-color: var(--mantine-color-blue-5);
+  padding: 3px 7px;
+  border-radius: 3px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #fff;
+
+  &:hover {
+    background-color: var(--mantine-color-blue-7);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.navBtn {
+  height: 36px;
+  min-width: 80px;
+  background-color: #759cff;
+  padding: 3px 7px;
+  border-radius: 3px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: center;
+  color: #fff;
+
+  &:hover {
+    background-color: #5c83e6;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.dateBtn {
+  min-width: 70px;
+  background-color: #efefef;
+  padding: 3px 7px;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #d6d6d6;
+  }
+}

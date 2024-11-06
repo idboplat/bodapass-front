@@ -1,5 +1,4 @@
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { button } from "./eyeToggleBtn.css";
 
 interface EyeToggleBtnProps {
   value: boolean;
@@ -13,7 +12,7 @@ export default function EyeToggleBtn({ value, onClick }: EyeToggleBtnProps) {
   };
 
   return (
-    <button className={button} type="button" tabIndex={-1} onClick={onClickBtn}>
+    <button type="button" tabIndex={-1} onClick={onClickBtn}>
       {value ? (
         <AiFillEye size="17px" color="#919492" />
       ) : (

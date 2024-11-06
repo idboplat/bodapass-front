@@ -1,7 +1,7 @@
 import { navWrap, btnWrap, inputWrap } from "./nav.css";
 import { useSetCoinStore } from "../_lib/store";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import { navBtn } from "@/app/_component/btn/btn.css";
+import module from "@/app/_component/btn/Btn.module.scss";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import CreCoinModal from "./CreCoinlModal";
 import { useState } from "react";
@@ -52,12 +52,12 @@ export default function Form({ session }: FormProps) {
       <BalanceViewer session={session} />
       <div className={inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
-        <button className={navBtn} type="submit" disabled={isFetching > 0}>
+        <button className={module.navBtn} type="submit" disabled={isFetching > 0}>
           내역 조회
         </button>
       </div>
       <div className={btnWrap}>
-        <button className={navBtn} onClick={openModal} type="button">
+        <button className={module.navBtn} onClick={openModal} type="button">
           USDL 발행
         </button>
       </div>

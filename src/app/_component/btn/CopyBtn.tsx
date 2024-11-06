@@ -1,6 +1,6 @@
 import { HiOutlineClipboardDocument, HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 import { toast } from "sonner";
-import { btn } from "./copyBtn.css";
+import module from "./CopyBtn.module.scss";
 
 interface CopyButtonProps {
   /** 복사할 컨텐츠 */
@@ -28,7 +28,7 @@ export default function CopyButton({
   };
 
   return (
-    <button className={btn} onClick={handleCopy} style={style} disabled={disabled}>
+    <button className={module.btn} onClick={handleCopy} style={style} disabled={disabled}>
       {check ? (
         <HiOutlineClipboardDocumentCheck size={size} />
       ) : (

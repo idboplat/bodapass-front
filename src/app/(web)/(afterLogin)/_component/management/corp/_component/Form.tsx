@@ -1,4 +1,4 @@
-import { navBtn } from "@/app/_component/btn/btn.css";
+import module from "@/app/_component/btn/Btn.module.scss";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -92,7 +92,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button type="submit" className={navBtn} disabled={isFetching > 0}>
+        <button type="submit" className={module.navBtn} disabled={isFetching > 0}>
           조회
         </button>
       </div>
@@ -109,7 +109,7 @@ export default function Form({ session }: FormProps) {
         </div>
       </div> */}
       <div className={btnWrap}>
-        <button type="button" onClick={openModal} className={navBtn}>
+        <button type="button" onClick={openModal} className={module.navBtn}>
           회사 생성
         </button>
       </div>

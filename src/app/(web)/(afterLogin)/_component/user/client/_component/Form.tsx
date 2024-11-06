@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
 import LabelInput from "@/app/_component/input/LabelInput";
-import { navBtn } from "@/app/_component/btn/btn.css";
+import module from "@/app/_component/btn/Btn.module.scss";
 import { useState } from "react";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { useSetClientStore } from "../_lib/store";
@@ -54,7 +54,7 @@ export default function Form({ session }: FormProps) {
               onReset={() => setExtnUserId(() => "")}
             />
           </div>
-          <button type="submit" className={navBtn} disabled={isFetching > 0}>
+          <button type="submit" className={module.navBtn} disabled={isFetching > 0}>
             조회
           </button>
         </div>
