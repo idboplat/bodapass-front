@@ -39,6 +39,19 @@
   }
 }
 
+.categoryBox {
+  overflow-y: auto;
+  flex: 1;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+}
+
+.logoutBtnBox {
+  @extend %flex-center;
+}
+
 .logoutBtn {
   color: #9b9b9b;
   transition: color 0.2s ease;

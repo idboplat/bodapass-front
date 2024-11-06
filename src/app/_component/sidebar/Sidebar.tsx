@@ -1,9 +1,10 @@
 "use client";
 import { ClientPath } from "@web/(afterLogin)/_lib/getPage";
 import SidebarLogoutBtn from "./SidebarLogoutBtn";
-import SidebarMenuList from "./SidebarMenuList";
 import { Session } from "next-auth";
 import { AppShellNavbar, Center } from "@mantine/core";
+import module from "./Sidebar.module.scss";
+import Category from "./Category";
 
 interface SidebarProps {
   pathList: ClientPath[];
@@ -12,10 +13,14 @@ interface SidebarProps {
 export default function Sidebar({ pathList, session }: SidebarProps) {
   return (
     <AppShellNavbar p="xs">
-      <SidebarMenuList pathList={pathList} session={session} />
-      <Center>
+      <div className={module.categoryBox}>
+        {pathList.map((path) => {
+          return <Category key={path.category} path={path} session={session} />;
+        })}
+      </div>
+      <div className={module.logoutBtnBox}>
         <SidebarLogoutBtn />
-      </Center>
+      </div>
     </AppShellNavbar>
   );
 }
