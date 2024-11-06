@@ -1,5 +1,5 @@
-import { loader } from "./loadingSpinner.css";
+import module from "./LoadingSpinner.module.scss";
 
 export default function LoadingSpinner() {
-  return <span className={loader}></span>;
+  return <span className={module.loader}></span>;
 }

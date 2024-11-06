@@ -1,0 +1,23 @@
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    backgroundposition: 468px 0;
+  }
+}
+
+.placeholder {
+  width: 100%;
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #e8e8e8 10%, #dddddd 18%, #e8e8e8 33%);
+  background-size: 800px 104px;
+  position: relative;
+  border-radius: 3px;
+  display: inline-block;
+  vertical-align: bottom;
+}
