@@ -1,4 +1,4 @@
-import { input, inputBox } from "./iconInput.css";
+import module from "./IconInput.module.scss";
 
 interface IconInputProps {
   id?: string;
@@ -24,12 +24,12 @@ export default function IcontInput({
   inputRef,
 }: IconInputProps) {
   return (
-    <div className={inputBox} style={style}>
+    <div className={module.inputBox} style={style}>
       {leftSide}
       <input
         id={id}
         type={type}
-        className={input}
+        className={module.input}
         value={value}
         onChange={onChange}
         placeholder={placeholder}

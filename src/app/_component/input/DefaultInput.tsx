@@ -1,7 +1,7 @@
 import { HTMLInputTypeAttribute, useState } from "react";
 import EyeToggleBtn from "../btn/EyeToggleBtn";
 import ResetButton from "../btn/ResetBtn";
-import { input, inputBox } from "./defaultInput.css";
+import module from "./DefaultInput.module.scss";
 import classNames from "classnames";
 
 interface DefaultInputProps {
@@ -34,11 +34,11 @@ export default function DefaultInput({
   const toggleShow = () => setShow((prev) => !prev);
 
   return (
-    <div className={classNames(inputBox, disabled && "disabled")} style={style}>
+    <div className={classNames(module.inputBox, disabled && "disabled")} style={style}>
       <input
         id={id}
         type={isShow ? "text" : type}
-        className={input}
+        className={module.input}
         value={value}
         onChange={onChange}
         placeholder={placeholder}

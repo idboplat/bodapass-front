@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ResetButton from "../btn/ResetBtn";
-import { input, inputBox } from "./underLineInput.css";
+import module from "./UnderLineInput.module.scss";
 import EyeToggleBtn from "../btn/EyeToggleBtn";
 
 interface UnderLineInputProps {
@@ -29,9 +29,9 @@ export default function UnderLineInput({
   const toggleShow = () => setShow((prev) => !prev);
 
   return (
-    <div className={inputBox} style={style}>
+    <div className={module.inputBox} style={style}>
       <input
-        className={input}
+        className={module.input}
         id={id}
         type={isShow ? "text" : type}
         value={value}

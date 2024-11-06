@@ -1,0 +1,42 @@
+.labelInputBox {
+  border: 1.25px solid #bfbfbf;
+  padding: 7px;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  &:global(.focus) > .label {
+    top: 0px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    background-color: #fff;
+  }
+
+  &:global(.focus) > .input::placeholder {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.label {
+  position: absolute;
+  display: inline-block;
+  transition: all 0.2s ease;
+  padding: 0px 2px;
+}
+
+.input {
+  width: 100%;
+
+  &::placeholder {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
