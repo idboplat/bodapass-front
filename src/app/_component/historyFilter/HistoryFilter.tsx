@@ -1,7 +1,7 @@
 import DateBtn from "../btn/DateBtn";
 import { DateType } from "../datepicker/DatePicker";
 import RangePicker from "../datepicker/RangePicker";
-import { btnWrap, historyFilterwrap } from "./historyFIlter.css";
+import module from "./HistoryFIlter.module.scss";
 import { addDays, addMonths, addWeeks } from "date-fns";
 
 interface HistoryFilterProps {
@@ -14,8 +14,8 @@ const today = new Date();
 
 export default function HistoryFilter({ date, onDateChange, onDateBtnClick }: HistoryFilterProps) {
   return (
-    <div className={historyFilterwrap}>
-      <div className={btnWrap}>
+    <div className={module.wrap}>
+      <div className={module.btnBox}>
         <DateBtn onClick={() => onDateBtnClick(addDays(today, -1))}>1Day</DateBtn>
         <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1))}>1Week</DateBtn>
         <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1))}>1Month</DateBtn>

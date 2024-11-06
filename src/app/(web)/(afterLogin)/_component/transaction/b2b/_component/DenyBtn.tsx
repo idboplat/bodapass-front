@@ -1,10 +1,11 @@
-import { modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import callTms from "@/model/callTms";
 import { TBW_000100_P03 } from "@/type/api";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
+import classNames from "classnames";
 
 interface DenyBtnProps {
   session: Session;
@@ -41,11 +42,16 @@ export default function DenyBtn({ session, data, onSuccess }: DenyBtnProps) {
     },
   });
 
+  const onClick = () => {
+    if (muation.isPending) return;
+    muation.mutate();
+  };
+
   return (
     <button
-      className={modalDenyBtn}
+      className={classNames(module.btn, "deny")}
       type="button"
-      onClick={() => muation.mutate()}
+      onClick={onClick}
       disabled={muation.isPending}
     >
       반려

@@ -2,7 +2,7 @@ import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "../modal/Modal";
 import module from "../modal/Modal.module.scss";
 import ModalCloseBtn from "../modal/ModalCloseBtn";
-import { item, list, button } from "./fiatSettingModal.css";
+import fiatSettingModalModule from "./FiatSettingModal.module.scss";
 import classNames from "classnames";
 
 export const ID = "fiatSettingModal";
@@ -26,9 +26,9 @@ export default function FiatSettingModal({
             <h3 className={module.title}>화폐 단위를 선택하세요</h3>
           </div>
           <div>
-            <ul className={list}>
-              <li className={item}>
-                <button className={button} onClick={() => onClick("KRW")}>
+            <ul className={fiatSettingModalModule.list}>
+              <li>
+                <button className={fiatSettingModalModule.btn} onClick={() => onClick("KRW")}>
                   KRW - 대한민국 원화
                 </button>
               </li>

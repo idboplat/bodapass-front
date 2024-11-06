@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import FiatButton from "./FiatButton";
+import FiatButton from "./FiatBtn";
 import { Session } from "next-auth";
 import { AppShellHeader, Flex, Text, UnstyledButton, useMantineTheme } from "@mantine/core";
 import { IconMenu2 } from "@tabler/icons-react";

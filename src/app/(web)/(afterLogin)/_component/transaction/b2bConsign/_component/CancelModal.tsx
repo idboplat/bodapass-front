@@ -1,6 +1,6 @@
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import { modalDenyBtn } from "@/app/_component/modal/modalBtn.css";
+import module from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000100_P02 } from "@/type/api";
@@ -8,7 +8,6 @@ import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
-import module from "@/app/_component/modal/Modal.module.scss";
 import ApproveView from "./ApproveView";
 import classNames from "classnames";
 
@@ -70,7 +69,7 @@ export default function CancelModal({
         </div>
         <div className={module.btnBox}>
           <button
-            className={modalDenyBtn}
+            className={classNames(module.btn, "deny")}
             type="button"
             onClick={onClick}
             disabled={mutation.isPending}
