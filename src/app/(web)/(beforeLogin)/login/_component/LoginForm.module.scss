@@ -1,0 +1,58 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputWrap {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  width: 60px;
+}
+
+.inputBox {
+  border: none;
+  display: flex;
+  border-bottom: 1px solid #000;
+}
+
+.input {
+  border: none;
+  width: 100%;
+  padding: 7px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btnBox {
+  @extend %flex-center;
+  margin-top: 40px;
+}
+
+.loginBtn {
+  width: 100%;
+  height: 40;
+  background-color: var(--mantine-color-blue-5);
+  padding: 7px 0px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: var(--mantine-color-blue-7);
+  }
+
+  &:disabled {
+    background-color: var(--mantine-color-blue-2);
+  }
+}

@@ -4,7 +4,7 @@ import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
 import module from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { inputBox, label } from "./creCoinModal.css";
+import CreCoinModalModule from "./CreCoinModal.module.scss";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import { TBW_000300_P01 } from "@/type/api";
 import callTms from "@/model/callTms";
@@ -97,8 +97,8 @@ export default function CreCoinModal({
           <div className={module.header}>
             <h3 className={module.titled}>USDL 발행</h3>
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreCoinInput.instCd}>
+          <div className={CreCoinModalModule.inputBox}>
+            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.instCd}>
               종목 코드
             </label>
             <DefaultInput
@@ -108,8 +108,8 @@ export default function CreCoinModal({
               disabled
             />
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreCoinInput.amount}>
+          <div className={CreCoinModalModule.inputBox}>
+            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.amount}>
               신규 발행할 USDL 수량 입력
             </label>
             <DefaultInput
@@ -130,8 +130,8 @@ export default function CreCoinModal({
               onReset={() => setOtp("")}
             />
           </div> */}
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreCoinInput.adminPw}>
+          <div className={CreCoinModalModule.inputBox}>
+            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.adminPw}>
               관리자 Password
             </label>
             <DefaultInput id={CreCoinInput.adminPw} onChange={onChangeInput} type="password" />

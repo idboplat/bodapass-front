@@ -11,7 +11,8 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useCoinStore } from "../_lib/store";
-import { tableWrap } from "./table.css";
+import module from "./Table.module.scss";
+
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
@@ -58,7 +59,7 @@ export default function Table({ session }: { session: Session }) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", module.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}

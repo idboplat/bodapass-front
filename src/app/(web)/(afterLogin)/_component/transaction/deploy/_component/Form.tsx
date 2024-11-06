@@ -1,4 +1,4 @@
-import { navWrap, btnWrap, inputWrap } from "./nav.css";
+import formModule from "./Form.module.scss";
 import { useSetCoinStore } from "../_lib/store";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import module from "@/app/_component/btn/Btn.module.scss";
@@ -48,15 +48,15 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
+    <form className={formModule.navWrap} onSubmit={onSubmit}>
       <BalanceViewer session={session} />
-      <div className={inputWrap}>
+      <div className={formModule.inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <button className={module.navBtn} type="submit" disabled={isFetching > 0}>
           내역 조회
         </button>
       </div>
-      <div className={btnWrap}>
+      <div className={formModule.btnWrap}>
         <button className={module.navBtn} onClick={openModal} type="button">
           USDL 발행
         </button>
