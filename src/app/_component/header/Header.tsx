@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import FiatButton from "./FiatButton";
 import { Session } from "next-auth";
-import { AppShellHeader, Burger, Flex, Text } from "@mantine/core";
+import { AppShellHeader, Flex, Text, UnstyledButton, useMantineTheme } from "@mantine/core";
+import { IconMenu2 } from "@tabler/icons-react";
 
 const SessionTime = dynamic(() => import("./SessionTime"), { ssr: false });
 
@@ -12,6 +13,8 @@ interface HeaderProps {
 }
 
 export default function Header({ session, toggleNav }: HeaderProps) {
+  const theme = useMantineTheme();
+
   return (
     <AppShellHeader>
       <Flex
@@ -25,7 +28,9 @@ export default function Header({ session, toggleNav }: HeaderProps) {
         })}
       >
         <Flex style={{ alignItems: "center" }}>
-          <Burger opened={false} onClick={toggleNav} size="sm" mr={4} />
+          <UnstyledButton mr={4} onClick={toggleNav}>
+            <IconMenu2 size={24} color={theme.colors.gray[5]} />
+          </UnstyledButton>
           <Text component="h1" style={{ fontSize: 16 }}>
             GLE Admin
           </Text>

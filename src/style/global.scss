@@ -34,11 +34,14 @@ ol {
   padding-left: 0;
 }
 
+html {
+  font-size: 14px; // root font-size
+}
+
 /* ----- Global styles ----- */
 body {
   margin: 0;
   padding: 0;
-  font-size: 16px;
   font-family: var(--mantine-font-family);
   font-size: var(--mantine-font-size-md);
   line-height: var(--mantine-line-height);
