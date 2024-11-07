@@ -9,7 +9,7 @@ import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
-import { btnBox, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import formModule from "./Form.module.scss";
 import ReqModal from "./ReqModal";
 import BalanceViewer from "@transaction/_component/BalanceViewer";
 import { addDays } from "date-fns";
@@ -60,9 +60,9 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
+    <form className={formModule.navWrap} onSubmit={onSubmit}>
       <BalanceViewer session={session} />
-      <div className={inputWrap}>
+      <div className={formModule.inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
           <LabelInput
@@ -74,7 +74,7 @@ export default function Form({ session }: FormProps) {
             style={{ width: 120 }}
           />
         </div>
-        <div className={selectBoxWrap}>
+        <div className={formModule.selectBoxWrap}>
           <LabelSelect>상태 구분</LabelSelect>
           <TextSelect
             value={rqstStatTp}
@@ -91,7 +91,7 @@ export default function Form({ session }: FormProps) {
           조회
         </button>
       </div>
-      <div className={btnBox}>
+      <div className={formModule.btnBox}>
         {/* <button type="button" onClick={openReqModal} className={navBtn}>
           구매 신청
         </button> */}

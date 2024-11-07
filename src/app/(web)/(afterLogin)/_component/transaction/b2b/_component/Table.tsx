@@ -14,7 +14,7 @@ import { useState } from "react";
 import { RowData } from "../_const/row.type";
 import { useTransactionCorpStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
-import { tableWrap } from "./table.css";
+import module from "./Table.module.scss";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 import { GRID_COLS } from "../_const/col";
 
@@ -97,7 +97,7 @@ export default function Table({ session }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", module.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}
