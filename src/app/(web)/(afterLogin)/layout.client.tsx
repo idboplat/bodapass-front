@@ -2,7 +2,7 @@
 import Header from "@/app/_component/header/Header";
 import Sidebar from "@/app/_component/sidebar/Sidebar";
 import { AppShell, AppShellMain } from "@mantine/core";
-import * as css from "./layout.css";
+import css from "./layout.module.scss";
 import { Session } from "next-auth";
 import { ClientPath } from "./_lib/getPage";
 import { useDisclosure, useHotkeys, useMediaQuery } from "@mantine/hooks";

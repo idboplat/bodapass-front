@@ -1,7 +1,7 @@
 import { getServerSessionWithOptions } from "@/model/nextAuth";
 import { redirect } from "next/navigation";
 import LoginForm from "./_component/LoginForm";
-import * as css from "./page.css";
+import css from "./page.module.scss";
 
 export default async function Page() {
   const session = await getServerSessionWithOptions();

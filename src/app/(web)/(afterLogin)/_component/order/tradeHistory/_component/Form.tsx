@@ -1,4 +1,4 @@
-import css from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import LabelSelect from "@/app/_component/select/LabelSelect";
@@ -6,7 +6,7 @@ import TextSelect from "@/app/_component/select/TextSelect";
 import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
 import { useSetOrderHistory } from "../_lib/store";
-import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import formCss from "./Form.module.scss";
 import { useIsFetching } from "@tanstack/react-query";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import { addDays } from "date-fns";
@@ -64,8 +64,8 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
-      <div className={inputWrap}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
+      <div className={formCss.inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
           <LabelInput
@@ -79,7 +79,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <div className={selectBoxWrap}>
+        <div className={formCss.selectBoxWrap}>
           <LabelSelect>매수매도 구분</LabelSelect>
           <TextSelect
             value={mvioTp}
@@ -92,11 +92,11 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button type="submit" className={css.navBtn} disabled={isFetching > 0}>
+        <button type="submit" className={btnCss.navBtn} disabled={isFetching > 0}>
           조회
         </button>
       </div>
-      <div className={btnWrap}></div>
+      <div className={formCss.btnWrap}></div>
     </form>
   );
 }

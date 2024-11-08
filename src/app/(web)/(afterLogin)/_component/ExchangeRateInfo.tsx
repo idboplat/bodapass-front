@@ -1,6 +1,6 @@
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 import { ICellRendererParams } from "ag-grid-community";
-import { wrap } from "./exchangeRateInfo.css";
+import css from "./ExchangeRateInfo.module.scss";
 
 interface Props {
   num: string;
@@ -17,7 +17,7 @@ export default function ExchangRateInfo(props: Props) {
   });
 
   return (
-    <div className={wrap}>
+    <div className={css.wrap}>
       <span>{props.num}</span>
       <span>(≒ {convertedPrice})</span>
     </div>

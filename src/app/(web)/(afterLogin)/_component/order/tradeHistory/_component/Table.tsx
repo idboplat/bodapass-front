@@ -10,7 +10,7 @@ import classNames from "classnames";
 import { Session } from "next-auth";
 import { useMemo, useState } from "react";
 import { useOrderHistoryStore } from "../_lib/store";
-import { tableWrap } from "./table.css";
+import css from "./Table.module.scss";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 import { ColDef } from "ag-grid-community";
@@ -211,7 +211,7 @@ export default function Table({ session }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}
