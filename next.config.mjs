@@ -1,11 +1,6 @@
-import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import path from "path";
 
 const __dirname = path.resolve();
-
-const withVanillaExtract = createVanillaExtractPlugin({
-  identifiers: ({ hash }) => `css_${hash}`,
-});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -46,4 +41,4 @@ const nextConfig = {
   },
 };
 
-export default withVanillaExtract(nextConfig);
+export default nextConfig;

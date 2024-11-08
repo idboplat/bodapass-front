@@ -1,5 +1,5 @@
 import ReactDatePicker from "react-datepicker";
-import { rangePickerWrap } from "./rangePicker.css";
+import css from "./DatePicker.module.scss";
 import CalendarIcon from "@/asset/svg/calendarIcon.svg?react";
 import { ko } from "date-fns/locale";
 import { DateType } from "./DatePicker";
@@ -13,7 +13,7 @@ interface RangePickerProps {
 // maxDate={!!date[0] ? addMonths(date[0] as Date, 6) : new Date("2024-12-31")}
 export default function RangePicker({ date, onChange }: RangePickerProps) {
   return (
-    <div className={rangePickerWrap}>
+    <div className={css.rangePickerWrap}>
       <ReactDatePicker
         selected={date[0]}
         startDate={date[0]}

@@ -1,7 +1,7 @@
 import CalendarIcon from "@/asset/svg/calendarIcon.svg?react";
 import { ko } from "date-fns/locale";
 import ReactDatePicker from "react-datepicker";
-import { datePickerWrap } from "./datepicker.css";
+import css from "./Datepicker.module.scss";
 
 export type DateType = Date | null;
 
@@ -14,7 +14,7 @@ interface DatePickerProps {
 
 export default function DatePicker({ style, startDate, onChange, placeholder }: DatePickerProps) {
   return (
-    <div className={datePickerWrap} style={style}>
+    <div className={css.datePickerWrap} style={style}>
       <ReactDatePicker
         selected={startDate}
         onChange={onChange}
