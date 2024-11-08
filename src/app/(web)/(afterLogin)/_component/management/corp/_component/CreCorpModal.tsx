@@ -1,12 +1,12 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import css from "@/app/_component/modal/Modal.module.scss";
+import modalCss from "@/app/_component/modal/Modal.module.scss";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { duplicateCheckInput, inputBox, label } from "./creCorpModal.css";
+import creCorpModalCss from "./CreCorpAlertModal.module.scss";
 import callTms from "@/model/callTms";
 import { TBW_000000_P01 } from "@/type/api";
 import { Session } from "next-auth";
@@ -14,7 +14,6 @@ import { toast } from "sonner";
 import { useSetCorpStore } from "../_lib/store";
 import CreCorpAlertModal from "./CreCorpAlertModal";
 import { CORP_GRP_ITEM, findEntity } from "@/app/_const/tp";
-import { selectBoxWrap } from "./nav.css";
 import LabelSelect from "@/app/_component/select/LabelSelect";
 import { checkCorpNm } from "@/app/_lib/regexp";
 import classNames from "classnames";
@@ -101,14 +100,14 @@ export default function CreCorpModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(css.content, "center")}>
+      <form onSubmit={handleSubmit} className={classNames(modalCss.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.header}>
-            <h3 className={css.title}>회사 생성</h3>
+          <div className={modalCss.header}>
+            <h3 className={modalCss.title}>회사 생성</h3>
           </div>
-          <div className={inputBox}>
-            <div className={selectBoxWrap}>
+          <div className={creCorpModalCss.inputBox}>
+            <div className={creCorpModalCss.selectBoxWrap}>
               <LabelSelect>회사 유형</LabelSelect>
               <TextSelect
                 value={corpGrpTp}
@@ -120,8 +119,8 @@ export default function CreCorpModal({
               />
             </div>
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreCorpInput.corpNm}>
+          <div className={creCorpModalCss.inputBox}>
+            <label className={creCorpModalCss.label} htmlFor={CreCorpInput.corpNm}>
               회사명
             </label>
             <DefaultInput
@@ -145,15 +144,15 @@ export default function CreCorpModal({
               onReset={() => setMastCorpCd("")}
             />
           </div> */}
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreCorpInput.adminPw}>
+          <div className={creCorpModalCss.inputBox}>
+            <label className={creCorpModalCss.label} htmlFor={CreCorpInput.adminPw}>
               관리자 Password
             </label>
             <DefaultInput id={CreCorpInput.adminPw} onChange={onChangeInput} type={"password"} />
           </div>
         </div>
-        <div className={css.btnBox}>
-          <button className={css.btn} type="submit" disabled={mutation.isPending}>
+        <div className={modalCss.btnBox}>
+          <button className={modalCss.btn} type="submit" disabled={mutation.isPending}>
             회사 생성
           </button>
         </div>

@@ -1,4 +1,4 @@
-import css from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import LabelInput from "@/app/_component/input/LabelInput";
 import { useSetModalStore } from "@/app/_lib/modalStore";
@@ -8,7 +8,7 @@ import CreEmplModal from "./CreEmplModal";
 import { useIsFetching } from "@tanstack/react-query";
 import { addDays } from "date-fns";
 import { Session } from "next-auth";
-import { btnWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
+import formCss from "./Form.module.scss";
 
 const ID = "adminNavForm";
 
@@ -54,9 +54,9 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
-      <div className={leftWrap}>
-        <div className={inputWrap}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
+      <div className={formCss.leftWrap}>
+        <div className={formCss.inputWrap}>
           <div>
             <LabelInput
               label="관리자 ID"
@@ -77,7 +77,7 @@ export default function Form({ session }: FormProps) {
               onReset={() => setEmplName(() => "")}
             />
           </div>
-          <button type="submit" className={css.navBtn} disabled={isFetching > 0}>
+          <button type="submit" className={btnCss.navBtn} disabled={isFetching > 0}>
             조회
           </button>
         </div>
@@ -86,8 +86,8 @@ export default function Form({ session }: FormProps) {
           <RangePicker date={date} onChange={onDateChange} />
         </div> */}
       </div>
-      <div className={btnWrap}>
-        <button type="button" className={css.navBtn} onClick={openModal}>
+      <div className={formCss.btnWrap}>
+        <button type="button" className={btnCss.navBtn} onClick={openModal}>
           관리자 생성
         </button>
       </div>

@@ -1,0 +1,30 @@
+.wrap {
+  position: relative;
+  margin-inline: 75px;
+  border: 1px solid #ccc;
+  border-radius: 3;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.label {
+  font-weight: 600;
+  text-align: center;
+  width: 120px;
+  border-right: 1px solid #ccc;
+  padding: 5px 10px;
+}
+
+.text {
+  width: 100%;
+  text-align: center;
+  padding: 5px 10px;
+}

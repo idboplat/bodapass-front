@@ -2,7 +2,7 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import css from "@/app/_component/modal/Modal.module.scss";
+import modalCss from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000010_P01 } from "@/type/api";
@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSetAdminStore } from "../_lib/store";
-import { inputBox, label, pwCheckBox } from "./creEmplModal.css";
+import creEmplModalCss from "./CreEmplModal.module.scss";
 import { checkEnNumSp } from "@/app/_lib/regexp";
 import classNames from "classnames";
 
@@ -104,26 +104,26 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(css.content, "center")}>
+      <form onSubmit={handleSubmit} className={classNames(modalCss.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={css.header}>
-            <h3 className={css.title}>관리자 생성</h3>
+          <div className={modalCss.header}>
+            <h3 className={modalCss.title}>관리자 생성</h3>
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreEmplInput.extnUserId}>
+          <div className={creEmplModalCss.inputBox}>
+            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.extnUserId}>
               관리자 ID
             </label>
             <DefaultInput id={CreEmplInput.extnUserId} />
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreEmplInput.emplName}>
+          <div className={creEmplModalCss.inputBox}>
+            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.emplName}>
               관리자 명
             </label>
             <DefaultInput id={CreEmplInput.emplName} />
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreEmplInput.pw}>
+          <div className={creEmplModalCss.inputBox}>
+            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
               신규 비밀번호
             </label>
             <DefaultInput
@@ -134,8 +134,8 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
               placeholder="영문, 숫자, 특수문자만 입력 가능하며 7자 이상이어야 합니다."
             />
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreEmplInput.pwCheck}>
+          <div className={creEmplModalCss.inputBox}>
+            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pwCheck}>
               신규 비밀번호 확인
             </label>
             <DefaultInput
@@ -144,18 +144,20 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
               inputRef={pwCheckRef}
               onChange={checkPw}
             />
-            <div className={pwCheckBox}>{!validationPw ? "비밀번호가 일치하지 않습니다." : ""}</div>
+            <div className={creEmplModalCss.pwCheckBox}>
+              {!validationPw ? "비밀번호가 일치하지 않습니다." : ""}
+            </div>
           </div>
-          <div className={inputBox}>
-            <label className={label} htmlFor={CreEmplInput.pw}>
+          <div className={creEmplModalCss.inputBox}>
+            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
               관리자 Password
             </label>
             <DefaultInput id={CreEmplInput.adminPw} type="password" />
           </div>
         </div>
-        <div className={css.btnBox}>
+        <div className={modalCss.btnBox}>
           <button
-            className={css.btn}
+            className={modalCss.btn}
             type="submit"
             disabled={validationPw === false || mutation.isPending}
           >

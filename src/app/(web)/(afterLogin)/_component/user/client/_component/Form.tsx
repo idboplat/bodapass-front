@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
-import { btnWrap, datePickerWrap, inputWrap, leftWrap, navWrap } from "./nav.css";
+import formCss from "./Form.module.scss";
 import LabelInput from "@/app/_component/input/LabelInput";
-import css from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import { useState } from "react";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import { useSetClientStore } from "../_lib/store";
@@ -41,9 +41,9 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
-      <div className={leftWrap}>
-        <div className={inputWrap}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
+      <div className={formCss.leftWrap}>
+        <div className={formCss.inputWrap}>
           <div>
             <LabelInput
               label="사용자 ID"
@@ -54,7 +54,7 @@ export default function Form({ session }: FormProps) {
               onReset={() => setExtnUserId(() => "")}
             />
           </div>
-          <button type="submit" className={css.navBtn} disabled={isFetching > 0}>
+          <button type="submit" className={btnCss.navBtn} disabled={isFetching > 0}>
             조회
           </button>
         </div>
@@ -63,7 +63,7 @@ export default function Form({ session }: FormProps) {
       <RangePicker date={date} onChange={onDateChange} />
     </div> */}
       </div>
-      <div className={btnWrap}></div>
+      <div className={formCss.btnWrap}></div>
     </form>
   );
 }

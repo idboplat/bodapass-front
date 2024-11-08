@@ -1,11 +1,11 @@
-import css from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import LabelInput from "@/app/_component/input/LabelInput";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import { ChangeEvent, useState } from "react";
 import { useSetCorpStore } from "../_lib/store";
 import CreCorpModal from "./CreCorpModal";
-import { btnWrap, inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import formCss from "./Form.module.scss";
 import { Session } from "next-auth";
 import LabelSelect from "@/app/_component/select/LabelSelect";
 import { corpGrpItemsMap, corpGrpTpItemsMap, getCorpGrpTpItems } from "../_const/map";
@@ -65,8 +65,8 @@ export default function Form({ session }: FormProps) {
   const today = new Date();
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
-      <div className={inputWrap}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
+      <div className={formCss.inputWrap}>
         <div>
           <LabelInput
             label="회사 명"
@@ -79,7 +79,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <div className={selectBoxWrap}>
+        <div className={formCss.selectBoxWrap}>
           <LabelSelect>회사 유형</LabelSelect>
           <TextSelect
             value={corpGrpValue}
@@ -92,7 +92,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button type="submit" className={css.navBtn} disabled={isFetching > 0}>
+        <button type="submit" className={btnCss.navBtn} disabled={isFetching > 0}>
           조회
         </button>
       </div>
@@ -108,8 +108,8 @@ export default function Form({ session }: FormProps) {
           <RangePicker date={date} onChange={onChange} />
         </div>
       </div> */}
-      <div className={btnWrap}>
-        <button type="button" onClick={openModal} className={css.navBtn}>
+      <div className={formCss.btnWrap}>
+        <button type="button" onClick={openModal} className={btnCss.navBtn}>
           회사 생성
         </button>
       </div>

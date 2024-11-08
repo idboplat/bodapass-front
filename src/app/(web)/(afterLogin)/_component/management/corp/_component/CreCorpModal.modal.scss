@@ -1,0 +1,24 @@
+.selectBoxWrap {
+  position: relative;
+}
+
+.inputBox {
+  margin-bottom: 14px;
+}
+
+.duplicateCheckInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.checkBoxDiv {
+  text-align: right;
+  padding: 7px;
+  font-size: 12px;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 2px;
+}

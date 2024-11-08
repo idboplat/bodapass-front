@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
 import { useOpenOrderStore } from "../_lib/store";
-import { tableWrap } from "./table.css";
+import css from "./Table.module.scss";
 import PagePagination from "@/app/_component/pagination/PagiPagination";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 
@@ -85,7 +85,7 @@ export default function Table({ session }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}

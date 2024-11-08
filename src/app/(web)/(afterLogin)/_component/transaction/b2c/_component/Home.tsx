@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import Table from "./Table";
 import { GRID_400503_COLS } from "../_const/400503";
 import { Meta } from "../_const/meta";
-import * as css from "./home.css";
+import css from "./Home.module.scss";
 
 interface B2cHomeProps {}
 

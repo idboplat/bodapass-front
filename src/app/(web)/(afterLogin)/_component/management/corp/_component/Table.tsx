@@ -2,7 +2,7 @@
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 import { GRID_COLS } from "../_const/colum";
-import { tableWrap } from "./table.css";
+import css from "./Table.module.scss";
 import classNames from "classnames";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
@@ -61,7 +61,7 @@ export default function Table({ session }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}

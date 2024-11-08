@@ -1,7 +1,7 @@
 import Modal from "@/app/_component/modal/Modal";
 import { ModalProps } from "@/app/_lib/modalStore";
-import css from "@/app/_component/modal/Modal.module.scss";
-import { descBox, textBox } from "./creCorpAlertModal.css";
+import modalCss from "@/app/_component/modal/Modal.module.scss";
+import creCorpAlertModalCss from "./CreCorpAlertModal.module.scss";
 import { useState } from "react";
 import { toast } from "sonner";
 import CheckBox from "@/app/_component/input/CheckBox";
@@ -26,29 +26,29 @@ export default function CreCorpAlertModal({
   };
   return (
     <Modal id={ID}>
-      <div className={classNames(css.content, "ceneter")} style={{ width: 400 }}>
+      <div className={classNames(modalCss.content, "ceneter")} style={{ width: 400 }}>
         <div>
-          <div className={css.header}>
-            <h3 className={css.title}>회사 생성</h3>
+          <div className={modalCss.header}>
+            <h3 className={modalCss.title}>회사 생성</h3>
           </div>
-          <div className={css.stack}>
-            <div className={textBox}>
+          <div className={modalCss.stack}>
+            <div className={creCorpAlertModalCss.textBox}>
               <p>{`관리자 ID : ${id}`}</p>
             </div>
-            <div className={textBox}>
+            <div className={creCorpAlertModalCss.textBox}>
               <p>{`비밀번호 : ${password}`}</p>
             </div>
-            <div className={descBox}>
+            <div className={creCorpAlertModalCss.descBox}>
               <CheckBox value={isCheck} onClick={() => setIsCheck(() => !isCheck)} />
               <p>관리자 ID와 비밀번호를 확인하시고, G2 관리자에게 전달하시기 바랍니다.</p>
             </div>
           </div>
         </div>
-        <div className={css.btnBox}>
-          <button className={css.btn} type="button" onClick={onClose} disabled={!isCheck}>
+        <div className={modalCss.btnBox}>
+          <button className={modalCss.btn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
           </button>
-          <button className={classNames(css.btn, "save")} type="button" onClick={onClickCopy}>
+          <button className={classNames(modalCss.btn, "save")} type="button" onClick={onClickCopy}>
             복사
           </button>
         </div>

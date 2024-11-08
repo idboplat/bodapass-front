@@ -15,7 +15,7 @@ import { Meta } from "../_const/meta";
 import { RowData } from "../_const/row.type";
 import { useTransactionClientStore } from "../_lib/store";
 import ReqStatus from "./ReqStatus";
-import { tableWrap } from "./table.css";
+import css from "./Table.module.scss";
 import { sortDecimal } from "@/app/_lib/numberFormatter";
 
 const PAGE_SIZE = 20;
@@ -99,7 +99,7 @@ export default function Table({ session, meta }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}

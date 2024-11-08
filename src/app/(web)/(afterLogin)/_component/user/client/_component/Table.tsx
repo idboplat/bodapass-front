@@ -1,5 +1,4 @@
 "use client";
-
 import { Session } from "next-auth";
 import { useState } from "react";
 import { GRID_COLS, RowData } from "../_const/colum";
@@ -10,7 +9,7 @@ import { TBW_000001_S01 } from "@/type/api";
 import { convertToStandardDateTime } from "@/app/_lib/regexp";
 import classNames from "classnames";
 import { AgGridReact } from "ag-grid-react";
-import { tableWrap } from "./table.css";
+import css from "./Table.module.scss";
 import PagePagination from "@/app/_component/pagination/PagiPagination";
 
 const PAGE_SIZE = 20;
@@ -59,7 +58,7 @@ export default function Table({ session }: TableProps) {
 
   return (
     <>
-      <div className={classNames("ag-theme-alpine", tableWrap)}>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
         <AgGridReact
           columnDefs={colDefs}
           rowData={rowData}
