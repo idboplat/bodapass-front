@@ -1,13 +1,13 @@
 "use client";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
-import module from "./Sidebar.module.scss";
+import css from "./Sidebar.module.scss";
 
 export default function SidebarLogoutBtn() {
   const mutateLogout = useLogoutMutation();
 
   return (
     <button
-      className={module.logoutBtn}
+      className={css.logoutBtn}
       type="button"
       onClick={() => mutateLogout.mutate()}
       disabled={mutateLogout.isPending}

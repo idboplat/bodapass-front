@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import ResetButton from "../btn/ResetBtn";
-import module from "./LabelInput.module.scss";
+import css from "./LabelInput.module.scss";
 
 interface LabelInputProps {
   id: string;
@@ -31,13 +31,13 @@ export default function LabelInput({
   const onFocus = () => setFocus(true);
 
   return (
-    <div className={classNames(module.labelInputBox, { focus })} style={style}>
-      <label htmlFor={id} className={module.label}>
+    <div className={classNames(css.labelInputBox, { focus })} style={style}>
+      <label htmlFor={id} className={css.label}>
         {label}
       </label>
       <input
         id={id}
-        className={module.input}
+        className={css.input}
         onFocus={onFocus}
         type={type}
         value={value}

@@ -1,10 +1,10 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import CreCoinModalModule from "./CreCoinModal.module.scss";
+import creCoinModalCss from "./CreCoinModal.module.scss";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import { TBW_000300_P01 } from "@/type/api";
 import callTms from "@/model/callTms";
@@ -89,16 +89,16 @@ export default function CreCoinModal({
     <Modal id={ID} onClose={onClose}>
       <form
         onSubmit={handleSubmit}
-        className={classNames(module.content, "center")}
+        className={classNames(css.content, "center")}
         style={{ width: 450 }}
       >
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={module.header}>
-            <h3 className={module.titled}>USDL 발행</h3>
+          <div className={css.header}>
+            <h3 className={css.titled}>USDL 발행</h3>
           </div>
-          <div className={CreCoinModalModule.inputBox}>
-            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.instCd}>
+          <div className={creCoinModalCss.inputBox}>
+            <label className={creCoinModalCss.label} htmlFor={CreCoinInput.instCd}>
               종목 코드
             </label>
             <DefaultInput
@@ -108,8 +108,8 @@ export default function CreCoinModal({
               disabled
             />
           </div>
-          <div className={CreCoinModalModule.inputBox}>
-            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.amount}>
+          <div className={creCoinModalCss.inputBox}>
+            <label className={creCoinModalCss.label} htmlFor={CreCoinInput.amount}>
               신규 발행할 USDL 수량 입력
             </label>
             <DefaultInput
@@ -130,15 +130,15 @@ export default function CreCoinModal({
               onReset={() => setOtp("")}
             />
           </div> */}
-          <div className={CreCoinModalModule.inputBox}>
-            <label className={CreCoinModalModule.label} htmlFor={CreCoinInput.adminPw}>
+          <div className={creCoinModalCss.inputBox}>
+            <label className={creCoinModalCss.label} htmlFor={CreCoinInput.adminPw}>
               관리자 Password
             </label>
             <DefaultInput id={CreCoinInput.adminPw} onChange={onChangeInput} type="password" />
           </div>
         </div>
-        <div className={module.btnBox}>
-          <button className={module.btn} type="submit" disabled={mutation.isPending}>
+        <div className={css.btnBox}>
+          <button className={css.btn} type="submit" disabled={mutation.isPending}>
             발행
           </button>
         </div>

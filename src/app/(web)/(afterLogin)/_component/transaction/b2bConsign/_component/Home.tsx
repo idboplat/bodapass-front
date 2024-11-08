@@ -1,5 +1,5 @@
 import { HomeProps } from "@/type/common";
-import * as css from "./home.css";
+import css from "./Home.module.scss";
 import Nav from "./Nav";
 import Table from "./Table";
 

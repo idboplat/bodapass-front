@@ -1,5 +1,5 @@
 import { HomeProps } from "@/type/common";
-import module from "./Home.module.scss";
+import css from "./Home.module.scss";
 import Nav from "./Nav";
 import Table from "./Table";
 
@@ -13,8 +13,8 @@ export default async function B2bHome({ session, page }: HomeProps<B2bHomeProps>
   }
 
   return (
-    <div className={module.wrap}>
-      <div className={module.title}>{title}</div>
+    <div className={css.wrap}>
+      <div className={css.title}>{title}</div>
       <Nav session={session} />
       <Table session={session} />
     </div>

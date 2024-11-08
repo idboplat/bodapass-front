@@ -1,4 +1,4 @@
-import module from "./Btn.module.scss";
+import css from "./Btn.module.scss";
 
 export default function DateBtn({
   children,
@@ -8,7 +8,7 @@ export default function DateBtn({
   onClick: () => void;
 }) {
   return (
-    <button className={module.dateBtn} onClick={onClick} type="button">
+    <button className={css.dateBtn} onClick={onClick} type="button">
       {children}
     </button>
   );

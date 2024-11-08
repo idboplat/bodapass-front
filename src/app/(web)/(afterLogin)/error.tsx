@@ -1,5 +1,5 @@
 "use client";
-import module from "@/app/_component/btn/Btn.module.scss";
+import css from "@/app/_component/btn/Btn.module.scss";
 import { useEffect } from "react";
 
 export default function Error({
@@ -30,7 +30,7 @@ export default function Error({
           <p>반복적으로 문제가 발생하면 로그아웃 후 관리자에게 문의하세요.</p>
         </div>
         <div>
-          <button type="button" className={module.btn} onClick={reset}>
+          <button type="button" className={css.btn} onClick={reset}>
             다시시도
           </button>
         </div>

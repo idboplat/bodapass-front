@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import TextSelect from "@/app/_component/select/TextSelect";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import { useMutation } from "@tanstack/react-query";
@@ -101,11 +101,11 @@ export default function CreCorpModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(module.content, "center")}>
+      <form onSubmit={handleSubmit} className={classNames(css.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>회사 생성</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>회사 생성</h3>
           </div>
           <div className={inputBox}>
             <div className={selectBoxWrap}>
@@ -152,8 +152,8 @@ export default function CreCorpModal({
             <DefaultInput id={CreCorpInput.adminPw} onChange={onChangeInput} type={"password"} />
           </div>
         </div>
-        <div className={module.btnBox}>
-          <button className={module.btn} type="submit" disabled={mutation.isPending}>
+        <div className={css.btnBox}>
+          <button className={css.btn} type="submit" disabled={mutation.isPending}>
             회사 생성
           </button>
         </div>

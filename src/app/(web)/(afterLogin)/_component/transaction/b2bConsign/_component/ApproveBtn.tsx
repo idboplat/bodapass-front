@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import { RowData } from "../_const/row.type";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 
 interface ApproveBtnProps {
   session: Session;
@@ -38,7 +38,7 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
   };
 
   return (
-    <button className={module.btn} type="button" onClick={onClick} disabled={muation.isPending}>
+    <button className={css.btn} type="button" onClick={onClick} disabled={muation.isPending}>
       승인
     </button>
   );

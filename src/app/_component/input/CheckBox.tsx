@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useHotkeys } from "react-hotkeys-hook";
-import module from "./CheckBox.module.scss";
+import css from "./CheckBox.module.scss";
 
 interface CheckBoxProps {
   id?: string;
@@ -24,7 +24,7 @@ export default function CheckBox({
   return (
     <label
       tabIndex={0}
-      className={classNames(module.label, value && "checked")}
+      className={classNames(css.label, value && "checked")}
       ref={labelRef}
       style={
         {
@@ -36,7 +36,7 @@ export default function CheckBox({
       <input
         id={id}
         tabIndex={-1}
-        className={module.input}
+        className={css.input}
         type="checkbox"
         checked={value}
         onChange={onClick}

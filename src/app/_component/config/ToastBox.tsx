@@ -1,10 +1,10 @@
 import { Toaster } from "sonner";
-import module from "./ToastBox.module.scss";
+import css from "./ToastBox.module.scss";
 
 export default function ToastBox() {
   return (
     <Toaster
-      toastOptions={{ className: module.toast }}
+      toastOptions={{ className: css.toast }}
       closeButton
       visibleToasts={3}
       position="bottom-right"

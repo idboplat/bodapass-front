@@ -2,7 +2,7 @@ import DefaultInput from "@/app/_component/input/DefaultInput";
 import ErrorModal from "@/app/_component/modal/ErrorModal";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps, useSetModalStore } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000010_P01 } from "@/type/api";
@@ -104,11 +104,11 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(module.content, "center")}>
+      <form onSubmit={handleSubmit} className={classNames(css.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>관리자 생성</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>관리자 생성</h3>
           </div>
           <div className={inputBox}>
             <label className={label} htmlFor={CreEmplInput.extnUserId}>
@@ -153,9 +153,9 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
             <DefaultInput id={CreEmplInput.adminPw} type="password" />
           </div>
         </div>
-        <div className={module.btnBox}>
+        <div className={css.btnBox}>
           <button
-            className={module.btn}
+            className={css.btn}
             type="submit"
             disabled={validationPw === false || mutation.isPending}
           >

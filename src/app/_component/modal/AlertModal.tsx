@@ -1,6 +1,6 @@
 import { ModalProps } from "@/app/_lib/modalStore";
 import Modal from "./Modal";
-import module from "./Modal.module.scss";
+import css from "./Modal.module.scss";
 import classNames from "classnames";
 
 export const ID = "alertModal";
@@ -17,15 +17,15 @@ export default function AlertModal({
 }: ModalProps<AlertModalProps>) {
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={classNames(module.content, module.center)}>
+      <div className={classNames(css.content, css.center)}>
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>{title}</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>{title}</h3>
           </div>
           <p>{content}</p>
         </div>
-        <div className={module.btnBox}>
-          <button className={module.btn} type="button" onClick={onClose}>
+        <div className={css.btnBox}>
+          <button className={css.btn} type="button" onClick={onClose}>
             확인
           </button>
         </div>

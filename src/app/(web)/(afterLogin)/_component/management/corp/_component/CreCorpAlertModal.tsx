@@ -1,6 +1,6 @@
 import Modal from "@/app/_component/modal/Modal";
 import { ModalProps } from "@/app/_lib/modalStore";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import { descBox, textBox } from "./creCorpAlertModal.css";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -26,12 +26,12 @@ export default function CreCorpAlertModal({
   };
   return (
     <Modal id={ID}>
-      <div className={classNames(module.content, "ceneter")} style={{ width: 400 }}>
+      <div className={classNames(css.content, "ceneter")} style={{ width: 400 }}>
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>회사 생성</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>회사 생성</h3>
           </div>
-          <div className={module.stack}>
+          <div className={css.stack}>
             <div className={textBox}>
               <p>{`관리자 ID : ${id}`}</p>
             </div>
@@ -44,11 +44,11 @@ export default function CreCorpAlertModal({
             </div>
           </div>
         </div>
-        <div className={module.btnBox}>
-          <button className={module.btn} type="button" onClick={onClose} disabled={!isCheck}>
+        <div className={css.btnBox}>
+          <button className={css.btn} type="button" onClick={onClose} disabled={!isCheck}>
             확인
           </button>
-          <button className={classNames(module.btn, "save")} type="button" onClick={onClickCopy}>
+          <button className={classNames(css.btn, "save")} type="button" onClick={onClickCopy}>
             복사
           </button>
         </div>

@@ -1,7 +1,7 @@
-import formModule from "./Form.module.scss";
+import formCss from "./Form.module.scss";
 import { useSetCoinStore } from "../_lib/store";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
-import module from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import CreCoinModal from "./CreCoinlModal";
 import { useState } from "react";
@@ -48,16 +48,16 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={formModule.navWrap} onSubmit={onSubmit}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
       <BalanceViewer session={session} />
-      <div className={formModule.inputWrap}>
+      <div className={formCss.inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
-        <button className={module.navBtn} type="submit" disabled={isFetching > 0}>
+        <button className={btnCss.navBtn} type="submit" disabled={isFetching > 0}>
           내역 조회
         </button>
       </div>
-      <div className={formModule.btnWrap}>
-        <button className={module.navBtn} onClick={openModal} type="button">
+      <div className={formCss.btnWrap}>
+        <button className={btnCss.navBtn} onClick={openModal} type="button">
           USDL 발행
         </button>
       </div>

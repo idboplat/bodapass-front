@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useStore } from "zustand";
 import emailLoginFn from "../_lib/login";
-import module from "./LoginForm.module.scss";
+import css from "./LoginForm.module.scss";
 
 const ID = "loginForm";
 
@@ -52,21 +52,21 @@ export default function LoginForm() {
   };
 
   return (
-    <form className={module.form} onSubmit={handleSubmit}>
-      <div className={module.inputWrap}>
-        <label className={module.label} htmlFor={LoginInput.email}>
+    <form className={css.form} onSubmit={handleSubmit}>
+      <div className={css.inputWrap}>
+        <label className={css.label} htmlFor={LoginInput.email}>
           아이디
         </label>
         <UnderLineInput id={LoginInput.email} type="text" />
       </div>
-      <div className={module.inputWrap}>
-        <label className={module.label} htmlFor={LoginInput.pw}>
+      <div className={css.inputWrap}>
+        <label className={css.label} htmlFor={LoginInput.pw}>
           비밀번호
         </label>
         <UnderLineInput id={LoginInput.pw} type="password" />
       </div>
-      <div className={module.btnBox}>
-        <button className={module.loginBtn} type="submit" disabled={isLoading}>
+      <div className={css.btnBox}>
+        <button className={css.loginBtn} type="submit" disabled={isLoading}>
           {isLoading ? <DotsLoading /> : "로그인"}
         </button>
       </div>

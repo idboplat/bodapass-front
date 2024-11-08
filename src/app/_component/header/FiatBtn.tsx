@@ -2,7 +2,7 @@
 import { useApp } from "@/app/_lib/appStore";
 import { useStore } from "zustand";
 import { RiExchangeDollarLine } from "react-icons/ri";
-import module from "./FiatBtn.module.scss";
+import css from "./FiatBtn.module.scss";
 import { useSetModalStore } from "@/app/_lib/modalStore";
 import FiatSettingModal from "./FiatSettingModal";
 
@@ -21,7 +21,7 @@ export default function FiatButton() {
   };
 
   return (
-    <button className={module.btn} onClick={onClick}>
+    <button className={css.btn} onClick={onClick}>
       <RiExchangeDollarLine size="20px" />
       <span>{fiat}</span>
     </button>

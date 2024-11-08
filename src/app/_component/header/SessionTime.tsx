@@ -3,7 +3,7 @@ import { SESSION_STORAGE_KEY, useApp } from "@/app/_lib/appStore";
 import { useLogoutMutation } from "@web/(afterLogin)/_lib/useLogoutMutation";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
-import module from "./SessionTime.module.scss";
+import css from "./SessionTime.module.scss";
 import { useStore } from "zustand";
 
 const TIME = 60 * 60; // 단위 초
@@ -57,7 +57,7 @@ export default function SessionTime({}: SessionTimeProps) {
       <span>
         <time>{timeFormat}</time>
       </span>
-      <button className={module.scss} onClick={appStore.actions.refresh}>
+      <button className={css.scss} onClick={appStore.actions.refresh}>
         연장하기
       </button>
     </>

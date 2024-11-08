@@ -1,7 +1,7 @@
 import DefaultInput from "@/app/_component/input/DefaultInput";
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps } from "@/app/_lib/modalStore";
 import { addComma, deleteIntegerZero, replaceToNumber } from "@/app/_lib/regexp";
 import callTms from "@/model/callTms";
@@ -72,15 +72,15 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={classNames(module.content, "center")}>
+      <div className={classNames(css.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>USDL 신청</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>USDL 신청</h3>
           </div>
           <div>
-            <div className={module.inputBox}>
-              <label htmlFor={ReqModalInput.instCd} className={module.label}>
+            <div className={css.inputBox}>
+              <label htmlFor={ReqModalInput.instCd} className={css.label}>
                 종목 코드
               </label>
               <DefaultInput
@@ -92,8 +92,8 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
                 // onReset={() => setInstCd("")}
               />
             </div>
-            <div className={module.inputBox}>
-              <label htmlFor={ReqModalInput.amount} className={module.label}>
+            <div className={css.inputBox}>
+              <label htmlFor={ReqModalInput.amount} className={css.label}>
                 신청 수량
               </label>
               <DefaultInput
@@ -105,9 +105,9 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
             </div>
           </div>
         </div>
-        <div className={module.btnBox}>
+        <div className={css.btnBox}>
           <button
-            className={module.btn}
+            className={css.btn}
             type="button"
             onClick={() => muation.mutate({ amount, instCd })}
             disabled={muation.isPending}

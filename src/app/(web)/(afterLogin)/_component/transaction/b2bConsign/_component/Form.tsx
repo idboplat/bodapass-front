@@ -1,4 +1,4 @@
-import module from "@/app/_component/btn/Btn.module.scss";
+import btnCss from "@/app/_component/btn/Btn.module.scss";
 import { DateType } from "@/app/_component/datepicker/DatePicker";
 import HistoryFilter from "@/app/_component/historyFilter/HistoryFilter";
 import LabelInput from "@/app/_component/input/LabelInput";
@@ -9,7 +9,7 @@ import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetTransactionCorpStore } from "../_lib/store";
-import { inputWrap, navWrap, selectBoxWrap } from "./nav.css";
+import formCss from "./Form.module.scss";
 import BalanceViewer from "@transaction/_component/BalanceViewer";
 import { addDays } from "date-fns";
 
@@ -54,9 +54,9 @@ export default function Form({ session }: FormProps) {
   };
 
   return (
-    <form className={navWrap} onSubmit={onSubmit}>
+    <form className={formCss.navWrap} onSubmit={onSubmit}>
       <BalanceViewer session={session} />
-      <div className={inputWrap}>
+      <div className={formCss.inputWrap}>
         <HistoryFilter date={date} onDateChange={onDateChange} onDateBtnClick={onDateBtnClick} />
         <div>
           <LabelInput
@@ -68,7 +68,7 @@ export default function Form({ session }: FormProps) {
             style={{ width: 120 }}
           />
         </div>
-        <div className={selectBoxWrap}>
+        <div className={formCss.selectBoxWrap}>
           <LabelSelect>상태 구분</LabelSelect>
           <TextSelect
             value={rqstStatTp}
@@ -81,7 +81,7 @@ export default function Form({ session }: FormProps) {
             }}
           />
         </div>
-        <button className={module.navBtn} type="submit" disabled={isFetching > 0}>
+        <button className={btnCss.navBtn} type="submit" disabled={isFetching > 0}>
           조회
         </button>
       </div>

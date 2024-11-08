@@ -1,6 +1,6 @@
 import Modal from "@/app/_component/modal/Modal";
 import ModalCloseBtn from "@/app/_component/modal/ModalCloseBtn";
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import { ModalProps } from "@/app/_lib/modalStore";
 import callTms from "@/model/callTms";
 import { TBW_000100_P02 } from "@/type/api";
@@ -59,17 +59,17 @@ export default function CancelModal({
 
   return (
     <Modal id={ID} onClose={onClose}>
-      <div className={classNames(module.content, "center")}>
+      <div className={classNames(css.content, "center")}>
         <ModalCloseBtn onClose={onClose} />
         <div>
-          <div className={module.header}>
-            <h3 className={module.title}>취소요청</h3>
+          <div className={css.header}>
+            <h3 className={css.title}>취소요청</h3>
           </div>
           <ApproveView data={data} />
         </div>
-        <div className={module.btnBox}>
+        <div className={css.btnBox}>
           <button
-            className={classNames(module.btn, "deny")}
+            className={classNames(css.btn, "deny")}
             type="button"
             onClick={onClick}
             disabled={mutation.isPending}

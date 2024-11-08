@@ -6,7 +6,7 @@ import { Session } from "next-auth";
 import { TBW_001000_Q03 } from "@/type/api";
 import Badge from "./Badge";
 import { NavLink } from "@mantine/core";
-import module from "./Sidebar.module.scss";
+import css from "./Sidebar.module.scss";
 import { usePathname } from "next/navigation";
 
 interface SidebarMenuItemProps {
@@ -46,7 +46,7 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
   return (
     <NavLink
       classNames={{
-        root: module.link,
+        root: css.link,
       }}
       styles={{
         label: {

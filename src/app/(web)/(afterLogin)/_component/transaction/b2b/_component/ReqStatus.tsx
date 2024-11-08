@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { RowData } from "../_const/row.type";
 import ApproveModal from "./ApproveModal";
 import CancelModal from "./CancelModal";
-import reqModule from "./ReqStatus.module.scss";
+import reqCss from "./ReqStatus.module.scss";
 import { useTransactionCorpStore } from "../_lib/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import callTms from "@/model/callTms";
@@ -96,7 +96,7 @@ export default function ReqStatus({ index, data, session }: ReqStatusProps) {
   }
 
   return (
-    <button type="button" className={classNames(reqModule.req)} onClick={onClick}>
+    <button type="button" className={classNames(reqCss.req)} onClick={onClick}>
       {data["신청 상태"]}
     </button>
   );

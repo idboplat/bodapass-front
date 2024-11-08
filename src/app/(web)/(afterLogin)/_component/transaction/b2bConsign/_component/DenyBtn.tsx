@@ -1,4 +1,4 @@
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import callTms from "@/model/callTms";
 import { TBW_000100_P03 } from "@/type/api";
 import { useMutation } from "@tanstack/react-query";
@@ -48,7 +48,7 @@ export default function DenyBtn({ session, data, onSuccess }: DenyBtnProps) {
 
   return (
     <button
-      className={classNames(module.btn, "deny")}
+      className={classNames(css.btn, "deny")}
       type="button"
       onClick={onClick}
       disabled={muation.isPending}

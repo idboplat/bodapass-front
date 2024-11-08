@@ -1,9 +1,9 @@
-import module from "./Backdrop.module.scss";
+import css from "./Backdrop.module.scss";
 
 interface BackdropProps {
   onClick?: () => void;
 }
 
 export default function Backdrop({ onClick }: BackdropProps) {
-  return <div className={module.backdrop} onClick={onClick} />;
+  return <div className={css.backdrop} onClick={onClick} />;
 }

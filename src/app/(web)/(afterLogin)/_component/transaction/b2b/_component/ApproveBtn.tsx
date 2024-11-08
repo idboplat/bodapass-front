@@ -1,4 +1,4 @@
-import module from "@/app/_component/modal/Modal.module.scss";
+import css from "@/app/_component/modal/Modal.module.scss";
 import callTms from "@/model/callTms";
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
@@ -38,7 +38,7 @@ export default function ApproveBtn({ session, data, onSuccess }: ApproveBtnProps
   };
 
   return (
-    <button className={module.btn} type="button" onClick={onClick} disabled={muation.isPending}>
+    <button className={css.btn} type="button" onClick={onClick} disabled={muation.isPending}>
       승인
     </button>
   );
