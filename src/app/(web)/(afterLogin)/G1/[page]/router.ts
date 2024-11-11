@@ -1,14 +1,13 @@
-import DeployHome from "@transaction/deploy/Home";
-import B2bHome from "@transaction/b2b/_component/Home";
-import PnlHome from "@order/pnl/Home";
-import ClientHome from "@user/client/home";
-import CorpHome from "@web/(afterLogin)/_component/management/corp/Home";
-import AdminHome from "@web/(afterLogin)/_component/user/admin/home";
-import { Path } from "@web/(afterLogin)/_lib/getPage";
-import OpenOrderHome from "@order/openOrder/Home";
-import TradeHistoryHome from "@order/tradeHistory/Home";
-import OrderHistoryHome from "@order/orderHistory/Home";
-import B2bConsignHome from "@transaction/b2bConsign/_component/Home";
+import AdminHome from "@/components/admin/home";
+import B2bConsignHome from "@/components/b2bConsign/Home";
+import ClientHome from "@/components/client/home";
+import CorpHome from "@/components/corp/Home";
+import DeployHome from "@/components/deploy/Home";
+import OpenOrderHome from "@/components/openOrder/Home";
+import OrderHistoryHome from "@/components/orderHistory/Home";
+import PnlHome from "@/components/pnl/Home";
+import TradeHistoryHome from "@/components/tradeHistory/Home";
+import { Path } from "@/utils/getPage";
 
 export const G1_PATH_LIST: Path[] = [
   {

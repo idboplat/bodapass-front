@@ -18,12 +18,6 @@
       }
     ],
     "paths": {
-      "@transaction/*": ["./src/app/(web)/(afterLogin)/_component/transaction/*"],
-      "@log/*": ["./src/app/(web)/(afterLogin)/_component/log/*"],
-      "@management/*": ["./src/app/(web)/(afterLogin)/_component/management/*"],
-      "@order/*": ["./src/app/(web)/(afterLogin)/_component/order/*"],
-      "@status/*": ["./src/app/(web)/(afterLogin)/_component/status/*"],
-      "@user/*": ["./src/app/(web)/(afterLogin)/_component/user/*"],
       "@web/*": ["./src/app/(web)/*"],
       "@api/*": ["./src/app/api/*"],
       "@/*": ["./src/*"],
@@ -38,5 +32,5 @@
     ".next/types/**/*.ts",
     "jest.polyfills.js"
   ],
-  "exclude": ["node_modules", "./src/temp/*"]
+  "exclude": ["node_modules", "src/temps/*"]
 }

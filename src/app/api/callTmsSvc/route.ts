@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { TmsRequest } from "@/model/callTms";
+import { TmsRequest } from "@/libraries/callTms";
 
 export async function POST(request: NextRequest) {
   try {

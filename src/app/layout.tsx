@@ -1,10 +1,10 @@
-import "@/style/global.scss";
-import "@/style/theme.scss";
+import "@/styles/global.scss";
+import "@/styles/theme.scss";
 
 import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
-import Configs from "./_component/config";
-import { getDefaultMetadata } from "./_const/getDefaultMetadata";
+import Configs from "@/components/config";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { ColorSchemeScript } from "@mantine/core";
 
 export const metadata = getDefaultMetadata();

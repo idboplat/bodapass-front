@@ -2,11 +2,11 @@
 import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Session } from "next-auth";
-import App from "@/app/_component/config/App";
-import ToastBox from "@/app/_component/config/ToastBox";
-import ModalContainer from "@/app/_component/modal/ModalContainer";
+import App from "@/components/config/App";
+import ToastBox from "@/components/config/ToastBox";
+import ModalContainer from "@/components/common/modal/ModalContainer";
 import { MantineProvider } from "@mantine/core";
-import { theme } from "@/style/theme";
+import { theme } from "@/styles/theme";
 
 const createTestQueryClient = () =>
   new QueryClient({

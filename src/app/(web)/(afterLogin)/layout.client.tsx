@@ -1,13 +1,13 @@
 "use client";
-import Header from "@/app/_component/header/Header";
-import Sidebar from "@/app/_component/sidebar/Sidebar";
+import Header from "@/components/common/header/Header";
+import Sidebar from "@/components/common/sidebar/Sidebar";
 import { AppShell, AppShellMain } from "@mantine/core";
 import css from "./layout.module.scss";
 import { Session } from "next-auth";
-import { ClientPath } from "./_lib/getPage";
+import { ClientPath } from "@/utils/getPage";
 import { useDisclosure, useHotkeys, useMediaQuery } from "@mantine/hooks";
-import { theme } from "@/style/theme";
-import { useApp } from "@/app/_lib/appStore";
+import { theme } from "@/styles/theme";
+import { useApp } from "@/stores/app";
 import { useStore } from "zustand";
 
 interface LayoutClientProps {

@@ -10,7 +10,7 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, "src", "style")], // style 폴더에 있는 파일은 이름만으로 import 가능(경로 축약)
+    includePaths: [path.join(__dirname, "src", "styles")], // style 폴더에 있는 파일은 이름만으로 import 가능(경로 축약)
     prependData: `
       @use "var";
       @use "util";

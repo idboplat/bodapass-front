@@ -1,0 +1,88 @@
+"use client";
+import PagePagination from "@/components/common/pagination/PagiPagination";
+import { GRID_COLS, RowData } from "@/constants/admin/colum";
+import callTms from "@/libraries/callTms";
+import { useAdminStore } from "@/stores/admin";
+import { TBW_000001_Q01 } from "@/types/api";
+import { convertToStandardDateTime } from "@/utils/regexp";
+import { useQuery } from "@tanstack/react-query";
+import { AgGridReact } from "ag-grid-react";
+import classNames from "classnames";
+import { Session } from "next-auth";
+import { useState } from "react";
+import css from "./Table.module.scss";
+
+const PAGE_SIZE = 20;
+
+interface TableProps {
+  session: Session;
+}
+
+export default function Table({ session }: TableProps) {
+  const [colDefs] = useState([...GRID_COLS]);
+  const [total, setTotal] = useState(-1);
+  const adminStore = useAdminStore();
+
+  const { data } = useQuery({
+    queryKey: ["TBW_000001_Q01", adminStore],
+    queryFn: async () => {
+      const res = await callTms<TBW_000001_Q01>({
+        svcId: "TBW_000001_Q01",
+        session,
+        data: [
+          session.user.corpCd,
+          session.user.id, //사원 ID
+          adminStore.extnUserId, //입력 사원 ID
+          adminStore.emplName, //입력 사원명
+        ],
+        pgSize: PAGE_SIZE,
+        pgSn: adminStore.page,
+      });
+      setTotal(() => res.svcTotRecCnt);
+      const data = res.svcRspnData || [];
+      return data;
+    },
+    select: (data) => {
+      const rowData = data.map<RowData>((item) => ({
+        "생성 일시": convertToStandardDateTime(item.F01),
+        "관리자 코드": item.F02,
+        "관리자 ID": item.F03,
+        "관리자 명": item.F04,
+        "회사 코드": item.F05,
+        "회사 명": item.F06,
+        생성인: item.F07,
+        "변경 작업 ID": item.F08,
+        "변경 작업 일시": convertToStandardDateTime(item.F09),
+      }));
+      return rowData;
+    },
+    enabled: adminStore.nonce > 0,
+  });
+
+  const rowData = adminStore.nonce === 0 ? [] : data;
+
+  return (
+    <>
+      <div className={classNames("ag-theme-alpine", css.tableWrap)}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={
+            adminStore.nonce === 0 ? "<span></span>" : "<span>데이터가 없습니다.</span>"
+          }
+          headerHeight={28}
+          rowHeight={28}
+        />
+      </div>
+      {total !== -1 && (
+        <PagePagination
+          currentPage={adminStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={adminStore.actions.setPage}
+        />
+      )}
+    </>
+  );
+}

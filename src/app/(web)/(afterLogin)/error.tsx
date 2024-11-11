@@ -1,5 +1,5 @@
 "use client";
-import css from "@/app/_component/btn/Btn.module.scss";
+import css from "@/components/common/btn/Btn.module.scss";
 import { useEffect } from "react";
 
 export default function Error({

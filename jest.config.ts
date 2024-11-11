@@ -16,12 +16,6 @@ const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   moduleNameMapper: {
-    "^@transaction/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/transaction/$1",
-    "^@log/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/log/$1",
-    "^@management/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/management/$1",
-    "^@order/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/order/$1",
-    "^@status/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/status/$1",
-    "^@user/(.*)$": "<rootDir>/src/app/(web)/(afterLogin)/_component/user/$1",
     "^@web/(.*)$": "<rootDir>/src/app/(web)/$1",
     "^@api/(.*)$": "<rootDir>/src/app/api/$1",
     "^@/(.*)$": "<rootDir>/src/$1",

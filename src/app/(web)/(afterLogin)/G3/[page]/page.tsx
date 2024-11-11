@@ -1,9 +1,9 @@
-import { getServerSessionWithOptions } from "@/model/nextAuth";
-import { getPage } from "@web/(afterLogin)/_lib/getPage";
+import { getServerSessionWithOptions } from "@/libraries/nextAuth";
+import { getPage } from "@/utils/getPage";
 import { notFound, redirect } from "next/navigation";
 import { G3_PATH_LIST } from "./router";
 import { Metadata } from "next";
-import { getDefaultMetadata } from "@/app/_const/getDefaultMetadata";
+import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 
 interface PageProps {
   params: {

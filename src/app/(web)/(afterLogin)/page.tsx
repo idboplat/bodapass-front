@@ -1,4 +1,4 @@
-import { getServerSessionWithOptions } from "@/model/nextAuth";
+import { getServerSessionWithOptions } from "@/libraries/nextAuth";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
