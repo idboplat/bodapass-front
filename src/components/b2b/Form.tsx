@@ -12,7 +12,6 @@ import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import forCss from "./Form.module.scss";
-import ReqModal from "./ReqModal";
 
 interface FormProps {
   session: Session;
@@ -44,10 +43,6 @@ export default function Form({ session }: FormProps) {
     queryClient.invalidateQueries({ queryKey: ["TBW_002000_S02"] });
     // 입금 신청 내역 재조회
     queryClient.invalidateQueries({ queryKey: ["TBW_001000_Q03"] });
-  };
-
-  const openReqModal = async () => {
-    await modalStore.push(ReqModal, { props: { session } });
   };
 
   const onDateChange = (date: [DateType, DateType]) => {

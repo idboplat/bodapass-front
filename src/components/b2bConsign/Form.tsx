@@ -12,6 +12,7 @@ import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import formCss from "./Form.module.scss";
+import ReqModal from "./ReqModal";
 
 interface FormProps {
   session: Session;
@@ -53,6 +54,10 @@ export default function Form({ session }: FormProps) {
     setDate(() => [startDate, today]);
   };
 
+  const openReqModal = async () => {
+    await modalStore.push(ReqModal, { props: { session } });
+  };
+
   return (
     <form className={formCss.navWrap} onSubmit={onSubmit}>
       <BalanceViewer session={session} />
@@ -83,6 +88,11 @@ export default function Form({ session }: FormProps) {
         </div>
         <button className={btnCss.navBtn} type="submit" disabled={isFetching > 0}>
           조회
+        </button>
+      </div>
+      <div className={formCss.btnBox}>
+        <button type="button" onClick={openReqModal} className={btnCss.navBtn}>
+          입금 승인
         </button>
       </div>
     </form>

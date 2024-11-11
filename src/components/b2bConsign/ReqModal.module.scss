@@ -1,0 +1,12 @@
+.tableWrap {
+  height: 300px;
+}
+
+.corpWrap {
+  display: flex;
+  gap: 10px;
+
+  & > div {
+    flex: 1;
+  }
+}
