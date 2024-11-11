@@ -9,7 +9,7 @@ import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
-import { GRID_COLS } from "@/constants/b2b/col";
+import { GRID_COLS } from "@/constants/deploy/col";
 import { useCoinStore } from "@/stores/deploy";
 import css from "./Table.module.scss";
 import { sortDecimal } from "@/utils/numberFormatter";
