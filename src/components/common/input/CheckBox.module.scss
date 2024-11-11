@@ -15,7 +15,7 @@ $SVG_IMAGE: "data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='h
     transition: background-color 0.2s ease;
   }
 
-  &.checked:before {
+  &:global(.checked):before {
     border-color: transparent;
     background-image: url($SVG_IMAGE);
     background-size: 100% 100%;

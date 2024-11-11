@@ -26,7 +26,7 @@ export default function CreCorpAlertModal({
   };
   return (
     <Modal id={ID}>
-      <div className={classNames(modalCss.content, "ceneter")} style={{ width: 400 }}>
+      <div className={classNames(modalCss.content, "center")} style={{ width: 400 }}>
         <div>
           <div className={modalCss.header}>
             <h3 className={modalCss.title}>회사 생성</h3>

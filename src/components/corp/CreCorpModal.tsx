@@ -1,22 +1,22 @@
 import DefaultInput from "@/components/common/input/DefaultInput";
 import Modal from "@/components/common/modal/Modal";
-import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import modalCss from "@/components/common/modal/Modal.module.scss";
-import TextSelect from "@/components/common/select/TextSelect";
-import { ModalProps, useSetModalStore } from "@/stores/modal";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import creCorpModalCss from "./CreCorpAlertModal.module.scss";
-import callTms from "@/libraries/callTms";
-import { TBW_000000_P01 } from "@/types/api";
-import { Session } from "next-auth";
-import { toast } from "sonner";
-import { useSetCorpStore } from "@/stores/corp";
-import CreCorpAlertModal from "./CreCorpAlertModal";
-import { CORP_GRP_ITEM, findEntity } from "@/types/tp";
+import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import LabelSelect from "@/components/common/select/LabelSelect";
+import TextSelect from "@/components/common/select/TextSelect";
+import callTms from "@/libraries/callTms";
+import { useSetCorpStore } from "@/stores/corp";
+import { ModalProps, useSetModalStore } from "@/stores/modal";
+import { TBW_000000_P01 } from "@/types/api";
+import { CORP_GRP_ITEM, findEntity } from "@/types/tp";
 import { checkCorpNm } from "@/utils/regexp";
+import { useMutation } from "@tanstack/react-query";
 import classNames from "classnames";
+import { Session } from "next-auth";
+import { useState } from "react";
+import { toast } from "sonner";
+import CreCorpAlertModal from "./CreCorpAlertModal";
+import creCorpModalCss from "./CreCorpModal.module.scss";
 
 const ID = "creCorpModal";
 
@@ -128,7 +128,7 @@ export default function CreCorpModal({
               value={corpNm}
               onChange={onChangeInput}
               onReset={() => setCorpNm("")}
-              style={{ width: "100%" }}
+              style={{ height: 36 }}
               placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
             />
           </div>
@@ -148,7 +148,12 @@ export default function CreCorpModal({
             <label className={creCorpModalCss.label} htmlFor={CreCorpInput.adminPw}>
               관리자 Password
             </label>
-            <DefaultInput id={CreCorpInput.adminPw} onChange={onChangeInput} type={"password"} />
+            <DefaultInput
+              style={{ height: 36 }}
+              id={CreCorpInput.adminPw}
+              onChange={onChangeInput}
+              type={"password"}
+            />
           </div>
         </div>
         <div className={modalCss.btnBox}>

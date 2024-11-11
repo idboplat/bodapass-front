@@ -24,7 +24,7 @@ export default function CheckBox({
   return (
     <label
       tabIndex={0}
-      className={classNames(css.label, value && "checked")}
+      className={classNames(css.label, { checked: value })}
       ref={labelRef}
       style={
         {

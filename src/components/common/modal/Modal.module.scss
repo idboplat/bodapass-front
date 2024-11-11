@@ -88,7 +88,7 @@
     cursor: default;
   }
 
-  :global(.cancel) {
+  &:global(.cancel) {
     // 취소 버튼
     background-color: var(--mantine-color-gray-5);
 
@@ -97,7 +97,7 @@
     }
   }
 
-  :global(.deny) {
+  &:global(.deny) {
     // 거부 버튼
     background-color: #e5383b;
 
@@ -106,7 +106,7 @@
     }
   }
 
-  :global(.save) {
+  &:global(.save) {
     // 저장 버튼
     background-color: #028a0f;
 

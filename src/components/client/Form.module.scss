@@ -1,34 +1,34 @@
 .navWrap {
-  display: "flex";
-  justify-content: "space-between";
-  align-items: "center";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   height: 120px;
   gap: 10px;
 }
 
 .leftWrap {
-  display: "flex";
+  display: flex;
   gap: 30px;
 }
 
 .historyFilterwrap {
-  display: "flex";
+  display: flex;
   gap: 30px;
 }
 
 .inputWrap {
-  display: "flex";
+  display: flex;
   gap: 10px;
-  align-items: "center";
+  align-items: center;
 }
 
 .datePickerWrap {
-  display: "flex";
+  display: flex;
   gap: 10px;
-  align-items: "center";
+  align-items: center;
 }
 
 .btnWrap {
-  display: "flex";
+  display: flex;
   gap: 10px;
 }
