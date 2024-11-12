@@ -1,11 +1,11 @@
-import { DateType } from "@/components/common/datepicker/DatePicker";
-import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 type AdminState = {
   extnUserId: string;
   emplName: string;
-  date: [DateType, DateType];
+  date: [DateValue, DateValue];
   nonce: number;
   resetTime: number;
   page: number;
@@ -24,7 +24,7 @@ type AdminActions = {
 const initState: AdminState = {
   extnUserId: "",
   emplName: "",
-  date: [addDays(new Date(), -1), new Date()],
+  date: [dayjs().subtract(1, "day").toDate(), dayjs().toDate()],
   resetTime: Date.now(),
   nonce: 0,
   page: 1,

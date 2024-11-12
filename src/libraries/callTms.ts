@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import CryptoJS from "crypto-js";
 import { TmsError } from "@/libraries/error/TmsError";
-import { formatInTimeZone } from "date-fns-tz";
+import dayjs from "@/libraries/dayjs";
 
 export const isArray = <T>(item: T | T[]): item is T[] => {
   return Array.isArray(item);
@@ -84,7 +84,7 @@ export const genarateBody = ({
   data: any[];
 }) => {
   /** YYYYMMDDHHmmssSSS */
-  const currentTime = formatInTimeZone(new Date(), "UTC", "yyyyMMddHHmmssSSS");
+  const currentTime = dayjs().utc().format("YYYYMMDDHHmmssSSS");
 
   const svcRqst = {
     svcTranKey: 1,

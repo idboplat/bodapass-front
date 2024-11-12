@@ -1,28 +1,42 @@
+import CalendarIcon from "@/assets/svg/calendarIcon.svg?react";
+import { DatePickerInput, DateValue } from "@mantine/dates";
 import DateBtn from "../btn/DateBtn";
-import { DateType } from "../datepicker/DatePicker";
-import RangePicker from "../datepicker/RangePicker";
 import css from "./HistoryFIlter.module.scss";
-import { addDays, addMonths, addWeeks } from "date-fns";
+import dayjs from "@/libraries/dayjs";
 
 interface HistoryFilterProps {
-  date: [DateType, DateType];
-  onDateChange: (date: [DateType, DateType]) => void;
-  onDateBtnClick: (startDate: DateType) => void;
+  date: [DateValue, DateValue];
+  onDateChange: (date: [DateValue, DateValue]) => void;
+  onDateBtnClick: (startDate: DateValue) => void;
 }
 
-const today = new Date();
-
 export default function HistoryFilter({ date, onDateChange, onDateBtnClick }: HistoryFilterProps) {
+  const today = dayjs();
+
   return (
     <div className={css.wrap}>
       <div className={css.btnBox}>
-        <DateBtn onClick={() => onDateBtnClick(addDays(today, -1))}>1Day</DateBtn>
-        <DateBtn onClick={() => onDateBtnClick(addWeeks(today, -1))}>1Week</DateBtn>
-        <DateBtn onClick={() => onDateBtnClick(addMonths(today, -1))}>1Month</DateBtn>
-        <DateBtn onClick={() => onDateBtnClick(addMonths(today, -3))}>3Month</DateBtn>
+        <DateBtn onClick={() => onDateBtnClick(today.subtract(1, "day").toDate())}>1Day</DateBtn>
+        <DateBtn onClick={() => onDateBtnClick(today.subtract(1, "week").toDate())}>1Week</DateBtn>
+        <DateBtn onClick={() => onDateBtnClick(today.subtract(1, "month").toDate())}>
+          1Month
+        </DateBtn>
+        <DateBtn onClick={() => onDateBtnClick(today.subtract(3, "month").toDate())}>
+          3Month
+        </DateBtn>
       </div>
       <div>
-        <RangePicker date={date} onChange={onDateChange} />
+        <DatePickerInput
+          type="range"
+          leftSection={<CalendarIcon color="#000000" />}
+          value={date}
+          valueFormat="YYYY년 MM월 DD일"
+          onChange={onDateChange}
+          styles={{ input: { height: 36, width: 270 } }}
+          placeholder="시작일자 ~ 종료일자"
+          numberOfColumns={2}
+          clearable
+        />
       </div>
     </div>
   );

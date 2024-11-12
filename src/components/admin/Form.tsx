@@ -1,14 +1,14 @@
 import btnCss from "@/components/common/btn/Btn.module.scss";
-import { DateType } from "@/components/common/datepicker/DatePicker";
 import LabelInput from "@/components/common/input/LabelInput";
 import { useSetAdminStore } from "@/stores/admin";
 import { useSetModalStore } from "@/stores/modal";
 import { useIsFetching } from "@tanstack/react-query";
-import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import CreEmplModal from "./CreEmplModal";
 import formCss from "./Form.module.scss";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 const ID = "adminNavForm";
 
@@ -25,7 +25,10 @@ interface FormProps {
 export default function Form({ session }: FormProps) {
   const [extnUserId, setExtnUserId] = useState("");
   const [emplName, setEmplName] = useState("");
-  const [date, setDate] = useState<[DateType, DateType]>([addDays(new Date(), -1), new Date()]);
+  const [date, setDate] = useState<[DateValue, DateValue]>([
+    dayjs().subtract(1, "day").toDate(),
+    dayjs().toDate(),
+  ]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000001_Q01"] });
 
@@ -81,10 +84,6 @@ export default function Form({ session }: FormProps) {
             조회
           </button>
         </div>
-        {/* <div className={datePickerWrap}>
-          <div>등록일</div>
-          <RangePicker date={date} onChange={onDateChange} />
-        </div> */}
       </div>
       <div className={formCss.btnWrap}>
         <button type="button" className={btnCss.navBtn} onClick={openModal}>

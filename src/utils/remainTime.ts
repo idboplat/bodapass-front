@@ -1,9 +1,9 @@
-import { differenceInSeconds, isValid, parseISO } from "date-fns";
+import dayjs from "@/libraries/dayjs";
 
 export const remainTime = (exp: string) => {
-  const expireTime = parseISO(exp);
-  if (!isValid(expireTime)) return 1;
-  const now = new Date();
-  const diff = differenceInSeconds(expireTime, now);
+  const expireTime = dayjs(exp);
+  if (!expireTime.isValid()) return 1;
+  const now = dayjs();
+  const diff = expireTime.diff(now, "second");
   return diff;
 };

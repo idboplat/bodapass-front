@@ -1,6 +1,6 @@
 // css 순서변경 금지
 import "@/styles/agGrid.scss";
-import "@/styles/datepicker.css";
+import "@/styles/dates.scss";
 
 import { getServerSessionWithOptions } from "@/libraries/nextAuth";
 import { notFound, redirect } from "next/navigation";
@@ -8,7 +8,7 @@ import { PropsWithChildren } from "react";
 import { G1_PATH_LIST } from "./G1/[page]/router";
 import { G2_PATH_LIST } from "./G2/[page]/router";
 import { G4_PATH_LIST } from "./G4/[page]/router";
-import { Path, getClientPathList } from "../../../utils/getPage";
+import { Path, getClientPathList } from "@/utils/getPage";
 import LayoutClient from "./layout.client";
 
 export default async function Layout({ children }: PropsWithChildren) {

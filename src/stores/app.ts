@@ -1,6 +1,6 @@
-import { formatISO } from "date-fns";
 import { createContext, useContext } from "react";
 import { createStore, useStore } from "zustand";
+import dayjs from "@/libraries/dayjs";
 
 export const SESSION_STORAGE_KEY = "auth-session";
 
@@ -33,7 +33,7 @@ export const createAppStore = (initState: State) => {
     ...initState,
     actions: {
       login: () => {
-        const session = formatISO(new Date());
+        const session = dayjs().toISOString();
         localStorage.setItem(SESSION_STORAGE_KEY, session);
         set(() => ({ session }));
       },

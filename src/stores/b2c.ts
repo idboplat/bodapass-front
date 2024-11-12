@@ -1,9 +1,9 @@
-import { DateType } from "@/components/common/datepicker/DatePicker";
-import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 type TransactionClientState = {
-  date: [DateType, DateType];
+  date: [DateValue, DateValue];
   instCd: string;
   mvioTp: string; //입출고
   rqstStatTp: string; //신청상태구분
@@ -23,7 +23,7 @@ type TransactionClientActions = {
 };
 
 const initState: TransactionClientState = {
-  date: [addDays(new Date(), -1), new Date()],
+  date: [dayjs().subtract(1, "day").toDate(), dayjs().toDate()],
   instCd: "",
   mvioTp: "",
   rqstStatTp: "",

@@ -1,10 +1,10 @@
-import { DateType } from "@/components/common/datepicker/DatePicker";
-import { addDays } from "date-fns";
 import { create, useStore } from "zustand";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 type clientState = {
   extnUserId: string;
-  date: [DateType, DateType];
+  date: [DateValue, DateValue];
   nonce: number;
   resetTime: number;
   page: number;
@@ -12,7 +12,7 @@ type clientState = {
 
 type clientActions = {
   actions: {
-    setState: (extnUserId: string, date: [DateType, DateType]) => void;
+    setState: (extnUserId: string, date: [DateValue, DateValue]) => void;
     setPage: (page: number) => void;
     refreshPage: () => void;
     unmount: () => void;
@@ -21,7 +21,7 @@ type clientActions = {
 
 const initState: clientState = {
   extnUserId: "",
-  date: [addDays(new Date(), -1), new Date()],
+  date: [dayjs().subtract(1, "day").toDate(), dayjs().toDate()],
   nonce: 0,
   resetTime: Date.now(),
   page: 1,

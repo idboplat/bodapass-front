@@ -1,6 +1,5 @@
 import BalanceViewer from "@/components/BalanceViewer";
 import btnCss from "@/components/common/btn/Btn.module.scss";
-import { DateType } from "@/components/common/datepicker/DatePicker";
 import HistoryFilter from "@/components/common/historyFilter/HistoryFilter";
 import LabelInput from "@/components/common/input/LabelInput";
 import LabelSelect from "@/components/common/select/LabelSelect";
@@ -8,19 +7,21 @@ import TextSelect from "@/components/common/select/TextSelect";
 import { useSetTransactionCorpStore } from "@/stores/b2b";
 import { useSetModalStore } from "@/stores/modal";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
-import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import forCss from "./Form.module.scss";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 interface FormProps {
   session: Session;
 }
 
-const today = new Date();
-
 export default function Form({ session }: FormProps) {
-  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
+  const [date, setDate] = useState<[DateValue, DateValue]>([
+    dayjs().subtract(1, "day").toDate(),
+    dayjs().toDate(),
+  ]);
   const [instCd, setInstCd] = useState("");
   const [rqstStatTp, setRqstStatTp] = useState("전체");
 
@@ -45,13 +46,14 @@ export default function Form({ session }: FormProps) {
     queryClient.invalidateQueries({ queryKey: ["TBW_001000_Q03"] });
   };
 
-  const onDateChange = (date: [DateType, DateType]) => {
+  const onDateChange = (date: [DateValue, DateValue]) => {
     setDate(() => date);
   };
 
-  const onDateBtnClick = (startDate: DateType) => {
-    actions.setState({ date: [startDate, today] });
-    setDate(() => [startDate, today]);
+  const onDateBtnClick = (startDate: DateValue) => {
+    const date: [DateValue, DateValue] = [startDate, dayjs().toDate()];
+    actions.setState({ date });
+    setDate(() => date);
   };
 
   return (

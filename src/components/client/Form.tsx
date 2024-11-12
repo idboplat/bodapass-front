@@ -1,12 +1,12 @@
 import btnCss from "@/components/common/btn/Btn.module.scss";
-import { DateType } from "@/components/common/datepicker/DatePicker";
 import LabelInput from "@/components/common/input/LabelInput";
+import dayjs from "@/libraries/dayjs";
 import { useSetClientStore } from "@/stores/client";
 import { useIsFetching } from "@tanstack/react-query";
-import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import formCss from "./Form.module.scss";
+import { DateValue } from "@mantine/dates";
 
 const ID = "clientNavForm";
 
@@ -21,7 +21,11 @@ interface FormProps {
 
 export default function Form({ session }: FormProps) {
   const [extnUserId, setExtnUserId] = useState("");
-  const [date, setDate] = useState<[DateType, DateType]>([addDays(new Date(), -1), new Date()]);
+  const [date, setDate] = useState<[DateValue, DateValue]>([
+    dayjs().subtract(1, "day").toDate(),
+    dayjs().toDate(),
+  ]);
+
   const actions = useSetClientStore();
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000001_S01"] });

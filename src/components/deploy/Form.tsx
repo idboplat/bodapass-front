@@ -1,15 +1,15 @@
 import btnCss from "@/components/common/btn/Btn.module.scss";
-import { DateType } from "@/components/common/datepicker/DatePicker";
 import HistoryFilter from "@/components/common/historyFilter/HistoryFilter";
 import BalanceViewer from "@/components/BalanceViewer";
 import { useSetModalStore } from "@/stores/modal";
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
-import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { useSetCoinStore } from "@/stores/deploy";
 import CreCoinModal from "./CreCoinlModal";
 import formCss from "./Form.module.scss";
+import dayjs from "@/libraries/dayjs";
+import { DateValue } from "@mantine/dates";
 
 interface FormProps {
   session: Session;
@@ -18,7 +18,10 @@ const today = new Date();
 
 export default function Form({ session }: FormProps) {
   const queryClient = useQueryClient();
-  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
+  const [date, setDate] = useState<[DateValue, DateValue]>([
+    dayjs().subtract(1, "day").toDate(),
+    dayjs().toDate(),
+  ]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_000300_Q01"] });
 
@@ -29,11 +32,11 @@ export default function Form({ session }: FormProps) {
     modalAction.push(CreCoinModal, { props: { session } });
   };
 
-  const onDateChange = (date: [DateType, DateType]) => {
+  const onDateChange = (date: [DateValue, DateValue]) => {
     setDate(() => date);
   };
 
-  const onDateBtnClick = (startDate: DateType) => {
+  const onDateBtnClick = (startDate: DateValue) => {
     actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
   };

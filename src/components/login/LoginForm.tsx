@@ -6,7 +6,7 @@ import { useApp } from "@/stores/app";
 import { useSetModalStore } from "@/stores/modal";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useStore } from "zustand";
 import emailLoginFn from "@/apis/login";
 import css from "./LoginForm.module.scss";

@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { AppContext, createAppStore, SESSION_STORAGE_KEY } from "@/stores/app";
 import { Session } from "next-auth";
-import { formatISO } from "date-fns";
+import dayjs from "@/libraries/dayjs";
 
 interface AppProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ interface AppProps {
 export default function App({ session, sidebar, children, fiat }: AppProps) {
   const store = useRef(
     createAppStore({
-      session: !!session ? formatISO(new Date()) : "guest",
+      session: !!session ? dayjs().toISOString() : "guest",
       theme: "light",
       sidebar,
       fiat,

@@ -1,15 +1,15 @@
 import btnCss from "@/components/common/btn/Btn.module.scss";
-import { DateType } from "@/components/common/datepicker/DatePicker";
 import HistoryFilter from "@/components/common/historyFilter/HistoryFilter";
 import LabelInput from "@/components/common/input/LabelInput";
 import LabelSelect from "@/components/common/select/LabelSelect";
 import TextSelect from "@/components/common/select/TextSelect";
+import dayjs from "@/libraries/dayjs";
+import { useSetOrderHistory } from "@/stores/tradeHistory";
 import { useIsFetching } from "@tanstack/react-query";
-import { addDays } from "date-fns";
 import { Session } from "next-auth";
 import { ChangeEvent, useState } from "react";
-import { useSetOrderHistory } from "../../stores/tradeHistory";
 import formCss from "./Form.module.scss";
+import { DateValue } from "@mantine/dates";
 
 enum OrderHistoryNavForm {
   instCd = "instCd",
@@ -22,9 +22,12 @@ interface FormProps {
 const today = new Date();
 
 export default function Form({ session }: FormProps) {
-  const [date, setDate] = useState<[DateType, DateType]>([addDays(today, -1), today]);
   const [instCd, setInstCd] = useState("");
   const [mvioTp, setMvioTp] = useState("전체");
+  const [date, setDate] = useState<[DateValue, DateValue]>([
+    dayjs().subtract(1, "day").toDate(),
+    dayjs().toDate(),
+  ]);
 
   const isFetching = useIsFetching({ queryKey: ["TBW_006000_Q03"] });
 
@@ -54,11 +57,11 @@ export default function Form({ session }: FormProps) {
     });
   };
 
-  const onDateChange = (date: [DateType, DateType]) => {
+  const onDateChange = (date: [DateValue, DateValue]) => {
     setDate(() => date);
   };
 
-  const onDateBtnClick = (startDate: DateType) => {
+  const onDateBtnClick = (startDate: DateValue) => {
     actions.setState({ date: [startDate, today] });
     setDate(() => [startDate, today]);
   };

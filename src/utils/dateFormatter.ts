@@ -1,6 +1,7 @@
-import { format } from "date-fns";
+import { DateValue } from "@mantine/dates";
+import dayjs from "@/libraries/dayjs";
 
-export const dateToString = (date: Date | null) => {
+export const dateToString = (date: DateValue) => {
   if (!date) return "";
-  return format(date, "yyyyMMdd");
+  return dayjs(date).format("YYYYMMDD");
 };

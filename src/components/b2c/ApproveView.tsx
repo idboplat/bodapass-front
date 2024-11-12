@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { RowData } from "@/constants/b2c/row.type";
 import css from "./ApproveView.module.scss";
 
