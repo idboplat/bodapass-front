@@ -1,6 +1,4 @@
 import DefaultInput from "@/components/common/input/DefaultInput";
-import Modal from "@/components/common/modal/Modal";
-import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import modalCss from "@/components/common/modal/Modal.module.scss";
 import PagiPagination from "@/components/common/pagination/PagiPagination";
 import { COLUMN_STYLE } from "@/types/agGrid";
@@ -24,6 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useSetTransactionCorpStore } from "@/stores/b2bConsign";
 import reqModalCss from "./ReqModal.module.scss";
+import { Modal } from "@mantine/core";
 
 const ID = "reqModal";
 
@@ -154,88 +153,79 @@ export default function ReqModal({ onClose, onSuccess, session }: ModalProps<Req
   };
 
   return (
-    <Modal id={ID} onClose={onClose}>
-      <div className={classNames(modalCss.content, "center")}>
-        <ModalCloseBtn onClose={onClose} />
-        <div>
-          <div className={modalCss.header}>
-            <h3 className={modalCss.title}>입금 승인</h3>
-          </div>
-          <>
+    <Modal opened centered onClose={onClose} title="입금 승인">
+      <label htmlFor={ReqModalInput.corpNm} className={modalCss.label}>
+        회사 목록
+      </label>
+      <div className={classNames("ag-theme-alpine", reqModalCss.tableWrap, "scroll")}>
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
+          headerHeight={28}
+          rowHeight={28}
+          onRowClicked={onRowClicked}
+        />
+      </div>
+      {total !== -1 && (
+        <PagiPagination
+          currentPage={corpStore.page}
+          totalCnt={total}
+          pgSize={PAGE_SIZE}
+          groupSize={10}
+          onChange={corpStore.actions.setPage}
+        />
+      )}
+
+      <div>
+        <div className={reqModalCss.corpWrap}>
+          <div className={modalCss.inputBox}>
             <label htmlFor={ReqModalInput.corpNm} className={modalCss.label}>
-              회사 목록
+              회사 명
             </label>
-            <div className={classNames("ag-theme-alpine", reqModalCss.tableWrap, "scroll")}>
-              <AgGridReact
-                columnDefs={colDefs}
-                rowData={rowData}
-                overlayNoRowsTemplate={"<span>데이터가 없습니다.</span>"}
-                headerHeight={28}
-                rowHeight={28}
-                onRowClicked={onRowClicked}
-              />
-            </div>
-            {total !== -1 && (
-              <PagiPagination
-                currentPage={corpStore.page}
-                totalCnt={total}
-                pgSize={PAGE_SIZE}
-                groupSize={10}
-                onChange={corpStore.actions.setPage}
-              />
-            )}
-          </>
-          <div>
-            <div className={reqModalCss.corpWrap}>
-              <div className={modalCss.inputBox}>
-                <label htmlFor={ReqModalInput.corpNm} className={modalCss.label}>
-                  회사 명
-                </label>
-                <DefaultInput id={ReqModalInput.corpNm} value={corpNm} disabled={true} />
-              </div>
-              <div className={modalCss.inputBox}>
-                <label htmlFor={ReqModalInput.corpCd} className={modalCss.label}>
-                  회사 코드
-                </label>
-                <DefaultInput id={ReqModalInput.corpNm} value={corpCd} disabled={true} />
-              </div>
-            </div>
-            <div className={modalCss.inputBox}>
-              <label htmlFor={ReqModalInput.instCd} className={modalCss.label}>
-                종목 코드
-              </label>
-              <DefaultInput
-                id={ReqModalInput.instCd}
-                value={instCd}
-                disabled={true}
-                // placeholder="USDT"
-                // onChange={onChangeInput}
-                // onReset={() => setInstCd("")}
-              />
-            </div>
-            <div className={modalCss.inputBox}>
-              <label htmlFor={ReqModalInput.amount} className={modalCss.label}>
-                신청 수량
-              </label>
-              <DefaultInput
-                id={ReqModalInput.amount}
-                value={amount}
-                onChange={onChangeInput}
-                onReset={() => setAmount("")}
-              />
-            </div>
+            <DefaultInput id={ReqModalInput.corpNm} value={corpNm} disabled={true} />
+          </div>
+          <div className={modalCss.inputBox}>
+            <label htmlFor={ReqModalInput.corpCd} className={modalCss.label}>
+              회사 코드
+            </label>
+            <DefaultInput id={ReqModalInput.corpNm} value={corpCd} disabled={true} />
           </div>
         </div>
-        <div className={modalCss.btnBox}>
-          <button
-            className={modalCss.btn}
-            type="button"
-            onClick={() => muation.mutate({ amount, instCd })}
-            disabled={muation.isPending}
-          >
-            입금승인
-          </button>
+        <div className={modalCss.inputBox}>
+          <label htmlFor={ReqModalInput.instCd} className={modalCss.label}>
+            종목 코드
+          </label>
+          <DefaultInput
+            id={ReqModalInput.instCd}
+            value={instCd}
+            disabled={true}
+            // placeholder="USDT"
+            // onChange={onChangeInput}
+            // onReset={() => setInstCd("")}
+          />
         </div>
+        <div className={modalCss.inputBox}>
+          <label htmlFor={ReqModalInput.amount} className={modalCss.label}>
+            신청 수량
+          </label>
+          <DefaultInput
+            id={ReqModalInput.amount}
+            value={amount}
+            onChange={onChangeInput}
+            onReset={() => setAmount("")}
+          />
+        </div>
+      </div>
+      <div className={modalCss.btnBox}>
+        <button
+          className={modalCss.btn}
+          type="button"
+          onClick={() => muation.mutate({ amount, instCd })}
+          disabled={muation.isPending}
+        >
+          입금승인
+        </button>
       </div>
     </Modal>
   );

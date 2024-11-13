@@ -1,7 +1,6 @@
 import { ModalProps } from "@/stores/modal";
-import Modal from "./Modal";
 import css from "./Modal.module.scss";
-import classNames from "classnames";
+import { Modal } from "@mantine/core";
 
 export const ID = "alertModal";
 
@@ -16,19 +15,14 @@ export default function AlertModal({
   content,
 }: ModalProps<AlertModalProps>) {
   return (
-    <Modal id={ID} onClose={onClose}>
-      <div className={classNames(css.content, css.center)}>
-        <div>
-          <div className={css.header}>
-            <h3 className={css.title}>{title}</h3>
-          </div>
-          <p>{content}</p>
-        </div>
-        <div className={css.btnBox}>
-          <button className={css.btn} type="button" onClick={onClose}>
-            확인
-          </button>
-        </div>
+    <Modal opened centered onClose={onClose} title={title}>
+      <div>
+        <p>{content}</p>
+      </div>
+      <div className={css.btnBox}>
+        <button className={css.btn} type="button" onClick={onClose}>
+          확인
+        </button>
       </div>
     </Modal>
   );

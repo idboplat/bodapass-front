@@ -1,6 +1,4 @@
 import css from "@/components/common/modal/Modal.module.scss";
-import Modal from "@/components/common/modal/Modal";
-import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import { RowData } from "@/constants/b2bConsign/row.type";
 import callTms from "@/libraries/callTms";
 import { ModalProps } from "@/stores/modal";
@@ -10,8 +8,7 @@ import classNames from "classnames";
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import ApproveView from "./ApproveView";
-
-const ID = "cancelModal";
+import { Modal } from "@mantine/core";
 
 interface CancelModalProps {
   session: Session;
@@ -58,25 +55,20 @@ export default function CancelModal({
   };
 
   return (
-    <Modal id={ID} onClose={onClose}>
-      <div className={classNames(css.content, "center")}>
-        <ModalCloseBtn onClose={onClose} />
-        <div>
-          <div className={css.header}>
-            <h3 className={css.title}>취소요청</h3>
-          </div>
-          <ApproveView data={data} />
-        </div>
-        <div className={css.btnBox}>
-          <button
-            className={classNames(css.btn, "deny")}
-            type="button"
-            onClick={onClick}
-            disabled={mutation.isPending}
-          >
-            취소
-          </button>
-        </div>
+    <Modal opened centered onClose={onClose} title="취소요청">
+      <div>
+        <ApproveView data={data} />
+      </div>
+
+      <div className={css.btnBox}>
+        <button
+          className={classNames(css.btn, "deny")}
+          type="button"
+          onClick={onClick}
+          disabled={mutation.isPending}
+        >
+          취소
+        </button>
       </div>
     </Modal>
   );

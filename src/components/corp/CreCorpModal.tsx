@@ -1,7 +1,5 @@
 import DefaultInput from "@/components/common/input/DefaultInput";
-import Modal from "@/components/common/modal/Modal";
 import modalCss from "@/components/common/modal/Modal.module.scss";
-import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import LabelSelect from "@/components/common/select/LabelSelect";
 import TextSelect from "@/components/common/select/TextSelect";
 import callTms from "@/libraries/callTms";
@@ -11,12 +9,12 @@ import { TBW_000000_P01 } from "@/types/api";
 import { CORP_GRP_ITEM, findEntity } from "@/types/tp";
 import { checkCorpNm } from "@/utils/regexp";
 import { useMutation } from "@tanstack/react-query";
-import classNames from "classnames";
 import { Session } from "next-auth";
 import { useState } from "react";
 import { toast } from "sonner";
 import CreCorpAlertModal from "./CreCorpAlertModal";
 import creCorpModalCss from "./CreCorpModal.module.scss";
+import { Modal, px, rem } from "@mantine/core";
 
 const ID = "creCorpModal";
 
@@ -99,41 +97,34 @@ export default function CreCorpModal({
   };
 
   return (
-    <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(modalCss.content, "center")}>
-        <ModalCloseBtn onClose={onClose} />
-        <div>
-          <div className={modalCss.header}>
-            <h3 className={modalCss.title}>회사 생성</h3>
-          </div>
-          <div className={creCorpModalCss.inputBox}>
-            <div className={creCorpModalCss.selectBoxWrap}>
-              <LabelSelect>회사 유형</LabelSelect>
-              <TextSelect
-                value={corpGrpTp}
-                onChange={onChangeSelect}
-                items={corpGrpTpItems}
-                style={{
-                  height: 36,
-                }}
-              />
-            </div>
-          </div>
-          <div className={creCorpModalCss.inputBox}>
-            <label className={creCorpModalCss.label} htmlFor={CreCorpInput.corpNm}>
-              회사명
-            </label>
-            <DefaultInput
-              id={CreCorpInput.corpNm}
-              value={corpNm}
-              onChange={onChangeInput}
-              onReset={() => setCorpNm("")}
+    <Modal opened centered onClose={onClose} title="회사생성">
+      <form onSubmit={handleSubmit} style={{ padding: 7 }}>
+        <div className={creCorpModalCss.inputBox}>
+          <div className={creCorpModalCss.selectBoxWrap}>
+            <LabelSelect>회사 유형</LabelSelect>
+            <TextSelect
+              value={corpGrpTp}
+              onChange={onChangeSelect}
+              items={corpGrpTpItems}
               style={{ height: 36 }}
-              placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
             />
           </div>
+        </div>
+        <div className={creCorpModalCss.inputBox}>
+          <label className={creCorpModalCss.label} htmlFor={CreCorpInput.corpNm}>
+            회사명
+          </label>
+          <DefaultInput
+            id={CreCorpInput.corpNm}
+            value={corpNm}
+            onChange={onChangeInput}
+            onReset={() => setCorpNm("")}
+            style={{ height: 36 }}
+            placeholder="회사명은 한글, 영문, 숫자만 입력 가능합니다."
+          />
+        </div>
 
-          {/* <div className={inputBox}>
+        {/* <div className={inputBox}>
             <label className={label} htmlFor={CreCorpInput.mastCorpCd}>
               주 회사 코드
             </label>
@@ -144,17 +135,16 @@ export default function CreCorpModal({
               onReset={() => setMastCorpCd("")}
             />
           </div> */}
-          <div className={creCorpModalCss.inputBox}>
-            <label className={creCorpModalCss.label} htmlFor={CreCorpInput.adminPw}>
-              관리자 Password
-            </label>
-            <DefaultInput
-              style={{ height: 36 }}
-              id={CreCorpInput.adminPw}
-              onChange={onChangeInput}
-              type={"password"}
-            />
-          </div>
+        <div className={creCorpModalCss.inputBox}>
+          <label className={creCorpModalCss.label} htmlFor={CreCorpInput.adminPw}>
+            관리자 Password
+          </label>
+          <DefaultInput
+            style={{ height: 36 }}
+            id={CreCorpInput.adminPw}
+            onChange={onChangeInput}
+            type={"password"}
+          />
         </div>
         <div className={modalCss.btnBox}>
           <button className={modalCss.btn} type="submit" disabled={mutation.isPending}>

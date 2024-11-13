@@ -1,10 +1,6 @@
 import { ModalProps } from "@/stores/modal";
-import Modal from "./Modal";
-import ModalCloseBtn from "./ModalCloseBtn";
+import { Modal } from "@mantine/core";
 import css from "./Modal.module.scss";
-import classNames from "classnames";
-
-const ID = "errorModal";
 
 interface ErrorModalProps {
   title?: string;
@@ -17,20 +13,17 @@ export default function ErrorModal({
   error,
 }: ModalProps<ErrorModalProps>) {
   return (
-    <Modal id={ID} onClose={onClose}>
-      <div className={classNames(css.content, "center")}>
-        <ModalCloseBtn onClose={onClose} />
-        <div>
-          <div className={css.header}>
-            <h3 className={css.title}>{title}</h3>
-          </div>
-          <p>{error.message}</p>
+    <Modal opened centered onClose={onClose} title={title}>
+      <div>
+        <div className={css.header}>
+          <h3 className={css.title}>{title}</h3>
         </div>
-        <div className={css.btnBox}>
-          <button className={css.btn} type="button" onClick={onClose}>
-            확인
-          </button>
-        </div>
+        <p>{error.message}</p>
+      </div>
+      <div className={css.btnBox}>
+        <button className={css.btn} type="button" onClick={onClose}>
+          확인
+        </button>
       </div>
     </Modal>
   );

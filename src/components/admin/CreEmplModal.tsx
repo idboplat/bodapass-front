@@ -1,19 +1,17 @@
 import modalCss from "@/components/common/modal/Modal.module.scss";
 import DefaultInput from "@/components/common/input/DefaultInput";
 import ErrorModal from "@/components/common/modal/ErrorModal";
-import Modal from "@/components/common/modal/Modal";
-import ModalCloseBtn from "@/components/common/modal/ModalCloseBtn";
 import callTms from "@/libraries/callTms";
 import { ModalProps, useSetModalStore } from "@/stores/modal";
 import { TBW_000010_P01 } from "@/types/api";
 import { checkEnNumSp } from "@/utils/regexp";
 import { useMutation } from "@tanstack/react-query";
-import classNames from "classnames";
 import { Session } from "next-auth";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { useSetAdminStore } from "@/stores/admin";
 import creEmplModalCss from "./CreEmplModal.module.scss";
+import { Modal } from "@mantine/core";
 
 const ID = "creEmplModal";
 
@@ -103,58 +101,53 @@ export default function CreEmplModal({ onClose, session }: ModalProps<CreEmplMod
   };
 
   return (
-    <Modal id={ID} onClose={onClose}>
-      <form onSubmit={handleSubmit} className={classNames(modalCss.content, "center")}>
-        <ModalCloseBtn onClose={onClose} />
-        <div>
-          <div className={modalCss.header}>
-            <h3 className={modalCss.title}>관리자 생성</h3>
-          </div>
-          <div className={creEmplModalCss.inputBox}>
-            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.extnUserId}>
-              관리자 ID
-            </label>
-            <DefaultInput id={CreEmplInput.extnUserId} />
-          </div>
-          <div className={creEmplModalCss.inputBox}>
-            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.emplName}>
-              관리자 명
-            </label>
-            <DefaultInput id={CreEmplInput.emplName} />
-          </div>
-          <div className={creEmplModalCss.inputBox}>
-            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
-              신규 비밀번호
-            </label>
-            <DefaultInput
-              id={CreEmplInput.pw}
-              type={"password"}
-              inputRef={pwRef}
-              onChange={checkPw}
-              placeholder="영문, 숫자, 특수문자만 입력 가능하며 7자 이상이어야 합니다."
-            />
-          </div>
-          <div className={creEmplModalCss.inputBox}>
-            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pwCheck}>
-              신규 비밀번호 확인
-            </label>
-            <DefaultInput
-              id={CreEmplInput.pwCheck}
-              type={"password"}
-              inputRef={pwCheckRef}
-              onChange={checkPw}
-            />
-            <div className={creEmplModalCss.pwCheckBox}>
-              {!validationPw ? "비밀번호가 일치하지 않습니다." : ""}
-            </div>
-          </div>
-          <div className={creEmplModalCss.inputBox}>
-            <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
-              관리자 Password
-            </label>
-            <DefaultInput id={CreEmplInput.adminPw} type="password" />
+    <Modal opened centered onClose={onClose} title="관리자 생성">
+      <form onSubmit={handleSubmit}>
+        <div className={creEmplModalCss.inputBox}>
+          <label className={creEmplModalCss.label} htmlFor={CreEmplInput.extnUserId}>
+            관리자 ID
+          </label>
+          <DefaultInput id={CreEmplInput.extnUserId} />
+        </div>
+        <div className={creEmplModalCss.inputBox}>
+          <label className={creEmplModalCss.label} htmlFor={CreEmplInput.emplName}>
+            관리자 명
+          </label>
+          <DefaultInput id={CreEmplInput.emplName} />
+        </div>
+        <div className={creEmplModalCss.inputBox}>
+          <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
+            신규 비밀번호
+          </label>
+          <DefaultInput
+            id={CreEmplInput.pw}
+            type={"password"}
+            inputRef={pwRef}
+            onChange={checkPw}
+            placeholder="영문, 숫자, 특수문자만 입력 가능하며 7자 이상이어야 합니다."
+          />
+        </div>
+        <div className={creEmplModalCss.inputBox}>
+          <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pwCheck}>
+            신규 비밀번호 확인
+          </label>
+          <DefaultInput
+            id={CreEmplInput.pwCheck}
+            type={"password"}
+            inputRef={pwCheckRef}
+            onChange={checkPw}
+          />
+          <div className={creEmplModalCss.pwCheckBox}>
+            {!validationPw ? "비밀번호가 일치하지 않습니다." : ""}
           </div>
         </div>
+        <div className={creEmplModalCss.inputBox}>
+          <label className={creEmplModalCss.label} htmlFor={CreEmplInput.pw}>
+            관리자 Password
+          </label>
+          <DefaultInput id={CreEmplInput.adminPw} type="password" />
+        </div>
+
         <div className={modalCss.btnBox}>
           <button
             className={modalCss.btn}
