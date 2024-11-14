@@ -14,7 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import CreCorpAlertModal from "./CreCorpAlertModal";
 import creCorpModalCss from "./CreCorpModal.module.scss";
-import { Modal, px, rem } from "@mantine/core";
+import { Modal } from "@mantine/core";
 
 const ID = "creCorpModal";
 

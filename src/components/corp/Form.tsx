@@ -70,13 +70,12 @@ export default function Form({ session }: FormProps) {
         <div>
           <LabelInput
             label="회사 명"
-            value={corpNm}
             id={CorpNavForm.corpNm}
+            w={160}
+            h={40}
+            value={corpNm}
             onChange={onChange}
             onReset={() => setCorpNm("")}
-            style={{
-              width: 160,
-            }}
           />
         </div>
         <div className={formCss.selectBoxWrap}>

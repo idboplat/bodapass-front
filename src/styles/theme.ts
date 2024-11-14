@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 
 export const theme = createTheme({
-  /* Put your mantine theme override here */
+  scale: 1.142, // root font size: 14px
   fontFamily:
     "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif",
   breakpoints: {
