@@ -1,15 +1,15 @@
 "use client";
-import UnderLineInput from "@/components/common/input/UnderLineInput";
 import DotsLoading from "@/components/common/loading/DotsLoading";
 import ErrorModal from "@/components/common/modal/ErrorModal";
 import { useApp } from "@/stores/app";
 import { useSetModalStore } from "@/stores/modal";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useStore } from "zustand";
 import emailLoginFn from "@/apis/login";
 import css from "./LoginForm.module.scss";
+import { Button, PasswordInput, TextInput } from "@mantine/core";
 
 const ID = "loginForm";
 
@@ -54,21 +54,25 @@ export default function LoginForm() {
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <div className={css.inputWrap}>
-        <label className={css.label} htmlFor={LoginInput.email}>
-          아이디
-        </label>
-        <UnderLineInput id={LoginInput.email} type="text" />
+        <TextInput
+          id={LoginInput.email}
+          variant="underline"
+          label="아이디"
+          styles={(theme) => ({ input: { height: 40 } })}
+        />
       </div>
       <div className={css.inputWrap}>
-        <label className={css.label} htmlFor={LoginInput.pw}>
-          비밀번호
-        </label>
-        <UnderLineInput id={LoginInput.pw} type="password" />
+        <PasswordInput
+          id={LoginInput.pw}
+          variant="underline"
+          label="비밀번호"
+          styles={(theme) => ({ input: { height: 40 } })}
+        />
       </div>
       <div className={css.btnBox}>
-        <button className={css.loginBtn} type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} w="100%" h={40}>
           {isLoading ? <DotsLoading /> : "로그인"}
-        </button>
+        </Button>
       </div>
     </form>
   );
