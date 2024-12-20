@@ -1,11 +1,9 @@
-import "@/styles/global.scss";
-import "@/styles/theme.scss";
-
 import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
 import Configs from "@/components/config";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
-import { ColorSchemeScript } from "@mantine/core";
+import StyledComponentsRegistry from "@/libraries/styled-components-registry";
+//import Script from "next/script";
 
 export const metadata = getDefaultMetadata();
 
@@ -19,19 +17,18 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    // https://github.com/mantinedev/mantine/issues/7008
-    <html lang="ko" suppressHydrationWarning>
+    <html 
+      lang="ko" 
+      style={{ overflowX: "auto", touchAction: "none", minWidth: "1903px", maxWidth: "1920px" }}
+      suppressHydrationWarning>
       <head>
-        <ColorSchemeScript defaultColorScheme="light" />
-        {/* Pretendard Font */}
-        <link
-          rel="stylesheet"
-          as="style"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
+        {/* run dev - 개발 체크. react-scan */}
+        {/* <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
       </head>
-      <body>
-        <Configs defaultColorScheme="light">{children}</Configs>
+      <body style={{ overflowX: "auto", touchAction: "none", WebkitTextSizeAdjust: "none", minWidth: "1903px", maxWidth: "1920px" }}>
+        <StyledComponentsRegistry>
+          <Configs defaultColorScheme="light">{children}</Configs>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

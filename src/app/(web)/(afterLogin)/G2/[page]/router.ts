@@ -1,53 +1,69 @@
-import CorpHome from "@/components/corp/Home";
-import OpenOrderHome from "@/components/openOrder/Home";
-import OrderHistoryHome from "@/components/orderHistory/Home";
-import PnlHome from "@/components/pnl/Home";
-import TradeHistoryHome from "@/components/tradeHistory/Home";
-import B2bHome from "@/components/b2b/Home";
-import B2bConsignHome from "@/components/b2bConsign/Home";
-import AdminHome from "@/components/admin/home";
-import ClientHome from "@/components/client/home";
+import ScreenAdmin from "@/components/pageComponents/screenAdmin";
 import { Path } from "@/utils/getPage";
 
 export const G2_PATH_LIST: Path[] = [
   {
-    category: "운영",
-    pages: [{ title: "회사 관리", number: "200101", Component: CorpHome }],
+    category: "대시보드",
+    pages: [{ title: "대시보드", description: "현황 등의 통계 데이터는 마지막 접속 시각을 기준으로 1시간 뒤에 새롭게 업데이트하여 반영됩니다.", number: "100101", Component: ScreenAdmin }],
   },
   {
-    category: "사용자",
+    category: "마이페이지",
     pages: [
-      { title: "고객 관리", number: "200201", Component: ClientHome },
-      { title: "관리자 관리", number: "200202", Component: AdminHome },
-    ],
-  },
-  // {
-  //   category: "로그",
-  //   pages: [],
-  // },
-  {
-    category: "주문",
-    pages: [
-      { title: "미체결 내역", number: "200401", Component: OpenOrderHome },
-      { title: "주문 내역", number: "200402", Component: OrderHistoryHome },
-      { title: "체결 내역", number: "200403", Component: TradeHistoryHome },
-      { title: "고객 손익 내역", number: "200404", Component: PnlHome },
+      { title: "마이페이지", description: "관리자 개인의 정보와 관련된 기능을 제공. 계정 정보를 확인하고 수정하거나, 시스템과 관련된 일부 설정을 관리할 수 있습니다", number: "100201", Component: ScreenAdmin },
     ],
   },
   {
-    category: "입출금",
+    category: "유저/마켓관리",
     pages: [
-      {
-        category: "회사 입금 신청 내역",
-        pages: [
-          { title: "당사 입금 신청 내역", number: "200502", Component: B2bHome },
-          { title: "위탁 입금 신청 내역", number: "200512", Component: B2bConsignHome },
-        ],
-      },
+      { title: "유저/마켓관리", description: "사용안함", number: "100301", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "유저 목록", number: "100302", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "출금 내역", number: "100303", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "마켓 목록", number: "100304", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "오더북 현황", number: "100305", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "포지션 현황", number: "100306", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "거래내역", number: "100307", Component: ScreenAdmin },
+      { title: "유저/마켓관리", description: "사용안함", number: "100308", Component: ScreenAdmin },
     ],
   },
-  // {
-  //   category: "현황",
-  //   pages: [],
-  // },
+  {
+    category: "사용안함",
+    pages: [
+      { title: "사용안함", description: "사용안함", number: "100401", Component: ScreenAdmin },
+    ],
+  },
+  {
+    category: "에이전트 관리",
+    pages: [
+      { title: "에이전트 관리", description: "에이전트 내역", number: "100501", Component: ScreenAdmin },
+      { title: "에이전트 관리", description: "에이전트 목록", number: "100502", Component: ScreenAdmin },
+      { title: "에이전트 관리", description: "에이전트 생성", number: "100503", Component: ScreenAdmin },
+    ],
+  },
+  {
+    category: "입금/출금",
+    pages: [
+      { title: "입금/출금", description: "입금내역과 출금내역을 확인 할 수 있습니다.", number: "100601", Component: ScreenAdmin },
+    ],
+  },
+  {
+    category: "통계",
+    pages: [
+      { title: "통계", description: "정산관리", number: "100701", Component: ScreenAdmin },
+      { title: "통계", description: "에이전트 수익 통계", number: "100702", Component: ScreenAdmin },
+      { title: "통계", description: "하부 에이전트 수익 통계 (소수점 자리는 첫째 자리에서 반올림 되어집니다. 매일 00시 기준으로 업데이트 됩니다.", number: "100703", Component: ScreenAdmin },
+      { title: "통계", description: "유통 통계", number: "100704", Component: ScreenAdmin },
+    ],
+  },
+  {
+    category: "개발자",
+    pages: [
+      { title: "개발자", description: "", number: "100801", Component: ScreenAdmin },
+    ],
+  },
+  {
+    category: "관리자",
+    pages: [
+      { title: "관리자", description: "", number: "100901", Component: ScreenAdmin },
+    ],
+  },
 ];

@@ -29,7 +29,7 @@ export default async function Configs({ children, defaultColorScheme }: ConfigsP
         <ReactQuery>
           <MantineProvider defaultColorScheme={defaultColorScheme}>
             {children}
-            <Devtools />
+            {/* <Devtools /> */}
             <ModalContainer />
             <ToastBox />
           </MantineProvider>

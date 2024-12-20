@@ -1,6 +1,6 @@
 // css 순서변경 금지
-import "@/styles/agGrid.scss";
-import "@/styles/dates.scss";
+//import "@/styles/agGrid.scss";
+//import "@/styles/dates.scss";
 
 import { getServerSessionWithOptions } from "@/libraries/nextAuth";
 import { notFound, redirect } from "next/navigation";

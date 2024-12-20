@@ -43,6 +43,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--mantine-font-family);
+  font-size: var(--mantine-font-size-md);
   line-height: var(--mantine-line-height);
   background-color: var(--mantine-color-body);
   color: var(--mantine-color-text);
@@ -833,7 +834,7 @@ fieldset:disabled .mantine-active:active {
   --input-cursor: text;
   --input-text-align: left;
   --input-line-height: calc(var(--input-height) - calc(0.125rem * var(--mantine-scale)));
-  --input-padding: calc(var(--input-height) / 5);
+  --input-padding: calc(var(--input-height) / 3);
   --input-padding-inline-start: var(--input-padding);
   --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
@@ -1080,11 +1081,6 @@ fieldset:disabled .mantine-active:active {
 /* ----- Input.Wrapper ----- */
 .m_46b77525 {
   line-height: var(--mantine-line-height);
-}
-
-.m_46b77525[data-variant="underline"] {
-  border-bottom: 1px solid;
-  border-radius: 0;
 }
 
 .m_8fdc1311 {

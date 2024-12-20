@@ -3,6 +3,7 @@ import { ComponentType } from "react";
 
 export type Page = {
   title: string;
+  description: string;
   number: string;
   Component: ComponentType<HomeProps<any>>;
 };
@@ -55,8 +56,8 @@ export const getClientPathList = (paths: Path[]) => {
         const pages = traversePages(page.pages);
         result.push({ category: page.category, pages });
       } else {
-        const { title, number } = page;
-        result.push({ title, number });
+        const { title, description, number } = page;
+        result.push({ title, description, number });
       }
     }
 
