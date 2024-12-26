@@ -20,8 +20,8 @@ import ScreenUserList from "@/components/pageComponents/userMarket/screenUserLis
 import ScreenPayment from "@/components/pageComponents/userMarket/screenPayment";
 import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
 import ScreenOrderbookStatus from "@/components/pageComponents/userMarket/screenOrderbookStatus";
-import ScreenPositionStatus from "@/components/pageComponents/userMarket/screenPositionStatus";
-import ScreenTradeStatus from "@/components/pageComponents/userMarket/screenTradeStatus";
+import PositionStatus from "@/components/pageComponents/order/PositionStatus";
+import TradeStatus from "@/components/pageComponents/order/TradeStatus";
 import ScreenAgentStatus from "@/components/pageComponents/agents/screenAgentStatus";
 import ScreenAgentList from "@/components/pageComponents/agents/screenAgentList";
 import ScreenAgentRegister from "@/components/pageComponents/agents/screenAgentRegister";
@@ -95,13 +95,13 @@ export default function LayoutClient({ children, clientPath, session }: LayoutCl
       
 
       {/* 주문 - 포지션내역 */}
-      {(pageName === "100401") && (pathPage) && <ScreenPositionStatus page={pathPage} session={session} />}
+      {(pageName === "100401") && (pathPage) && <PositionStatus page={pathPage} session={session} />}
       {/* 주문 - 미체결내역 */}
       {(pageName === "100402") && (pathPage) && <OpenOrderStatus page={pathPage} session={session} />}
       {/* 주문 - 주문내역 */}
       {(pageName === "100403") && (pathPage) && <ScreenOrderbookStatus page={pathPage} session={session} />}
       {/* 주문 - 체결내역 */}
-      {(pageName === "100404") && (pathPage) && <ScreenTradeStatus page={pathPage} session={session} />}
+      {(pageName === "100404") && (pathPage) && <TradeStatus page={pathPage} session={session} />}
       {/* 주문 - 고객 손익내역 */}
       {(pageName === "100405") && (pathPage) && <PnlStatus page={pathPage} session={session} />}
 

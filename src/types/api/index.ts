@@ -94,3 +94,6 @@ export type TBW_002000_S02 = StringRspn<2>;
 
 /** 입출금 신청 내역 존재 유무 조회 */
 export type TBW_001000_Q03 = StringRspn<3>;
+
+/** 체결 내역 조회(관리자) */
+export type TBW_106000_Q03 = StringRspn<20>

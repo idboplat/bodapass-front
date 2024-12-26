@@ -16,11 +16,11 @@ const Flex_vc = styled.div`
 `;
 
 
-interface ScreenPositionStatusProps {}
+interface PositionStatusProps {}
 
-/** 유저/마켓관리 - 포지션 현황 */
-export default function ScreenPositionStatus(
-  { page, session }: HomeProps<ScreenPositionStatusProps>
+/** 주문 - 포지션 현황 */
+export default function PositionStatus(
+  { page, session }: HomeProps<PositionStatusProps>
 ) {
 
   const [openMarket, setOpenMarket] = useState(false);
