@@ -18,6 +18,7 @@
       }
     ],
     "paths": {
+      "@variable": ["./src/styles/variable.module.scss"],
       "@web/*": ["./src/app/(web)/*"],
       "@api/*": ["./src/app/api/*"],
       "@/*": ["./src/*"],

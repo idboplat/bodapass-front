@@ -1,13 +1,21 @@
 "use client";
-import { COLOR_SCHEME_KEY } from "@/constants";
-import {
-  createTheme,
-  virtualColor,
-  isMantineColorScheme,
-  MantineColorScheme,
-  MantineColorSchemeManager,
-  LocalStorageColorSchemeManagerOptions,
-} from "@mantine/core";
+import {ActionIcon, ButtonProps, Checkbox, defaultVariantColorsResolver, MantineTheme, MantineTransition, Menu, Modal, ModalContent, Pagination, Radio, SegmentedControl, Select, Switch} from '@mantine/core';
+import {  createTheme, virtualColor } from "@mantine/core";
+
+// https://mantine.dev/styles/variants-sizes
+
+const OPEN_MENU_TRANSITION: MantineTransition = {
+  out: { opacity: 0, transform: 'translateY(-4px)' },
+  in: { opacity: 1, transform: 'translateY(0px)' },
+  transitionProperty: 'opacity, transform',
+};
+
+const BLANK_TRANSITION: MantineTransition = {
+  out: {},
+  in: {},
+  transitionProperty: '',
+};
+
 
 export const theme = createTheme({
   /* Put your mantine theme override here */
@@ -20,95 +28,142 @@ export const theme = createTheme({
     lg: "74em",
     xl: "90em",
   },
-  colors: {
-    primary: virtualColor({
-      name: "primary",
-      dark: "deep-blue",
-      light: "deep-orange",
+  colors: {},
+  components: {
+    ActionIcon: ActionIcon.extend({
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+      },
     }),
-    demo: virtualColor({
-      name: "demo",
-      dark: "deep-orange",
-      light: "deep-blue",
+    Button: {
+      vars: (theme: MantineTheme, props: ButtonProps) => {
+        if (props.variant === 'default') {
+          return {
+            root: {
+              '--button-color': 'var(--mantine-color-text)',
+            },
+          };
+        }
+      },
+      // styles: (theme: MantineTheme, props: ButtonProps) => {
+      //   return {
+      //     root: {
+      //       color: 'red',
+      //     },
+      //   };
+      // },
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+      },
+    },
+    Checkbox: Checkbox.extend({
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+      },
     }),
-    "deep-blue": [
-      "#e5f3ff",
-      "#cde2ff",
-      "#9ac2ff",
-      "#64a0ff",
-      "#3884fe",
-      "#1d72fe",
-      "#0969ff",
-      "#0058e4",
-      "#004ecd",
-      "#0043b5",
-    ],
-    "deep-orange": [
-      "#fff4e2",
-      "#fee8cf",
-      "#f7cfa2",
-      "#f2b571",
-      "#ed9f48",
-      "#ea912d",
-      "#e98a1d",
-      "#cf770f",
-      "#b96907",
-      "#a15900",
-    ],
+    Menu: Menu.extend({
+      defaultProps: {
+        transitionProps: {
+          transition: OPEN_MENU_TRANSITION,
+          timingFunction: 'ease-out',
+          duration: 300,
+        },
+      },
+    }),
+    Modal: Modal.extend({
+      defaultProps: {
+        transitionProps: {
+          transition: BLANK_TRANSITION,
+          duration: 0,
+          timingFunction: '',
+        },
+      },
+    }),
+    ModalContent: ModalContent.extend({
+      defaultProps: {
+        transitionProps: {
+          transition: BLANK_TRANSITION,
+          duration: 0,
+          timingFunction: '',
+        },
+      },
+    }),
+    Pagination: Pagination.extend({
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+        siblings: 2,
+        withEdges: true, // Show first/last controls
+      },
+    }),
+    Radio: Radio.extend({
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+      },
+    }),
+    SegmentedControl: SegmentedControl.extend({
+      styles: {
+        root: {
+          boxShadow: '0px 0px 0px 1px var(--mantine-color-default-border)',
+        },
+      },
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+        transitionTimingFunction: 'ease-out',
+        transitionDuration: 300,
+      },
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        comboboxProps: {
+          transitionProps: {
+            transition: OPEN_MENU_TRANSITION,
+            timingFunction: 'ease-out',
+            duration: 300,
+          },
+        },
+      },
+    }),
+    Switch: Switch.extend({
+      defaultProps: {
+        // color: variable.thirdColorDefault,
+      },
+    }),
+  },
+  variantColorResolver(input) {
+    const defaultResolvedColors = defaultVariantColorsResolver(input);
+
+    if (input.variant === 'ghost') {
+      return {
+        background: 'transparent',
+        hover: 'var(--mantine-color-default-hover)',
+        color: 'var(--mantine-color-text)',
+        border: 'none',
+      };
+    }
+
+    if (input.color === 'first') {
+      return {
+        background: 'transparent',
+        hover: 'var(--mantine-color-default-hover)',
+        color: 'var(--mantine-color-text)',
+        border: 'none',
+      };
+    } else if (input.color === 'second') {
+      return {
+        background: 'transparent',
+        hover: 'var(--mantine-color-default-hover)',
+        color: 'var(--mantine-color-text)',
+        border: 'none',
+      };
+    } else if (input.color === 'third') {
+      return {
+        background: 'transparent',
+        hover: 'var(--mantine-color-default-hover)',
+        color: 'var(--mantine-color-text)',
+        border: 'none',
+      };
+    }
+
+    return defaultResolvedColors;
   },
 });
-
-export interface ColorSchemeManagerOptions {
-  /** Local storage key used to retrieve value with `localStorage.getItem(key)`, `mantine-color-scheme` by default */
-  key?: string;
-}
-
-export function colorSchemeManager({
-  key = COLOR_SCHEME_KEY,
-}: LocalStorageColorSchemeManagerOptions = {}): MantineColorSchemeManager {
-  let handleStorageEvent: (event: StorageEvent) => void;
-
-  return {
-    get: (defaultValue) => {
-      if (typeof window === "undefined") {
-        return defaultValue;
-      }
-
-      try {
-        return (window.localStorage.getItem(key) as MantineColorScheme) || defaultValue;
-      } catch {
-        return defaultValue;
-      }
-    },
-
-    set: (value) => {
-      try {
-        window.localStorage.setItem(key, value);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          "[@mantine/core] Local storage color scheme manager was unable to save color scheme.",
-          error,
-        );
-      }
-    },
-
-    subscribe: (onUpdate) => {
-      handleStorageEvent = (event) => {
-        if (event.storageArea === window.localStorage && event.key === key) {
-          isMantineColorScheme(event.newValue) && onUpdate(event.newValue);
-        }
-      };
-
-      window.addEventListener("storage", handleStorageEvent);
-    },
-
-    unsubscribe: () => {
-      window.removeEventListener("storage", handleStorageEvent);
-    },
-
-    clear: () => {
-      window.localStorage.removeItem(key);
-    },
-  };
-}

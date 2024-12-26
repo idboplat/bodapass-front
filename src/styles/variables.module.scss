@@ -1,4 +1,16 @@
 :export {
   bezierCurve: var.$bezier-curve;
   boxShadow: var.$box-shadow;
+
+  breakpointSm: #{map-get(var.$breakpoints, sm)};
+  breakpointXs: #{map-get(var.$breakpoints, xs)};
+  breakpointMd: #{map-get(var.$breakpoints, md)};
+  breakpointLg: #{map-get(var.$breakpoints, lg)};
+  breakpointXl: #{map-get(var.$breakpoints, xl)};
+
+  zIndexApp: #{map-get(var.$z-indexes, app)};
+  zIndexModal: #{map-get(var.$z-indexes, modal)};
+  zIndexPopover: #{map-get(var.$z-indexes, popover)};
+  zIndexOverlay: #{map-get(var.$z-indexes, overlay)};
+  zIndexMax: #{map-get(var.$z-indexes, max)};
 }

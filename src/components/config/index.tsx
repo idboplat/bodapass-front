@@ -27,7 +27,7 @@ export default async function Configs({ children, defaultColorScheme }: ConfigsP
     <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <NextAuth>
         <ReactQuery>
-          <MantineProvider defaultColorScheme={defaultColorScheme}>
+          <MantineProvider defaultColorScheme={"light"}>
             {children}
             {/* <Devtools /> */}
             <ModalContainer />

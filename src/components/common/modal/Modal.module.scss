@@ -12,7 +12,7 @@
 .layout {
   @extend %flex-center;
   @extend %fixed-max-size;
-  z-index: map-get(var.$z-index, modal);
+  z-index: map-get(var.$z-indexs, modal);
 }
 
 .content {
