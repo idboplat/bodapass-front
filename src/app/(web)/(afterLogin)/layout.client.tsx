@@ -29,6 +29,8 @@ import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenCharg
 import ScreenManagement from "@/components/pageComponents/statistics/screenManagement";
 import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
 import ScreenSubAgentStatistics from "@/components/pageComponents/statistics/screenSubAgentStatistics";
+import OpenOrderStatus from '@/components/pageComponents/order/OpenOrderStatus';
+import PnlStatus from '@/components/pageComponents/order/PnlStatus';
 
 interface LayoutClientProps {
   clientPath: ClientPath[];
@@ -90,12 +92,19 @@ export default function LayoutClient({ children, clientPath, session }: LayoutCl
       {(pageName === "100303") && (pathPage) && <ScreenPayment page={pathPage} session={session} />}
       {/* 유저/마켓관리 - 마켓목록 */}
       {(pageName === "100304") && (pathPage) && <ScreenMarketList page={pathPage} session={session} />}
-      {/* 유저/마켓관리 - 오더북 현황 */}
-      {(pageName === "100305") && (pathPage) && <ScreenOrderbookStatus page={pathPage} session={session} />}
-      {/* 유저/마켓관리 - 포지션 현황 */}
-      {(pageName === "100306") && (pathPage) && <ScreenPositionStatus page={pathPage} session={session} />}
-      {/* 유저/마켓관리 - 거래내역 */}
-      {(pageName === "100307") && (pathPage) && <ScreenTradeStatus page={pathPage} session={session} />}
+      
+
+      {/* 주문 - 포지션내역 */}
+      {(pageName === "100401") && (pathPage) && <ScreenPositionStatus page={pathPage} session={session} />}
+      {/* 주문 - 미체결내역 */}
+      {(pageName === "100402") && (pathPage) && <OpenOrderStatus page={pathPage} session={session} />}
+      {/* 주문 - 주문내역 */}
+      {(pageName === "100403") && (pathPage) && <ScreenOrderbookStatus page={pathPage} session={session} />}
+      {/* 주문 - 체결내역 */}
+      {(pageName === "100404") && (pathPage) && <ScreenTradeStatus page={pathPage} session={session} />}
+      {/* 주문 - 고객 손익내역 */}
+      {(pageName === "100405") && (pathPage) && <PnlStatus page={pathPage} session={session} />}
+
 
       {/* 에이전트 관리 - 에이전트 내역 */}
       {(pageName === "100501") && (pathPage) && <ScreenAgentStatus page={pathPage} session={session} />}

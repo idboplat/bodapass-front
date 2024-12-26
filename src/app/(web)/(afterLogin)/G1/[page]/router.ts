@@ -26,9 +26,13 @@ export const G1_PATH_LIST: Path[] = [
     ],
   },
   {
-    category: "사용안함",
+    category: "주문",
     pages: [
-      { title: "사용안함", description: "사용안함", number: "100401", Component: ScreenAdmin },
+      { title: "주문", description: "포지션 내역", number: "100401", Component: ScreenAdmin },
+      { title: "주문", description: "미체결 내역", number: "100402", Component: ScreenAdmin },
+      { title: "주문", description: "주문 내역", number: "100403", Component: ScreenAdmin },
+      { title: "주문", description: "체결 내역", number: "100404", Component: ScreenAdmin },
+      { title: "주문", description: "고객 손익 내역", number: "100405", Component: ScreenAdmin },
     ],
   },
   {

@@ -37,7 +37,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    optimizePackageImports: ["@mantine/core", "@mantine/hooks"], // tree shaking
+    // optimizePackageImports: ["@mantine/core", "@mantine/hooks"], // 테스트 필요 tree shaking
   },
 };
 

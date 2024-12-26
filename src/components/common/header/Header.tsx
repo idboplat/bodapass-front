@@ -41,6 +41,7 @@ export default function Header({ session, pathList, handleSubmit }: HeaderProps)
 
   const [indexCategory, setIndexCategory] = useState(0);
   const [indexMarket, setIndexMarket] = useState(1);
+  const [indexOrder, setIndexOrder] = useState(0);
   const [indexAgent, setIndexAgent] = useState(0);
   const [indexStatistic, setIndexStatistic] = useState(0);
 
@@ -77,10 +78,32 @@ export default function Header({ session, pathList, handleSubmit }: HeaderProps)
       case 1: pathContent= `100302`; break;
       case 2: pathContent= `100303`; break;
       case 3: pathContent= `100304`; break;
-      case 4: pathContent= `100305`; break;
-      case 5: pathContent= `100306`; break;
-      case 6: pathContent= `100307`; break;
-      case 7: pathContent= `100308`; break;
+      // case 4: pathContent= `100305`; break;
+      // case 5: pathContent= `100306`; break;
+      // case 6: pathContent= `100307`; break;
+      // case 7: pathContent= `100308`; break;
+      default: break;
+    }
+
+    handleSubmit(pathContent);
+  }
+
+  
+  // 주문
+  function handleSubmitOrder(params: number) {
+    setIndexOrder(params);
+
+    var pathContent: string = "";
+    switch(params)
+    {
+      case 0: pathContent= `100401`; break;
+      case 1: pathContent= `100402`; break;
+      case 2: pathContent= `100403`; break;
+      case 3: pathContent= `100404`; break;
+      case 4: pathContent= `100405`; break;
+      // case 5: pathContent= `100306`; break;
+      // case 6: pathContent= `100307`; break;
+      // case 7: pathContent= `100308`; break;
       default: break;
     }
 
@@ -125,7 +148,7 @@ export default function Header({ session, pathList, handleSubmit }: HeaderProps)
       <header.Header_logo>
         <h1>
           <a >
-            <Image src={logo.src} alt="logo image" />
+            <img src={logo.src} alt="logo image" />
           </a>
         </h1>
       </header.Header_logo>
@@ -146,11 +169,18 @@ export default function Header({ session, pathList, handleSubmit }: HeaderProps)
               <header.Header_cate_dd active={indexMarket == 1} ><a onClick={() => {handleSubmitMarket(1)}}>유저 목록</a></header.Header_cate_dd>
               <header.Header_cate_dd active={indexMarket == 2} ><a onClick={() => {handleSubmitMarket(2)}}>출금 내역</a></header.Header_cate_dd>
               <header.Header_cate_dd active={indexMarket == 3} ><a onClick={() => {handleSubmitMarket(3)}}>마켓 목록</a></header.Header_cate_dd>
-              <header.Header_cate_dd active={indexMarket == 4} ><a onClick={() => {handleSubmitMarket(4)}}>오더북 현황</a></header.Header_cate_dd>
-              <header.Header_cate_dd active={indexMarket == 5} ><a onClick={() => {handleSubmitMarket(5)}}>포지션 현황</a></header.Header_cate_dd>
-              <header.Header_cate_dd active={indexMarket == 6} ><a onClick={() => {handleSubmitMarket(6)}}>거래내역</a></header.Header_cate_dd>
-              {/* <header.Header_cate_dd active={indexMarket == 7} ><a onClick={() => {handleSubmitMarket(7)}}>포지션 내역</a></header.Header_cate_dd> */}
-					</dl>
+					  </dl>
+          </header.Header_cate_li>
+          <header.Header_cate_li active={indexCategory == 3} normalImg={iconCate3.src} activeImg={iconCate3On.src}>
+            <a onClick={() => {handleSubmitCate(3)}}>주문</a>
+            <dl>
+              {/* <header.Header_cate_dd active={indexMarket == 0} ><a onClick={() => {handleSubmitMarket(0)}}>트랜잭션 내역</a></header.Header_cate_dd> */}
+              <header.Header_cate_dd active={indexOrder === 0} ><a onClick={() => {handleSubmitOrder(0)}}>포지션 내역</a></header.Header_cate_dd>
+              <header.Header_cate_dd active={indexOrder === 1} ><a onClick={() => {handleSubmitOrder(1)}}>미체결 내역</a></header.Header_cate_dd>
+              <header.Header_cate_dd active={indexOrder === 2} ><a onClick={() => {handleSubmitOrder(2)}}>주문 내역</a></header.Header_cate_dd>
+              <header.Header_cate_dd active={indexOrder === 3} ><a onClick={() => {handleSubmitOrder(3)}}>체결 내역</a></header.Header_cate_dd>
+              <header.Header_cate_dd active={indexOrder === 4} ><a onClick={() => {handleSubmitOrder(4)}}>고객 손익 내역</a></header.Header_cate_dd>
+					  </dl>
           </header.Header_cate_li>
           {/* <header.Header_cate_li active={indexCategory == 3} normalImg={iconCate4.src} activeImg={iconCate4On.src}>
             <a onClick={() => {handleSubmitCate(3)}}>제한 사항</a>
