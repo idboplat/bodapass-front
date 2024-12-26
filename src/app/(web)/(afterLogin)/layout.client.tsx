@@ -19,7 +19,7 @@ import ScreenTransaction from "@/components/pageComponents/userMarket/screenTran
 import ScreenUserList from "@/components/pageComponents/userMarket/screenUserList";
 import ScreenPayment from "@/components/pageComponents/userMarket/screenPayment";
 import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
-import ScreenOrderbookStatus from "@/components/pageComponents/userMarket/screenOrderbookStatus";
+import ScreenOrderbookStatus from "@/components/pageComponents/order/screenOrderbookStatus";
 import PositionStatus from "@/components/pageComponents/order/PositionStatus";
 import TradeStatus from "@/components/pageComponents/order/TradeStatus";
 import ScreenAgentStatus from "@/components/pageComponents/agents/screenAgentStatus";

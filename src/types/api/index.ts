@@ -84,7 +84,7 @@ export type TBW_000001_S01 = StringRspn<9>;
 export type TBW_006000_Q01 = StringRspn<18>;
 
 /** 주문 내역 조회 */
-export type TBW_006000_Q02 = StringRspn<18>;
+export type TBW_106000_Q02 = StringRspn<18>;
 
 /** 체결 내역 조회 */
 export type TBW_006000_Q03 = StringRspn<20>;
