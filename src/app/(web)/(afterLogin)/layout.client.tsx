@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/components/common/header/Header";
+import Sidebar from "@/components/common/header/Sidebar";
 import { Session } from "next-auth";
 import { ClientPath } from "@/utils/getPage";
 import { useApp } from "@/stores/app";
@@ -72,7 +72,7 @@ export default function LayoutClient({ children, clientPath, session }: LayoutCl
 
   return (
     <>
-      <Header
+      <Sidebar
         session={session}
         pathList={clientPath}
         handleSubmit={(pageNumber) => handleMovePath(pageNumber)}

@@ -1,0 +1,105 @@
+.sidebar {
+  position: fixed; 
+  left: 0; 
+  top: 0; 
+  width: 240px; 
+  height: 100%; 
+  background:#fff; 
+  z-index: 9999; 
+  overflow-y: auto;
+
+  .logo {
+    display: block;
+    padding: 20px 38px 25px;
+
+    h1 {
+      img {
+        width: 127px;
+        height: 24px;
+      }
+    }
+  }
+
+  .nav {
+    margin: 10px 0 0;
+
+    li {
+      margin: 0 0 11.8px;
+
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+  }
+
+
+  .navHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 30px;
+    padding: 0 33px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+    
+    &::before {
+      display: inline-block;
+      content: "";
+      width: 30.2px;
+      height: 30.2px;
+      margin: 0 12.27px 0 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: var(--bg-image);
+      background-size: 15px auto;
+    }
+
+
+    &[data-active="true"] {
+      color: #000000;
+      margin-bottom: 14px;
+
+      &::before {
+        background-image: var(--bg-image-active);
+      }
+    }
+  }
+
+  :global(.app-NavLink-collapse) {
+    background: #FAFAFA;
+
+    :global(.app-NavLink-children) {
+      padding: 18px 0 18px 49px;
+      
+      dl {
+        dd + dd {
+          margin-top: 17px;
+        }
+      }
+    }
+
+  }
+
+  .navItem {
+    padding: 0;
+    color: #808080;
+
+    :global(.app-NavLink-body){
+      &::before {
+        display: inline-block;
+          content: "";
+          width: 3px;
+          height: 3px;
+          margin: 0 26px 0 0;
+          border-radius: 9999px;
+          background: currentColor;
+          vertical-align: middle;
+      }
+    }
+
+    &[data-active="true"] {
+      color: #000000;
+    }
+  }
+}
