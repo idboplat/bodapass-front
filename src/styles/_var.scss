@@ -14,7 +14,6 @@ $mantine-breakpoint-md: var(--mantine-breakpoint-md);
 $mantine-breakpoint-lg: var(--mantine-breakpoint-lg);
 $mantine-breakpoint-xl: var(--mantine-breakpoint-xl);
 
-
 // #{} interpolation과 함께 사용
 $theme-light-selector: ":where([data-mantine-color-scheme='light'])";
 $theme-dark-selector: ":where([data-mantine-color-scheme='dark'])";
@@ -25,7 +24,7 @@ $breakpoints: (
   md: 64rem,
   lg: 74rem,
   xl: 90rem,
-  2xl: 120rem
+  2xl: 120rem,
 );
 
 $mobile-boundary: sm; // breakpoint for mobile devices
@@ -43,7 +42,7 @@ $box-shadow: 0px 1px 2px 0 rgba(56, 52, 52, 0.4);
 
 $backdrop-color: #ffffff34;
 
-// #667DFF
+
 $colors: (
   white-0: #dddddd,
   white-1:#F2F2F2,
@@ -75,3 +74,6 @@ $colors: (
   
   purple-0: #B85fff,
 );
+
+$ag-gird-font-size: 12px;
+$ag-gird-font-color: #8898aa;
