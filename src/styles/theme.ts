@@ -167,6 +167,30 @@ export const theme = createTheme({
           },
         },
       },
+      styles: () => {
+        return {
+          input: {
+            borderRadius: 15,
+            textAlign: "center",
+          },
+          dropdown: {
+            fontSize: 16,
+            borderRadius: 15,
+            border: "1px solid #588CBF",
+            overflow: "hidden",
+            padding: 0,
+          },
+
+          option: {
+            textAlign: "center",
+            justifyContent: "center",
+            marginRight: "auto",
+            fontSize: 16,
+            padding: "14px 0",
+            borderRadius: 0,
+          },
+        };
+      },
     }),
     Switch: Switch.extend({
       defaultProps: {

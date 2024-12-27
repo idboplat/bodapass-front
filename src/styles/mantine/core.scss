@@ -1616,6 +1616,18 @@ fieldset:disabled .mantine-active:active {
   color: inherit;
   cursor: pointer;
   word-break: break-word;
+  position: relative;
+
+  & + &::before {
+    position: absolute;
+    top: 0px;
+    left: 14px;
+    right: 14px;
+    padding-inline: 14px;
+    height: 1px;
+    background-color: #bdbdbd;
+    content: "";
+  }
 }
 
 .m_92253aa5:where([data-combobox-selected]) {
@@ -1631,7 +1643,8 @@ fieldset:disabled .mantine-active:active {
 @media (hover: hover) {
   :where([data-mantine-color-scheme="light"])
     .m_92253aa5:hover:where(:not([data-combobox-selected], [data-combobox-disabled])) {
-    background-color: var(--mantine-color-gray-0);
+    // background-color: var(--mantine-color-gray-0);
+    background-color: var(--mantine-color-blue-10);
   }
 
   :where([data-mantine-color-scheme="dark"])

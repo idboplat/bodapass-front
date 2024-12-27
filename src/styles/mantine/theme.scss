@@ -19,7 +19,7 @@
   --mantine-line-height: 1.55;
   --mantine-font-family: var.$font-pretendard;
   --mantine-heading-font-weight: 700;
-  
+
   --mantine-primary-color-0: var(--mantine-color-blue-0);
   --mantine-primary-color-1: var(--mantine-color-blue-1);
   --mantine-primary-color-2: var(--mantine-color-blue-2);
@@ -79,7 +79,7 @@
       calc(-0.4375rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(1.0625rem * var(--mantine-scale))
       calc(1.0625rem * var(--mantine-scale)) calc(-0.4375rem * var(--mantine-scale));
-      
+
   --mantine-radius-xs: calc(0.125rem * var(--mantine-scale));
   --mantine-radius-sm: calc(0.25rem * var(--mantine-scale));
   --mantine-radius-md: calc(0.5rem * var(--mantine-scale));
@@ -167,6 +167,7 @@
   --mantine-color-blue-7: #1c7ed6;
   --mantine-color-blue-8: #1971c2;
   --mantine-color-blue-9: #1864ab;
+  --mantine-color-blue-10: #d7deff;
   --mantine-color-cyan-0: #e3fafc;
   --mantine-color-cyan-1: #c5f6fa;
   --mantine-color-cyan-2: #99e9f2;
@@ -376,7 +377,7 @@
   --mantine-color-orange-outline-hover: rgba(253, 126, 20, 0.05);
 }
 
-:root[data-mantine-color-scheme='dark'] {
+:root[data-mantine-color-scheme="dark"] {
   --mantine-color-scheme: dark;
   --mantine-color-bright: var(--mantine-color-white);
   --mantine-color-text: var(--mantine-color-dark-0);
