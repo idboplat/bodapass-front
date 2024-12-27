@@ -13,6 +13,7 @@ import { useState } from "react"
 import {useQuery} from '@tanstack/react-query'
 import callTms from '@/libraries/callTms'
 import {TBW_106000_Q03} from '@/types/api'
+import {TextInput} from '@mantine/core'
 
 const Flex1_li = styled.li`
   flex:1 !important; 
@@ -157,6 +158,7 @@ export default function TradeStatus(
                 </Select_box> */}
 
                 {/** 종목코드 설정 */}
+                <TextInput value="asdada" />
                 <Input_box flex1={true} >
                   <input type="text" placeholder="종목코드" value={instCd} onChange={(e)=>setInstCd(e.target.value)} />
                   <a className="search" onClick={onSearch}>검색</a>

@@ -1,3 +1,10 @@
+// css 순서변경 금지
+import "@/styles/agGrid.scss";
+import "@/styles/mantine/core.scss";
+import "@/styles/mantine/theme.scss";
+import "@/styles/mantine/dates.scss";
+import "@/styles/global.scss";
+
 import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
 import Configs from "@/components/config";
