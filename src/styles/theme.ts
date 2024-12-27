@@ -1,23 +1,39 @@
 "use client";
-import {ActionIcon, ButtonProps, Checkbox, defaultVariantColorsResolver, MantineTheme, MantineTransition, Menu, Modal, ModalContent, Pagination, Radio, SegmentedControl, Select, Switch} from '@mantine/core';
-import {  createTheme, virtualColor } from "@mantine/core";
+import {
+  ActionIcon,
+  ButtonProps,
+  Checkbox,
+  defaultVariantColorsResolver,
+  MantineTheme,
+  MantineTransition,
+  Menu,
+  Modal,
+  ModalContent,
+  Pagination,
+  Radio,
+  SegmentedControl,
+  Select,
+  Switch,
+  TextInput,
+} from "@mantine/core";
+import { createTheme, virtualColor } from "@mantine/core";
 
 // https://mantine.dev/styles/variants-sizes
 
 const OPEN_MENU_TRANSITION: MantineTransition = {
-  out: { opacity: 0, transform: 'translateY(-4px)' },
-  in: { opacity: 1, transform: 'translateY(0px)' },
-  transitionProperty: 'opacity, transform',
+  out: { opacity: 0, transform: "translateY(-4px)" },
+  in: { opacity: 1, transform: "translateY(0px)" },
+  transitionProperty: "opacity, transform",
 };
 
 const BLANK_TRANSITION: MantineTransition = {
   out: {},
   in: {},
-  transitionProperty: '',
+  transitionProperty: "",
 };
 
-
 export const theme = createTheme({
+  scale: 1,
   /* Put your mantine theme override here */
   fontFamily:
     "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif",
@@ -35,12 +51,18 @@ export const theme = createTheme({
         // color: variable.thirdColorDefault,
       },
     }),
+    TextInput: TextInput.extend({
+      defaultProps: {
+        h: 47,
+        radius: 15,
+      },
+    }),
     Button: {
       vars: (theme: MantineTheme, props: ButtonProps) => {
-        if (props.variant === 'default') {
+        if (props.variant === "default") {
           return {
             root: {
-              '--button-color': 'var(--mantine-color-text)',
+              "--button-color": "var(--mantine-color-text)",
             },
           };
         }
@@ -65,7 +87,7 @@ export const theme = createTheme({
       defaultProps: {
         transitionProps: {
           transition: OPEN_MENU_TRANSITION,
-          timingFunction: 'ease-out',
+          timingFunction: "ease-out",
           duration: 300,
         },
       },
@@ -75,7 +97,7 @@ export const theme = createTheme({
         transitionProps: {
           transition: BLANK_TRANSITION,
           duration: 0,
-          timingFunction: '',
+          timingFunction: "",
         },
       },
     }),
@@ -84,7 +106,7 @@ export const theme = createTheme({
         transitionProps: {
           transition: BLANK_TRANSITION,
           duration: 0,
-          timingFunction: '',
+          timingFunction: "",
         },
       },
     }),
@@ -103,12 +125,12 @@ export const theme = createTheme({
     SegmentedControl: SegmentedControl.extend({
       styles: {
         root: {
-          boxShadow: '0px 0px 0px 1px var(--mantine-color-default-border)',
+          boxShadow: "0px 0px 0px 1px var(--mantine-color-default-border)",
         },
       },
       defaultProps: {
         // color: variable.thirdColorDefault,
-        transitionTimingFunction: 'ease-out',
+        transitionTimingFunction: "ease-out",
         transitionDuration: 300,
       },
     }),
@@ -117,7 +139,7 @@ export const theme = createTheme({
         comboboxProps: {
           transitionProps: {
             transition: OPEN_MENU_TRANSITION,
-            timingFunction: 'ease-out',
+            timingFunction: "ease-out",
             duration: 300,
           },
         },
@@ -132,35 +154,35 @@ export const theme = createTheme({
   variantColorResolver(input) {
     const defaultResolvedColors = defaultVariantColorsResolver(input);
 
-    if (input.variant === 'ghost') {
+    if (input.variant === "ghost") {
       return {
-        background: 'transparent',
-        hover: 'var(--mantine-color-default-hover)',
-        color: 'var(--mantine-color-text)',
-        border: 'none',
+        background: "transparent",
+        hover: "var(--mantine-color-default-hover)",
+        color: "var(--mantine-color-text)",
+        border: "none",
       };
     }
 
-    if (input.color === 'first') {
+    if (input.color === "first") {
       return {
-        background: 'transparent',
-        hover: 'var(--mantine-color-default-hover)',
-        color: 'var(--mantine-color-text)',
-        border: 'none',
+        background: "transparent",
+        hover: "var(--mantine-color-default-hover)",
+        color: "var(--mantine-color-text)",
+        border: "none",
       };
-    } else if (input.color === 'second') {
+    } else if (input.color === "second") {
       return {
-        background: 'transparent',
-        hover: 'var(--mantine-color-default-hover)',
-        color: 'var(--mantine-color-text)',
-        border: 'none',
+        background: "transparent",
+        hover: "var(--mantine-color-default-hover)",
+        color: "var(--mantine-color-text)",
+        border: "none",
       };
-    } else if (input.color === 'third') {
+    } else if (input.color === "third") {
       return {
-        background: 'transparent',
-        hover: 'var(--mantine-color-default-hover)',
-        color: 'var(--mantine-color-text)',
-        border: 'none',
+        background: "transparent",
+        hover: "var(--mantine-color-default-hover)",
+        color: "var(--mantine-color-text)",
+        border: "none",
       };
     }
 

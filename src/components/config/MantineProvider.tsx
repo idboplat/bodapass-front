@@ -1,4 +1,5 @@
 "use client";
+import { theme } from "@/styles/theme";
 import { MantineProvider as Provider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
 import "dayjs/locale/ko";
@@ -10,9 +11,10 @@ interface MantineProviderProps {
 
 export default function MantineProvider({ children, defaultColorScheme }: MantineProviderProps) {
   return (
-    <Provider 
-      defaultColorScheme={defaultColorScheme}  
-      classNamesPrefix="app" // ex) app-Button-root 
+    <Provider
+      theme={theme}
+      defaultColorScheme={defaultColorScheme}
+      classNamesPrefix="app" // ex) app-Button-root
       withCssVariables={false} // css variable 동적으로 추가되지 않도록
     >
       <DatesProvider settings={{ locale: "ko" }}>{children}</DatesProvider>

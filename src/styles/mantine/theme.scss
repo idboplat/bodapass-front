@@ -20,7 +20,7 @@
   --mantine-font-family: Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif;
 
   --mantine-heading-font-weight: 700;
-  --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
+  
   --mantine-primary-color-0: var(--mantine-color-blue-0);
   --mantine-primary-color-1: var(--mantine-color-blue-1);
   --mantine-primary-color-2: var(--mantine-color-blue-2);
@@ -80,11 +80,14 @@
       calc(-0.4375rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(1.0625rem * var(--mantine-scale))
       calc(1.0625rem * var(--mantine-scale)) calc(-0.4375rem * var(--mantine-scale));
+      
   --mantine-radius-xs: calc(0.125rem * var(--mantine-scale));
   --mantine-radius-sm: calc(0.25rem * var(--mantine-scale));
   --mantine-radius-md: calc(0.5rem * var(--mantine-scale));
   --mantine-radius-lg: calc(1rem * var(--mantine-scale));
   --mantine-radius-xl: calc(2rem * var(--mantine-scale));
+  --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
+
   --mantine-color-dark-0: #c9c9c9;
   --mantine-color-dark-1: #b8b8b8;
   --mantine-color-dark-2: #828282;

@@ -1,46 +1,43 @@
-"use client"
-import styled, { css } from "styled-components"
-import * as styles from "../styled/contentboxStyled"
-import { HomeProps } from "@/types/common"
-import { Input_box } from "../styled/inputboxStyled"
-import { Write_box } from "../styled/writeboxStyled"
-import { Calendar_box } from "../styled/calendarboxStyled"
-import { Select_box } from "../styled/selectboxStyled"
-import { Button_box } from "../styled/buttonboxStyled"
-import { Line_box } from "../styled/lineboxStyled"
+"use client";
+import styled, { css } from "styled-components";
+import * as styles from "../styled/contentboxStyled";
+import { HomeProps } from "@/types/common";
+import { Input_box } from "../styled/inputboxStyled";
+import { Write_box } from "../styled/writeboxStyled";
+import { Calendar_box } from "../styled/calendarboxStyled";
+import { Select_box } from "../styled/selectboxStyled";
+import { Button_box } from "../styled/buttonboxStyled";
+import { Line_box } from "../styled/lineboxStyled";
 
-import { useState } from "react"
-import {useQuery} from '@tanstack/react-query'
-import callTms from '@/libraries/callTms'
-import {TBW_106000_Q03} from '@/types/api'
-import {TextInput} from '@mantine/core'
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import callTms from "@/libraries/callTms";
+import { TBW_106000_Q03 } from "@/types/api";
+import { TextInput } from "@mantine/core";
 
 const Flex1_li = styled.li`
-  flex:1 !important; 
-  -webkit-flex:1; 
-  min-width:0;
+  flex: 1 !important;
+  -webkit-flex: 1;
+  min-width: 0;
 `;
 
 const Flex_vc = styled.div`
-  display:flex; 
-  flex-wrap:wrap !important;
-  align-items:center !important;
-  width:100%;
+  display: flex;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  width: 100%;
 `;
 
 const BSTP_MAP = {
   "": "전체",
-  "B": "매수",
-  "S": "매도",
+  B: "매수",
+  S: "매도",
 } as const;
 
 interface ScreenTradeStatusProps {}
 
 /** 유저/마켓관리 - 거래내역 */
-export default function TradeStatus(
-  { page, session }: HomeProps<ScreenTradeStatusProps>
-) {
-
+export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStatusProps>) {
   const [openMarket, setOpenMarket] = useState(false);
   const [openOrder, setOpenOrder] = useState(false);
   const [openId, setOpenId] = useState(false);
@@ -49,26 +46,24 @@ export default function TradeStatus(
   const [selectedType, setSelectedType] = useState(-1);
 
   const [count, setCount] = useState(0);
-  const [instCd, setInstCd] = useState("")
-  const [bstp, setBstp] = useState<keyof typeof BSTP_MAP>("")
+  const [instCd, setInstCd] = useState("");
+  const [bstp, setBstp] = useState<keyof typeof BSTP_MAP>("");
   const [strDd, setStrDd] = useState("2024-12-25");
   const [endDd, setEndDd] = useState("2024-12-26");
 
-
-
- const query =  useQuery({
+  const query = useQuery({
     queryKey: ["TBW_106000_Q03", count],
     queryFn: async () => {
-     const result =  await callTms<TBW_106000_Q03>({
+      const result = await callTms<TBW_106000_Q03>({
         session,
         svcId: "TBW_106000_Q03",
-        data : [
+        data: [
           session.user.corpCd,
           instCd, // 종목코드
           strDd.replaceAll("-", ""), // 조회 시작일
           endDd.replaceAll("-", ""), // 조회 종료일
           bstp, // bstp
-          "KRW", // 기준통화코드 
+          "KRW", // 기준통화코드
         ],
       });
 
@@ -83,33 +78,31 @@ export default function TradeStatus(
           "회사 명": item.F03,
           // "계좌 번호": item.F04,
           "사용자 ID": item.F05,
-          "종목": item.F06,
-          "레버리지": item.F07,
+          종목: item.F06,
+          레버리지: item.F07,
           "매수/매도": item.F08 === "B" ? "매수" : "매도",
-          "체결가": item.F09,
+          체결가: item.F09,
           "체결 수량": item.F10,
-          "진입가": item.F11,
-          "수수료": item.F12,
-          "손익": item.F13,
+          진입가: item.F11,
+          수수료: item.F12,
+          손익: item.F13,
           "가격 소수점": item.F14,
           "수량 소수점": item.F15,
           "체결 일자": item.F16,
           "체결 일련번호": item.F17,
           "주문 일자": item.F18,
           "주문 일련번호": item.F19,
-          "기준 환율": item.F20, 
-        }
+          "기준 환율": item.F20,
+        };
       });
     },
     enabled: count > 0,
-  })
-
+  });
 
   const onSearch = () => {
     console.log("onSearch", count);
     setCount((pre) => pre + 1);
-  }
-
+  };
 
   return (
     <styles.Section>
@@ -158,10 +151,17 @@ export default function TradeStatus(
                 </Select_box> */}
 
                 {/** 종목코드 설정 */}
-                <TextInput value="asdada" />
-                <Input_box flex1={true} >
-                  <input type="text" placeholder="종목코드" value={instCd} onChange={(e)=>setInstCd(e.target.value)} />
-                  <a className="search" onClick={onSearch}>검색</a>
+                <TextInput placeholder="asdasasd" />
+                <Input_box flex1={true}>
+                  <input
+                    type="text"
+                    placeholder="종목코드"
+                    value={instCd}
+                    onChange={(e) => setInstCd(e.target.value)}
+                  />
+                  <a className="search" onClick={onSearch}>
+                    검색
+                  </a>
                 </Input_box>
               </Flex_vc>
             </li>
@@ -170,13 +170,18 @@ export default function TradeStatus(
               <div>
                 <Calendar_box openPop={openCalendar}>
                   <div className="cal-button">
-                    <a className="select" onClick={() => {setOpenCalendar(!openCalendar)}}>
-                      <input value={strDd} onChange={(e)=>setStrDd(e.target.value)} />
+                    <a
+                      className="select"
+                      onClick={() => {
+                        setOpenCalendar(!openCalendar);
+                      }}
+                    >
+                      <input value={strDd} onChange={(e) => setStrDd(e.target.value)} />
                       <em>~</em>
-                      <input value={endDd} onChange={(e)=>setEndDd(e.target.value)} />
+                      <input value={endDd} onChange={(e) => setEndDd(e.target.value)} />
                     </a>
                     <a className="yesterday">어제</a>
-									  <a className="today">오늘</a>
+                    <a className="today">오늘</a>
                   </div>
                 </Calendar_box>
               </div>
@@ -191,23 +196,35 @@ export default function TradeStatus(
                   </button>
                   <div>
                     <dl>
-                      <dd className={(bstp === "")? "active" : ""}><a onClick={() => setBstp("")}><p>전체</p></a></dd>
-                      <dd className={(bstp === "B")? "active" : ""}><a onClick={() => setBstp("B")}><p>매수</p></a></dd>
-                      <dd className={(bstp === "S")? "active" : ""}><a onClick={() => setBstp("S")}><p>매도</p></a></dd>
+                      <dd className={bstp === "" ? "active" : ""}>
+                        <a onClick={() => setBstp("")}>
+                          <p>전체</p>
+                        </a>
+                      </dd>
+                      <dd className={bstp === "B" ? "active" : ""}>
+                        <a onClick={() => setBstp("B")}>
+                          <p>매수</p>
+                        </a>
+                      </dd>
+                      <dd className={bstp === "S" ? "active" : ""}>
+                        <a onClick={() => setBstp("S")}>
+                          <p>매도</p>
+                        </a>
+                      </dd>
                     </dl>
                   </div>
-                  </Select_box>
+                </Select_box>
               </div>
             </li>
-
           </ul>
-
         </Write_box>
 
         {/** 검색 버튼 */}
         <Button_box mt="24">
-          <div style={{width: "110px"}}>
-            <a className="btn-active" onClick={onSearch}>검색</a>
+          <div style={{ width: "110px" }}>
+            <a className="btn-active" onClick={onSearch}>
+              검색
+            </a>
           </div>
         </Button_box>
 
@@ -236,36 +253,30 @@ export default function TradeStatus(
 
               {/** 테이블 body */}
               <tbody>
-
-              {query.data?.map((item, index) => (
-                <tr key={`trade_status_${index}`}>
-                  <td>{item['체결 일시']}</td>
-                  <td>{item["회사 코드"]}</td>
-                  <td>{item["회사 명"]}</td>
-                  <td>{item["사용자 ID"]}</td>
-                  <td>{item["종목"]}</td>
-                  <td>{item["레버리지"]}</td>
-                  <td>{item["매수/매도"]}</td>
-                  <td>{item["체결가"]}</td>
-                  <td>{item["체결 수량"]}</td>
-                  <td>{item["진입가"]}</td>
-                  <td>{item["수수료"]}</td>
-                  <td>{item["손익"]}</td>
-                </tr>
-              ))}
+                {query.data?.map((item, index) => (
+                  <tr key={`trade_status_${index}`}>
+                    <td>{item["체결 일시"]}</td>
+                    <td>{item["회사 코드"]}</td>
+                    <td>{item["회사 명"]}</td>
+                    <td>{item["사용자 ID"]}</td>
+                    <td>{item["종목"]}</td>
+                    <td>{item["레버리지"]}</td>
+                    <td>{item["매수/매도"]}</td>
+                    <td>{item["체결가"]}</td>
+                    <td>{item["체결 수량"]}</td>
+                    <td>{item["진입가"]}</td>
+                    <td>{item["수수료"]}</td>
+                    <td>{item["손익"]}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </styles.Table_body>
-
         </styles.Table_box>
-
       </styles.Content_box>
     </styles.Section>
   );
 }
-
-
-
 
 // <div className="cal-popup">
 
@@ -311,7 +322,7 @@ export default function TradeStatus(
 //           <td><p className="date">4</p></td>
 //           <td><p className="date">5</p></td>
 //           <td><p className="date">6</p></td>
-//         </tr>				
+//         </tr>
 //         <tr>
 //           <td className="sun"><p className="date">7</p></td>
 //           <td><p className="date">8</p></td>
@@ -320,7 +331,7 @@ export default function TradeStatus(
 //           <td><p className="date">11</p></td>
 //           <td><p className="date">12</p></td>
 //           <td><p className="date">13</p></td>
-//         </tr>				
+//         </tr>
 //         <tr>
 //           <td className="sun today"><a className="date">14</a></td>
 //           <td><a className="date">15</a></td>
@@ -372,7 +383,7 @@ export default function TradeStatus(
 //           <td><a className="date">4</a></td>
 //           <td><a className="date">5</a></td>
 //           <td><a className="date">6</a></td>
-//         </tr>				
+//         </tr>
 //         <tr>
 //           <td className="sun"><a className="date">7</a></td>
 //           <td><a className="date">8</a></td>
@@ -381,7 +392,7 @@ export default function TradeStatus(
 //           <td><a className="date">11</a></td>
 //           <td><a className="date">12</a></td>
 //           <td><a className="date">13</a></td>
-//         </tr>				
+//         </tr>
 //         <tr>
 //           <td className="sun"><a className="date">14</a></td>
 //           <td><a className="date">15</a></td>

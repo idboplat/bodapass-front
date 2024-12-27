@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { AppContext, createAppStore, SESSION_STORAGE_KEY } from "@/stores/app";
 import { Session } from "next-auth";
 import dayjs from "@/libraries/dayjs";
-import { GlobalStyle } from "@/styles/GlobalStyle";
 
 interface AppProps {
   children: React.ReactNode;
@@ -40,10 +39,5 @@ export default function App({ session, sidebar, children, fiat }: AppProps) {
     return () => window.removeEventListener("storage", syncStore);
   }, []);
 
-  return (
-    <AppContext.Provider value={store.current}>
-      <GlobalStyle />
-      {children}
-    </AppContext.Provider>
-  );
+  return <AppContext.Provider value={store.current}>{children}</AppContext.Provider>;
 }

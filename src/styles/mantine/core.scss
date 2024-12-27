@@ -867,7 +867,7 @@ fieldset:disabled .mantine-active:active {
 
   text-align: var(--input-text-align);
   color: var(--input-color);
-  border: calc(0.0625rem * var(--mantine-scale)) solid var(--input-bd);
+  // border: calc(0.0625rem * var(--mantine-scale)) solid var(--input-bd);
   background-color: var(--input-bg);
   font-family: var(--input-font-family, var(--mantine-font-family));
   // height: var(--input-size);
