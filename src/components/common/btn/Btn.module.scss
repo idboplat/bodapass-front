@@ -49,3 +49,29 @@
     background-color: #d6d6d6;
   }
 }
+
+
+.search {
+  width: 25px;
+  height: 25px; 
+  font-size: 0; 
+  border-radius: 0;
+  margin-right: 20px;
+  background: var(--ai-bg) no-repeat center / cover;
+}
+
+// .plus {
+//   width:11px; 
+//   height:11px; 
+//   font-size:0; 
+//   border-radius:0; 
+//   background: url(${iconPlus.src}) no-repeat center / cover;
+// }
+
+// .link {
+//   width:15px; 
+//   height:15px; 
+//   font-size:0; 
+//   border-radius:0; 
+//   background: url(${iconLink.src}) no-repeat center / cover;
+// }

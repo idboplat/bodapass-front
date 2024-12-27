@@ -1,5 +1,5 @@
 "use client";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import * as styles from "../styled/contentboxStyled";
 import { HomeProps } from "@/types/common";
 import { Input_box } from "../styled/inputboxStyled";
@@ -8,12 +8,14 @@ import { Calendar_box } from "../styled/calendarboxStyled";
 import { Select_box } from "../styled/selectboxStyled";
 import { Button_box } from "../styled/buttonboxStyled";
 import { Line_box } from "../styled/lineboxStyled";
-
+import iconSearch from "@/assets/images/icon_search.png";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/libraries/callTms";
 import { TBW_106000_Q03 } from "@/types/api";
-import { TextInput } from "@mantine/core";
+import { ActionIcon, Button, TextInput } from "@mantine/core";
+import Image from "next/image";
+import css from "@/components/common/btn/Btn.module.scss";
 
 const Flex1_li = styled.li`
   flex: 1 !important;
@@ -151,8 +153,28 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
                 </Select_box> */}
 
                 {/** 종목코드 설정 */}
-                <TextInput placeholder="asdasasd" />
-                <Input_box flex1={true}>
+                <TextInput
+                  styles={(t, p, c) => {
+                    console.log("vars", t, p, c);
+                    return {
+                      root: { "--input-right-section-width": "53px" },
+                    };
+                  }}
+                  placeholder="종목코드"
+                  rightSection={
+                    <ActionIcon
+                      variant="transparent"
+                      classNames={{ root: css.search }}
+                      vars={(t, p, c) => {
+                        console.log("vars", t, p, c);
+                        return {
+                          root: { "--ai-bg": `url(${iconSearch.src})` },
+                        };
+                      }}
+                    />
+                  }
+                />
+                {/* <Input_box flex1={true}>
                   <input
                     type="text"
                     placeholder="종목코드"
@@ -162,7 +184,7 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
                   <a className="search" onClick={onSearch}>
                     검색
                   </a>
-                </Input_box>
+                </Input_box> */}
               </Flex_vc>
             </li>
             <Flex1_li>
@@ -227,6 +249,9 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
             </a>
           </div>
         </Button_box>
+
+        <Button variant="filled">asdasd</Button>
+        <Button variant="outline">asdasd</Button>
 
         <Line_box></Line_box>
 

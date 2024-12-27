@@ -736,11 +736,14 @@ fieldset:disabled .mantine-active:active {
   --input-cursor: text;
   --input-text-align: left;
   --input-line-height: calc(var(--input-height) - calc(0.125rem * var(--mantine-scale)));
-  --input-padding: calc(var(--input-height) / 3);
+  --input-fz: 16px;
+  // --input-padding: calc(var(--input-height) / 3);
+  --input-padding: 20px;
   --input-padding-inline-start: var(--input-padding);
   --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
-  --input-color: var(--mantine-color-text);
+  // --input-color: var(--mantine-color-text);
+  --input-color: #494949;
 
   --input-left-section-size: var(
     --input-left-section-width,
@@ -857,6 +860,7 @@ fieldset:disabled .mantine-active:active {
   --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
 }
 
+// input
 .m_8fb7ebe7 {
   -webkit-tap-highlight-color: transparent;
   appearance: none;
@@ -869,7 +873,7 @@ fieldset:disabled .mantine-active:active {
   color: var(--input-color);
   // border: calc(0.0625rem * var(--mantine-scale)) solid var(--input-bd);
   background-color: var(--input-bg);
-  font-family: var(--input-font-family, var(--mantine-font-family));
+  // font-family: var(--input-font-family, var(--mantine-font-family));
   // height: var(--input-size);
   height: 100%;
   min-height: var(--input-height);

@@ -4,6 +4,8 @@ import {
   ButtonProps,
   Checkbox,
   defaultVariantColorsResolver,
+  Input,
+  InputProps,
   MantineTheme,
   MantineTransition,
   Menu,
@@ -15,6 +17,7 @@ import {
   Select,
   Switch,
   TextInput,
+  TextInputProps,
 } from "@mantine/core";
 import { createTheme, virtualColor } from "@mantine/core";
 import { pretendard } from "@font";
@@ -52,9 +55,17 @@ export const theme = createTheme({
       },
     }),
     TextInput: TextInput.extend({
+      // vars: (theme: MantineTheme, props: TextInputProps) => {
+      //   return {};
+      // },
       defaultProps: {
         h: 47,
         radius: 15,
+      },
+    }),
+    Input: Input.extend({
+      defaultProps: {
+        fz: 16,
       },
     }),
     Button: {
@@ -63,6 +74,14 @@ export const theme = createTheme({
           return {
             root: {
               "--button-color": "var(--mantine-color-text)",
+            },
+          };
+        }
+
+        if (props.variant === "outline") {
+          return {
+            root: {
+              // "--button-color": "var(--mantine-color-text)",
             },
           };
         }
@@ -76,6 +95,7 @@ export const theme = createTheme({
       // },
       defaultProps: {
         // color: variable.thirdColorDefault,
+        radius: 15,
       },
     },
     Checkbox: Checkbox.extend({
