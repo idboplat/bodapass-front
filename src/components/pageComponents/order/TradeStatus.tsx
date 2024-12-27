@@ -202,8 +202,12 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
                       <em>~</em>
                       <input value={endDd} onChange={(e) => setEndDd(e.target.value)} />
                     </a>
-                    <a className="yesterday">어제</a>
-                    <a className="today">오늘</a>
+                    <Button variant="filled" h={29} radius={10} bg={"#667DFF"} w={76} mr={12}>
+                      어제
+                    </Button>
+                    <Button variant="outline" h={29} fz={16} radius={10} color="#667DFF" bg="none">
+                      오늘
+                    </Button>
                   </div>
                 </Calendar_box>
               </div>
@@ -244,14 +248,19 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
         {/** 검색 버튼 */}
         <Button_box mt="24">
           <div style={{ width: "110px" }}>
-            <a className="btn-active" onClick={onSearch}>
+            <Button
+              variant="filled"
+              h={29}
+              radius={10}
+              bg={"#667DFF"}
+              w={110}
+              mr={12}
+              onClick={onSearch}
+            >
               검색
-            </a>
+            </Button>
           </div>
         </Button_box>
-
-        <Button variant="filled">asdasd</Button>
-        <Button variant="outline">asdasd</Button>
 
         <Line_box></Line_box>
 

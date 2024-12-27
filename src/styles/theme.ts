@@ -86,13 +86,16 @@ export const theme = createTheme({
           };
         }
       },
-      // styles: (theme: MantineTheme, props: ButtonProps) => {
-      //   return {
-      //     root: {
-      //       color: 'red',
-      //     },
-      //   };
-      // },
+      styles: (theme: MantineTheme, props: ButtonProps) => {
+        return {
+          // root: {
+          //   color: 'red',
+          // },
+          label: {
+            fontSize: 16,
+          },
+        };
+      },
       defaultProps: {
         // color: variable.thirdColorDefault,
         radius: 15,
