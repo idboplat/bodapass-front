@@ -1,5 +1,5 @@
 import { TPath } from "@/utils/getPage";
-import ScreenAdmin from "@/components/pageComponents/screenAdmin";
+import Adminlist from "@/components/adminlist/Home";
 import iconCate1 from "@/assets/images/icon_header_cate_01.png";
 import iconCate1On from "@/assets/images/icon_header_cate_on_01.png";
 import iconCate2 from "@/assets/images/icon_header_cate_02.png";
@@ -20,7 +20,7 @@ import iconCate9 from "@/assets/images/icon_header_cate_09.png";
 import iconCate9On from "@/assets/images/icon_header_cate_on_09.png";
 import ScreenDashboard from "@/components/pageComponents/screenDashboard";
 import ScreenMy from "@/components/pageComponents/screenMy";
-import UserList from "@/components/userlist/Home";
+import Userlist from "@/components/userlist/Home";
 import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
 import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
 import PositionStatus from "@/components/pageComponents/order/PositionStatus";
@@ -77,13 +77,13 @@ export const G1_PATH_LIST: TPath[] = [
         title: "유저 목록",
         description: "",
         pid: "100201",
-        Home: UserList,
+        Home: Userlist,
       },
       {
         title: "관리자 목록",
         description: "",
         pid: "100202",
-        Home: ScreenAdmin,
+        Home: Adminlist,
       },
     ],
   },
@@ -139,25 +139,25 @@ export const G1_PATH_LIST: TPath[] = [
         title: "발행",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100501",
-        Home: ScreenAdmin,
+        Home: Adminlist,
       },
       {
         title: "당사 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100502",
-        Home: ScreenAdmin,
+        Home: Adminlist,
       },
       {
         title: "위탁 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100503",
-        Home: ScreenAdmin,
+        Home: Adminlist,
       },
       {
         title: "회원 입출금 신청",
         description: "",
         pid: "100504",
-        Home: ScreenAdmin,
+        Home: Adminlist,
       },
     ],
   },
@@ -206,10 +206,10 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate9On.src,
     },
     pages: [
-      { title: "회원 로그", description: "", pid: "100801", Home: ScreenAdmin },
-      { title: "회원 접속 이력", description: "", pid: "100802", Home: ScreenAdmin },
-      { title: "관리자 로그", description: "", pid: "100803", Home: ScreenAdmin },
-      { title: "관리자 접속 이력", description: "", pid: "100804", Home: ScreenAdmin },
+      { title: "회원 로그", description: "", pid: "100801", Home: Adminlist },
+      { title: "회원 접속 이력", description: "", pid: "100802", Home: Adminlist },
+      { title: "관리자 로그", description: "", pid: "100803", Home: Adminlist },
+      { title: "관리자 접속 이력", description: "", pid: "100804", Home: Adminlist },
     ],
   },
 ];

@@ -3,25 +3,31 @@ import { Button, TextInput } from "@mantine/core";
 import css from "./Home.module.scss";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { TUserlistDto } from "@/types/dto";
+import { TAdminlistDto } from "@/types/dto";
 
 interface NavProps {
-  dto: TUserlistDto;
+  dto: TAdminlistDto;
 }
 
 export default function Nav({ dto }: NavProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [userId, setUserId] = useState(dto.userId);
+  const [adminId, setAdminId] = useState(dto.adminId);
+  const [adminName, setAdminName] = useState(dto.adminName);
   const pathname = usePathname();
 
-  const onChangeUserId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(() => e.target.value);
+  const onChangeAdminId = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdminId(() => e.target.value);
+  };
+
+  const onChangeAdminName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAdminName(() => e.target.value);
   };
 
   const onSearch = () => {
     const params = new URLSearchParams(searchParams);
-    params.set("userId", userId);
+    params.set("adminId", adminId);
+    params.set("adminName", adminName);
     params.set("enabled", "true");
     router.push(`${pathname}?${params.toString()}`);
   };
@@ -30,9 +36,15 @@ export default function Nav({ dto }: NavProps) {
     <div className={css.writeBox}>
       <ul>
         <li>
-          <strong>사용자 ID</strong>
+          <strong>관리자 ID</strong>
           <div>
-            <TextInput value={userId} onChange={onChangeUserId} w={200} />
+            <TextInput value={adminId} onChange={onChangeAdminId} w={200} />
+          </div>
+        </li>
+        <li>
+          <strong>관리자 명</strong>
+          <div>
+            <TextInput value={adminId} onChange={onChangeAdminName} w={200} />
           </div>
         </li>
         <li>

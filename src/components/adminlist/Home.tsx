@@ -1,10 +1,10 @@
 import { HomeProps } from "@/types/common";
 import Client from "./Home.client";
-import { userlistDto } from "@/types/dto";
+import { adminlistDto } from "@/types/dto";
 import { notFound } from "next/navigation";
 
-export default async function Userlist({ page, session, searchParams }: HomeProps) {
-  const dto = userlistDto.safeParse(searchParams);
+export default async function Adminlist({ page, session, searchParams }: HomeProps) {
+  const dto = adminlistDto.safeParse(searchParams);
 
   if (dto.error) {
     notFound();
