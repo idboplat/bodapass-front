@@ -35,7 +35,7 @@ import ScreenAgentStatus from "@/components/pageComponents/agents/screenAgentSta
 
 export const G1_PATH_LIST: TPath[] = [
   {
-    category: "전체현황",
+    category: "대시보드",
     icons: {
       default: iconCate1.src,
       hover: iconCate1On.src,
@@ -48,6 +48,15 @@ export const G1_PATH_LIST: TPath[] = [
         pid: "100101",
         Component: ScreenDashboard,
       },
+    ],
+  },
+  {
+    category: "마이페이지",
+    icons: {
+      default: iconCate1.src,
+      hover: iconCate1On.src,
+    },
+    pages: [
       {
         title: "마이페이지",
         description:
