@@ -23,9 +23,9 @@ const nextConfig = {
     },
   },
   compiler: {
-    removeConsole: {
-      // exclude: ['error', 'warn', 'log', 'info'],
-    },
+    // removeConsole: {
+    // exclude: ['error', 'warn', 'log', 'info'],
+    // },
   },
   logging: {
     fetches: {

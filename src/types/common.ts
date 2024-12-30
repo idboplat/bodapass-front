@@ -1,9 +1,9 @@
-import { Page } from "@/utils/getPage";
+import { TPage } from "@/utils/getPage";
 import { Session } from "next-auth";
 import dayjs from "@/libraries/dayjs";
 
 export type HomeProps<T> = {
-  page: Page;
+  page: TPage;
   session: Session;
 };
 
