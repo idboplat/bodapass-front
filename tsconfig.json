@@ -19,7 +19,7 @@
     ],
     "paths": {
       "@font": ["./src/styles/font"],
-      "@variable": ["./src/styles/variable.module.scss"],
+      "@variable": ["./src/styles/variables.module.scss"],
       "@web/*": ["./src/app/(web)/*"],
       "@api/*": ["./src/app/api/*"],
       "@/*": ["./src/*"],
