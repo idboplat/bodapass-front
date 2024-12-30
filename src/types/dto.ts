@@ -100,6 +100,18 @@ export const orderStatusDto = z.object({
   enabled: nullableBooleanFromString,
 });
 
+export const openOrderStatusDto = z.object({
+  corpCd: nullableString,
+  userId: nullableString,
+  instCd: nullableString,
+  bsTp: nullableBsTp,
+  orderNumber: emptyOrNumberString,
+  startDd: empryOrDateString,
+  endDd: empryOrDateString,
+  enabled: nullableBooleanFromString,
+});
+
 export type TUserlistDto = z.infer<typeof userlistDto>;
 export type TAdminlistDto = z.infer<typeof adminlistDto>;
 export type TOrderStatusDto = z.infer<typeof orderStatusDto>;
+export type TOpenOrderStatusDto = z.infer<typeof openOrderStatusDto>;

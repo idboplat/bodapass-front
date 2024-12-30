@@ -26,7 +26,7 @@ import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenCharg
 import PositionStatus from "@/components/pageComponents/order/PositionStatus";
 import PnlStatus from "@/components/pageComponents/order/PnlStatus";
 import TradeStatus from "@/components/pageComponents/order/TradeStatus";
-import OpenOrderStatus from "@/components/pageComponents/order/OpenOrderStatus";
+import OpenOrderStatus from "@/components/openOrderStatus/Home";
 import OrderStatus from "@/components/orderStatus/Home";
 import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
 import ScreenManagement from "@/components/pageComponents/statistics/screenManagement";
