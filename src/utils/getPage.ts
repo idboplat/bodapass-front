@@ -1,11 +1,11 @@
-import { HomeProps as PageProps } from "@/types/common";
+import { HomeProps } from "@/types/common";
 import { ComponentType } from "react";
 
 export type TPage = {
   title: string;
   description: string;
   pid: string; // page id
-  Component: ComponentType<PageProps<any>>;
+  Home: ComponentType<HomeProps<any>>;
 };
 
 /**
@@ -19,7 +19,8 @@ export type TPath = {
   pages: TPage[];
 };
 
-export type TClientPath = Omit<TPath, "pages"> & { pages: Omit<TPage, "Component">[] };
+export type TClientPage = Omit<TPage, "Home">;
+export type TClientPath = Omit<TPath, "pages"> & { pages: TClientPage[] };
 
 /** 모든 페이지 번호를 가져온다 */
 export const getAllPageNm = (pathList: TPath[]) => {
@@ -69,7 +70,7 @@ export const getClientPathList = (paths: TPath[]) => {
         const pages = traversePages(page.pages);
         result.push({ ...page, pages });
       } else {
-        const { Component, ...props } = page;
+        const { Home, ...props } = page;
         temp.push({ ...props });
       }
     }

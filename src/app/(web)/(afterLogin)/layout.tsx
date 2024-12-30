@@ -6,6 +6,7 @@ import { G1_PATH_LIST } from "./G1/[page]/router";
 // import { G4_PATH_LIST } from "./G4/[page]/router";
 import { TPath, getClientPathList } from "@/utils/getPage";
 import Sidebar from "@/components/common/sidebar/Sidebar";
+import DataObserver from "@/components/DataObserver";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await getServerSessionWithOptions();
@@ -27,6 +28,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 
   return (
     <>
+      <DataObserver session={session} />
       <Sidebar session={session} pathList={clientPath} />
       {children}
     </>

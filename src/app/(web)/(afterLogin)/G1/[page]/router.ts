@@ -20,7 +20,7 @@ import iconCate9 from "@/assets/images/icon_header_cate_09.png";
 import iconCate9On from "@/assets/images/icon_header_cate_on_09.png";
 import ScreenDashboard from "@/components/pageComponents/screenDashboard";
 import ScreenMy from "@/components/pageComponents/screenMy";
-import ScreenUserList from "@/components/pageComponents/userMarket/screenUserList";
+import UserList from "@/components/userlist/Home";
 import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
 import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
 import PositionStatus from "@/components/pageComponents/order/PositionStatus";
@@ -46,7 +46,7 @@ export const G1_PATH_LIST: TPath[] = [
         description:
           "현황 등의 통계 데이터는 마지막 접속 시각을 기준으로 1시간 뒤에 새롭게 업데이트하여 반영됩니다.",
         pid: "100101",
-        Component: ScreenDashboard,
+        Home: ScreenDashboard,
       },
     ],
   },
@@ -62,7 +62,7 @@ export const G1_PATH_LIST: TPath[] = [
         description:
           "관리자 개인의 정보와 관련된 기능을 제공. 계정 정보를 확인하고 수정하거나, 시스템과 관련된 일부 설정을 관리할 수 있습니다",
         pid: "100102",
-        Component: ScreenMy,
+        Home: ScreenMy,
       },
     ],
   },
@@ -77,13 +77,13 @@ export const G1_PATH_LIST: TPath[] = [
         title: "유저 목록",
         description: "",
         pid: "100201",
-        Component: ScreenUserList,
+        Home: UserList,
       },
       {
         title: "관리자 목록",
         description: "",
         pid: "100202",
-        Component: ScreenAdmin,
+        Home: ScreenAdmin,
       },
     ],
   },
@@ -98,19 +98,19 @@ export const G1_PATH_LIST: TPath[] = [
         title: "마켓 목록",
         description: "",
         pid: "100301",
-        Component: ScreenMarketList,
+        Home: ScreenMarketList,
       },
       {
         title: "입출금 관련",
         description: "",
         pid: "100302",
-        Component: ScreenChargeNPay,
+        Home: ScreenChargeNPay,
       },
       {
         title: "환율",
         description: "",
         pid: "100303",
-        Component: ScreenChargeNPay,
+        Home: ScreenChargeNPay,
       },
     ],
   },
@@ -121,11 +121,11 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate3On.src,
     },
     pages: [
-      { title: "주문 내역", description: "", pid: "100401", Component: OrderStatus },
-      { title: "미체결 내역", description: "", pid: "100402", Component: OpenOrderStatus },
-      { title: "체결 내역", description: "", pid: "100403", Component: TradeStatus },
-      { title: "포지션 내역", description: "", pid: "100404", Component: PositionStatus },
-      { title: "고객 손익 내역", description: "", pid: "100405", Component: PnlStatus },
+      { title: "주문 내역", description: "", pid: "100401", Home: OrderStatus },
+      { title: "미체결 내역", description: "", pid: "100402", Home: OpenOrderStatus },
+      { title: "체결 내역", description: "", pid: "100403", Home: TradeStatus },
+      { title: "포지션 내역", description: "", pid: "100404", Home: PositionStatus },
+      { title: "고객 손익 내역", description: "", pid: "100405", Home: PnlStatus },
     ],
   },
   {
@@ -139,25 +139,25 @@ export const G1_PATH_LIST: TPath[] = [
         title: "발행",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100501",
-        Component: ScreenAdmin,
+        Home: ScreenAdmin,
       },
       {
         title: "당사 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100502",
-        Component: ScreenAdmin,
+        Home: ScreenAdmin,
       },
       {
         title: "위탁 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100503",
-        Component: ScreenAdmin,
+        Home: ScreenAdmin,
       },
       {
         title: "회원 입출금 신청",
         description: "",
         pid: "100504",
-        Component: ScreenAdmin,
+        Home: ScreenAdmin,
       },
     ],
   },
@@ -172,7 +172,7 @@ export const G1_PATH_LIST: TPath[] = [
         title: "에이전트 관리",
         description: "",
         pid: "100601",
-        Component: ScreenAgentStatus,
+        Home: ScreenAgentStatus,
       },
     ],
   },
@@ -183,19 +183,19 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate7On.src,
     },
     pages: [
-      { title: "정산관리", description: "", pid: "100701", Component: ScreenManagement },
+      { title: "정산관리", description: "", pid: "100701", Home: ScreenManagement },
       {
         title: "에이전트 수익 통계",
         description: "",
         pid: "100711",
-        Component: ScreenAgentStatistics,
+        Home: ScreenAgentStatistics,
       },
       {
         title: "하부 에이전트 수익 통계",
         description:
           "소수점 자리는 첫째 자리에서 반올림 되어집니다. 매일 00시 기준으로 업데이트 됩니다.",
         pid: "100721",
-        Component: ScreenSubAgentStatistics,
+        Home: ScreenSubAgentStatistics,
       },
     ],
   },
@@ -206,10 +206,10 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate9On.src,
     },
     pages: [
-      { title: "회원 로그", description: "", pid: "100801", Component: ScreenAdmin },
-      { title: "회원 접속 이력", description: "", pid: "100802", Component: ScreenAdmin },
-      { title: "관리자 로그", description: "", pid: "100803", Component: ScreenAdmin },
-      { title: "관리자 접속 이력", description: "", pid: "100804", Component: ScreenAdmin },
+      { title: "회원 로그", description: "", pid: "100801", Home: ScreenAdmin },
+      { title: "회원 접속 이력", description: "", pid: "100802", Home: ScreenAdmin },
+      { title: "관리자 로그", description: "", pid: "100803", Home: ScreenAdmin },
+      { title: "관리자 접속 이력", description: "", pid: "100804", Home: ScreenAdmin },
     ],
   },
 ];

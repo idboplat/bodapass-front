@@ -96,4 +96,6 @@ export type TBW_002000_S02 = StringRspn<2>;
 export type TBW_001000_Q03 = StringRspn<3>;
 
 /** 체결 내역 조회(관리자) */
-export type TBW_106000_Q03 = StringRspn<20>
+export type TBW_106000_Q03 = StringRspn<20>;
+
+export type TBW_100201_Q01 = StringRspn<9>;

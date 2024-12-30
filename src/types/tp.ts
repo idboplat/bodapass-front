@@ -50,6 +50,11 @@ export const ORDR_PRC_TP: Entity = [
   ["SM", "스탑마켓"],
 ];
 
+export const USEABLE_TP: Entity = [
+  ["Y", "사용가능"],
+  ["N", "사용제한"],
+];
+
 export const findEntity = (entity: Entity, value: string) => {
   return entity.find(([tp, text]) => tp === value || text === value);
 };
