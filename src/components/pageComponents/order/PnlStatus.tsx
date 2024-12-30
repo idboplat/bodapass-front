@@ -76,11 +76,8 @@ export default function PnlStatus({ page, session }: HomeProps<OpenOrderStatusPr
                   data={["React", "Angular", "Vue", "Svelte"]}
                   w={330}
                   mr={17}
-                  fz={16}
                   h={47}
                   rightSection={<img src={iconSelect.src} alt="select" width={14} height={12} />}
-                  withScrollArea={false}
-                  comboboxProps={{ offset: 14 }}
                 />
 
                 {/** 주문 유형 선택 (전체, 롱, 숏) */}

@@ -26,7 +26,7 @@ import variable from "@variable";
 
 // https://mantine.dev/styles/variants-sizes
 
-const OPEN_MENU_TRANSITION: MantineTransition = {
+export const OPEN_MENU_TRANSITION: MantineTransition = {
   out: { opacity: 0, transform: "translateY(-4px)" },
   in: { opacity: 1, transform: "translateY(0px)" },
   transitionProperty: "opacity, transform",
@@ -173,7 +173,9 @@ export const theme = createTheme({
     }),
     Select: Select.extend({
       defaultProps: {
+        withScrollArea: false,
         comboboxProps: {
+          offset: 14,
           transitionProps: {
             transition: OPEN_MENU_TRANSITION,
             timingFunction: "ease-out",
@@ -183,12 +185,14 @@ export const theme = createTheme({
       },
       styles: () => {
         return {
+          root: {
+            fontSize: 16,
+          },
           input: {
             borderRadius: 15,
             textAlign: "center",
           },
           dropdown: {
-            fontSize: 16,
             borderRadius: 15,
             border: "1px solid #588CBF",
             overflow: "hidden",
