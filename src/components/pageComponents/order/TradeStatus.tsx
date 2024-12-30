@@ -202,10 +202,10 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
                       <em>~</em>
                       <input value={endDd} onChange={(e) => setEndDd(e.target.value)} />
                     </a>
-                    <Button variant="filled" h={29} radius={10} bg={"#667DFF"} w={76} mr={12}>
+                    <Button variant="filled" h={29} w={76} mr={12}>
                       어제
                     </Button>
-                    <Button variant="outline" h={29} fz={16} radius={10} color="#667DFF" bg="none">
+                    <Button variant="outline" h={29}>
                       오늘
                     </Button>
                   </div>

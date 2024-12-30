@@ -18,9 +18,11 @@ import {
   Switch,
   TextInput,
   TextInputProps,
+  VariantColorResolverResult,
 } from "@mantine/core";
 import { createTheme, virtualColor } from "@mantine/core";
 import { pretendard } from "@font";
+import variable from "@variable";
 
 // https://mantine.dev/styles/variants-sizes
 
@@ -70,10 +72,14 @@ export const theme = createTheme({
     }),
     Button: {
       vars: (theme: MantineTheme, props: ButtonProps) => {
-        if (props.variant === "default") {
+        if (props.variant === "filled") {
           return {
             root: {
-              "--button-color": "var(--mantine-color-text)",
+              "--button-radius": "10px",
+              "--button-bg": variable.colorsBlue2,
+              "--button-hover": variable.colorsBlue2,
+              "--button-color": variable.colorsWhite4,
+              "--button-bd": "none",
             },
           };
         }
@@ -81,19 +87,27 @@ export const theme = createTheme({
         if (props.variant === "outline") {
           return {
             root: {
-              // "--button-color": "var(--mantine-color-text)",
+              "--button-radius": "10px",
+              "--button-bg": variable.colorsWhite4,
+              "--button-hover": variable.colorsWhite4,
+              "--button-color": variable.colorsBlue2,
+              "--button-bd": `1px solid ${variable.colorsBlue2}`,
             },
           };
         }
+
+        // props.variant === default
+        return {
+          root: {
+            "--button-radius": "10px",
+            "--button-color": "var(--mantine-color-text)",
+          },
+        };
       },
       styles: (theme: MantineTheme, props: ButtonProps) => {
         return {
-          // root: {
-          //   color: 'red',
-          // },
-          label: {
-            fontSize: 16,
-          },
+          root: {},
+          label: { fontSize: 16 },
         };
       },
       defaultProps: {
@@ -180,7 +194,6 @@ export const theme = createTheme({
             overflow: "hidden",
             padding: 0,
           },
-
           option: {
             textAlign: "center",
             justifyContent: "center",
@@ -198,41 +211,33 @@ export const theme = createTheme({
       },
     }),
   },
-  variantColorResolver(input) {
-    const defaultResolvedColors = defaultVariantColorsResolver(input);
+  // variantColorResolver(input) {
+  //   let result: VariantColorResolverResult | undefined;
 
-    if (input.variant === "ghost") {
-      return {
-        background: "transparent",
-        hover: "var(--mantine-color-default-hover)",
-        color: "var(--mantine-color-text)",
-        border: "none",
-      };
-    }
+  //   if (input.variant === "ghost") {
+  //     return {
+  //       background: "transparent",
+  //       hover: "var(--mantine-color-default-hover)",
+  //       color: "var(--mantine-color-text)",
+  //       border: "none",
+  //     };
+  //   }
 
-    if (input.color === "first") {
-      return {
-        background: "transparent",
-        hover: "var(--mantine-color-default-hover)",
-        color: "var(--mantine-color-text)",
-        border: "none",
-      };
-    } else if (input.color === "second") {
-      return {
-        background: "transparent",
-        hover: "var(--mantine-color-default-hover)",
-        color: "var(--mantine-color-text)",
-        border: "none",
-      };
-    } else if (input.color === "third") {
-      return {
-        background: "transparent",
-        hover: "var(--mantine-color-default-hover)",
-        color: "var(--mantine-color-text)",
-        border: "none",
-      };
-    }
-
-    return defaultResolvedColors;
-  },
+  //   switch (input.variant) {
+  //     case "filled":
+  //       result = {
+  //         background: "var(--mantine-color-primary)",
+  //         hover: "var(--mantine-color-primary-hover)",
+  //         color: "var(--mantine-color-white)",
+  //         border: "var(--mantine-color-primary)",
+  //       };
+  //       break;
+  //     case "outline":
+  //       result = undefined;
+  //       break;
+  //     default:
+  //       result = defaultVariantColorsResolver(input);
+  //   }
+  //   return result;
+  // },
 });
