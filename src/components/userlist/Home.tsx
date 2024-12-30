@@ -7,8 +7,11 @@ export default async function Userlist({ page, session, searchParams }: HomeProp
   const dto = userlistDto.safeParse(searchParams);
 
   if (dto.error) {
+    console.error(dto.error);
     notFound();
   }
+
+  console.log("userlistDto", dto);
 
   return <Client page={page} session={session} dto={dto.data} />;
 }
