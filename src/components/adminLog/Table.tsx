@@ -2,17 +2,13 @@
 import { useState } from "react";
 import CustomAgGrid from "../common/agGrid/CustomAgGrid";
 import { ColDef } from "ag-grid-community";
-import { useQuery } from "@tanstack/react-query";
-import callTms from "@/libraries/callTms";
 import { Session } from "next-auth";
-import { convertToStandardDateTime } from "@/utils/regexp";
 import { Box, LoadingOverlay } from "@mantine/core";
-import { TBW_100201_Q01 } from "@/types/api";
-import { TUserlistDto } from "@/types/dto";
+import { TAdminLogDto } from "@/types/dto";
 
 interface TableProps {
   session: Session;
-  dto: TUserlistDto;
+  dto: TAdminLogDto;
 }
 
 export default function Table({ session, dto }: TableProps) {

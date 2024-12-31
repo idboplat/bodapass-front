@@ -4,11 +4,11 @@ import CustomAgGrid from "../common/agGrid/CustomAgGrid";
 import { ColDef } from "ag-grid-community";
 import { Session } from "next-auth";
 import { Box, LoadingOverlay } from "@mantine/core";
-import { TAdminlistDto } from "@/types/dto";
+import { TAdminHistoryDto } from "@/types/dto";
 
 interface TableProps {
   session: Session;
-  dto: TAdminlistDto;
+  dto: TAdminHistoryDto;
 }
 
 export default function Table({ session, dto }: TableProps) {

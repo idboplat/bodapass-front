@@ -3,17 +3,17 @@ import { Button, TextInput } from "@mantine/core";
 import css from "./Home.module.scss";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { TAdminlistDto } from "@/types/dto";
+import { TAdminListDto, TUserLogDto } from "@/types/dto";
 
 interface NavProps {
-  dto: TAdminlistDto;
+  dto: TUserLogDto;
 }
 
 export default function Nav({ dto }: NavProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [adminId, setAdminId] = useState(dto.adminId);
-  const [adminName, setAdminName] = useState(dto.adminName);
+  const [adminId, setAdminId] = useState("");
+  const [adminName, setAdminName] = useState("");
   const pathname = usePathname();
 
   const onChangeAdminId = (e: React.ChangeEvent<HTMLInputElement>) => {

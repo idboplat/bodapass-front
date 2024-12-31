@@ -1,5 +1,5 @@
 import { TPath } from "@/utils/getPage";
-import Adminlist from "@/components/adminlist/Home";
+import AdminList from "@/components/adminList/Home";
 import iconCate1 from "@/assets/images/icon_header_cate_01.png";
 import iconCate1On from "@/assets/images/icon_header_cate_on_01.png";
 import iconCate2 from "@/assets/images/icon_header_cate_02.png";
@@ -20,7 +20,7 @@ import iconCate9 from "@/assets/images/icon_header_cate_09.png";
 import iconCate9On from "@/assets/images/icon_header_cate_on_09.png";
 import ScreenDashboard from "@/components/pageComponents/screenDashboard";
 import ScreenMy from "@/components/pageComponents/screenMy";
-import Userlist from "@/components/userlist/Home";
+import UserList from "@/components/userList/Home";
 import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
 import PositionStatus from "@/components/positionStatus/Home";
 import PnlStatus from "@/components/pnlStatus/Home";
@@ -30,7 +30,7 @@ import OrderStatus from "@/components/orderStatus/Home";
 import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
 import Settlement from "@/components/settlement/Home";
 import ScreenSubAgentStatistics from "@/components/pageComponents/statistics/screenSubAgentStatistics";
-import ScreenAgentStatus from "@/components/agentstatus/Home";
+import AgentStatus from "@/components/agentstatus/Home";
 import Deploy from "@/components/deploy/Home";
 import B2b from "@/components/b2b/Home";
 import B2bConsign from "@/components/b2bConsign/Home";
@@ -40,6 +40,10 @@ import MartketCurrencies from "@/components/marketCurrencies/Home";
 import MarketTransaction from "@/components/marketTransaction/Home";
 import AgentProfit from "@/components/agentProfit/Home";
 import SubAgentProfit from "@/components/subAgentProfit/Home";
+import UserLog from "@/components/userLog/Home";
+import UserHistory from "@/components/userHistory/Home";
+import AdminLog from "@/components/adminLog/Home";
+import AdminHistory from "@/components/adminHistory/Home";
 
 export const G1_PATH_LIST: TPath[] = [
   {
@@ -85,13 +89,13 @@ export const G1_PATH_LIST: TPath[] = [
         title: "유저 목록",
         description: "",
         pid: "100201",
-        Home: Userlist,
+        Home: UserList,
       },
       {
         title: "관리자 목록",
         description: "",
         pid: "100202",
-        Home: Adminlist,
+        Home: AdminList,
       },
     ],
   },
@@ -180,7 +184,7 @@ export const G1_PATH_LIST: TPath[] = [
         title: "에이전트 관리",
         description: "",
         pid: "100601",
-        Home: ScreenAgentStatus,
+        Home: AgentStatus,
       },
     ],
   },
@@ -214,10 +218,10 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate9On.src,
     },
     pages: [
-      { title: "회원 로그", description: "", pid: "100801", Home: Adminlist },
-      { title: "회원 접속 이력", description: "", pid: "100802", Home: Adminlist },
-      { title: "관리자 로그", description: "", pid: "100803", Home: Adminlist },
-      { title: "관리자 접속 이력", description: "", pid: "100804", Home: Adminlist },
+      { title: "회원 로그", description: "", pid: "100801", Home: UserLog },
+      { title: "회원 접속 이력", description: "", pid: "100802", Home: UserHistory },
+      { title: "관리자 로그", description: "", pid: "100803", Home: AdminLog },
+      { title: "관리자 접속 이력", description: "", pid: "100804", Home: AdminHistory },
     ],
   },
 ];

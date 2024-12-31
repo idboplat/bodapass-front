@@ -1,17 +1,17 @@
 import { HomeProps } from "@/types/common";
 import Client from "./Home.client";
-import { adminlistDto } from "@/types/dto";
+import { adminLogDto } from "@/types/dto";
 import { notFound } from "next/navigation";
 
-export default async function Adminlist({ page, session, searchParams }: HomeProps) {
-  const dto = adminlistDto.safeParse(searchParams);
+export default async function AdminLog({ page, session, searchParams }: HomeProps) {
+  const dto = adminLogDto.safeParse(searchParams);
 
   if (dto.error) {
     console.error(dto.error);
     notFound();
   }
 
-  console.log("adminlistDto", dto);
+  console.log("adminLogDto", dto);
 
   return <Client page={page} session={session} dto={dto.data} />;
 }

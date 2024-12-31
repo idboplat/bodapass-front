@@ -4,12 +4,12 @@ import css from "./Home.module.scss";
 import { Divider } from "@mantine/core";
 import Nav from "./Nav";
 import Table from "./Table";
-import { TAdminlistDto } from "@/types/dto";
+import { TUserLogDto } from "@/types/dto";
 
 interface ClientProps {
   page: TClientPage;
   session: Session;
-  dto: TAdminlistDto;
+  dto: TUserLogDto;
 }
 
 export default function Client({ page, session, dto }: ClientProps) {

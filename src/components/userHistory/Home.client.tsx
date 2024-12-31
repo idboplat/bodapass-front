@@ -1,17 +1,15 @@
-"use client";
-import css from "./Home.module.scss";
 import { TClientPage } from "@/utils/getPage";
 import { Session } from "next-auth";
+import css from "./Home.module.scss";
 import { Divider } from "@mantine/core";
-import Table from "./Table";
 import Nav from "./Nav";
-import { TUserlistDto } from "@/types/dto";
-import { DatePickerInput } from "@mantine/dates";
+import Table from "./Table";
+import { TAdminListDto, TUserHistoryDto } from "@/types/dto";
 
 interface ClientProps {
   page: TClientPage;
   session: Session;
-  dto: TUserlistDto;
+  dto: TUserHistoryDto;
 }
 
 export default function Client({ page, session, dto }: ClientProps) {
@@ -19,14 +17,8 @@ export default function Client({ page, session, dto }: ClientProps) {
     <section className="main">
       <div className={css.titleBox}>
         <h2>{page.title}</h2>
-        <p>{"유저 목록 금월 내역은 XX-XX 00:00:00 ~ YY-YY 23:59:59 총 합을 표시합니다."}</p>
+        <p>{page.description}</p>
       </div>
-
-      <DatePickerInput
-        type="range"
-        popoverProps={{ position: "bottom-start" }}
-        numberOfColumns={2}
-      />
 
       <div className={css.contentBox}>
         <Nav dto={dto} />

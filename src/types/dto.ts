@@ -78,12 +78,12 @@ const nullishDateString = z
     return val;
   });
 
-export const userlistDto = z.object({
+export const userListDto = z.object({
   userId: nullishString,
   enabled: nullishBooleanString,
 });
 
-export const adminlistDto = z.object({
+export const adminListDto = z.object({
   adminId: nullishString,
   adminName: nullishString,
   enabled: nullishBooleanString,
@@ -161,8 +161,16 @@ export const subAgentProfitDto = z.object({});
 
 export const settlementDto = z.object({});
 
-export type TUserlistDto = z.infer<typeof userlistDto>;
-export type TAdminlistDto = z.infer<typeof adminlistDto>;
+export const adminHistoryDto = z.object({});
+
+export const adminLogDto = z.object({});
+
+export const userHistoryDto = z.object({});
+
+export const userLogDto = z.object({});
+
+export type TUserListDto = z.infer<typeof userListDto>;
+export type TAdminListDto = z.infer<typeof adminListDto>;
 export type TOrderStatusDto = z.infer<typeof orderStatusDto>;
 export type TOpenOrderStatusDto = z.infer<typeof openOrderStatusDto>;
 export type TPnlStatusDto = z.infer<typeof pnlStatusDto>;
@@ -179,3 +187,7 @@ export type TMarketTransactionDto = z.infer<typeof marketTransactionDto>;
 export type TAgentProfitDto = z.infer<typeof agentProfitDto>;
 export type TSubAgentProfitDto = z.infer<typeof subAgentProfitDto>;
 export type TSettlementDto = z.infer<typeof settlementDto>;
+export type TAdminHistoryDto = z.infer<typeof adminHistoryDto>;
+export type TAdminLogDto = z.infer<typeof adminLogDto>;
+export type TUserHistoryDto = z.infer<typeof userHistoryDto>;
+export type TUserLogDto = z.infer<typeof userLogDto>;

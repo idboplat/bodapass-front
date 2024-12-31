@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 import { convertToStandardDateTime } from "@/utils/regexp";
 import { Box, Divider, LoadingOverlay } from "@mantine/core";
 import { TBW_100201_Q01 } from "@/types/api";
-import { TUserlistDto } from "@/types/dto";
+import { TUserListDto } from "@/types/dto";
 import css from "./Home.module.scss";
 
 type OrderStatus = {
@@ -62,7 +62,7 @@ const convertOrdrPrcTp = (ordrPrcTp: string) => {
 
 interface TableProps {
   session: Session;
-  dto: TUserlistDto;
+  dto: TUserListDto;
 }
 
 export default function Table({ session, dto }: TableProps) {
