@@ -32,7 +32,7 @@ export default function Client({ page, session }: ClientProps) {
                 className="inner"
                 style={
                   {
-                    "--icon-url": `url(${iconState01})`,
+                    "--icon-url": `url(${iconState01.src})`,
                   } as CSSProperties
                 }
               >
@@ -49,7 +49,7 @@ export default function Client({ page, session }: ClientProps) {
                 className="inner"
                 style={
                   {
-                    "--icon-url": `url(${iconState02})`,
+                    "--icon-url": `url(${iconState02.src})`,
                   } as CSSProperties
                 }
               >
@@ -66,7 +66,7 @@ export default function Client({ page, session }: ClientProps) {
                 className="inner"
                 style={
                   {
-                    "--icon-url": `url(${iconState03})`,
+                    "--icon-url": `url(${iconState03.src})`,
                   } as CSSProperties
                 }
               >
@@ -83,7 +83,7 @@ export default function Client({ page, session }: ClientProps) {
                 className="inner"
                 style={
                   {
-                    "--icon-url": `url(${iconState04})`,
+                    "--icon-url": `url(${iconState04.src})`,
                   } as CSSProperties
                 }
               >
