@@ -1,21 +1,22 @@
 "use client";
 import styled from "styled-components";
-import * as styles from "../styled/contentboxStyled";
-import { HomeProps } from "@/types/common";
-import { Input_box } from "../styled/inputboxStyled";
-import { Write_box } from "../styled/writeboxStyled";
-import { Calendar_box } from "../styled/calendarboxStyled";
-import { Select_box } from "../styled/selectboxStyled";
-import { Button_box } from "../styled/buttonboxStyled";
-import { Line_box } from "../styled/lineboxStyled";
+import * as styles from "../pageComponents/styled/contentboxStyled";
+import { Write_box } from "../pageComponents/styled/writeboxStyled";
+import { Calendar_box } from "../pageComponents/styled/calendarboxStyled";
+import { Select_box } from "../pageComponents/styled/selectboxStyled";
+import { Button_box } from "../pageComponents/styled/buttonboxStyled";
+import { Line_box } from "../pageComponents/styled/lineboxStyled";
 import iconSearch from "@/assets/images/icon_search.png";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/libraries/callTms";
 import { TBW_106000_Q03 } from "@/types/api";
 import { ActionIcon, Button, TextInput } from "@mantine/core";
-import Image from "next/image";
-import css from "@/components/common/btn/Btn.module.scss";
+import BtnCss from "@/components/common/btn/Btn.module.scss";
+import { TClientPage } from "@/utils/getPage";
+import { Session } from "next-auth";
+import { TTradeStatusDto } from "@/types/dto";
+import css from "./Home.module.scss";
 
 const Flex1_li = styled.li`
   flex: 1 !important;
@@ -36,10 +37,13 @@ const BSTP_MAP = {
   S: "매도",
 } as const;
 
-interface ScreenTradeStatusProps {}
+interface Props {
+  page: TClientPage;
+  session: Session;
+  dto: TTradeStatusDto;
+}
 
-/** 유저/마켓관리 - 거래내역 */
-export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStatusProps>) {
+export default function Client({ page, session, dto }: Props) {
   const [openMarket, setOpenMarket] = useState(false);
   const [openOrder, setOpenOrder] = useState(false);
   const [openId, setOpenId] = useState(false);
@@ -107,13 +111,13 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
   };
 
   return (
-    <styles.Section>
-      <styles.TitleBox>
+    <section className="main">
+      <div className={css.titleBox}>
         <h2>{page.title}</h2>
         <p>{page.description}</p>
-      </styles.TitleBox>
+      </div>
 
-      <styles.Content_box>
+      <div className={css.contentBox}>
         {/** 검색 설정 */}
         <Write_box>
           <ul>
@@ -164,7 +168,7 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
                   rightSection={
                     <ActionIcon
                       variant="transparent"
-                      classNames={{ root: css.search }}
+                      classNames={{ root: BtnCss.search }}
                       vars={(t, p, c) => {
                         console.log("vars", t, p, c);
                         return {
@@ -307,8 +311,8 @@ export default function TradeStatus({ page, session }: HomeProps<ScreenTradeStat
             </table>
           </styles.Table_body>
         </styles.Table_box>
-      </styles.Content_box>
-    </styles.Section>
+      </div>
+    </section>
   );
 }
 

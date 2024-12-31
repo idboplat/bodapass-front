@@ -23,15 +23,19 @@ import ScreenMy from "@/components/pageComponents/screenMy";
 import Userlist from "@/components/userlist/Home";
 import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
 import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
-import PositionStatus from "@/components/pageComponents/order/PositionStatus";
-import PnlStatus from "@/components/pageComponents/order/PnlStatus";
-import TradeStatus from "@/components/pageComponents/order/TradeStatus";
+import PositionStatus from "@/components/positionStatus/Home";
+import PnlStatus from "@/components/pnlStatus/Home";
+import TradeStatus from "@/components/tradeStatus/Home";
 import OpenOrderStatus from "@/components/openOrderStatus/Home";
 import OrderStatus from "@/components/orderStatus/Home";
 import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
 import ScreenManagement from "@/components/pageComponents/statistics/screenManagement";
 import ScreenSubAgentStatistics from "@/components/pageComponents/statistics/screenSubAgentStatistics";
-import ScreenAgentStatus from "@/components/pageComponents/agents/screenAgentStatus";
+import ScreenAgentStatus from "@/components/agentstatus/Home";
+import Deploy from "@/components/deploy/Home";
+import B2b from "@/components/b2b/Home";
+import B2bConsign from "@/components/b2bConsign/Home";
+import B2c from "@/components/b2c/Home";
 
 export const G1_PATH_LIST: TPath[] = [
   {
@@ -139,25 +143,25 @@ export const G1_PATH_LIST: TPath[] = [
         title: "발행",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100501",
-        Home: Adminlist,
+        Home: Deploy,
       },
       {
         title: "당사 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100502",
-        Home: Adminlist,
+        Home: B2b,
       },
       {
         title: "위탁 입금 신청",
         description: "입금내역과 출금내역을 확인 할 수 있습니다.",
         pid: "100503",
-        Home: Adminlist,
+        Home: B2bConsign,
       },
       {
         title: "회원 입출금 신청",
         description: "",
         pid: "100504",
-        Home: Adminlist,
+        Home: B2c,
       },
     ],
   },

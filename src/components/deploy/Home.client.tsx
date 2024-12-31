@@ -1,17 +1,20 @@
 "use client";
-import styled, { css } from "styled-components";
-import * as styles from "../styled/contentboxStyled";
-import { HomeProps } from "@/types/common";
-import { Input_box } from "../styled/inputboxStyled";
-import { Write_box } from "../styled/writeboxStyled";
-import { Calendar_box } from "../styled/calendarboxStyled";
-import { Select_box } from "../styled/selectboxStyled";
-import { Button_box } from "../styled/buttonboxStyled";
-import { Line_box } from "../styled/lineboxStyled";
+import styled from "styled-components";
+import * as styles from "../pageComponents/styled/contentboxStyled";
+import { Input_box } from "../pageComponents/styled/inputboxStyled";
+import { Write_box } from "../pageComponents/styled/writeboxStyled";
+import { Calendar_box } from "../pageComponents/styled/calendarboxStyled";
+import { Select_box } from "../pageComponents/styled/selectboxStyled";
+import { Button_box } from "../pageComponents/styled/buttonboxStyled";
+import { Line_box } from "../pageComponents/styled/lineboxStyled";
 import { useState } from "react";
 import { Select } from "@mantine/core";
 
-import iconSelect from "../../../assets/images/icon_select.png";
+import iconSelect from "@/assets/images/icon_select.png";
+import { TClientPage } from "@/utils/getPage";
+import { Session } from "next-auth";
+import { TDeployDto } from "@/types/dto";
+import css from "./Home.module.scss";
 
 const Flex1_li = styled.li`
   flex: 1 !important;
@@ -26,10 +29,13 @@ const Flex_vc = styled.div`
   width: 100%;
 `;
 
-interface OpenOrderStatusProps {}
+interface Props {
+  page: TClientPage;
+  session: Session;
+  dto: TDeployDto;
+}
 
-/** 주문 - 고객 손익내역 */
-export default function PnlStatus({ page, session }: HomeProps<OpenOrderStatusProps>) {
+export default function Client({ page, session, dto }: Props) {
   const [openMarket, setOpenMarket] = useState(false);
   const [openOrder, setOpenOrder] = useState(false);
   const [openId, setOpenId] = useState(false);
@@ -38,13 +44,13 @@ export default function PnlStatus({ page, session }: HomeProps<OpenOrderStatusPr
   const [selectedType, setSelectedType] = useState(-1);
 
   return (
-    <styles.Section>
-      <styles.TitleBox>
+    <section className="main">
+      <div className={css.titleBox}>
         <h2>{page.title}</h2>
         <p>{page.description}</p>
-      </styles.TitleBox>
+      </div>
 
-      <styles.Content_box>
+      <div className={css.contentBox}>
         {/** 검색 설정 */}
         <Write_box>
           <ul>
@@ -525,7 +531,7 @@ export default function PnlStatus({ page, session }: HomeProps<OpenOrderStatusPr
             </table>
           </styles.Table_body>
         </styles.Table_box>
-      </styles.Content_box>
-    </styles.Section>
+      </div>
+    </section>
   );
 }
