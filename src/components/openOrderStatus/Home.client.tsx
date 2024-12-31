@@ -12,6 +12,9 @@ import { TClientPage } from "@/utils/getPage";
 import { Session } from "next-auth";
 import css from "./Home.module.scss";
 import { TOpenOrderStatusDto } from "@/types/dto";
+import { DatePickerInput } from "@mantine/dates";
+import { Button, Pagination } from "@mantine/core";
+import CustomDatePicker from "../common/datepicker/CustomDatePicker";
 
 const Flex1_li = styled.li`
   flex: 1 !important;
@@ -37,9 +40,17 @@ export default function Client({ page, session, dto }: OpenOrderStatusProps) {
   const [openMarket, setOpenMarket] = useState(false);
   const [openOrder, setOpenOrder] = useState(false);
   const [openId, setOpenId] = useState(false);
-  const [openCalendar, setOpenCalendar] = useState(false);
+
   const [openType, setOpenType] = useState(false);
   const [selectedType, setSelectedType] = useState(-1);
+
+  // 어제 날짜
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  // 오늘 날짜
+
+  const [value, setValue] = useState<[Date | null, Date | null]>([yesterday, new Date()]);
 
   return (
     <styles.Section>
@@ -125,9 +136,10 @@ export default function Client({ page, session, dto }: OpenOrderStatusProps) {
               </Flex_vc>
             </li>
             <Flex1_li>
-              <strong>기간</strong>
+              <label htmlFor="range">기간</label>
               <div>
-                <Calendar_box openPop={openCalendar}>
+                <CustomDatePicker id="range" height={47} value={value} setValue={setValue} />
+                {/* <Calendar_box openPop={openCalendar}>
                   <div className="cal-button">
                     <a
                       className="select"
@@ -411,7 +423,7 @@ export default function Client({ page, session, dto }: OpenOrderStatusProps) {
                       </div>
                     </div>
                   </div>
-                </Calendar_box>
+                </Calendar_box> */}
               </div>
             </Flex1_li>
 
@@ -450,6 +462,8 @@ export default function Client({ page, session, dto }: OpenOrderStatusProps) {
         </Button_box>
 
         <Line_box></Line_box>
+
+        <Pagination total={20} siblings={1} defaultValue={10} size="sm" color="#667DFF" />
 
         <styles.Table_box>
           <styles.Table_body>
