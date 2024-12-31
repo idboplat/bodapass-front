@@ -155,6 +155,12 @@ export const marketlistDto = z.object({});
 
 export const marketTransactionDto = z.object({});
 
+export const agentProfitDto = z.object({});
+
+export const subAgentProfitDto = z.object({});
+
+export const settlementDto = z.object({});
+
 export type TUserlistDto = z.infer<typeof userlistDto>;
 export type TAdminlistDto = z.infer<typeof adminlistDto>;
 export type TOrderStatusDto = z.infer<typeof orderStatusDto>;
@@ -170,3 +176,6 @@ export type TAgentStatusDto = z.infer<typeof agentStatusDto>;
 export type TMarketCurrenciesDto = z.infer<typeof marketCurrenciesDto>;
 export type TMarketlistDto = z.infer<typeof marketlistDto>;
 export type TMarketTransactionDto = z.infer<typeof marketTransactionDto>;
+export type TAgentProfitDto = z.infer<typeof agentProfitDto>;
+export type TSubAgentProfitDto = z.infer<typeof subAgentProfitDto>;
+export type TSettlementDto = z.infer<typeof settlementDto>;

@@ -1,16 +1,16 @@
 import { HomeProps } from "@/types/common";
 import Client from "./Home.client";
-import { marketlistDto } from "@/types/dto";
+import { agentProfitDto } from "@/types/dto";
 import { notFound } from "next/navigation";
 
-export default async function MarketList({ page, session, searchParams }: HomeProps) {
-  const dto = marketlistDto.safeParse(searchParams);
+export default async function AgentProfit({ page, session, searchParams }: HomeProps) {
+  const dto = agentProfitDto.safeParse(searchParams);
 
   if (dto.error) {
     console.error(dto.error);
     notFound();
   }
 
-  console.log("marketlistDto", dto);
+  console.log("agentProfitDto", dto);
   return <Client page={page} session={session} dto={dto.data} />;
 }

@@ -21,7 +21,6 @@ import iconCate9On from "@/assets/images/icon_header_cate_on_09.png";
 import ScreenDashboard from "@/components/pageComponents/screenDashboard";
 import ScreenMy from "@/components/pageComponents/screenMy";
 import Userlist from "@/components/userlist/Home";
-import ScreenMarketList from "@/components/pageComponents/userMarket/screenMarketList";
 import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
 import PositionStatus from "@/components/positionStatus/Home";
 import PnlStatus from "@/components/pnlStatus/Home";
@@ -29,13 +28,18 @@ import TradeStatus from "@/components/tradeStatus/Home";
 import OpenOrderStatus from "@/components/openOrderStatus/Home";
 import OrderStatus from "@/components/orderStatus/Home";
 import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
-import ScreenManagement from "@/components/pageComponents/statistics/screenManagement";
+import Settlement from "@/components/settlement/Home";
 import ScreenSubAgentStatistics from "@/components/pageComponents/statistics/screenSubAgentStatistics";
 import ScreenAgentStatus from "@/components/agentstatus/Home";
 import Deploy from "@/components/deploy/Home";
 import B2b from "@/components/b2b/Home";
 import B2bConsign from "@/components/b2bConsign/Home";
 import B2c from "@/components/b2c/Home";
+import MarketList from "@/components/marketlist/Home";
+import MartketCurrencies from "@/components/marketCurrencies/Home";
+import MarketTransaction from "@/components/marketTransaction/Home";
+import AgentProfit from "@/components/agentProfit/Home";
+import SubAgentProfit from "@/components/subAgentProfit/Home";
 
 export const G1_PATH_LIST: TPath[] = [
   {
@@ -102,19 +106,19 @@ export const G1_PATH_LIST: TPath[] = [
         title: "마켓 목록",
         description: "",
         pid: "100301",
-        Home: ScreenMarketList,
+        Home: MarketList,
       },
       {
         title: "입출금 관련",
         description: "",
         pid: "100302",
-        Home: ScreenChargeNPay,
+        Home: MarketTransaction,
       },
       {
         title: "환율",
         description: "",
         pid: "100303",
-        Home: ScreenChargeNPay,
+        Home: MartketCurrencies,
       },
     ],
   },
@@ -187,19 +191,19 @@ export const G1_PATH_LIST: TPath[] = [
       hover: iconCate7On.src,
     },
     pages: [
-      { title: "정산관리", description: "", pid: "100701", Home: ScreenManagement },
+      { title: "정산관리", description: "", pid: "100701", Home: Settlement },
       {
         title: "에이전트 수익 통계",
         description: "",
         pid: "100711",
-        Home: ScreenAgentStatistics,
+        Home: AgentProfit,
       },
       {
         title: "하부 에이전트 수익 통계",
         description:
           "소수점 자리는 첫째 자리에서 반올림 되어집니다. 매일 00시 기준으로 업데이트 됩니다.",
         pid: "100721",
-        Home: ScreenSubAgentStatistics,
+        Home: SubAgentProfit,
       },
     ],
   },
