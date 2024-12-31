@@ -1,5 +1,4 @@
 import { TPath } from "@/utils/getPage";
-import AdminList from "@/components/adminList/Home";
 import iconCate1 from "@/assets/images/icon_header_cate_01.png";
 import iconCate1On from "@/assets/images/icon_header_cate_on_01.png";
 import iconCate2 from "@/assets/images/icon_header_cate_02.png";
@@ -18,18 +17,17 @@ import iconCate8 from "@/assets/images/icon_header_cate_08.png";
 import iconCate8On from "@/assets/images/icon_header_cate_on_08.png";
 import iconCate9 from "@/assets/images/icon_header_cate_09.png";
 import iconCate9On from "@/assets/images/icon_header_cate_on_09.png";
-import ScreenDashboard from "@/components/pageComponents/screenDashboard";
-import ScreenMy from "@/components/pageComponents/screenMy";
+
+import AdminList from "@/components/adminList/Home";
+import Dashboard from "@/components/dashboard/Home";
+import My from "@/components/my/Home";
 import UserList from "@/components/userList/Home";
-import ScreenChargeNPay from "@/components/pageComponents/chargeNpay/screenChargeNPay";
 import PositionStatus from "@/components/positionStatus/Home";
 import PnlStatus from "@/components/pnlStatus/Home";
 import TradeStatus from "@/components/tradeStatus/Home";
 import OpenOrderStatus from "@/components/openOrderStatus/Home";
 import OrderStatus from "@/components/orderStatus/Home";
-import ScreenAgentStatistics from "@/components/pageComponents/statistics/screenAgentStatistics";
 import Settlement from "@/components/settlement/Home";
-import ScreenSubAgentStatistics from "@/components/pageComponents/statistics/screenSubAgentStatistics";
 import AgentStatus from "@/components/agentstatus/Home";
 import Deploy from "@/components/deploy/Home";
 import B2b from "@/components/b2b/Home";
@@ -58,7 +56,7 @@ export const G1_PATH_LIST: TPath[] = [
         description:
           "현황 등의 통계 데이터는 마지막 접속 시각을 기준으로 1시간 뒤에 새롭게 업데이트하여 반영됩니다.",
         pid: "100101",
-        Home: ScreenDashboard,
+        Home: Dashboard,
       },
     ],
   },
@@ -74,7 +72,7 @@ export const G1_PATH_LIST: TPath[] = [
         description:
           "관리자 개인의 정보와 관련된 기능을 제공. 계정 정보를 확인하고 수정하거나, 시스템과 관련된 일부 설정을 관리할 수 있습니다",
         pid: "100102",
-        Home: ScreenMy,
+        Home: My,
       },
     ],
   },
