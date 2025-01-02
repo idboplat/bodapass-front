@@ -19,7 +19,9 @@ export default function ErrorModal({
     <Modal id={ERROR_MODAL_ID} title={title} onClose={onClose} closeOnClickOutside={false}>
       <div className={css.content}>{error.message}</div>
       <div className={css.btnBox}>
-        <Button onClick={onClose}>확인</Button>
+        <Button variant="filled" onClick={onClose}>
+          확인
+        </Button>
       </div>
     </Modal>
   );

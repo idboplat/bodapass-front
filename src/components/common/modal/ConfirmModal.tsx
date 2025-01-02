@@ -20,10 +20,12 @@ export default function ConfirmModal({
     <Modal id={CONFIRM_MODAL_ID} title={title} onClose={onClose} closeOnClickOutside={false}>
       <div className={css.content}>{message}</div>
       <div className={css.btnBox}>
-        <Button variant="light" onClick={onClose}>
+        <Button variant="outline" onClick={onClose}>
           취소
         </Button>
-        <Button onClick={() => onSuccess(true)}>확인</Button>
+        <Button variant="filled" onClick={() => onSuccess(true)}>
+          확인
+        </Button>
       </div>
     </Modal>
   );
