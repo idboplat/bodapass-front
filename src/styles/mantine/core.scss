@@ -665,7 +665,8 @@ fieldset:disabled .mantine-active:active {
   position: sticky;
   top: 0;
   background-color: var(--mantine-color-body);
-  z-index: 1000;
+  // z-index: 1000;
+  z-index: 100;
   min-height: calc(3.75rem * var(--mantine-scale));
   transition: padding-inline-end 100ms;
 }

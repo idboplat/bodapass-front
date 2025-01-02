@@ -145,7 +145,13 @@ export const deployDto = z.object({
   enabled: nullishString,
 });
 
-export const b2bDto = z.object({});
+export const b2bDto = z.object({
+  instCd: nullishString,
+  status: nullishString,
+  startDd: nullishDateString,
+  endDd: nullishDateString,
+  enabled: nullishString,
+});
 
 export const b2bConsignDto = z.object({});
 
