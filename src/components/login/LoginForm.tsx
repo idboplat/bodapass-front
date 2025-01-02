@@ -11,11 +11,8 @@ import { FormEvent, useState } from "react";
 import { useStore } from "zustand";
 import emailLoginFn from "@/apis/login";
 import { ActionIcon, Box, Button, CloseButton, TextInput } from "@mantine/core";
-import AlertModal from "../common/modal/AlertModal";
-import ConfirmModal from "../common/modal/ConfirmModal";
 //import css from "./LoginForm.module.scss";
-import variable from "@variable";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import EyeToggleBtn from "../common/btn/EyeToggleBtn";
 
 const Form = styled.form`
   display: flex;
@@ -103,32 +100,15 @@ export default function LoginForm() {
   };
   return (
     <Form onSubmit={handleSubmit}>
-      <TextInput
-        styles={{ input: { border: `1.5px solid ${variable.colorsBlue2}` } }}
-        label="아이디"
-        id={LoginInput.email}
-        type="text"
-      />
+      <TextInput variant="outline" label="아이디" id={LoginInput.email} type="text" />
 
       <TextInput
         mt={28}
-        styles={{
-          input: {
-            "--input-padding-inline-end": "45px",
-            border: `1.5px solid ${variable.colorsBlue2}`,
-          },
-          section: {
-            "--input-right-section-size": "45px",
-          },
-        }}
+        variant="outline"
         label="비밀번호"
         id={LoginInput.pw}
         type={isHidePw ? "password" : "text"}
-        rightSection={
-          <ActionIcon radius="lg" variant="subtle" color="gray" onClick={toggleHidePw}>
-            {isHidePw ? <IconEye /> : <IconEyeOff />}
-          </ActionIcon>
-        }
+        rightSection={<EyeToggleBtn value={isHidePw} onClick={toggleHidePw} />}
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>

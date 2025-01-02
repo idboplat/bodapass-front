@@ -11,12 +11,15 @@ import {
   Menu,
   Modal,
   ModalContent,
+  NumberInputFactory,
   Pagination,
   Radio,
   SegmentedControl,
   Select,
+  Styles,
   Switch,
   TextInput,
+  TextInputFactory,
   TextInputProps,
   VariantColorResolverResult,
 } from "@mantine/core";
@@ -60,8 +63,24 @@ export const theme = createTheme({
       // vars: (theme: MantineTheme, props: TextInputProps) => {
       //   return {};
       // },
+      styles(theme, props, ctx) {
+        const existRightSection = !!props.rightSection;
+        const RightSectionPadding = "45px";
+
+        const style: Styles<TextInputFactory> = { input: { height: 47 }, section: {} };
+
+        if (existRightSection) {
+          style.input!["--input-padding-inline-end"] = RightSectionPadding;
+          style.section!["--input-right-section-size"] = RightSectionPadding;
+        }
+
+        if (props.variant === "outline") {
+          style.input!.border = `1.5px solid ${variable.colorsBlue2}`;
+        }
+
+        return style;
+      },
       defaultProps: {
-        h: 47,
         radius: 15,
       },
     }),
