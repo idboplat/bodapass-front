@@ -10,8 +10,12 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useStore } from "zustand";
 import emailLoginFn from "@/apis/login";
+import { ActionIcon, Box, Button, CloseButton, TextInput } from "@mantine/core";
+import AlertModal from "../common/modal/AlertModal";
+import ConfirmModal from "../common/modal/ConfirmModal";
 //import css from "./LoginForm.module.scss";
-
+import variable from "@variable";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 
 const Form = styled.form`
   display: flex;
@@ -53,8 +57,6 @@ const LoginBtn = styled.button`
   }
 `;
 
-
-
 const ID = "loginForm";
 
 enum LoginInput {
@@ -65,6 +67,7 @@ enum LoginInput {
 export default function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isHidePw, setIsHidePw] = useState(true);
 
   const modalStore = useSetModalStore();
   const store = useApp();
@@ -95,30 +98,48 @@ export default function LoginForm() {
     mutateEmailLogin.mutate({ email, password });
   };
 
+  const toggleHidePw = () => {
+    setIsHidePw((prev) => !prev);
+  };
   return (
     <Form onSubmit={handleSubmit}>
-      <InputWrap>
-        <Label htmlFor={LoginInput.email}>
-          아이디
-        </Label>
-        <UnderLineInput id={LoginInput.email} type="text" />
-      </InputWrap>
+      <TextInput
+        styles={{ input: { border: `1.5px solid ${variable.colorsBlue2}` } }}
+        label="아이디"
+        id={LoginInput.email}
+        type="text"
+      />
 
-      <InputWrap>
-        <Label htmlFor={LoginInput.pw}>
-          비밀번호
-        </Label>
-        <UnderLineInput id={LoginInput.pw} type="password" />
-      </InputWrap>
+      <TextInput
+        mt={28}
+        styles={{
+          input: {
+            "--input-padding-inline-end": "45px",
+            border: `1.5px solid ${variable.colorsBlue2}`,
+          },
+          section: {
+            "--input-right-section-size": "45px",
+          },
+        }}
+        label="비밀번호"
+        id={LoginInput.pw}
+        type={isHidePw ? "password" : "text"}
+        rightSection={
+          <ActionIcon radius="lg" variant="subtle" color="gray" onClick={toggleHidePw}>
+            {isHidePw ? <IconEye /> : <IconEyeOff />}
+          </ActionIcon>
+        }
+      />
 
-      <BtnBox>
-        <LoginBtn type="submit" disabled={isLoading}>
+      <Box mt={28} style={{ textAlign: "center" }}>
+        {/* <LoginBtn type="submit" disabled={isLoading}>
           {isLoading ? <DotsLoading /> : "로그인"}
-        </LoginBtn>
-      </BtnBox>
+        </LoginBtn> */}
+        <Button variant="filled" type="submit" disabled={isLoading} loading={isLoading}>
+          로그인
+        </Button>
+      </Box>
     </Form>
-
-
 
     // <form className={css.form} onSubmit={handleSubmit}>
     //   <div className={css.inputWrap}>
