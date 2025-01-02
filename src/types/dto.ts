@@ -57,7 +57,7 @@ const nullishDateString = z
   .transform((val, ctx) => {
     if (!val) return "";
 
-    if (val.length !== 6) {
+    if (val.length !== 8) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "invalid input length",
@@ -139,7 +139,12 @@ export const tradeStatusDto = z.object({
   enabled: nullishBooleanString,
 });
 
-export const deployDto = z.object({});
+export const deployDto = z.object({
+  corpCd: nullishString,
+  startDd: nullishDateString,
+  endDd: nullishDateString,
+  enabled: nullishString,
+});
 
 export const b2bDto = z.object({});
 

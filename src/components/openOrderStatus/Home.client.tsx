@@ -14,7 +14,7 @@ import css from "./Home.module.scss";
 import { TOpenOrderStatusDto } from "@/types/dto";
 import { DatePickerInput } from "@mantine/dates";
 import { Button, Pagination } from "@mantine/core";
-import CustomDatePicker from "../common/datepicker/CustomDatePicker";
+import CustomRangePickerInput from "../common/datepicker/CustomDatePicker";
 
 const Flex1_li = styled.li`
   flex: 1 !important;
@@ -138,7 +138,7 @@ export default function Client({ page, session, dto }: OpenOrderStatusProps) {
             <Flex1_li>
               <label htmlFor="range">기간</label>
               <div>
-                <CustomDatePicker id="range" height={47} value={value} setValue={setValue} />
+                <CustomRangePickerInput id="range" height={47} value={value} onChange={setValue} />
                 {/* <Calendar_box openPop={openCalendar}>
                   <div className="cal-button">
                     <a

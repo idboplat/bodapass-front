@@ -18,6 +18,29 @@
   padding: 45px;
 }
 
+.navInnerTop {
+  display: flex;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  & > label {
+    width: 130px;
+  }
+
+  .datePicker {
+    width: 100%;
+  }
+}
+
+.navInnerBottom {
+  margin-top: 24px;
+  text-align: center;
+}
+
 .writeBox {
   ul {
     display: flex;
