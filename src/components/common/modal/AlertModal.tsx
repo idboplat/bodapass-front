@@ -1,6 +1,5 @@
 import { ModalProps } from "@/stores/modal";
 import { Button } from "@mantine/core";
-import classNames from "classnames";
 import Modal from "./Modal";
 import css from "./Modal.module.scss";
 
