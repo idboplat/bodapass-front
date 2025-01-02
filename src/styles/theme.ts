@@ -149,7 +149,7 @@ export const theme = createTheme({
     }),
     Pagination: Pagination.extend({
       defaultProps: {
-        // color: variable.thirdColorDefault,
+        color: variable.colorsBlue2,
         siblings: 2,
         withEdges: true, // Show first/last controls
       },

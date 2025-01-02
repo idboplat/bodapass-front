@@ -1,26 +1,26 @@
+import { TRangePickerChangeEventHandler, TRangePickerValue } from "@/types/common";
 import { CSSProperties, StylesApiProps } from "@mantine/core";
 import { DatePickerInput, DatePickerInputFactory } from "@mantine/dates";
-import { Dispatch, SetStateAction } from "react";
 
-interface CustomDatePickerProps {
+interface CustomRangePickerInputProps {
   id?: string;
   classNames?: StylesApiProps<DatePickerInputFactory>["classNames"];
   inputStyle?: CSSProperties;
   popOverStyle?: CSSProperties;
   height?: number;
-  value: [Date | null, Date | null];
-  setValue: Dispatch<SetStateAction<[Date | null, Date | null]>>;
+  value: TRangePickerValue;
+  onChange: TRangePickerChangeEventHandler;
 }
 
-export default function CustomDatePicker({
+export default function CustomRangePickerInput({
   id,
   classNames,
   inputStyle,
   popOverStyle,
   height = 47,
   value,
-  setValue,
-}: CustomDatePickerProps) {
+  onChange,
+}: CustomRangePickerInputProps) {
   return (
     <DatePickerInput
       id={id}
@@ -28,7 +28,7 @@ export default function CustomDatePicker({
       type="range"
       valueFormat="YYYY-MM-DD"
       value={value}
-      onChange={setValue}
+      onChange={onChange}
       numberOfColumns={2}
       radius={15}
       styles={{ input: { textAlign: "center", height, ...inputStyle } }}
