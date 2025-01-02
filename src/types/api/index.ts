@@ -98,7 +98,11 @@ export type TBW_001000_Q03 = StringRspn<3>;
 /** 체결 내역 조회(관리자) */
 export type TBW_106000_Q03 = StringRspn<20>;
 
+/** 사용자 정보(공통) 조회  */
 export type TBW_100201_Q01 = StringRspn<9>;
+
+/** 주문 내역 조회 */
+export type TBW_100401_Q01 = StringRspn<16>;
 
 /** 계좌 잔고 입고(G1) 발행 조회 */
 export type TBW_100501_Q01 = StringRspn<6>;
