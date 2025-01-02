@@ -1,25 +1,37 @@
-import { useEffect } from "react";
+import { AnimationEventHandler, ReactNode, useEffect } from "react";
 import { useHotkeys, useHotkeysContext } from "react-hotkeys-hook";
-import { RemoveScroll } from "react-remove-scroll";
-import Backdrop from "./Backdrop";
 import css from "./Modal.module.scss";
+import { Modal as MantineModal, MantineSize } from "@mantine/core";
 
 interface ModalProps {
-  className?: string;
   id: string;
-  children: React.ReactNode;
-  showBackdrop?: boolean;
-  removeScrollBar?: boolean;
-  onClose?: () => void;
+  className?: string;
+  title?: string;
+  children: ReactNode;
+  width?: number | "auto" | MantineSize;
+  /** 모달이 열려있을때는 스크롤 동작은 방지되나, 스크롤을 화면에서까지 안보이게 할지 여부 */
+  hideScroll?: boolean;
+  overlay?: boolean;
+  centered?: boolean;
+  withCloseButton?: boolean;
+  closeOnClickOutside?: boolean;
+  onAnimationEnd?: AnimationEventHandler;
+  onClose: (e?: any) => void;
 }
 
-/** backdrop과 outsideClick, 키보드 이벤트 */
 export default function Modal({
   id,
+  className,
   children,
-  onClose = () => {},
-  showBackdrop = true,
-  removeScrollBar = false,
+  title,
+  width = "auto",
+  hideScroll = false,
+  overlay = true,
+  centered = true,
+  withCloseButton = true,
+  closeOnClickOutside = true,
+  onAnimationEnd,
+  onClose,
 }: ModalProps) {
   const { enableScope, disableScope, enabledScopes } = useHotkeysContext();
 
@@ -36,11 +48,31 @@ export default function Modal({
   }, []);
 
   return (
-    <RemoveScroll removeScrollBar={removeScrollBar}>
-      <div className={css.layout} id={id}>
-        {showBackdrop && <Backdrop onClick={onClose} />}
-        {children}
-      </div>
-    </RemoveScroll>
+    <MantineModal
+      className={className}
+      removeScrollProps={{ removeScrollBar: hideScroll }}
+      onAnimationEnd={onAnimationEnd} //transtion 효과용
+      id={id}
+      opened
+      onClose={onClose}
+      title={title}
+      size={width}
+      closeButtonProps={{ w: 40, h: 40 }}
+      overlayProps={
+        overlay
+          ? {
+              blur: "2px",
+              opacity: 0.25,
+            }
+          : undefined
+      }
+      centered={centered}
+      withCloseButton={withCloseButton}
+      transitionProps={{}}
+      closeOnEscape={false} //직접 제어
+      closeOnClickOutside={closeOnClickOutside}
+    >
+      {children}
+    </MantineModal>
   );
 }

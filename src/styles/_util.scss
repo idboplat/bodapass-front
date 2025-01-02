@@ -3,6 +3,7 @@
  */
 
 @use "sass:math";
+@use "var";
 
 @function rem($value) {
   @return #{math.div(math.div($value, $value * 0 + 1), 16)}rem;
@@ -35,17 +36,22 @@
 }
 
 @mixin min-width($breakpoint) {
-  @media (max-width: $breakpoint) {
+  $value: map-get(var.$breakpoints, $breakpoint);
+  $query-value: if($value, $value, $breakpoint);
+
+  @media screen and (min-width: #{$query-value}) {
     @content;
   }
 }
 
 @mixin max-width($breakpoint) {
-  @media (min-width: $breakpoint) {
+  $value: map-get(var.$breakpoints, $breakpoint);
+  $query-value: if($value, $value, $breakpoint);
+
+  @media screen and (max-width: #{$query-value}) {
     @content;
   }
 }
-
 // Add direction mixins if you need rtl support
 @mixin rtl {
   [dir="rtl"] & {

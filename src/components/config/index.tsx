@@ -1,5 +1,4 @@
 import { getServerSessionWithOptions } from "@/libraries/nextAuth";
-import dynamic from "next/dynamic";
 import App from "./App";
 import Devtools from "./Devtools";
 import NextAuth from "./NextAuth";
@@ -7,10 +6,7 @@ import ReactQuery from "./ReactQuery";
 import ToastBox from "./ToastBox";
 import { cookies } from "next/headers";
 import MantineProvider from "./MantineProvider";
-
-const ModalContainer = dynamic(() => import("@/components/common/modal/ModalContainer"), {
-  ssr: false,
-});
+import ModalContainer from "../common/modal/ModalContainer";
 
 interface ConfigsProps {
   defaultColorScheme: "light" | "dark";
