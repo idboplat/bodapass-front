@@ -1,11 +1,11 @@
 .sidebar {
-  position: fixed; 
-  left: 0; 
-  top: 0; 
-  width: 240px; 
-  height: 100%; 
-  background:#fff; 
-  z-index: 9999; 
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100%;
+  background: hsl(0, 0%, 100%);
+  z-index: 200;
   overflow-y: auto;
 
   .logo {
@@ -32,7 +32,6 @@
     }
   }
 
-
   .navHeader {
     display: flex;
     flex-wrap: wrap;
@@ -41,7 +40,7 @@
     padding: 0 33px;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
-    
+
     &::before {
       display: inline-block;
       content: "";
@@ -55,7 +54,6 @@
       background-size: 15px auto;
     }
 
-
     &[data-active="true"] {
       color: #000000;
       margin-bottom: 14px;
@@ -67,34 +65,33 @@
   }
 
   :global(.app-NavLink-collapse) {
-    background: #FAFAFA;
+    background: #fafafa;
 
     :global(.app-NavLink-children) {
       padding: 18px 0 18px 49px;
-      
+
       dl {
         dd + dd {
           margin-top: 17px;
         }
       }
     }
-
   }
 
   .navItem {
     padding: 0;
     color: #808080;
 
-    :global(.app-NavLink-body){
+    :global(.app-NavLink-body) {
       &::before {
         display: inline-block;
-          content: "";
-          width: 3px;
-          height: 3px;
-          margin: 0 26px 0 0;
-          border-radius: 9999px;
-          background: currentColor;
-          vertical-align: middle;
+        content: "";
+        width: 3px;
+        height: 3px;
+        margin: 0 26px 0 0;
+        border-radius: 9999px;
+        background: currentColor;
+        vertical-align: middle;
       }
     }
 
