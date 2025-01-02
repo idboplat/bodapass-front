@@ -1,4 +1,5 @@
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { ActionIcon } from "@mantine/core";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 
 interface EyeToggleBtnProps {
   value: boolean;
@@ -12,12 +13,8 @@ export default function EyeToggleBtn({ value, onClick }: EyeToggleBtnProps) {
   };
 
   return (
-    <button type="button" tabIndex={-1} onClick={onClickBtn}>
-      {value ? (
-        <AiFillEye size="17px" color="#919492" />
-      ) : (
-        <AiFillEyeInvisible size="17px" color="#919492" />
-      )}
-    </button>
+    <ActionIcon radius="lg" variant="subtle" color="gray" onClick={onClickBtn}>
+      {value ? <IconEye /> : <IconEyeOff />}
+    </ActionIcon>
   );
 }
