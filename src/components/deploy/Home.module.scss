@@ -18,6 +18,11 @@
   padding: 45px;
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+}
+
 .navInnerTop {
   display: flex;
 }
@@ -37,8 +42,8 @@
 }
 
 .navInnerBottom {
-  margin-top: 24px;
-  text-align: center;
+  @extend %flex-center;
+  margin-left: 24px;
 }
 
 .writeBox {
@@ -71,4 +76,8 @@
       }
     }
   }
+}
+
+.tableBox {
+  position: relative;
 }

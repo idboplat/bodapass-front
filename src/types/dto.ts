@@ -140,7 +140,6 @@ export const tradeStatusDto = z.object({
 });
 
 export const deployDto = z.object({
-  corpCd: nullishString,
   startDd: nullishDateString,
   endDd: nullishDateString,
   enabled: nullishString,

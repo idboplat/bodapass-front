@@ -1,22 +1,11 @@
 "use client";
-import styled from "styled-components";
-import * as styles from "../pageComponents/styled/contentboxStyled";
-import { Input_box } from "../pageComponents/styled/inputboxStyled";
-import { Write_box } from "../pageComponents/styled/writeboxStyled";
-import { Calendar_box } from "../pageComponents/styled/calendarboxStyled";
-import { Select_box } from "../pageComponents/styled/selectboxStyled";
-import { Button_box } from "../pageComponents/styled/buttonboxStyled";
-import { Line_box } from "../pageComponents/styled/lineboxStyled";
-import { useState } from "react";
-import { Select } from "@mantine/core";
-
-import iconSelect from "@/assets/images/icon_select.png";
 import { TClientPage } from "@/utils/getPage";
 import { Session } from "next-auth";
 import { TDeployDto } from "@/types/dto";
 import css from "./Home.module.scss";
 import Nav from "./Nav";
 import Table from "./Table";
+import { Divider } from "@mantine/core";
 
 interface Props {
   page: TClientPage;
@@ -32,7 +21,9 @@ export default function Client({ page, session, dto }: Props) {
         <p>{page.description}</p>
       </div>
       <div className={css.contentBox}>
-        <Nav dto={dto} />
+        <Nav dto={dto} session={session} />
+
+        <Divider color="#fff" size={2} m="30px -45px" w="calc(100% + 90px)" />
 
         <Table session={session} dto={dto} />
       </div>

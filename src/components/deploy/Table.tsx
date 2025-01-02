@@ -1,14 +1,14 @@
 "use client";
-
 import callTms from "@/libraries/callTms";
 import { TDeployDto } from "@/types/dto";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import CustomAgGrid from "../common/agGrid/CustomAgGrid";
-import { Box, LoadingOverlay, Pagination } from "@mantine/core";
+import { LoadingOverlay, Pagination } from "@mantine/core";
 import { TBW_100501_Q01 } from "@/types/api";
 import { useState } from "react";
 import { ColDef } from "ag-grid-community";
+import css from "./Home.module.scss";
 
 interface Props {
   session: Session;
@@ -22,7 +22,7 @@ export default function Table({ session, dto }: Props) {
   const [maxPage, setMaxPage] = useState(-1);
   const [colDefs] = useState<ColDef[]>([
     {
-      field: "주문 일시",
+      field: "발행 일시",
       width: 150,
     },
     {
@@ -34,22 +34,14 @@ export default function Table({ session, dto }: Props) {
       width: 225,
     },
     {
-      field: "계좌 번호",
+      field: "종목",
     },
     {
-      field: "외부 사용자 ID",
+      field: "수량",
       width: 130,
     },
     {
-      field: "종목 코드",
-      width: 120,
-    },
-    {
-      field: "레버리지 크기",
-      width: 120,
-    },
-    {
-      field: "호가 구분",
+      field: "발행인",
       width: 120,
     },
   ]);
@@ -62,18 +54,26 @@ export default function Table({ session, dto }: Props) {
         session,
         pgSize: PAGE_SIZE,
         pgSn: page,
-        data: [dto.corpCd, dto.startDd, dto.endDd],
+        data: [session.user.corpCd, dto.startDd, dto.endDd],
       });
 
       setMaxPage(() => Math.ceil(TBW_100501_Q01Res?.svcTotRecCnt / PAGE_SIZE));
       return { rows: TBW_100501_Q01Res?.svcRspnData || [] };
     },
     enabled: !!dto.enabled,
-    select: (data) => data.rows.map((item) => ({})),
+    select: (data) =>
+      data.rows.map((item) => ({
+        "발행 일시": item.F01,
+        "회사 코드": item.F02,
+        "회사 명": item.F03,
+        종목: item.F04,
+        수량: item.F05,
+        발행인: item.F06,
+      })),
   });
 
   return (
-    <Box pos="relative">
+    <div className={css.tableBox}>
       <CustomAgGrid colDefs={colDefs} data={data || []} isShowNoRowsOverlay={!!dto.enabled} />
       {maxPage > -1 && (
         <Pagination
@@ -85,6 +85,6 @@ export default function Table({ session, dto }: Props) {
         />
       )}
       <LoadingOverlay visible={isFetching} overlayProps={{ radius: "sm", blur: 2 }} />
-    </Box>
+    </div>
   );
 }
