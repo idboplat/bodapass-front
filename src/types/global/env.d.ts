@@ -24,6 +24,12 @@ declare global {
 
       // dev-tools
       readonly NEXT_PUBLIC_ENABLE_REACT_QUERY_DEVTOOLS?: "true" | "false";
+
+      // aws credentials
+      readonly AWS_REGION: string;
+      readonly AWS_ACCESS_KEY: string;
+      readonly AWS_SECRET_KEY: string;
+      readonly AWS_BUCKET_NAME: string;
     }
   }
 }
