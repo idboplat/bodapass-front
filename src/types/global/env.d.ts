@@ -30,6 +30,9 @@ declare global {
       readonly AWS_ACCESS_KEY: string;
       readonly AWS_SECRET_KEY: string;
       readonly AWS_BUCKET_NAME: string;
+
+      // clova credentials
+      readonly CLOVA_SECRET_KEY: string;
     }
   }
 }
