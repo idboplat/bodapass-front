@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { RekognitionClient, CompareFacesCommand, Rekognition } from "@aws-sdk/client-rekognition";
 import formidable from "formidable";
 import fs from "fs/promises";
-
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
+import { rekognitionClient } from "@/libraries/rekognition/credentials";
 
 // Formidable 설정: 파일 업로드를 처리하기 위해
 // export const config = {
@@ -12,15 +12,6 @@ import path from "path";
 //     bodyParser: false,
 //   },
 // };
-
-// Rekognition 클라이언트 생성
-const rekognitionClient = new RekognitionClient({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-  },
-});
 
 // // 비동기 함수로 formidable을 사용하여 파일 파싱
 // const parseForm = (req: NextApiRequest) => {
@@ -46,14 +37,6 @@ const rekognitionClient = new RekognitionClient({
 //     });
 //   });
 // };
-
-// const rekognition = new Rekognition({
-//   region: process.env.AWS_REGION,
-//   credentials: {
-//     accessKeyId: process.env.AWS_ACCESS_KEY,
-//     secretAccessKey: process.env.AWS_SECRET_KEY,
-//   },
-// });
 
 // const createCollection = async () => {
 //   const collectionId = process.env.REKOGNITION_COLLECTION_ID;
