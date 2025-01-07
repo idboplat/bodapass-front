@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-OCR-SECRET": process.env.CLOVA_SECRET_KEY,
+        "X-OCR-SECRET": process.env.CLOVA_SECRET,
       },
       body: JSON.stringify({
         version: "V2",

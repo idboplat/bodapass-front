@@ -4,8 +4,8 @@ import { RekognitionClient, CompareFacesCommand, Rekognition } from "@aws-sdk/cl
 export const rekognitionClient = new RekognitionClient({
   region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS,
+    secretAccessKey: process.env.AWS_SECRET,
   },
 });
 
@@ -13,7 +13,7 @@ export const rekognitionClient = new RekognitionClient({
 export const rekognition = new Rekognition({
   region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS,
+    secretAccessKey: process.env.AWS_SECRET,
   },
 });
