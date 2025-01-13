@@ -1,5 +1,6 @@
-import VideoCapture from '@/components/VideoCapture';
+"use client";
+import Camera from "@/components/Camera";
 
 export default function Client() {
-  return <VideoCapture onFaceDetected={() => console.log("face detected")} />
+  return <Camera onFaceDetected={() => console.log("face detected")} />;
 }

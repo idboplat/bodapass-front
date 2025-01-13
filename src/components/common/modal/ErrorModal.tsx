@@ -11,7 +11,7 @@ type ErrorModalProp = {
 const ERROR_MODAL_ID = "errorModal";
 
 export default function ErrorModal({
-  title = "Confirm",
+  title = "Message",
   error,
   onClose,
 }: ModalProps<ErrorModalProp>) {

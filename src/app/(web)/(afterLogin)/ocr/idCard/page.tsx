@@ -1,3 +1,5 @@
-export default function Page () {
-  return <div>신분증</div>
+import Client from "./page.client";
+
+export default function Page() {
+  return <Client />;
 }
