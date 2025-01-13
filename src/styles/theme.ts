@@ -24,7 +24,6 @@ import {
   VariantColorResolverResult,
 } from "@mantine/core";
 import { createTheme, virtualColor } from "@mantine/core";
-import { pretendard } from "@font";
 import variable from "@variable";
 
 // https://mantine.dev/styles/variants-sizes
@@ -44,13 +43,15 @@ const BLANK_TRANSITION: MantineTransition = {
 export const theme = createTheme({
   scale: 1,
   /* Put your mantine theme override here */
-  fontFamily: pretendard.variable,
+  fontFamily:
+    'Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif',
   breakpoints: {
-    xs: "30em",
-    sm: "48em",
-    md: "64em",
-    lg: "74em",
-    xl: "90em",
+    xs: "320px",
+    sm: "480px",
+    md: "768px",
+    lg: "1024px",
+    xl: "1280px",
+    xxl: "1600px"
   },
   colors: {},
   components: {
@@ -60,80 +61,7 @@ export const theme = createTheme({
       },
     }),
     TextInput: TextInput.extend({
-      // vars: (theme: MantineTheme, props: TextInputProps) => {
-      //   return {};
-      // },
-      styles(theme, props, ctx) {
-        const existRightSection = !!props.rightSection;
-        const RightSectionPadding = "45px";
-
-        const style: Styles<TextInputFactory> = { input: { height: 47 }, section: {} };
-
-        if (existRightSection) {
-          style.input!["--input-padding-inline-end"] = RightSectionPadding;
-          style.section!["--input-right-section-size"] = RightSectionPadding;
-        }
-
-        if (props.variant === "outline") {
-          style.input!.border = `1.5px solid ${variable.colorsBlue2}`;
-        }
-
-        return style;
-      },
-      defaultProps: {
-        radius: 15,
-      },
     }),
-    Input: Input.extend({
-      defaultProps: {
-        fz: 16,
-      },
-    }),
-    Button: {
-      vars: (theme: MantineTheme, props: ButtonProps) => {
-        if (props.variant === "filled") {
-          return {
-            root: {
-              "--button-radius": "10px",
-              "--button-bg": variable.colorsBlue2,
-              "--button-hover": variable.colorsBlue2,
-              "--button-color": variable.colorsWhite4,
-              "--button-bd": "none",
-            },
-          };
-        }
-
-        if (props.variant === "outline") {
-          return {
-            root: {
-              "--button-radius": "10px",
-              "--button-bg": variable.colorsWhite4,
-              "--button-hover": variable.colorsWhite4,
-              "--button-color": variable.colorsBlue2,
-              "--button-bd": `1px solid ${variable.colorsBlue2}`,
-            },
-          };
-        }
-
-        // props.variant === default
-        return {
-          root: {
-            "--button-radius": "10px",
-            "--button-color": "var(--mantine-color-text)",
-          },
-        };
-      },
-      styles: (theme: MantineTheme, props: ButtonProps) => {
-        return {
-          root: {},
-          label: { fontSize: 16 },
-        };
-      },
-      defaultProps: {
-        // color: variable.thirdColorDefault,
-        radius: 15,
-      },
-    },
     Checkbox: Checkbox.extend({
       defaultProps: {
         // color: variable.thirdColorDefault,
@@ -168,7 +96,6 @@ export const theme = createTheme({
     }),
     Pagination: Pagination.extend({
       defaultProps: {
-        color: variable.colorsBlue2,
         siblings: 2,
         withEdges: true, // Show first/last controls
       },
@@ -201,31 +128,6 @@ export const theme = createTheme({
             duration: 300,
           },
         },
-      },
-      styles: () => {
-        return {
-          root: {
-            fontSize: 16,
-          },
-          input: {
-            borderRadius: 15,
-            textAlign: "center",
-          },
-          dropdown: {
-            borderRadius: 15,
-            border: "1px solid #588CBF",
-            overflow: "hidden",
-            padding: 0,
-          },
-          option: {
-            textAlign: "center",
-            justifyContent: "center",
-            marginRight: "auto",
-            fontSize: 16,
-            padding: "14px 0",
-            borderRadius: 0,
-          },
-        };
       },
     }),
     Switch: Switch.extend({

@@ -3,28 +3,30 @@ $env-bottom: env(safe-area-inset-bottom);
 $env-left: env(safe-area-inset-left);
 $env-right: env(safe-area-inset-right);
 
-$font-pretendard: var(--font-pretendard); 
-
 $header-height: 3.5rem;
-$footer-height: 4rem;
+$footer-height: 56px;
+
+$safe-header-height: calc($header-height + $env-top);
+$safe-footer-height: calc($footer-height + $env-bottom);
 
 $mantine-breakpoint-xs: var(--mantine-breakpoint-xs);
 $mantine-breakpoint-sm: var(--mantine-breakpoint-sm);
 $mantine-breakpoint-md: var(--mantine-breakpoint-md);
 $mantine-breakpoint-lg: var(--mantine-breakpoint-lg);
 $mantine-breakpoint-xl: var(--mantine-breakpoint-xl);
+$mantine-breakpoint-xxl: var(--mantine-breakpoint-xxl);
 
 // #{} interpolation과 함께 사용
 $theme-light-selector: ":where([data-mantine-color-scheme='light'])";
 $theme-dark-selector: ":where([data-mantine-color-scheme='dark'])";
 
 $breakpoints: (
-  xs: 30rem,
-  sm: 48rem,
-  md: 64rem,
-  lg: 74rem,
-  xl: 90rem,
-  2xl: 120rem,
+  xs: 320px,
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1600px,
 );
 
 $mobile-boundary: sm; // breakpoint for mobile devices
@@ -41,39 +43,3 @@ $bezier-curve: cubic-bezier(0.23, 1, 0.32, 1);
 $box-shadow: 0px 1px 2px 0 rgba(56, 52, 52, 0.4);
 
 $backdrop-color: #ffffff34;
-
-
-$colors: (
-  white-0: #dddddd,
-  white-1:#F2F2F2,
-  white-2: #F8F9FE,
-  white-3: #FAFAFA,
-  white-4: #ffffff,
-
-  black-0: #000000,
-  black-1: #3d3d3d,
-  black-2: #494949,
-
-  gray-0: #808080,
-  gray-1: #828282,
-  gray-2: #8898AA,
-  gray-3: #8e8e8e,
-  gray-4: #919199,
-  gray-5: #bdbdbd,
-  gray-6: #D7DEFF,
-
-  red-0: #C2281D,
-  red-1: #ff0000,
-  
-  blue-0: #588CBF,
-  blue-1: #0078ff,
-  blue-2: #667DFF,
-
-  green-0: #007C75,
-  green-1: #25B700,
-  
-  purple-0: #B85fff,
-);
-
-$ag-gird-font-size: 12px;
-$ag-gird-font-color: #8898aa;

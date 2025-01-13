@@ -15,7 +15,7 @@ export default function MantineProvider({ children, defaultColorScheme }: Mantin
       theme={theme}
       defaultColorScheme={defaultColorScheme}
       classNamesPrefix="app" // ex) app-Button-root
-      withCssVariables={false} // css variable 동적으로 추가되지 않도록
+      withCssVariables // css variable 동적으로 추가
     >
       <DatesProvider settings={{ locale: "ko" }}>{children}</DatesProvider>
     </Provider>

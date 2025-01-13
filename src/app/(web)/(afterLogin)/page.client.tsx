@@ -10,7 +10,6 @@ export default function Client() {
   return (
     <div>
       <h1>홈화면</h1>
-      <VideoCapture onFaceDetected={() => console.log("face detected")} />
     </div>
   );
 }

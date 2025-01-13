@@ -1,0 +1,47 @@
+.nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--mantine-color-blue-5);
+  color: #fff;
+  height: var.$safe-footer-height;
+  padding-bottom: var.$env-bottom;
+}
+
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  a {
+    display: block;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--mantine-color-blue-2)
+    }
+  }
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+
+  & + & {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      left: 0;
+      content: "";
+      width: 1px;
+      height: 100%;
+      background-color: #fff;
+    }
+  }
+}

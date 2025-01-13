@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import MantineProvider from "./MantineProvider";
 import ModalContainer from "../common/modal/ModalContainer";
 import {getServerSession} from '@/libraries/auth/auth.service';
+import Nav from '../common/header/Nav';
 
 interface ConfigsProps {
   defaultColorScheme: "light" | "dark";
@@ -21,8 +22,8 @@ export default async function Configs({ children, defaultColorScheme }: ConfigsP
   return (
     <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <ReactQuery>
-        <MantineProvider defaultColorScheme={"light"}>
-          {children}
+        <MantineProvider defaultColorScheme={"light"}>         
+            {children}
           {/* <Devtools /> */}
           <ModalContainer />
           <ToastBox />

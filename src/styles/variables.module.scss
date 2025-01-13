@@ -8,6 +8,7 @@
   breakpointMd: #{map-get(var.$breakpoints, md)};
   breakpointLg: #{map-get(var.$breakpoints, lg)};
   breakpointXl: #{map-get(var.$breakpoints, xl)};
+  breakpointXxl: #{map-get(var.$breakpoints, xxl)};
 
   mobileBoundary: var.$mobile-boundary;
 
@@ -16,30 +17,4 @@
   zIndexPopover: #{map-get(var.$z-indexes, popover)};
   zIndexOverlay: #{map-get(var.$z-indexes, overlay)};
   zIndexMax: #{map-get(var.$z-indexes, max)};
-
-  fontPretendard: var.$font-pretendard;
-
-  colorsWhite0: map-get(var.$colors, white-0);
-  colorsWhite1: map-get(var.$colors, white-1);
-  colorsWhite2: map-get(var.$colors, white-2);
-  colorsWhite3: map-get(var.$colors, white-3);
-  colorsWhite4: map-get(var.$colors, white-4);
-  colorsBlack0: map-get(var.$colors, black-0);
-  colorsBlack1: map-get(var.$colors, black-1);
-  colorsBlack2: map-get(var.$colors, black-2);
-  colorsGray0: map-get(var.$colors, gray-0);
-  colorsGray1: map-get(var.$colors, gray-1);
-  colorsGray2: map-get(var.$colors, gray-2);
-  colorsGray3: map-get(var.$colors, gray-3);
-  colorsGray4: map-get(var.$colors, gray-4);
-  colorsGray5: map-get(var.$colors, gray-5);
-  colorsGray6: map-get(var.$colors, gray-6);
-  colorsRed0: map-get(var.$colors, red-0);
-  colorsRed1: map-get(var.$colors, red-1);
-  colorsBlue0: map-get(var.$colors, blue-0);
-  colorsBlue1: map-get(var.$colors, blue-1);
-  colorsBlue2: map-get(var.$colors, blue-2);
-  colorsGreen0: map-get(var.$colors, green-0);
-  colorsGreen1: map-get(var.$colors, green-1);
-  colorsPurple0: map-get(var.$colors, purple-0);
 }

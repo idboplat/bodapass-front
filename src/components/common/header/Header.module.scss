@@ -1,0 +1,14 @@
+.header {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 3px 0px;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+  }
+}

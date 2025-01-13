@@ -8,8 +8,6 @@ import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
 import Configs from "@/components/config";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
-import { pretendard } from "@font";
-import classNames from "classnames";
 //import Script from "next/script";
 
 export const metadata = getDefaultMetadata();
@@ -24,8 +22,14 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="ko" className={classNames(pretendard.variable)} suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
         {/* run dev - 개발 체크. react-scan */}
         {/* <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
       </head>
