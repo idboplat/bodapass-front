@@ -1,5 +1,4 @@
 import { TClientPage } from "@/utils/getPage";
-import { Session } from "next-auth";
 import { PickerBaseProps } from "@mantine/dates";
 
 export type HomeProps<T = {}> = {

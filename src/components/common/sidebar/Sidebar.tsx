@@ -1,5 +1,4 @@
 "use client";
-import { Session } from "next-auth";
 import { TClientPath } from "@/utils/getPage";
 import Image from "next/image";
 import logo from "@/assets/images/logo.png";
@@ -18,7 +17,7 @@ interface SidebarProps {
 export default function Sidebar({ session, pathList }: SidebarProps) {
   const params = useParams();
   const pid = params.page as string;
-  const corpGrpTp = session.user.corpGrpTp;
+  const corpGrpTp = session.corpGrpTp;
 
   return (
     <aside className={css.sidebar}>

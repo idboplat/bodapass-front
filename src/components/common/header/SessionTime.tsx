@@ -1,7 +1,6 @@
 "use client";
 import { SESSION_STORAGE_KEY, useApp } from "@/stores/app";
 import { useLogoutMutation } from "@/hooks/useLogoutMutation";
-import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import css from "./SessionTime.module.scss";
 import { useStore } from "zustand";

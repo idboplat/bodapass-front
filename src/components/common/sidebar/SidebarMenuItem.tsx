@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import callTms from "@/libraries/callTms";
-import { Session } from "next-auth";
 import { TBW_001000_Q03 } from "@/types/api";
 import Badge from "./Badge";
 import { NavLink } from "@mantine/core";
@@ -25,7 +24,7 @@ export default function SidebarMenuItem({ icon, text, href, session }: SidebarMe
     queryFn: async () => {
       const TBW_001000_Q03Res = await callTms<TBW_001000_Q03>({
         svcId: "TBW_001000_Q03",
-        data: [session.user.corpCd],
+        data: [session.corpCd],
         session,
       });
 

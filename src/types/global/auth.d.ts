@@ -1,42 +1,31 @@
-import initTheme from "@/app/(config)/_lib/initTheme";
-
-declare module "@emotion/react" {
-  interface Theme extends ReturnType<typeof initTheme> {}
-}
-
-declare module "next-auth" {
-  interface User {
+declare global {
+  /** JWT payload */
+  interface JWT {
     id: string;
-    sessionId: string;
-    sessionKey: string;
-    errorMsg?: string;
+    email: string;    
+    /** 로그인 종류 */
+    provider: AuthProvider;
+
     corpCd: string;
     corpGrpTp: string;
+    sessionId: string;
+    sessionKey: string;
+    
+    /** 로그인한 ISO-시간 */
+    loginAt: string; 
+    /** ISO-String */
+    iss: string;
+    iat?: number;
+    exp?: number
   }
 
-  interface Session {
-    user: {
-      id: string;
-      sessionId: string;
-      sessionKey: string;
-      errorMsg?: string;
-      corpCd: string;
-      corpGrpTp: string;
-    };
+  /** Signin Session */
+  interface Session extends JWT {
+    accessToken: string;
   }
-}
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    user: {
-      id: string;
-      sessionId: string;
-      sessionKey: string;
-      errorMsg?: string;
-      corpCd: string;
-      corpGrpTp: string;
-    };
-  }
+  /** AccessToken Payload */
+  interface Payload extends JWT {}
 }
 
 export {};

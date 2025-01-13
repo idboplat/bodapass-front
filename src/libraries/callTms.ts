@@ -1,4 +1,3 @@
-import { Session } from "next-auth";
 import CryptoJS from "crypto-js";
 import { TmsError } from "@/libraries/error/TmsError";
 import dayjs from "@/libraries/dayjs";
@@ -101,8 +100,8 @@ export const genarateBody = ({
     apiTranKey: 1,
     apiCallDtm: currentTime,
     apiLangCd: "KO",
-    apiCorpCd: session?.user.corpCd || "",
-    apiUserId: session?.user.id || "guest",
+    apiCorpCd: session?.corpCd || "",
+    apiUserId: session?.id || "guest",
     svcRqstList: [svcRqst],
   };
 
@@ -135,11 +134,14 @@ const callTms = async <T extends RspnData<any>>({
 
   if (session) {
     //2차인증 통과시 암호화
-    headers["X-Content-Hash"] = getHashSha256(jsonBody + session.user.sessionKey);
-    headers["X-TMS-SES-ID"] = session.user.sessionId;
+    headers["X-Content-Hash"] = getHashSha256(jsonBody + session.sessionKey);
+    headers["X-TMS-SES-ID"] = session.sessionId;
   }
 
-  const requertUrl = `${process.env.NEXT_PUBLIC_FRONT_URL}/api/callTmsSvc`;
+  const isServer = typeof window === "undefined";
+  const baseUrl = isServer ? process.env.WAS_HTTP_URL : "";
+  const requertUrl = baseUrl  + "/api/call_tms_svc";
+
   const response = await fetch(requertUrl, {
     method: "POST",
     headers,

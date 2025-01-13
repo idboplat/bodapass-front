@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { AppContext, createAppStore, SESSION_STORAGE_KEY } from "@/stores/app";
-import { Session } from "next-auth";
 import dayjs from "@/libraries/dayjs";
 
 interface AppProps {

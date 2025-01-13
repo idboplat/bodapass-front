@@ -1,14 +1,13 @@
 import { useSetApp } from "@/stores/app";
 import { useMutation } from "@tanstack/react-query";
-import { signOut } from "next-auth/react";
 
 export const useLogoutMutation = () => {
   const action = useSetApp();
 
   const mutate = useMutation({
-    mutationKey: ["logout"],
+    mutationKey: ["signout"],
     mutationFn: async () => {
-      await signOut({ redirect: false, callbackUrl: "/login" });
+      //TODO: signout
     },
     onError: () => {
       // default error handler override
@@ -16,7 +15,7 @@ export const useLogoutMutation = () => {
     onSettled: () => {
       // 성공하든 실패하든 로그아웃 처리
       action.logout();
-      window.location.href = "/login";
+      window.location.href = "/signin";
     },
   });
 
