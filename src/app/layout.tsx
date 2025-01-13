@@ -1,5 +1,4 @@
 // css 순서변경 금지
-import "@/styles/agGrid.scss";
 import "@/styles/mantine/core.scss";
 import "@/styles/mantine/theme.scss";
 import "@/styles/mantine/dates.scss";
@@ -9,7 +8,6 @@ import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
 import Configs from "@/components/config";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
-import StyledComponentsRegistry from "@/libraries/styled-components-registry";
 import { pretendard } from "@font";
 import classNames from "classnames";
 //import Script from "next/script";
@@ -32,9 +30,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         {/* <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
       </head>
       <body>
-        <StyledComponentsRegistry>
-          <Configs defaultColorScheme="light">{children}</Configs>
-        </StyledComponentsRegistry>
+        <Configs defaultColorScheme="light">{children}</Configs>
       </body>
     </html>
   );
