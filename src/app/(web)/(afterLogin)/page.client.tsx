@@ -1,14 +1,16 @@
 "use client";
 import Camera from "@/components/Camera";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import Lottie from "lottie-react";
+import landingAni from "@/assets/lottie/landing.json";
+import css from "./page.module.scss";
 
 export default function Client() {
   const router = useRouter();
 
   return (
-    <div>
-      <h1>홈화면</h1>
-    </div>
+    <main className={css.main}>
+      <Lottie animationData={landingAni} loop />
+    </main>
   );
 }
