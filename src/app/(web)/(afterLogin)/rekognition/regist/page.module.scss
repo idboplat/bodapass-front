@@ -1,0 +1,10 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.loaderBox {
+  flex: 1;
+  @extend %flex-center;
+}

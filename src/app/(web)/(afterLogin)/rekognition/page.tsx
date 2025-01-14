@@ -1,4 +1,4 @@
-import Client from "./page.cilent";
+import Client from "./page.client";
 
 export default function Page() {
   return <Client />;

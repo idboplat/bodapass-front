@@ -6,14 +6,13 @@ declare global {
 
       readonly WAS_HTTP_URL: string;
       readonly AUTH_ACCESS_SECRET: string;
-      readonly AUTH_REFRESH_SECRET: string; 
-      readonly NEXT_PUBLIC_FRONT_URL: string;
+      readonly AUTH_REFRESH_SECRET: string;
 
-      // dev-tools
+      //  dev-tools
       readonly NEXT_PUBLIC_ENABLE_REACT_QUERY_DEVTOOLS?: "true" | "false";
 
       // aws credentials
-      readonly AWS_REGION: string;
+      readonly NEXT_PUBLIC_AWS_REGION: string;
       readonly AWS_ACCESS: string;
       readonly AWS_SECRET: string;
       readonly AWS_BUCKET_NAME: string;

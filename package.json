@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-react-liveness": "^3.2.1",
     "@aws-sdk/client-rekognition": "^3.716.0",
     "@aws-sdk/client-s3": "^3.726.1",
     "@aws-sdk/s3-request-presigner": "^3.726.1",
@@ -21,6 +22,7 @@
     "@tanstack/react-query-devtools": "5.18.0",
     "ag-grid-community": "31.3.2",
     "ag-grid-react": "31.3.2",
+    "aws-amplify": "^6.12.0",
     "classnames": "^2.5.1",
     "crypto-js": "4.2.0",
     "dayjs": "^1.11.13",

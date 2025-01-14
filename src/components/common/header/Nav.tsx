@@ -12,7 +12,7 @@ export default function Nav() {
             </Link>
           </li>
           <li className={css.item}>
-            <Link href="/recognition">
+            <Link href="/rekognition">
               <span>얼굴인식</span>
             </Link>
           </li>
