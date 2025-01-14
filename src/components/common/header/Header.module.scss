@@ -1,15 +1,51 @@
 .header {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 3px 0px;
+  height: var.$header-height;
+  flex-shrink: 0;
+  position: relative;
 }
 
-.inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
+.absoute:global(.default) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var.$header-height;
 
-  h1 {
-    font-size: 28px;
-    font-weight: 500;
+  .inner {
+    width: 100%;
+    height: 100%;
+    padding: var.$env-top 10px 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+}
+
+.absoute:global(.back) {
+  position: absolute;
+  width: 100%;
+  height: var.$header-height;
+  @extend %flex-center;
+
+  .inner {
+    padding: var.$env-top 10px 5px 10px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .backButton {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }

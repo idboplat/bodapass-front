@@ -44,24 +44,21 @@ export const theme = createTheme({
   scale: 1,
   /* Put your mantine theme override here */
   fontFamily:
-    'Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif',
+    "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif",
   breakpoints: {
     xs: "320px",
     sm: "480px",
     md: "768px",
     lg: "1024px",
     xl: "1280px",
-    xxl: "1600px"
+    xxl: "1600px",
   },
   colors: {},
   components: {
     ActionIcon: ActionIcon.extend({
-      defaultProps: {
-        // color: variable.thirdColorDefault,
-      },
+      defaultProps: {},
     }),
-    TextInput: TextInput.extend({
-    }),
+    TextInput: TextInput.extend({}),
     Checkbox: Checkbox.extend({
       defaultProps: {
         // color: variable.thirdColorDefault,

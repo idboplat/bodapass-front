@@ -202,6 +202,14 @@ fieldset:disabled .mantine-active:active {
   -webkit-tap-highlight-color: transparent;
 }
 
+.m_87cf2631[data-variant="touch"] {
+  --ai-bg: transparent;
+  --ai-hover: var(--mantine-color-gray-3);
+  --ai-color: var(--mantine-color-blue-light-color);
+  --ai-bd: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 :where([dir="rtl"]) .m_87cf2631 {
   text-align: right;
 }
@@ -3995,21 +4003,21 @@ fieldset:disabled .m_d3ea56bb,
 }
 
 @media (hover: hover) {
-  :where([data-mantine-color-scheme='light']) .m_f0824112:hover {
+  :where([data-mantine-color-scheme="light"]) .m_f0824112:hover {
     background-color: var(--mantine-color-gray-0);
   }
 
-  :where([data-mantine-color-scheme='dark']) .m_f0824112:hover {
+  :where([data-mantine-color-scheme="dark"]) .m_f0824112:hover {
     background-color: var(--mantine-color-dark-6);
   }
 }
 
 @media (hover: none) {
-  :where([data-mantine-color-scheme='light']) .m_f0824112:active {
+  :where([data-mantine-color-scheme="light"]) .m_f0824112:active {
     background-color: var(--mantine-color-gray-0);
   }
 
-  :where([data-mantine-color-scheme='dark']) .m_f0824112:active {
+  :where([data-mantine-color-scheme="dark"]) .m_f0824112:active {
     background-color: var(--mantine-color-dark-6);
   }
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ActionIcon } from "@mantine/core";
-import { IconBrandLoom } from "@tabler/icons-react";
+import { IconCamera } from "@tabler/icons-react";
 import { MutableRefObject } from "react";
 import Camera from "@/components/Camera";
 import css from "./Ocr.module.scss";
@@ -30,8 +30,8 @@ export default function Capture({ canvasRef, videoRef, onClickCapture, isMobile 
 
           <p>신분증이 가려지지 안항야 합니다.</p>
           <div className={css.shutterBox}>
-            <ActionIcon variant="transparent" w="6rem" h="6rem" onClick={onClickCapture}>
-              <IconBrandLoom width="5rem" height="5rem" />
+            <ActionIcon variant="touch" w="5rem" h="5rem" onClick={onClickCapture} radius={9999}>
+              <IconCamera width="4rem" height="4rem" />
             </ActionIcon>
           </div>
         </div>
