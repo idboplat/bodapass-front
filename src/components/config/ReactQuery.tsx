@@ -34,7 +34,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           // 에러 모달을 무시하고 싶을 때 queryKey에 ignore를 추가
           if (querykey.includes("ignore")) return;
 
-          await modalStore.push(ErrorModal, { props: { error } });
+          modalStore.push(ErrorModal, { props: { error } });
         },
       }),
       defaultOptions: {
@@ -68,7 +68,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
               }
             }
 
-            await modalStore.push(ErrorModal, { props: { error } });
+            modalStore.push(ErrorModal, { props: { error } });
           },
         },
       },

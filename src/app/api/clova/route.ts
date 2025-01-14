@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
 import path from "path";
 import { z } from "zod";
 import { serverErrorHandler } from "@/libraries/error";
 import { logger } from "@/libraries/logger/pino";
+import { OCRResponseData } from "@/types/api/clova";
+import { uploadToS3 } from "@/libraries/aws/s3";
 
 const CLOVA_END_POINT =
   "https://lrrlefv18g.apigw.ntruss.com/custom/v1/37307/4728863854c84533b46cf1a4ca5c0fe3e2d5815299eed8810564227591ac2c13";
@@ -47,7 +48,14 @@ export async function POST(req: NextRequest) {
       }),
     });
 
-    const body = await response.json();
+    const body: OCRResponseData = await response.json();
+
+    const fileName = body.requestId + path.extname(capture.name);
+    const fileType = capture?.type || "image/jpeg";
+
+    const key = await uploadToS3(buffer, fileName, fileType);
+    logger.info(`Uploaded to S3: ${key}`);
+
     return NextResponse.json({ data: body });
   } catch (error) {
     logger.error(error);
