@@ -9,9 +9,10 @@ import ErrorModal from "./common/modal/ErrorModal";
 interface CameraProps {
   canvasRef: MutableRefObject<HTMLCanvasElement>;
   videoRef: MutableRefObject<HTMLVideoElement>;
+  isMobile: boolean;
 }
 
-export default function Camera({ canvasRef, videoRef }: CameraProps) {
+export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
   const [error, setError] = useState(false);
   const modalStore = useSetModalStore();
   const [isDetecting, setIsDetecting] = useState(false);
@@ -24,7 +25,7 @@ export default function Camera({ canvasRef, videoRef }: CameraProps) {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "environment", // 전면: "user", 후면: "environment"
-          aspectRatio: 9 / 12,
+          aspectRatio: isMobile ? 9 / 12 : 12 / 9,
         },
       });
       videoRef.current.srcObject = stream;
@@ -42,10 +43,6 @@ export default function Camera({ canvasRef, videoRef }: CameraProps) {
 
   useEffect(() => {
     connectDevices();
-    window.addEventListener("resize", connectDevices);
-    return () => {
-      window.removeEventListener("resize", connectDevices);
-    };
   }, []);
 
   return (

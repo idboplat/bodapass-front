@@ -1,5 +1,9 @@
+import { userAgent } from "next/server";
 import Client from "./page.client";
+import { headers } from "next/headers";
 
 export default function Page() {
-  return <Client />;
+  const agent = userAgent({ headers: headers() });
+  const isMobile = agent.device.type === "mobile" || agent.device.type === "tablet";
+  return <Client isMobile={isMobile} />;
 }

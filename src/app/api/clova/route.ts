@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { z } from "zod";
+import { serverErrorHandler } from "@/libraries/error";
+import { logger } from "@/libraries/logger/pino";
 
 const CLOVA_END_POINT =
   "https://lrrlefv18g.apigw.ntruss.com/custom/v1/37307/4728863854c84533b46cf1a4ca5c0fe3e2d5815299eed8810564227591ac2c13";
@@ -8,14 +11,21 @@ const CLOVA_END_POINT =
 const PASSPORT_END_POINT = "/document/passport";
 const IDENTITICATION_END_POINT = "/document/id-card";
 
-export async function GET(req: NextRequest) {
-  try {
-    const imagesDir = path.join(process.cwd(), "public");
-    const sourceImagePath = path.join(imagesDir, "id_card.jpg");
+const dto = z.object({});
 
-    const [sourceImageBytes] = await Promise.all([fs.readFile(sourceImagePath)]);
-    // const sourceArrayBuffer = new Uint8Array(sourceImageBytes);
-    const sourceBase64 = sourceImageBytes.toString("base64");
+export async function POST(req: NextRequest) {
+  try {
+    const formdata = await req.formData();
+
+    const capture = formdata.get("image") as File | null;
+
+    if (!capture) {
+      throw new Error("Image not found");
+    }
+
+    const sourceImageBytes = await capture.arrayBuffer();
+    const buffer = Buffer.from(sourceImageBytes);
+    const sourceBase64 = buffer.toString("base64");
 
     const response = await fetch(CLOVA_END_POINT + IDENTITICATION_END_POINT, {
       method: "POST",
@@ -38,15 +48,10 @@ export async function GET(req: NextRequest) {
     });
 
     const body = await response.json();
-
     return NextResponse.json({ data: body });
   } catch (error) {
-    console.error(error);
-
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    logger.error(error);
+    const { message, status } = serverErrorHandler(error);
+    return NextResponse.json({ message }, { status });
   }
 }
-
-// export async function POST(req: NextRequest) {
-//   return NextResponse.json({ message: "Hello, Clova!" });
-// }

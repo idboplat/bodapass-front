@@ -22,7 +22,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning data-mantine-color-scheme="light">
       <head>
         <link
           rel="stylesheet"
