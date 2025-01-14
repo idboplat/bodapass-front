@@ -4,7 +4,7 @@ import formidable from "formidable";
 import fs from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import { rekognition } from "@/libraries/rekognition/credentials";
+import { rekognition } from "@/libraries/aws/rekognition";
 
 // // 비동기 함수로 formidable을 사용하여 파일 파싱
 // const parseForm = (req: NextApiRequest) => {

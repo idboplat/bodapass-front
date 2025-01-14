@@ -2,7 +2,7 @@
 import awsexports from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 
-Amplify.configure(awsexports);
+Amplify.configure(awsexports, { ssr: true });
 
 export default function AmplifyProvider() {
   return null;

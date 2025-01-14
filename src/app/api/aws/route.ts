@@ -4,7 +4,7 @@ import formidable from "formidable";
 import fs from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import { rekognitionClient } from "@/libraries/rekognition/credentials";
+import { rekognitionClient } from "@/libraries/aws/rekognition";
 
 // Formidable 설정: 파일 업로드를 처리하기 위해
 // export const config = {

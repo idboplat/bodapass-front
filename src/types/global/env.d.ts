@@ -12,7 +12,6 @@ declare global {
       readonly NEXT_PUBLIC_ENABLE_REACT_QUERY_DEVTOOLS?: "true" | "false";
 
       // aws credentials
-      readonly NEXT_PUBLIC_AWS_REGION: string;
       readonly AWS_ACCESS: string;
       readonly AWS_SECRET: string;
       readonly AWS_BUCKET_NAME: string;
