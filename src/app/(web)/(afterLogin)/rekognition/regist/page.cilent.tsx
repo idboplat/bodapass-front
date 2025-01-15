@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Loader } from "@mantine/core";
-import { FaceLivenessDetector } from "@aws-amplify/ui-react-liveness";
+import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";
 import BackHeader from "@/components/common/header/BackHeader";
 import { useRouter } from "next/navigation";
 import css from "./page.module.scss";
@@ -13,6 +13,8 @@ import {
 import { useSetModalStore } from "@/stores/modal";
 import ErrorModal from "@/components/common/modal/ErrorModal";
 import { RECOGNITION_REGION } from "@/libraries/aws/config";
+import { Credentials } from "@aws-sdk/client-sts";
+import { downloadImage } from "@/utils/download";
 
 export default function Client() {
   const router = useRouter();
@@ -27,10 +29,25 @@ export default function Client() {
         },
       });
 
-      const json: { message: string; data: GetFaceLivenessSessionResultsCommandOutput } =
-        await res.json();
+      const json: {
+        message: string;
+        data: GetFaceLivenessSessionResultsCommandOutput;
+      } = await res.json();
 
       return json.data;
+    },
+    onSuccess: (data) => {
+      const auditImages = data.AuditImages;
+      auditImages?.forEach((image) => {
+        const bytes = image.Bytes;
+        if (!bytes) return;
+        downloadImage(bytes);
+      });
+
+      const refImage = data.ReferenceImage;
+      const refImageByte = refImage?.Bytes;
+      if (!refImageByte) return;
+      downloadImage(refImageByte);
     },
   });
 
@@ -44,10 +61,16 @@ export default function Client() {
         },
       });
 
-      const json: { message: string; data: CreateFaceLivenessSessionCommandOutput } =
-        await res.json();
+      const json: {
+        message: string;
+        data: CreateFaceLivenessSessionCommandOutput;
+        credentials: Credentials;
+      } = await res.json();
       console.log("create liveness session", json.data);
-      return json.data.SessionId;
+      return {
+        sessionId: json.data.SessionId!,
+        credentials: json.credentials,
+      };
     },
   });
 
@@ -64,7 +87,7 @@ export default function Client() {
       });
       return;
     }
-    const result = await mutation.mutateAsync(data);
+    const result = await mutation.mutateAsync(data.sessionId);
     console.log("liveness result", result);
   };
 
@@ -77,12 +100,20 @@ export default function Client() {
             <Loader />
           </div>
         ) : (
-          <FaceLivenessDetector
+          <FaceLivenessDetectorCore
             // displayText={{ hintCenterFaceText: "얼굴을 중앙에" }}
-            sessionId={data!}
+            sessionId={data!.sessionId}
             region={RECOGNITION_REGION}
             onAnalysisComplete={onAnalysisComplete}
-            config={{}}
+            config={{
+              credentialProvider: async () => {
+                return {
+                  accessKeyId: data!.credentials.AccessKeyId!,
+                  secretAccessKey: data!.credentials.SecretAccessKey!,
+                  sessionToken: data!.credentials.SessionToken!,
+                };
+              },
+            }}
             onError={(error) => {
               console.error(error);
             }}

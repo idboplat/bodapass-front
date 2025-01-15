@@ -1,4 +1,4 @@
-import { RekognitionClient, CompareFacesCommand, Rekognition } from "@aws-sdk/client-rekognition";
+import { Rekognition, RekognitionClient } from "@aws-sdk/client-rekognition";
 import { AWS_REGION, RECOGNITION_REGION } from "./config";
 
 // 이미지 비교를 위한 인스턴스
