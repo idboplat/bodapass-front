@@ -4545,6 +4545,14 @@ html[dir="rtl"] .amplify-field-group__inner-start {
   left: 0;
   pointer-events: none;
   z-index: 1;
+
+  // display: none;
+  // position: absolute;
+  // width: 1px;
+  // height: 1px;
+  // margin: -1px;
+  // overflow: hidden;
+  // clip: rect(0, 0, 0, 0);
 }
 
 .amplify-liveness-loader {

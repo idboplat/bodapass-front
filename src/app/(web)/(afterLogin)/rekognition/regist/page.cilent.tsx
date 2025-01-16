@@ -9,6 +9,8 @@ import { Loader } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import css from "./page.module.scss";
 
+// https://ui.docs.amplify.aws/react/connected-components/liveness/customization/
+
 export default function Client() {
   const router = useRouter();
   const modalStore = useSetModalStore();
@@ -49,6 +51,10 @@ export default function Client() {
             onError={(error) => {
               console.error(error);
             }}
+            // onUserCancel={() => {}} // 사용자가 취소했을 때
+            // components={{
+            //   PhotosensitiveWarning: () => <div>테스트!!!!!!!</div>,
+            // }}
           />
         )}
       </div>
