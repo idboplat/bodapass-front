@@ -5,10 +5,10 @@ import {
   GetFaceLivenessSessionResultsCommandOutput,
 } from "@aws-sdk/client-rekognition";
 import { Credentials } from "@aws-sdk/client-sts";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 
 export const useLiveness = () => {
-  const query = useQuery({
+  const query = useSuspenseQuery({
     queryKey: ["createLivenessSession"],
     queryFn: async () => {
       const res = await fetch("/api/aws/liveness/create_session", {

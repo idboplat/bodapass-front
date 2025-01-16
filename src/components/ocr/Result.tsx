@@ -21,7 +21,7 @@ export default function Result({ data }: ResultProps) {
   }, [data]);
 
   return (
-    <pre>
+    <pre className="scroll">
       <code className="json" ref={jsonRef}></code>
     </pre>
   );

@@ -4,6 +4,7 @@ import { IconCamera } from "@tabler/icons-react";
 import { MutableRefObject } from "react";
 import Camera from "@/components/Camera";
 import css from "./Ocr.module.scss";
+import classNames from "classnames";
 
 type Props = {
   videoRef: MutableRefObject<HTMLVideoElement>;
@@ -14,7 +15,7 @@ type Props = {
 
 export default function Capture({ canvasRef, videoRef, onClickCapture, isMobile }: Props) {
   return (
-    <div className={css.cameraBox}>
+    <div className={classNames(css.cameraBox, "scroll")}>
       <Camera videoRef={videoRef} canvasRef={canvasRef} isMobile={isMobile} />
       <div className={css.descBox}>
         <div className={css.desc}>

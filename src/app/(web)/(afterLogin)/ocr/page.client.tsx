@@ -3,6 +3,7 @@ import Link from "next/link";
 import css from "./page.module.scss";
 import BackHeader from "@/components/common/header/BackHeader";
 import { useRouter } from "next/navigation";
+import classNames from "classnames";
 
 export default function Page() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function Page() {
   return (
     <>
       <BackHeader title="OCR" onClickBack={onClickBack} />
-      <div className={css.wrap}>
+      <div className={classNames(css.wrap, "scroll")}>
         <h2 className={css.title}>신분증 유형을 선택해주세요</h2>
         <div className={css.box}>
           <Link href="/ocr/idCard" className={css.link}>

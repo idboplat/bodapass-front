@@ -80,12 +80,15 @@ body,
   display: flex;
   flex-direction: column;
   position: relative;
-  max-height: 100svh;
   min-width: var.$mantine-breakpoint-xs;
   max-width: var.$mantine-breakpoint-sm;
   margin: 0 auto;
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
+
+  & > .scroll {
+    overflow-y: auto;
+  }
 }
 
 @media screen and (max-device-width: 31.25em) {
@@ -115,11 +118,11 @@ body,
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--liveuta-second-default);
+  background-color: var(--mantine-color-blue-3);
   border-radius: 10px;
   cursor: pointer;
 }
