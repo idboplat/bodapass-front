@@ -100,7 +100,7 @@ export const genarateBody = ({
     apiTranKey: 1,
     apiCallDtm: currentTime,
     apiLangCd: "KO",
-    apiCorpCd: session?.corpCd || "",
+    // apiCorpCd: session?.corpCd || "",
     apiUserId: session?.id || "guest",
     svcRqstList: [svcRqst],
   };
@@ -140,7 +140,7 @@ const callTms = async <T extends RspnData<any>>({
 
   const isServer = typeof window === "undefined";
   const baseUrl = isServer ? process.env.WAS_HTTP_URL : "";
-  const requertUrl = baseUrl  + "/api/call_tms_svc";
+  const requertUrl = baseUrl + "/api/call_tms_svc";
 
   const response = await fetch(requertUrl, {
     method: "POST",
