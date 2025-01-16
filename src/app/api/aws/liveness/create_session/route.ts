@@ -8,9 +8,9 @@ export async function POST() {
     const output = await rekognition.createFaceLivenessSession({
       Settings: {
         AuditImagesLimit: 1, // 1개의 얼굴만 감지
-        OutputConfig: {
-          S3Bucket: "logan-liveness-dev",
-        },
+        // OutputConfig: {
+        //   S3Bucket: "logan-liveness-dev",
+        // },
       },
     });
 

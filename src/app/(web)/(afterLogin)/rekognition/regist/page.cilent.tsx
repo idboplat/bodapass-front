@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Loader } from "@mantine/core";
 import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";
 import BackHeader from "@/components/common/header/BackHeader";
@@ -14,7 +14,7 @@ import { useSetModalStore } from "@/stores/modal";
 import ErrorModal from "@/components/common/modal/ErrorModal";
 import { RECOGNITION_REGION } from "@/libraries/aws/config";
 import { Credentials } from "@aws-sdk/client-sts";
-import { downloadImage } from "@/utils/download";
+import { bytesToBlob } from "@/utils/convert";
 
 export default function Client() {
   const router = useRouter();
@@ -34,21 +34,14 @@ export default function Client() {
         data: GetFaceLivenessSessionResultsCommandOutput;
       } = await res.json();
 
-      return json.data;
-    },
-    onSuccess: (data) => {
-      const auditImages = data.AuditImages;
-      auditImages?.forEach((image) => {
-        const bytes = image.Bytes;
-        if (!bytes) return;
-        downloadImage(bytes);
-      });
+      const bytes = json.data.AuditImages?.[0].Bytes;
 
-      const refImage = data.ReferenceImage;
-      const refImageByte = refImage?.Bytes;
-      if (!refImageByte) return;
-      downloadImage(refImageByte);
+      if (!bytes) throw new Error("No audit image");
+
+      const blob = bytesToBlob(bytes);
+      return blob;
     },
+    // onSuccess: (data) => {},
   });
 
   const { isPending, data } = useQuery({
