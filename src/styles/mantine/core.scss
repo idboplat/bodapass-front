@@ -746,14 +746,11 @@ fieldset:disabled .mantine-active:active {
   --input-cursor: text;
   --input-text-align: left;
   --input-line-height: calc(var(--input-height) - calc(0.125rem * var(--mantine-scale)));
-  --input-fz: 16px;
-  // --input-padding: calc(var(--input-height) / 3);
-  --input-padding: 20px;
+  --input-padding: calc(var(--input-height) / 3);
   --input-padding-inline-start: var(--input-padding);
   --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
-  // --input-color: var(--mantine-color-text);
-  --input-color: #494949;
+  --input-color: var(--mantine-color-text);
 
   --input-left-section-size: var(
     --input-left-section-width,
@@ -817,12 +814,14 @@ fieldset:disabled .mantine-active:active {
   --input-bd: var(--mantine-color-gray-4);
   --input-bg: var(--mantine-color-white);
   --input-bd: var(--mantine-color-blue-4);
+  --input-bd-focus: var(--mantine-color-blue-7);
 }
 
 [data-mantine-color-scheme="light"] .m_6c018570[data-variant="filled"] {
   --input-bd: transparent;
   --input-bg: var(--mantine-color-gray-1);
   --input-bd: var(--mantine-color-blue-4);
+  --input-bd-focus: var(--mantine-color-blue-7);
 }
 
 [data-mantine-color-scheme="light"] .m_6c018570[data-variant="unstyled"] {
@@ -840,12 +839,14 @@ fieldset:disabled .mantine-active:active {
   --input-bd: var(--mantine-color-dark-4);
   --input-bg: var(--mantine-color-dark-6);
   --input-bd: var(--mantine-color-blue-4);
+  --input-bd-focus: var(--mantine-color-blue-7);
 }
 
 [data-mantine-color-scheme="dark"] .m_6c018570[data-variant="filled"] {
   --input-bd: transparent;
   --input-bg: var(--mantine-color-dark-5);
   --input-bd: var(--mantine-color-blue-4);
+  --input-bd-focus: var(--mantine-color-blue-7);
 }
 
 [data-mantine-color-scheme="dark"] .m_6c018570[data-variant="unstyled"] {
@@ -881,9 +882,9 @@ fieldset:disabled .mantine-active:active {
 
   text-align: var(--input-text-align);
   color: var(--input-color);
-  // border: calc(0.0625rem * var(--mantine-scale)) solid var(--input-bd);
+  border: calc(0.0625rem * var(--mantine-scale)) solid var(--input-bd);
   background-color: var(--input-bg);
-  // font-family: var(--input-font-family, var(--mantine-font-family));
+  font-family: var(--input-font-family, var(--mantine-font-family));
   // height: var(--input-size);
   height: 100%;
   min-height: var(--input-height);
