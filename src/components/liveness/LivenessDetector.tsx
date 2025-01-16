@@ -1,19 +1,24 @@
+import ScreenError from "@/components/common/error/ScreenError";
+import ScreenLoading from "@/components/common/loading/ScreenLoading";
+import ErrorModal from "@/components/common/modal/ErrorModal";
 import { useLiveness } from "@/hooks/useLiveness";
 import { RECOGNITION_REGION } from "@/libraries/aws/config";
+import { LivenessError } from "@/libraries/error";
 import { useSetModalStore } from "@/stores/modal";
 import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";
-import ErrorModal from "@/components/common/modal/ErrorModal";
-import { Suspense } from "react";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import ScreenLoading from "../common/loading/ScreenLoading";
-import ScreenError from "../common/error/ScreenError";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 // https://ui.docs.amplify.aws/react/connected-components/liveness/customization/
 
-interface Props {}
+interface Props {
+  onSuccess: (image: Blob) => void;
+  onError: (error: LivenessError) => void;
+  onUserCancel: () => void;
+}
 
-function Success({}: Props) {
+function Success({ onSuccess, onError, onUserCancel }: Props) {
   const { query, mutation, credentialProvider } = useLiveness();
   const modalStore = useSetModalStore();
 
@@ -26,8 +31,8 @@ function Success({}: Props) {
       });
       return;
     }
-    const result = await mutation.mutateAsync(query.data.sessionId);
-    console.log("liveness result", result);
+
+    mutation.mutate(query.data.sessionId, { onSuccess });
   };
 
   return (
@@ -37,10 +42,8 @@ function Success({}: Props) {
       region={RECOGNITION_REGION}
       onAnalysisComplete={onAnalysisComplete}
       config={{ credentialProvider }}
-      onError={(error) => {
-        console.error(error);
-      }}
-      // onUserCancel={() => {}} // 사용자가 취소했을 때
+      onError={onError}
+      onUserCancel={onUserCancel} // 사용자가 취소했을 때
       // components={{
       //   PhotosensitiveWarning: () => <div>테스트!!!!!!!</div>,
       // }}

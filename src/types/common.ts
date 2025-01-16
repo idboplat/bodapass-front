@@ -13,3 +13,8 @@ export type CORP_GRP_TP = (typeof CORP_GRP)[number];
 export type TDatePickerValue = Date | null;
 export type TRangePickerValue = [TDatePickerValue, TDatePickerValue];
 export type TRangePickerChangeEventHandler = PickerBaseProps<"range">["onChange"];
+
+export type TRegistInfo = {
+  userName: string;
+  collectionId: string;
+};

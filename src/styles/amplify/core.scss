@@ -4515,7 +4515,8 @@ html[dir="rtl"] .amplify-field-group__inner-start {
   align-items: center;
   justify-content: center;
   background-color: var(--amplify-components-liveness-camera-module-background-color);
-  border: 1px solid var(--amplify-colors-neutral-40);
+  // border: 1px solid var(--amplify-colors-neutral-40);
+  border: 1px solid #fff;
   position: relative;
 }
 

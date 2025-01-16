@@ -1,0 +1,11 @@
+.registForm {
+  padding: 1rem;
+
+  :global(.app-TextInput-root) {
+    margin-bottom: 1rem;
+  }
+
+  .buttonBox {
+    text-align: end;
+  }
+}
