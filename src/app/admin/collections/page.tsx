@@ -7,7 +7,5 @@ export default async function Page() {
   });
   const json: { message: string; data: ListCollectionsCommandOutput } = await response.json();
 
-  const data = json.data.CollectionIds?.map((collectionId) => ({ collectionId })) ?? [];
-
-  return <Client data={data} />;
+  return <Client data={json.data} />;
 }

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { rekognition } from "@/libraries/aws/rekognition";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { logger } from "@/libraries/logger/pino";
-import path from "node:path";
 import { uploadToS3 } from "@/libraries/aws/s3";
 
 export async function GET(
@@ -40,7 +39,9 @@ export async function POST(
       throw new BadRequestError("이미지를 찾을 수 없습니다.");
     }
 
-    const Bytes = await image.bytes();
+    const sourceImageBytes = await image.arrayBuffer();
+    const Bytes = new Uint8Array(sourceImageBytes); // Uint8Array<ArrayBufferLike>
+    const buffer = Buffer.from(sourceImageBytes);
 
     const response = await rekognition.indexFaces({
       CollectionId: collectionId,
@@ -49,9 +50,9 @@ export async function POST(
       Image: { Bytes },
     });
 
-    const fileName = faceId + path.extname(image.name);
+    // console.log("name", image.name); => blob
+    const fileName = faceId + ".png";
     const fileType = image?.type || "image/png";
-    const buffer = Buffer.from(Bytes);
     const key = await uploadToS3(buffer, fileName, fileType);
 
     return NextResponse.json({ message: "얼굴 생성 완료", data: key, response }, { status: 201 });

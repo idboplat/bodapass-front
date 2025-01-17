@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import hljs from "highlight.js";
+import { IndexFacesCommandOutput } from "@aws-sdk/client-rekognition";
 
 type Props = {
-  result: any;
+  result: { message: string; data: string; response: IndexFacesCommandOutput };
 };
 
 export default function RegistResult({ result }: Props) {

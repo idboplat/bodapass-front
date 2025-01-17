@@ -43,6 +43,7 @@ export default function Client() {
       return json;
     },
     onSuccess: (data) => {
+      console.log("liveness 등록 결과", data);
       setResult(() => ({ ...data }));
       nextPage();
     },
@@ -88,7 +89,7 @@ export default function Client() {
             onUserCancel={onUserCancelDetector}
           />
         )}
-        {page === 3 && <RegistResult result={result} />}
+        {page === 2 && <RegistResult result={result} />}
       </div>
     </>
   );
