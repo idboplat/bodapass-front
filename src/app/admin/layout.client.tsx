@@ -1,9 +1,9 @@
-'use client';
-import NavItem from '@/components/common/header/AdminNavItem';
-import { AppShell, Burger, Button, Flex, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import Link from 'next/link';
-import css from './layout.module.scss';
+"use client";
+import NavItem from "@/components/common/header/AdminNavItem";
+import { AppShell, Burger, Button, Flex, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
+import css from "./layout.module.scss";
 
 type Props = {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export default function Client({ children }: Props) {
     <AppShell
       navbar={{
         width: 200,
-        breakpoint: 'sm',
+        breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
       padding="md"
@@ -40,7 +40,7 @@ export default function Client({ children }: Props) {
       </AppShell.Header>
       <AppShell.Navbar p="xs">
         <NavItem direction="rtl" href="/admin" label="관리자 홈" />
-        <NavItem direction="rtl" href="/admin/collection" label="콜렉션 조회" />
+        <NavItem direction="rtl" href="/admin/collections" label="콜렉션 조회" />
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
