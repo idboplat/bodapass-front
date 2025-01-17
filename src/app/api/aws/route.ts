@@ -1,64 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { RekognitionClient, CompareFacesCommand, Rekognition } from "@aws-sdk/client-rekognition";
-import formidable from "formidable";
+import { rekognitionClient } from "@/libraries/aws/rekognition";
+import { CompareFacesCommand } from "@aws-sdk/client-rekognition";
 import fs from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import { rekognitionClient } from "@/libraries/aws/rekognition";
 
-// Formidable 설정: 파일 업로드를 처리하기 위해
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
-// // 비동기 함수로 formidable을 사용하여 파일 파싱
-// const parseForm = (req: NextApiRequest) => {
-//   const form = new formidable.IncomingForm();
-//   return new Promise<{ sourceImage: Buffer; targetImage: Buffer }>((resolve, reject) => {
-//     form.parse(req, (err, fields, files) => {
-//       if (err) return reject(err);
-//       try {
-//         const sourceFile = files.sourceImage as formidable.File;
-//         const targetFile = files.targetImage as formidable.File;
-
-//         if (!sourceFile || !targetFile) {
-//           return reject(new Error("이미지 파일이 필요합니다."));
-//         }
-
-//         const sourceBuffer = fs.readFileSync(sourceFile.filepath);
-//         const targetBuffer = fs.readFileSync(targetFile.filepath);
-
-//         resolve({ sourceImage: sourceBuffer, targetImage: targetBuffer });
-//       } catch (error) {
-//         reject(error);
-//       }
-//     });
-//   });
-// };
-
-// const createCollection = async () => {
-//   const collectionId = process.env.REKOGNITION_COLLECTION_ID;
-
-//   if (!collectionId) {
-//     console.error("REKOGNITION_COLLECTION_ID이 정의되지 않았습니다.");
-//     process.exit(1);
-//   }
-
-//   try {
-//     const response = await rekognition.createCollection({ CollectionId: collectionId });
-//     console.log(`컬렉션 ARN: ${response.CollectionArn}`);
-//     console.log(`상태 코드: ${response.StatusCode}`);
-//   } catch (error: any) {
-//     if (error.code === "ResourceAlreadyExistsException") {
-//       console.log(`컬렉션 ${collectionId}은(는) 이미 존재합니다.`);
-//     } else {
-//       console.error("컬렉션 생성 중 오류:", error);
-//     }
-//   }
-// };
-
+// 1대 1비교
 export async function POST(req: NextRequest) {
   try {
     const imagesDir = path.join(process.cwd(), "public");

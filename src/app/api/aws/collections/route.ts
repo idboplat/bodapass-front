@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     // const paginationToken = req.query.paginationToken as string | undefined;
 
     const response = await rekognition.listCollections();
+    console.log(response);
 
     return NextResponse.json({ message: "콜렉션 조회", data: response });
   } catch (error) {
