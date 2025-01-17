@@ -6,12 +6,6 @@ interface ResultProps {
   data: OCRResponseData;
 }
 
-declare global {
-  interface Window {
-    hljs: any;
-  }
-}
-
 export default function Result({ data }: ResultProps) {
   const jsonRef = useRef<HTMLElement>(null!);
 
@@ -26,7 +20,3 @@ export default function Result({ data }: ResultProps) {
     </pre>
   );
 }
-
-// <div className="json-viewer">
-//   <div dangerouslySetInnerHTML={{ __html: html }}></div>
-// </div>

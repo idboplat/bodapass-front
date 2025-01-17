@@ -10,6 +10,8 @@ import RegistForm from "@/components/liveness/RegistForm";
 import { TRegistInfo } from "@/types/common";
 import RegistResult from "@/components/liveness/RegistResult";
 import { LivenessError } from "@/libraries/error";
+import { useMutation } from "@tanstack/react-query";
+import { IndexFacesCommandOutput } from "@aws-sdk/client-rekognition";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -20,9 +22,30 @@ export default function Client() {
     start: START_PAGE,
     max: LAST_PAGE,
   });
+
   const [info, setInfo] = useState<TRegistInfo>({
     userName: "",
     collectionId: "",
+  });
+
+  const [result, setResult] = useState<any>({});
+
+  const mutation = useMutation({
+    mutationFn: async (arg: { image: Blob }) => {
+      const formData = new FormData();
+      formData.append("image", arg.image);
+      const res = await fetch(`/api/aws/collections/${info.collectionId}/faces/${info.userName}`, {
+        method: "POST",
+        body: formData,
+      });
+      const json: { message: string; data: string; response: IndexFacesCommandOutput } =
+        await res.json();
+      return json;
+    },
+    onSuccess: (data) => {
+      setResult(() => ({ ...data }));
+      nextPage();
+    },
   });
 
   const onClickBack = () => {
@@ -40,11 +63,14 @@ export default function Client() {
   };
 
   const onSuccessDetector = (image: Blob) => {
-    console.log("liveness image", image);
+    console.log("liveness image 생성");
+    mutation.mutate({ image });
   };
+
   const onErrorDetector = (error: LivenessError) => {
     console.error(error);
   };
+
   const onUserCancelDetector = () => {
     console.log("user cancel");
     resetPage();
@@ -62,7 +88,7 @@ export default function Client() {
             onUserCancel={onUserCancelDetector}
           />
         )}
-        {page === 3 && <RegistResult />}
+        {page === 3 && <RegistResult result={result} />}
       </div>
     </>
   );
