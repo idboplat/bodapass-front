@@ -24,7 +24,7 @@ export const useCamera = () => {
           videoRef.current.play();
           resolve(blob);
         },
-        "image/jpeg",
+        "image/png",
         0.85,
       );
     });

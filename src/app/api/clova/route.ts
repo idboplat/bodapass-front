@@ -18,13 +18,13 @@ export async function POST(req: NextRequest) {
   try {
     const formdata = await req.formData();
 
-    const capture = formdata.get("image") as File | null;
+    const image = formdata.get("image") as File | null;
 
-    if (!capture) {
+    if (!image) {
       throw new Error("Image not found");
     }
 
-    const sourceImageBytes = await capture.arrayBuffer();
+    const sourceImageBytes = await image.arrayBuffer();
     const buffer = Buffer.from(sourceImageBytes);
     const sourceBase64 = buffer.toString("base64");
 
@@ -50,8 +50,8 @@ export async function POST(req: NextRequest) {
 
     const body: OCRResponseData = await response.json();
 
-    const fileName = body.requestId + path.extname(capture.name);
-    const fileType = capture?.type || "image/jpeg";
+    const fileName = body.requestId + path.extname(image.name);
+    const fileType = image?.type || "image/png";
 
     const key = await uploadToS3(buffer, fileName, fileType);
     logger.info(`Uploaded to S3: ${key}`);
