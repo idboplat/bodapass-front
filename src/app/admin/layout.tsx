@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import Client from './layout.client';
+import Client from "./layout.client";
+import "@/styles/agGrid.scss";
 
 type AdminLayoutProps = {
   children: React.ReactNode;

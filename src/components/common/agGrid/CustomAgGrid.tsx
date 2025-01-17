@@ -1,29 +1,35 @@
 import { gridOptions } from "@/utils/agGridUtils";
+import { ColDef, ColGroupDef, RowClickedEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import classNames from "classnames";
 
-interface AgGridProps {
+interface AgGridProps<T> {
   data?: any[];
-  colDefs: any[];
+  colDefs: (ColDef | ColGroupDef)[];
   className?: string;
   height?: number;
   isShowNoRowsOverlay?: boolean;
   headeHeight?: number;
   rowHeight?: number;
+  onRowClicked?: (event: RowClickedEvent<Record<string, string>>) => void;
+  context?: T;
 }
 
-export default function CustomAgGrid({
+export default function CustomAgGrid<T>({
   className,
   data,
   colDefs,
   headeHeight = 38,
   rowHeight = 38,
-  height = 760,
+  height = 800,
   isShowNoRowsOverlay = true,
-}: AgGridProps) {
+  onRowClicked,
+  context,
+}: AgGridProps<T>) {
   return (
     <div className={classNames("top-grid", "ag-theme-alpine", className)} style={{ height }}>
       <AgGridReact
+        context={context}
         rowData={data}
         columnDefs={colDefs}
         defaultColDef={gridOptions}
@@ -35,6 +41,7 @@ export default function CustomAgGrid({
             : "<span></span>"
         }
         suppressDragLeaveHidesColumns={true}
+        onRowClicked={onRowClicked}
       />
     </div>
   );
