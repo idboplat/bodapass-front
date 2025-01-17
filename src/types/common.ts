@@ -18,3 +18,7 @@ export type TRegistInfo = {
   userName: string;
   collectionId: string;
 };
+
+export type TCompareInfo = {
+  collectionId: string;
+};
