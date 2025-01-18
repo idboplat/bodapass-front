@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <>
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap, "scroll")}>
+      <div className={classNames(css.wrap)}>
         <div className={css.box}>
           <Link href="/rekognition/regist" className={css.link}>
             <div className={css.item}>

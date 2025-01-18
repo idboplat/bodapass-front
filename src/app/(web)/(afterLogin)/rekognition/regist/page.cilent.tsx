@@ -80,7 +80,7 @@ export default function Client() {
   return (
     <>
       <BackHeader title="Registration" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap, "scroll")}>
+      <div className={classNames(css.wrap)}>
         {page === 0 && <RegistForm info={info} updateInfo={updateInfo} />}
         {page === 1 && (
           <LivenessDetector

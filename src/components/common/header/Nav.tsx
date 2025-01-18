@@ -4,7 +4,7 @@ import css from "./Nav.module.scss";
 export default function Nav() {
   return (
     <nav className={css.nav}>
-      <div className={css.absoute}>
+      <div className={css.fixed}>
         <ul className={css.inner}>
           <li className={css.item}>
             <Link href="/ocr">

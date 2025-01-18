@@ -4,25 +4,27 @@
   position: relative;
 }
 
-.absoute {
-  position: absolute;
+.fixed {
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: var.$safe-footer-height;
+}
+
+.inner {
+  max-width: var.$mantine-breakpoint-sm;
+  height: 100%;
+  padding-bottom: var.$env-bottom;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
   background: linear-gradient(
     90deg,
     var(--mantine-color-blue-filled) 0%,
     var(--mantine-color-cyan-filled) 100%
   );
   color: #fff;
-  height: var.$safe-footer-height;
-  padding-bottom: var.$env-bottom;
-}
-
-.inner {
-  height: 100%;
-  display: flex;
-  align-items: center;
 
   a {
     @extend %flex-center;

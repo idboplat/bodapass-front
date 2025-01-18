@@ -73,6 +73,7 @@ body {
 html,
 body,
 #app {
+  width: 100%;
   height: 100%;
 }
 
@@ -80,15 +81,11 @@ body,
   display: flex;
   flex-direction: column;
   position: relative;
-  min-width: var.$mantine-breakpoint-xs;
   max-width: var.$mantine-breakpoint-sm;
+  min-height: 100%;
   margin: 0 auto;
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
-
-  & > .scroll {
-    overflow-y: auto;
-  }
 }
 
 @media screen and (max-device-width: 31.25em) {

@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <>
       <BackHeader title="OCR" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap, "scroll")}>
+      <div className={classNames(css.wrap)}>
         <h2 className={css.title}>신분증 유형을 선택해주세요</h2>
         <div className={css.box}>
           <Link href="/ocr/idCard" className={css.link}>

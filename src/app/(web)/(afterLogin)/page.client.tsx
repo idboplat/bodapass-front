@@ -10,7 +10,7 @@ export default function Client() {
   const router = useRouter();
 
   return (
-    <main className={classNames(css.main, "scroll")}>
+    <main className={classNames(css.main)}>
       <Lottie animationData={landingAni} loop />
     </main>
   );
