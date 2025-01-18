@@ -47,7 +47,7 @@ export default function CreateCollectionModal({ onSuccess, onClose }: ModalProps
         <TextInput label="콜렉션 ID" onChange={onChangeCollectionId} />
       </div>
       <div className={css.btnBox}>
-        <Button variant="filled" onClick={onClose} loading={mutation.isPending}>
+        <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
           닫기
         </Button>
         <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
