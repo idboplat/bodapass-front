@@ -6,14 +6,17 @@ import { useMutation } from "@tanstack/react-query";
 import Capture from "@/components/ocr/Capture";
 import { useState } from "react";
 import Result from "@/components/ocr/Result";
-import { LoadingOverlay } from "@mantine/core";
+import { Anchor, Breadcrumbs, LoadingOverlay } from "@mantine/core";
 import { OCRResponseData } from "@/types/api/clova";
+import Link from "next/link";
+import { v1 as uuid } from "uuid";
 
 type Props = {
   isMobile: boolean;
+  type: "idCard" | "passport";
 };
 
-export default function Client({ isMobile }: Props) {
+export default function Client({ isMobile, type }: Props) {
   const router = useRouter();
   const camera = useCamera();
   const [data, setData] = useState<OCRResponseData | null>(null);
@@ -24,7 +27,10 @@ export default function Client({ isMobile }: Props) {
       if (!blob) throw new Error("이미지 캡쳐 실패");
 
       const formData = new FormData();
-      formData.append("image", blob, "capture.jpg");
+      formData.append("image", blob, "capture.png");
+      formData.append("type", type);
+      formData.append("requestId", uuid());
+      formData.append("name", uuid());
 
       const response = await fetch("/api/clova", {
         method: "POST",
@@ -62,7 +68,14 @@ export default function Client({ isMobile }: Props) {
   return (
     <>
       <BackHeader title="신분증" onClickBack={onClickBack} />
-      <div></div>
+      <Breadcrumbs separator="→" separatorMargin="md" p="1rem">
+        <Anchor component={Link} href="/ocr">
+          OCR
+        </Anchor>
+        <Anchor component={Link} href={"/ocr/" + type}>
+          {type === "idCard" ? "신분증" : "여권"}
+        </Anchor>
+      </Breadcrumbs>
       {data ? (
         <Result data={data} />
       ) : (

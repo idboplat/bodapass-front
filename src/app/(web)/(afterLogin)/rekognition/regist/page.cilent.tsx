@@ -33,7 +33,7 @@ export default function Client() {
   const mutation = useMutation({
     mutationFn: async (arg: { image: Blob }) => {
       const formData = new FormData();
-      formData.append("image", arg.image);
+      formData.append("image", arg.image, "capture.png");
       const res = await fetch(`/api/aws/collections/${info.collectionId}/faces/${info.userName}`, {
         method: "POST",
         body: formData,

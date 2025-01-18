@@ -1,33 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import { z } from "zod";
-import { serverErrorHandler } from "@/libraries/error";
+import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { logger } from "@/libraries/logger/pino";
 import { OCRResponseData } from "@/types/api/clova";
 import { uploadToS3 } from "@/libraries/aws/s3";
+import { clovaRequestDto } from "@/types/dto";
 
 const CLOVA_END_POINT =
   "https://lrrlefv18g.apigw.ntruss.com/custom/v1/37307/4728863854c84533b46cf1a4ca5c0fe3e2d5815299eed8810564227591ac2c13";
 
-const PASSPORT_END_POINT = "/document/passport";
+// const PASSPORT_END_POINT = "/document/passport";
 const IDENTITICATION_END_POINT = "/document/id-card";
-
-const dto = z.object({});
 
 export async function POST(req: NextRequest) {
   try {
     const formdata = await req.formData();
+    const dto = clovaRequestDto.safeParse({
+      image: formdata.get("image"),
+      type: formdata.get("type"),
+      name: formdata.get("name"),
+      requestId: formdata.get("requestId"),
+    });
 
-    const image = formdata.get("image") as File | null;
-
-    if (!image) {
-      throw new Error("Image not found");
+    if (dto.error) {
+      throw new BadRequestError(dto.error.errors[0].message);
     }
 
-    const sourceImageBytes = await image.arrayBuffer();
+    // const endpoint = dto.data.type === "idCard" ? IDENTITICATION_END_POINT : PASSPORT_END_POINT;
+
+    const sourceImageBytes = await dto.data.image.arrayBuffer();
     const buffer = Buffer.from(sourceImageBytes);
     const sourceBase64 = buffer.toString("base64");
 
+    // passport도 /id-card로 처리해야함.
     const response = await fetch(CLOVA_END_POINT + IDENTITICATION_END_POINT, {
       method: "POST",
       headers: {
@@ -36,12 +41,12 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         version: "V2",
-        requestId: "test-id",
+        requestId: dto.data.requestId,
         timestamp: Date.now(),
         images: [
           {
             format: "png",
-            name: "idcard_test",
+            name: dto.data.name,
             data: sourceBase64,
           },
         ],
@@ -49,9 +54,10 @@ export async function POST(req: NextRequest) {
     });
 
     const body: OCRResponseData = await response.json();
+    console.log(body);
 
-    const fileName = body.requestId + path.extname(image.name);
-    const fileType = image?.type || "image/png";
+    const fileName = body.requestId + path.extname(dto.data.image.name);
+    const fileType = dto.data.image?.type || "image/png";
 
     const key = await uploadToS3(buffer, fileName, fileType);
     logger.info(`Uploaded to S3: ${key}`);

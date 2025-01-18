@@ -1,5 +1,6 @@
 .wrap {
   flex: 1;
+  padding: 1rem;
 }
 
 .title {
@@ -9,7 +10,6 @@
 .box {
   @extend %flex-center;
   flex-direction: column;
-  padding: 1rem;
 }
 
 .link {
