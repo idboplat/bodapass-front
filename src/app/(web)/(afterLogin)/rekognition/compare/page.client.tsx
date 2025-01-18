@@ -32,7 +32,7 @@ export default function Client() {
   const mutation = useMutation({
     mutationFn: async (arg: { image: Blob }) => {
       const formData = new FormData();
-      formData.append("image", arg.image);
+      formData.append("image", arg.image, "capture.png");
       const res = await fetch(`/api/aws/collections/${info.collectionId}/faces/search_by_image`, {
         method: "POST",
         body: formData,
@@ -77,7 +77,7 @@ export default function Client() {
 
   return (
     <>
-      <BackHeader title="Registration" onClickBack={onClickBack} />
+      <BackHeader title="얼굴 인증" onClickBack={onClickBack} />
       <div className={classNames(css.wrap)}>
         {page === 0 && <CompareForm info={info} updateInfo={updateInfo} />}
         {page === 1 && (

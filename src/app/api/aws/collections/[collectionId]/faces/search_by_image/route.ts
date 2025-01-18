@@ -13,13 +13,16 @@ export async function POST(req: NextRequest, props: { params: { collectionId: st
       throw new BadRequestError("이미지를 찾을 수 없습니다.");
     }
 
-    const Bytes = await image.bytes();
+    const sourceImageBytes = await image.arrayBuffer();
+    const Bytes = new Uint8Array(sourceImageBytes); // Uint8Array<ArrayBufferLike>
 
     const searchRes = await rekognition.searchFacesByImage({
       CollectionId: collectionId,
       FaceMatchThreshold: 85,
       Image: { Bytes },
     });
+
+    console.log("searchRes", searchRes);
 
     return NextResponse.json({ message: "이미지 검색 완료", data: searchRes });
   } catch (error) {
