@@ -9,3 +9,5 @@ export default async function Page() {
 
   return <Client data={json.data} />;
 }
+
+export const dynamic = "force-dynamic";
