@@ -3,6 +3,7 @@ import { rekognition } from "@/libraries/aws/rekognition";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { logger } from "@/libraries/logger/pino";
 import { uploadToS3 } from "@/libraries/aws/s3";
+import { ResourceNotFoundException } from "@aws-sdk/client-rekognition";
 
 export async function GET(
   req: NextRequest,
@@ -58,6 +59,11 @@ export async function POST(
     return NextResponse.json({ message: "얼굴 생성 완료", data: key, response }, { status: 201 });
   } catch (error) {
     logger.error(error);
+
+    if (error instanceof ResourceNotFoundException) {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
