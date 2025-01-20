@@ -8,7 +8,8 @@ type Props = {
 export default async function Page({ params }: Props) {
   const collectionId = params.collectionId;
   console.log("collectionId", collectionId);
-  const response = await fetch(`http://localhost:3000/api/aws/collections/${collectionId}`, {
+  const url = process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000";
+  const response = await fetch(`${url}/api/aws/collections/${collectionId}`, {
     next: { revalidate: 0 },
   });
 
