@@ -7,11 +7,11 @@ import { ResourceNotFoundException } from "@aws-sdk/client-rekognition";
 
 export async function GET(
   req: NextRequest,
-  props: { params: { collectionId: string; faceId: string } },
+  props: { params: Promise<{ collectionId: string; faceId: string }> },
 ) {
   try {
-    const collecitonId = props.params.collectionId;
-    const faceId = props.params.faceId;
+    const collecitonId = (await props.params).collectionId;
+    const faceId = (await props.params).faceId;
 
     const response = await rekognition.searchFaces({
       CollectionId: collecitonId,
@@ -28,12 +28,12 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  props: { params: { collectionId: string; faceId: string } },
+  props: { params: Promise<{ collectionId: string; faceId: string }> },
 ) {
   try {
     const formdata = await req.formData();
-    const collectionId = props.params.collectionId;
-    const faceId = props.params.faceId;
+    const collectionId = (await props.params).collectionId;
+    const faceId = (await props.params).faceId;
     const image = formdata.get("image") as File | null;
 
     if (!image) {
@@ -73,12 +73,12 @@ export async function POST(
 
 export async function DELETE(
   req: NextRequest,
-  props: { params: { collectionId: string; faceId: string } },
+  props: { params: Promise<{ collectionId: string; faceId: string }> },
 ) {
   try {
     // 단건삭제
-    const collectionId = props.params.collectionId;
-    const faceId = props.params.faceId;
+    const collectionId = (await props.params).collectionId;
+    const faceId = (await props.params).faceId;
 
     const response = await rekognition.deleteFaces({
       CollectionId: collectionId,

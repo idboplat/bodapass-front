@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     const newRefreshToken = await generateRefreshToken(payload);
 
-    cookies().set(REFRESH_COOKIE_NAME, newRefreshToken, {
+    (await cookies()).set(REFRESH_COOKIE_NAME, newRefreshToken, {
       maxAge: REFRESH_TOKEN_MAX_AGE,
       httpOnly: true,
       secure: isSecure,

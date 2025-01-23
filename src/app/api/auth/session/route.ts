@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.headers.get("x-full-url")!);
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const refreshToken = cookieStore.get(REFRESH_COOKIE_NAME);
 
     const headers = new Headers(req.headers);
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const session = await sessionService(refreshToken.value);
     const newRefreshToken = await generateRefreshToken(session);
 
-    cookies().set(REFRESH_COOKIE_NAME, newRefreshToken, {
+    (await cookies()).set(REFRESH_COOKIE_NAME, newRefreshToken, {
       maxAge: REFRESH_TOKEN_MAX_AGE,
       httpOnly: true,
       secure: url.protocol === "https:",

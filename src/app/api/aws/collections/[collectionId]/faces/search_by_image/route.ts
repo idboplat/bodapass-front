@@ -3,10 +3,10 @@ import { rekognition } from "@/libraries/aws/rekognition";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { logger } from "@/libraries/logger/pino";
 
-export async function POST(req: NextRequest, props: { params: { collectionId: string } }) {
+export async function POST(req: NextRequest, props: { params: Promise<{ collectionId: string }> }) {
   try {
     const formdata = await req.formData();
-    const collectionId = props.params.collectionId;
+    const collectionId = (await props.params).collectionId;
     const image = formdata.get("image") as File | null;
 
     if (!image) {

@@ -14,7 +14,7 @@ interface ConfigsProps {
 }
 
 export default async function Configs({ children, defaultColorScheme }: ConfigsProps) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const sidebar = cookieStore.get("sidebar")?.value !== "false";
   const fiat = cookieStore.get("fiat")?.value as string | undefined;
   const session = await getServerSession();

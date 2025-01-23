@@ -73,7 +73,7 @@ export const sessionService = async (refreshToken: string): Promise<Session> => 
 export const getServerSession = async (): Promise<Session | null> => {
   "use server";
   try{
-    const refreshToken = cookies().get(REFRESH_COOKIE_NAME);
+    const refreshToken = (await cookies()).get(REFRESH_COOKIE_NAME);
     if (!refreshToken) return null;
 
     return sessionService(refreshToken.value);
