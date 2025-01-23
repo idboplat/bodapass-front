@@ -23,6 +23,9 @@ declare global {
       readonly NEXT_PUBLIC_VERCEL_ENV: "production" | "preview" | "development";
       readonly NEXT_PUBLIC_VERCEL_URL: string; // *.vercel.app
       readonly NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: string; // main or dev
+
+      readonly NEXT_PUBLIC_SENTRY_DSN?: string;
+      readonly SENTRY_AUTH_TOKEN?: string;
     }
   }
 }

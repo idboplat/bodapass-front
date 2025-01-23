@@ -18,6 +18,7 @@
     "@mantine/dates": "^7.13.4",
     "@mantine/hooks": "^7.13.4",
     "@mantine/modals": "^7.13.4",
+    "@sentry/nextjs": "8",
     "@tabler/icons-react": "^3.21.0",
     "@tanstack/react-query": "5.18.0",
     "@tanstack/react-query-devtools": "5.18.0",
