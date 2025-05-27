@@ -61,3 +61,4 @@ API Routes
 1. POST /api/clova
    header multipart/formdata
    input image-capture.png, type-string, requestId-string, name-string
+   성공응답으로 촬영된 이미지가 Blob로 내려옴
