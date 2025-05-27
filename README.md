@@ -1,3 +1,63 @@
-AWS Amplify CLI
+키 발급 문서
 
-https://docs.amplify.aws/gen1/javascript/tools/cli/start/set-up-cli/#configure-the-amplify-cli
+https://docs.google.com/document/d/1WnlhoEiEPwL2qwO-Mbh5f32Q5H6wNAV8tvCqMKGv7Ys/edit?tab=t.0
+
+API Routes
+
+### aws collections
+
+0. POST /api/aws - 1 대 1 이미지 비교
+   header application/json
+   비고 해당 API는 데모에서 사용하고 있진 않습니다.
+
+1. POST /api/aws/collections/[collectionId] - 콜렉션 생성
+   header application/json
+   비고 임의의 collectionId 생성, face 등록전 collection 생성 필요
+
+2. GET /api/aws/collections - collections 다건 조회
+   header application/json
+
+3. GET /api/aws/collections/[collectionId] - 단건 조회
+   header application/json
+
+4. DELETE /api/aws/collections/[collectionId] - 콜렉션 삭제
+   header application/json
+
+===
+
+### aws faces
+
+1. POST /api/aws/collections/${info.collectionId}/faces/[userId] - face 등록
+   header multipart/form-data
+   input image-capture.png
+   비고 userId를 faceId로 함, 비슷한 얼굴이 중복으로 등록되지 않도록 검증필요.
+
+2. GET /api/aws/collections/${info.collectionId}/faces/[userId] - face 단건 조회
+   header application/json
+   비고 해당 API는 데모에서 사용하고 있진 않습니다.
+
+3. DELETE /api/aws/collections/[collectionId]/faces - face 다건 삭제
+   header application/json
+   input { faceIds: string[]}
+
+4. POST /api/aws/collections/[collectionId]/faces/search_by_image - faces 다건 이미지 검색
+   header multipart/form-data
+   input image-capture.png
+   비고 임계치에 해당하는 이미지 배열이 여러개 들어온다.
+
+===
+
+### aws liveness
+
+1. POST /api/aws/liveness/create_session - 라이브니스 세션 생성
+   header application/json
+
+2. GET /api/aws/liveness/get_result?sessionId=[sessionId] - 라이브니스 결과 조회
+   header application/json
+   비고 라이브니스 세션에서 발급된 sessionId로 결과 조회
+
+### naver clova
+
+1. POST /api/clova
+   header multipart/formdata
+   input image-capture.png, type-string, requestId-string, name-string
