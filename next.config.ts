@@ -106,7 +106,7 @@ export default withSentryConfig(nextConfig, {
   // https://vercel.com/docs/cron-jobs
   // automaticVercelMonitors: true,
 
-  telemetry: true,
+  telemetry: false,
   autoInstrumentMiddleware: false,
   autoInstrumentAppDirectory: true,
   autoInstrumentServerFunctions: true,

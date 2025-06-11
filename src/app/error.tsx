@@ -1,4 +1,5 @@
 "use client";
+import { serverLog } from "@/libraries/logger/server";
 import { useEffect } from "react";
 
 export default function Error({
@@ -12,6 +13,7 @@ export default function Error({
     if (process.env.NEXT_PUBLIC_VERCEL_ENV !== "production") {
       // 500에러 콘솔은 개발환경에서만 표시됩니다.
       console.error("Error-Boundary", error);
+      serverLog(error.message);
     }
   }, [error]);
 

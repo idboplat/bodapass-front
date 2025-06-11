@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rekognition } from "@/libraries/aws/rekognition";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 
 export async function POST(req: NextRequest, props: { params: Promise<{ collectionId: string }> }) {
   try {
@@ -26,7 +25,7 @@ export async function POST(req: NextRequest, props: { params: Promise<{ collecti
 
     return NextResponse.json({ message: "이미지 검색 완료", data: searchRes });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }

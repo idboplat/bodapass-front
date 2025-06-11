@@ -1,3 +1,5 @@
+@use "sass:map";
+
 :root {
   --app-shell-header-height: #{var.$safe-header-height};
   --app-shell-header-offset: #{var.$safe-header-height};
@@ -3792,11 +3794,11 @@ fieldset:disabled .m_d3ea56bb,
   max-height: var(--modal-content-max-height, calc(100dvh - var(--modal-y-offset) * 2));
   height: var(--modal-content-height, auto);
   overflow-y: auto;
-  min-width: map-get(var.$breakpoints, xs);
+  min-width: map.get(var.$breakpoints, xs);
 
   // @include util.min-width(xs) {
   //   flex: var(--modal-content-flex, 0 0 var(--modal-size));
-  //   min-width: map-get(var.$breakpoints, xs);
+  //   min-width: map.get(var.$breakpoints, xs);
   // }
 }
 

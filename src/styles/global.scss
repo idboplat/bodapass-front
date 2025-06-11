@@ -69,13 +69,13 @@ body {
   /* 모바일 가로모드 폰트확대 방지 */
   -webkit-text-size-adjust: none;
 
-  /* 롱프레스 미리보기 방지 */
-  -webkit-touch-callout: none;
+  // /* 롱프레스 미리보기 방지 */
+  // -webkit-touch-callout: none;
 
-  /* 텍스트 선택 방지 */
-  user-select: none;
-  -webkit-user-select: none;
-  pointer-events: none;
+  // /* 텍스트 선택 방지 */
+  // user-select: none;
+  // -webkit-user-select: none;
+  // pointer-events: none;
 }
 
 html,

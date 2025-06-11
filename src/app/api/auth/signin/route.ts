@@ -2,7 +2,6 @@ import { checkBasicAuth, signService } from "@/libraries/auth/auth.service";
 import { REFRESH_COOKIE_NAME, REFRESH_TOKEN_MAX_AGE } from "@/libraries/auth/config";
 import { generateRefreshToken } from "@/libraries/auth/jwt.service";
 import { serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -30,9 +29,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ message: "Signin success" });
-  } catch (e) {
-    logger.error(e);
-    const { status, message } = serverErrorHandler(e);
+  } catch (error) {
+    console.error(error);
+    const { status, message } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status: status });
   }
 }

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rekognition } from "@/libraries/aws/rekognition";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 import { uploadToS3 } from "@/libraries/aws/s3";
 import { ResourceNotFoundException } from "@aws-sdk/client-rekognition";
 
@@ -20,7 +19,7 @@ export async function GET(
 
     return NextResponse.json({ message: "얼굴 조회", data: response });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
@@ -58,7 +57,7 @@ export async function POST(
 
     return NextResponse.json({ message: "얼굴 생성 완료", data: key, response }, { status: 201 });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
 
     if (error instanceof ResourceNotFoundException) {
       return NextResponse.json({ message: error.message }, { status: 404 });
@@ -87,7 +86,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: "얼굴 삭제 완료", data: response });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }

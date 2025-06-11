@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rekognition } from "@/libraries/aws/rekognition";
-import { logger } from "@/libraries/logger/pino";
 import { serverErrorHandler } from "@/libraries/error";
 
 export async function GET(req: NextRequest) {
@@ -14,7 +13,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ message: "콜렉션 조회", data: response });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }

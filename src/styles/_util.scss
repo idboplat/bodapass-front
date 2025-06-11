@@ -1,8 +1,8 @@
 /* 
  * 해당 파일은 @mixin,  @function을 정의한 파일입니다.
  */
-
 @use "sass:math";
+@use "sass:map";
 @use "var";
 
 @function rem($value) {
@@ -36,7 +36,7 @@
 }
 
 @mixin min-width($breakpoint) {
-  $value: map-get(var.$breakpoints, $breakpoint);
+  $value: map.get(var.$breakpoints, $breakpoint);
   $query-value: if($value, $value, $breakpoint);
 
   @media screen and (min-width: #{$query-value}) {
@@ -45,7 +45,7 @@
 }
 
 @mixin max-width($breakpoint) {
-  $value: map-get(var.$breakpoints, $breakpoint);
+  $value: map.get(var.$breakpoints, $breakpoint);
   $query-value: if($value, $value, $breakpoint);
 
   @media screen and (max-width: #{$query-value}) {

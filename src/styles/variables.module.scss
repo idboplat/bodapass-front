@@ -1,20 +1,22 @@
+@use "sass:map";
+
 :export {
   bezierCurve: var.$bezier-curve;
   boxShadow: var.$box-shadow;
   backdropColor: var.$backdrop-color;
 
-  breakpointSm: #{map-get(var.$breakpoints, sm)};
-  breakpointXs: #{map-get(var.$breakpoints, xs)};
-  breakpointMd: #{map-get(var.$breakpoints, md)};
-  breakpointLg: #{map-get(var.$breakpoints, lg)};
-  breakpointXl: #{map-get(var.$breakpoints, xl)};
-  breakpointXxl: #{map-get(var.$breakpoints, xxl)};
+  breakpointSm: #{map.get(var.$breakpoints, sm)};
+  breakpointXs: #{map.get(var.$breakpoints, xs)};
+  breakpointMd: #{map.get(var.$breakpoints, md)};
+  breakpointLg: #{map.get(var.$breakpoints, lg)};
+  breakpointXl: #{map.get(var.$breakpoints, xl)};
+  breakpointXxl: #{map.get(var.$breakpoints, xxl)};
 
   mobileBoundary: var.$mobile-boundary;
 
-  zIndexApp: #{map-get(var.$z-indexes, app)};
-  zIndexModal: #{map-get(var.$z-indexes, modal)};
-  zIndexPopover: #{map-get(var.$z-indexes, popover)};
-  zIndexOverlay: #{map-get(var.$z-indexes, overlay)};
-  zIndexMax: #{map-get(var.$z-indexes, max)};
+  zIndexApp: #{map.get(var.$z-indexes, app)};
+  zIndexModal: #{map.get(var.$z-indexes, modal)};
+  zIndexPopover: #{map.get(var.$z-indexes, popover)};
+  zIndexOverlay: #{map.get(var.$z-indexes, overlay)};
+  zIndexMax: #{map.get(var.$z-indexes, max)};
 }

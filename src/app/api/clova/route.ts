@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 import { OCRResponseData } from "@/types/api/clova";
 import { uploadToS3 } from "@/libraries/aws/s3";
 import { clovaRequestDto } from "@/types/dto";
@@ -60,11 +59,11 @@ export async function POST(req: NextRequest) {
     const fileType = dto.data.image?.type || "image/png";
 
     const key = await uploadToS3(buffer, fileName, fileType);
-    logger.info(`Uploaded to S3: ${key}`);
+    console.log(`Uploaded to S3: ${key}`);
 
     return NextResponse.json({ data: body });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }

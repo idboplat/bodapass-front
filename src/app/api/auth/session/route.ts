@@ -2,7 +2,6 @@ import { sessionService } from "@/libraries/auth/auth.service";
 import { REFRESH_COOKIE_NAME, REFRESH_TOKEN_MAX_AGE } from "@/libraries/auth/config";
 import { generateRefreshToken } from "@/libraries/auth/jwt.service";
 import { serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -32,9 +31,9 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({ session, message: "세션조회 성공" }, { headers });
-  } catch (e) {
-    logger.error(e);
-    const { status, message } = serverErrorHandler(e);
+  } catch (error) {
+    console.error(error);
+    const { status, message } = serverErrorHandler(error);
     return NextResponse.json({ session: null, message: message }, { status: status });
   }
 }

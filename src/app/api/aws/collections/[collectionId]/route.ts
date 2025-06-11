@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rekognition } from "@/libraries/aws/rekognition";
 import { serverErrorHandler } from "@/libraries/error";
-import { logger } from "@/libraries/logger/pino";
 import { ResourceAlreadyExistsException } from "@aws-sdk/client-rekognition";
 
 export async function GET(req: NextRequest, props: { params: Promise<{ collectionId: string }> }) {
@@ -19,13 +18,16 @@ export async function GET(req: NextRequest, props: { params: Promise<{ collectio
 
     return NextResponse.json({ message: "콜렉션 조회", data: response });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
 }
 
-export async function POST(_req: NextRequest, props: { params: Promise<{ collectionId: string }> }) {
+export async function POST(
+  _req: NextRequest,
+  props: { params: Promise<{ collectionId: string }> },
+) {
   try {
     const collecitonId = (await props.params).collectionId;
     const response = await rekognition.createCollection({ CollectionId: collecitonId });
@@ -38,7 +40,7 @@ export async function POST(_req: NextRequest, props: { params: Promise<{ collect
       return NextResponse.json({ message: "이미 존재하는 컬렉션" }, { status: 409 });
     }
 
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
@@ -46,14 +48,17 @@ export async function POST(_req: NextRequest, props: { params: Promise<{ collect
 
 // 업데이트는 삭제후에 새로 만드는 방법으로 구현
 
-export async function DELETE(req: NextRequest, props: { params: Promise<{ collectionId: string }> }) {
+export async function DELETE(
+  req: NextRequest,
+  props: { params: Promise<{ collectionId: string }> },
+) {
   try {
     const collecitonId = (await props.params).collectionId;
     const resonse = await rekognition.deleteCollection({ CollectionId: collecitonId });
 
     return NextResponse.json({ message: "컬렉션 삭제 완료", data: resonse });
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }

@@ -5,6 +5,7 @@ import { Button } from "@mantine/core";
 import { IconRefresh } from "@tabler/icons-react";
 import { useSetModalStore } from "@/stores/modal";
 import ErrorModal from "./common/modal/ErrorModal";
+import { serverLog } from "@/libraries/logger/server";
 
 interface CameraProps {
   canvasRef: MutableRefObject<HTMLCanvasElement>;
@@ -31,6 +32,8 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
       videoRef.current.srcObject = stream;
     } catch (err) {
       console.error("camera error", err);
+      serverLog(err);
+
       const message = "카메라 권한을 요청할 수 없습니다. \n 기기 또는 권한 설정을 확인해주세요.";
       setError(() => true);
       // modalStore.push(ErrorModal, {
