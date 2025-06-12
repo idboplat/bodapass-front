@@ -1,28 +1,49 @@
 import { ModalProps } from "@/stores/modal";
+import { RemoveScroll } from "react-remove-scroll";
+import OutsideClickHandler from "react-outside-click-handler";
 import { Button } from "@mantine/core";
-import Modal from "./Modal";
-import css from "./Modal.module.scss";
+import {
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  ModalHeader,
+  ModalInner,
+  ModalTitle,
+} from "./Components";
 
-type ErrorModalProp = {
+interface ErrorModalProps {
   title?: string;
   error: Error;
-};
-
-const ERROR_MODAL_ID = "errorModal";
+}
 
 export default function ErrorModal({
   title = "Message",
-  error,
   onClose,
-}: ModalProps<ErrorModalProp>) {
+  error,
+}: ModalProps<ErrorModalProps>) {
+  console.log("error-modal:", error);
   return (
-    <Modal id={ERROR_MODAL_ID} title={title} onClose={onClose} closeOnClickOutside={false}>
-      <div className={css.content}>{error.message}</div>
-      <div className={css.btnBox}>
-        <Button variant="filled" onClick={onClose}>
-          확인
-        </Button>
-      </div>
-    </Modal>
+    <RemoveScroll removeScrollBar={false}>
+      <OutsideClickHandler onOutsideClick={onClose}>
+        <ModalInner style={{ maxWidth: "500px" }}>
+          <ModalCloseButton onClose={onClose} />
+          <ModalHeader>
+            <div>
+              <ModalTitle>{title}</ModalTitle>
+            </div>
+          </ModalHeader>
+          <ModalBody>
+            <div>
+              <p>{error.message}</p>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="default" type="button" onClick={onClose}>
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalInner>
+      </OutsideClickHandler>
+    </RemoveScroll>
   );
 }

@@ -1,0 +1,120 @@
+$desktop-modal-padding: 30px;
+$mobile-modal-padding: 10px;
+
+$defult-modal-max-width: 1000px;
+$defult-modal-max-height: 600px;
+
+.expand {
+  --modal-padding: #{$mobile-modal-padding};
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; // 모바일 너비에서 아래쪽 위치
+  backdrop-filter: blur(2px);
+  padding: 20px 0 0 0; // 위쪽 여유공간
+}
+
+.inner {
+  pointer-events: inherit;
+  overflow-y: auto; // 스크롤바는 종축만
+  width: 100%;
+  max-height: 100%; // 높이가 넘치면 스크롤바 생성
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px 10px 0 0;
+
+  padding: 20px var(--modal-padding) calc(20px + env(safe-area-inset-bottom)) var(--modal-padding);
+}
+
+@include util.dark {
+  .inner {
+    background: #131722 url("/images/bg_popup.png") no-repeat center 25% / cover;
+  }
+}
+
+@include util.max-width(sm) {
+  .inner {
+    max-width: 100% !important; // 모바일 너비에서 너비 100% 다 차지하도록, 인라인스타일 강제 override
+  }
+}
+
+@include util.min-width(sm) {
+  .expand {
+    --modal-padding: #{$desktop-modal-padding};
+
+    align-items: center;
+    padding: var(--modal-padding); // 상하좌우 여유공간
+  }
+
+  .inner {
+    max-width: $defult-modal-max-width;
+    max-height: $defult-modal-max-height;
+
+    border-radius: 5px;
+  }
+}
+
+button.closeButton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #000;
+}
+
+@include util.dark {
+  button.closeButton {
+    color: #fff;
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0 0 30px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 991px) {
+  .title {
+    font-size: 20px;
+  }
+}
+
+@include util.dark {
+  .title {
+    color: #fff;
+  }
+}
+
+.body {
+  overflow-y: auto;
+  flex: 1;
+  &::-webkit-scrollbar {
+    width: 5px; /* 스크롤바 너비 설정 */
+  }
+}
+
+@include util.dark {
+  .body {
+    color: #fff;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}

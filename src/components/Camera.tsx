@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import css from "./Camera.module.scss";
 import classNames from "classnames";
 import { Button } from "@mantine/core";
@@ -8,8 +8,8 @@ import ErrorModal from "./common/modal/ErrorModal";
 import { serverLog } from "@/libraries/logger/server";
 
 interface CameraProps {
-  canvasRef: MutableRefObject<HTMLCanvasElement>;
-  videoRef: MutableRefObject<HTMLVideoElement>;
+  canvasRef: RefObject<HTMLCanvasElement>;
+  videoRef: RefObject<HTMLVideoElement>;
   isMobile: boolean;
 }
 

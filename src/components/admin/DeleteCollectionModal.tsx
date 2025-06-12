@@ -1,15 +1,19 @@
-import Modal from "@/components/common/modal/Modal";
-import css from "@/components/common/modal/Modal.module.scss";
 import { ModalProps } from "@/stores/modal";
 import { DeleteCollectionCommandOutput } from "@aws-sdk/client-rekognition";
 import { Button } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
+import {
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalInner,
+  ModalTitle,
+} from "../common/modal/Components";
+import { RemoveScroll } from "react-remove-scroll";
 
 type Prop = {
   collectionId: string;
 };
-
-const ALERT_MODAL_ID = "deleteCollectionModal";
 
 export default function DeleteCollectionModal({
   collectionId,
@@ -41,18 +45,29 @@ export default function DeleteCollectionModal({
   };
 
   return (
-    <Modal id={ALERT_MODAL_ID} title={"콜렉션 삭제"} onClose={onClose} closeOnClickOutside={false}>
-      <div className={css.content}>
-        <p>{collectionId}를 삭제 하시겠습니까?</p>
-      </div>
-      <div className={css.btnBox}>
-        <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
-          닫기
-        </Button>
-        <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
-          확인
-        </Button>
-      </div>
-    </Modal>
+    <RemoveScroll removeScrollBar={false}>
+      <ModalInner style={{ maxWidth: "500px" }} outSideClick={onClose}>
+        <ModalHeader>
+          <div>
+            <ModalTitle>콜렉션 삭제</ModalTitle>
+          </div>
+        </ModalHeader>
+
+        <ModalBody>
+          <div>
+            <p>{collectionId}를 삭제 하시겠습니까?</p>
+          </div>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
+            닫기
+          </Button>
+          <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
+            확인
+          </Button>
+        </ModalFooter>
+      </ModalInner>
+    </RemoveScroll>
   );
 }

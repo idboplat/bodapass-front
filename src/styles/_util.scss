@@ -10,17 +10,16 @@
 }
 
 @mixin light {
-  [data-mantine-color-scheme="light"] & {
+  [data-mantine-color-scheme="light"] {
     @content;
   }
 }
 
 @mixin dark {
-  [data-mantine-color-scheme="dark"] & {
+  [data-mantine-color-scheme="dark"] {
     @content;
   }
 }
-
 @mixin hover {
   @media (hover: hover) {
     &:hover {
@@ -75,4 +74,28 @@
   -webkit-line-clamp: $line-count;
   line-height: $line-height;
   height: #{$line-height * $line-count}em;
+}
+
+@mixin line-clamp($line-count) {
+  overflow: hidden;
+
+  @if $line-count == "none" {
+    display: block;
+    -webkit-box-orient: horizontal;
+    -webkit-line-clamp: none;
+    white-space: normal;
+    text-overflow: clip;
+  } @else if $line-count ==1 {
+    // 한 줄일 때는 수평 말줄임 사용
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  } @else if meta.type-of($line-count) == "number" and $line-count > 0 {
+    // 여러 줄일 때는 수직 말줄임 사용
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line-count;
+  } @else {
+    @error "Invalid argument: line-count must be a number or 'none'.";
+  }
 }

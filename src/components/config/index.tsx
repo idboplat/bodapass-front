@@ -4,16 +4,16 @@ import ReactQuery from "./ReactQuery";
 import ToastBox from "./ToastBox";
 import { cookies } from "next/headers";
 import MantineProvider from "./MantineProvider";
-import ModalContainer from "../common/modal/ModalContainer";
-import {getServerSession} from '@/libraries/auth/auth.service';
-import Nav from '../common/header/Nav';
+import { getServerSession } from "@/libraries/auth/auth.service";
+import Nav from "../common/header/Nav";
+import PortalModalContainer from "../common/modal/PortalModalContainer";
+import AsyncModalContainer from "../common/modal/AsyncModalContainer";
 
 interface ConfigsProps {
-  defaultColorScheme: "light" | "dark";
   children: React.ReactNode;
 }
 
-export default async function Configs({ children, defaultColorScheme }: ConfigsProps) {
+export default async function Configs({ children }: ConfigsProps) {
   const cookieStore = await cookies();
   const sidebar = cookieStore.get("sidebar")?.value !== "false";
   const fiat = cookieStore.get("fiat")?.value as string | undefined;
@@ -22,10 +22,11 @@ export default async function Configs({ children, defaultColorScheme }: ConfigsP
   return (
     <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <ReactQuery>
-        <MantineProvider defaultColorScheme={"light"}>         
-            {children}
+        <MantineProvider>
+          {children}
           {/* <Devtools /> */}
-          <ModalContainer />
+          <PortalModalContainer />
+          <AsyncModalContainer />
           <ToastBox />
         </MantineProvider>
       </ReactQuery>

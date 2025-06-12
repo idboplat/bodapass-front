@@ -21,12 +21,11 @@ $theme-light-selector: ":where([data-mantine-color-scheme='light'])";
 $theme-dark-selector: ":where([data-mantine-color-scheme='dark'])";
 
 $breakpoints: (
-  xs: 320px,
-  sm: 480px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  2xl: 1600px,
+  xs: "30rem",
+  sm: "48rem",
+  md: "64rem",
+  lg: "74rem",
+  xl: "90rem",
 );
 
 $mobile-boundary: sm; // breakpoint for mobile devices

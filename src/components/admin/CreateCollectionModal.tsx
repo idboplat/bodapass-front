@@ -1,14 +1,18 @@
 import { ModalProps } from "@/stores/modal";
 import { Button, TextInput } from "@mantine/core";
-import css from "@/components/common/modal/Modal.module.scss";
-import Modal from "@/components/common/modal/Modal";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { CreateCollectionCommandOutput } from "@aws-sdk/client-rekognition";
+import { RemoveScroll } from "react-remove-scroll";
+import {
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalInner,
+  ModalTitle,
+} from "../common/modal/Components";
 
 type Prop = {};
-
-const ALERT_MODAL_ID = "createCollectionModal";
 
 export default function CreateCollectionModal({ onSuccess, onClose }: ModalProps<Prop>) {
   const [collectionId, setCollectionId] = useState("");
@@ -42,18 +46,29 @@ export default function CreateCollectionModal({ onSuccess, onClose }: ModalProps
   };
 
   return (
-    <Modal id={ALERT_MODAL_ID} title={"콜렉션 생성"} onClose={onClose} closeOnClickOutside={false}>
-      <div className={css.content}>
-        <TextInput label="콜렉션 ID" onChange={onChangeCollectionId} />
-      </div>
-      <div className={css.btnBox}>
-        <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
-          닫기
-        </Button>
-        <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
-          확인
-        </Button>
-      </div>
-    </Modal>
+    <RemoveScroll removeScrollBar={false}>
+      <ModalInner style={{ maxWidth: "500px" }} outSideClick={onClose}>
+        <ModalHeader>
+          <div>
+            <ModalTitle>콜렉션 생성</ModalTitle>
+          </div>
+        </ModalHeader>
+
+        <ModalBody>
+          <div>
+            <TextInput label="콜렉션 ID" onChange={onChangeCollectionId} />
+          </div>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
+            닫기
+          </Button>
+          <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
+            확인
+          </Button>
+        </ModalFooter>
+      </ModalInner>
+    </RemoveScroll>
   );
 }

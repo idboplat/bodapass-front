@@ -1,40 +1,59 @@
 "use client";
-import { serverLog } from "@/libraries/logger/server";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
+import { Button, RemoveScroll } from "@mantine/core";
+import {
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalInner,
+  ModalTitle,
+} from "@/components/common/modal/Components";
+import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
+import { AnimatePresence } from "motion/react";
+import Portal from "@/components/common/modal/Portal";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void; //세그먼트를 다시 렌더링하여 복구 시도
-}) {
+export default function ErrorPage({ error }: { error: Error & { digest?: string } }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_VERCEL_ENV !== "production") {
-      // 500에러 콘솔은 개발환경에서만 표시됩니다.
-      console.error("Error-Boundary", error);
-      serverLog(error.message);
-    }
+    Sentry.captureException(error);
+    setIsOpen(() => true);
   }, [error]);
 
   return (
-    <>
-      <title>500 | Server Error</title>
-      <div>
-        <h2>Internal Server Error</h2>
-        <div>
-          <p>
-            {process.env.NEXT_PUBLIC_VERCEL_ENV !== "production"
-              ? error.message // 개발 스테이징 환경에서만 보이게 한다.
-              : "Something wrong"}
-          </p>
-        </div>
-        <div>
-          <button type="button" onClick={reset}>
-            다시시도
-          </button>
-        </div>
-      </div>
-    </>
+    <AnimatePresence>
+      {isOpen && (
+        <Portal id={PORTAL_MODAL_CONTAINER_ID}>
+          <ErrorModal message={error.message} />
+        </Portal>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function ErrorModal({ message }: { message: string }) {
+  return (
+    <RemoveScroll removeScrollBar={false}>
+      <ModalInner style={{ maxWidth: "500px" }}>
+        <ModalHeader>
+          <div>
+            <ModalTitle>알림</ModalTitle>
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <div>
+            <p>{message}</p>
+            <br />
+            <p>반복적으로 발생시 관리자에게 문의해주세요.</p>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button component="a" href="/" variant="default" type="button">
+            확인
+          </Button>
+        </ModalFooter>
+      </ModalInner>
+    </RemoveScroll>
   );
 }

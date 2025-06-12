@@ -31,16 +31,7 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
-  async rewrites() {
-    return [
-      {
-        source: "/cloudfront/:path*",
-        destination: "https://d1e7n5w7ku9qm7.cloudfront.net/:path*", // cloudfront로 리다이렉트
-      },
-    ];
-  },
   webpack: (config, options) => {
-    /** SVGR **/
     const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.(".svg"));
     config.module.rules.push(
       {
@@ -52,9 +43,30 @@ const nextConfig: NextConfig = {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
         resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
-        use: ["@svgr/webpack"],
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              svgo: false, // svgo option을 사용하고 싶다면 false를 true로 변경하세요
+              // https://svgo.dev/docs/plugins/
+              // svgoConfig: {
+              //   plugins: [
+              //     {
+              //       name: "preset-default",
+              //       params: {
+              //         overrides: {
+              //           removeViewBox: false,
+              //         },
+              //       },
+              //     },
+              //   ],
+              // },
+            },
+          },
+        ],
       },
     );
+
     fileLoaderRule.exclude = /\.svg$/i;
     return config;
   },

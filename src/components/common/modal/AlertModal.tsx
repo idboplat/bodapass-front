@@ -1,28 +1,37 @@
 import { ModalProps } from "@/stores/modal";
 import { Button } from "@mantine/core";
-import Modal from "./Modal";
-import css from "./Modal.module.scss";
+import { RemoveScroll } from "react-remove-scroll";
+import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./Components";
 
-type AletModalProp = {
+interface AlertModalProps {
   title?: string;
-  message: string;
-};
-
-const ALERT_MODAL_ID = "alertModal";
+  content: React.ReactNode;
+}
 
 export default function AlertModal({
   title = "Alert",
-  message,
   onClose,
-}: ModalProps<AletModalProp>) {
+  content,
+}: ModalProps<AlertModalProps>) {
   return (
-    <Modal id={ALERT_MODAL_ID} title={title} onClose={onClose} closeOnClickOutside={false}>
-      <div className={css.content}>{message}</div>
-      <div className={css.btnBox}>
-        <Button variant="filled" onClick={onClose}>
-          확인
-        </Button>
-      </div>
-    </Modal>
+    <RemoveScroll removeScrollBar={false}>
+      <ModalInner style={{ maxWidth: "500px" }} outSideClick={onClose}>
+        <ModalHeader>
+          <div>
+            <ModalTitle>{title}</ModalTitle>
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <div>
+            <p>{content}</p>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="default" type="button" onClick={onClose}>
+            확인
+          </Button>
+        </ModalFooter>
+      </ModalInner>
+    </RemoveScroll>
   );
 }

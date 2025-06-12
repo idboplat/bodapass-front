@@ -1,16 +1,20 @@
-import Modal from "@/components/common/modal/Modal";
-import css from "@/components/common/modal/Modal.module.scss";
 import { ModalProps } from "@/stores/modal";
 import { DeleteFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { Button } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
+import { RemoveScroll } from "react-remove-scroll";
+import {
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalInner,
+  ModalTitle,
+} from "../common/modal/Components";
 
 type Prop = {
   faceIds: string[];
   collectionId: string;
 };
-
-const ALERT_MODAL_ID = "deleteFaceModal";
 
 export default function DeleteFaceModal({
   onSuccess,
@@ -44,21 +48,32 @@ export default function DeleteFaceModal({
   };
 
   return (
-    <Modal id={ALERT_MODAL_ID} title={"콜렉션 생성"} onClose={onClose} closeOnClickOutside={false}>
-      <div className={css.content}>
-        {faceIds.map((id) => (
-          <p key={id}>{id}</p>
-        ))}
-        <p>삭제하시겠습니까?</p>
-      </div>
-      <div className={css.btnBox}>
-        <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
-          닫기
-        </Button>
-        <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
-          확인
-        </Button>
-      </div>
-    </Modal>
+    <RemoveScroll removeScrollBar={false}>
+      <ModalInner style={{ maxWidth: "500px" }} outSideClick={onClose}>
+        <ModalHeader>
+          <div>
+            <ModalTitle>얼굴 삭제</ModalTitle>
+          </div>
+        </ModalHeader>
+
+        <ModalBody>
+          <div>
+            {faceIds.map((id) => (
+              <p key={id}>{id}</p>
+            ))}
+            <p>삭제하시겠습니까?</p>
+          </div>
+        </ModalBody>
+
+        <ModalFooter>
+          <Button variant="outline" onClick={onClose} disabled={mutation.isPending}>
+            닫기
+          </Button>
+          <Button variant="filled" onClick={onClickConfirm} loading={mutation.isPending}>
+            확인
+          </Button>
+        </ModalFooter>
+      </ModalInner>
+    </RemoveScroll>
   );
 }
