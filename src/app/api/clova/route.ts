@@ -6,8 +6,7 @@ import { uploadToS3 } from "@/libraries/aws/s3";
 import { clovaRequestDto } from "@/types/dto";
 
 const CLOVA_END_POINT =
-  "https://lrrlefv18g.apigw.ntruss.com/custom/v1/37307/4728863854c84533b46cf1a4ca5c0fe3e2d5815299eed8810564227591ac2c13";
-
+  "  https://lrrlefv18g.apigw.ntruss.com/custom/v1/42943/46509df1791a218d1a140702e953af05978abd0c195840980f9309ff6a06b001";
 // const PASSPORT_END_POINT = "/document/passport";
 const IDENTITICATION_END_POINT = "/document/id-card";
 

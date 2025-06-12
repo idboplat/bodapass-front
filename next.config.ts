@@ -31,6 +31,14 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  async rewrites() {
+    return [
+      {
+        source: "/cloudfront/:path*",
+        destination: "https://d1e7n5w7ku9qm7.cloudfront.net/:path*", // cloudfront로 리다이렉트
+      },
+    ];
+  },
   webpack: (config, options) => {
     const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.(".svg"));
     config.module.rules.push(

@@ -23,6 +23,25 @@ export default function Client({ data }: Props) {
   const modalStore = useSetModalStore();
   const router = useRouter();
 
+  const openDeleteModal = async (collectionId: string) => {
+    const result = await modalStore.push(DeleteCollectionModal, {
+      id: "deleteCollectionModal",
+      props: { collectionId },
+    });
+
+    console.log("result", result);
+    router.refresh();
+  };
+
+  const openCreateModal = async () => {
+    const result = await modalStore.push(CreateCollectionModal, {
+      id: "createCollectionModal",
+    });
+
+    console.log("result", result);
+    router.refresh();
+  };
+
   const colDefs = useMemo<ColDef[]>(
     () => [
       {
@@ -52,25 +71,6 @@ export default function Client({ data }: Props) {
     ],
     [],
   );
-
-  const openDeleteModal = async (collectionId: string) => {
-    const result = await modalStore.push(DeleteCollectionModal, {
-      id: "deleteCollectionModal",
-      props: { collectionId },
-    });
-
-    console.log("result", result);
-    router.refresh();
-  };
-
-  const openCreateModal = async () => {
-    const result = await modalStore.push(CreateCollectionModal, {
-      id: "createCollectionModal",
-    });
-
-    console.log("result", result);
-    router.refresh();
-  };
 
   const rowData = useMemo(
     () =>

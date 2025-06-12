@@ -24,8 +24,8 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
       setIsDetecting(() => true);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          // facingMode: "environment", // 전면: "user", 후면: "environment"
-          facingMode: "user",
+          facingMode: "environment", // 후면
+          // facingMode: "user", // 전면
           aspectRatio: isMobile ? 9 / 12 : 12 / 9,
         },
       });
