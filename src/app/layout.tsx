@@ -40,7 +40,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         {/* <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
         <ColorSchemeScript localStorageKey={THEME_LOCAL_STORAGE_KEY} />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <Configs>{children}</Configs>
       </body>
     </html>
