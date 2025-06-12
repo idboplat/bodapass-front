@@ -1,11 +1,10 @@
 import { RefObject, useEffect, useState } from "react";
 import css from "./Camera.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { Button } from "@mantine/core";
-import { IconRefresh } from "@tabler/icons-react";
 import { useSetModalStore } from "@/stores/modal";
-import ErrorModal from "./common/modal/ErrorModal";
 import { serverLog } from "@/libraries/logger/server";
+import { RefreshCw } from "lucide-react";
 
 interface CameraProps {
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -56,12 +55,12 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
         지원되지않는 기기입니다.
       </canvas>
       {error && (
-        <div className={classNames(css.error)}>
+        <div className={clsx(css.error)}>
           <p className="essential">&nbsp;연결된 기기가 없습니다.</p>
           <div>
             <Button
               variant="light"
-              leftSection={<IconRefresh width="1rem" height="1rem" />}
+              leftSection={<RefreshCw width="1rem" height="1rem" />}
               onClick={connectDevices}
             >
               재시도

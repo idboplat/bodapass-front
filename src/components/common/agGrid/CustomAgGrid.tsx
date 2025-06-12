@@ -1,7 +1,7 @@
 import { gridOptions } from "@/utils/agGridUtils";
 import { ColDef, ColGroupDef, RowClickedEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 interface AgGridProps<T> {
   data?: any[];
@@ -27,7 +27,7 @@ export default function CustomAgGrid<T>({
   context,
 }: AgGridProps<T>) {
   return (
-    <div className={classNames("top-grid", "ag-theme-alpine", className)} style={{ height }}>
+    <div className={clsx("top-grid", "ag-theme-alpine", className)} style={{ height }}>
       <AgGridReact
         context={context}
         rowData={data}

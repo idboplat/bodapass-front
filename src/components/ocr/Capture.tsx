@@ -1,21 +1,21 @@
 import Link from "next/link";
 import { ActionIcon } from "@mantine/core";
-import { IconCamera } from "@tabler/icons-react";
-import { MutableRefObject } from "react";
+import { Camera as IconCamera } from "lucide-react";
+import { RefObject } from "react";
 import Camera from "@/components/Camera";
 import css from "./Ocr.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 type Props = {
-  videoRef: MutableRefObject<HTMLVideoElement>;
-  canvasRef: MutableRefObject<HTMLCanvasElement>;
+  videoRef: RefObject<HTMLVideoElement>;
+  canvasRef: RefObject<HTMLCanvasElement>;
   onClickCapture: () => void;
   isMobile: boolean;
 };
 
 export default function Capture({ canvasRef, videoRef, onClickCapture, isMobile }: Props) {
   return (
-    <div className={classNames(css.cameraBox, "scroll")}>
+    <div className={clsx(css.cameraBox, "scroll")}>
       <Camera videoRef={videoRef} canvasRef={canvasRef} isMobile={isMobile} />
       <div className={css.descBox}>
         <div className={css.desc}>

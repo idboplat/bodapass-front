@@ -3,7 +3,7 @@ import Link from "next/link";
 import css from "./page.module.scss";
 import BackHeader from "@/components/common/header/BackHeader";
 import { useRouter } from "next/navigation";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { Anchor, Breadcrumbs } from "@mantine/core";
 
 const items = [{ title: "OCR", href: "/ocr" }].map((item, index) => (
@@ -22,7 +22,7 @@ export default function Page() {
   return (
     <>
       <BackHeader title="OCR" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap)}>
+      <div className={clsx(css.wrap)}>
         <Breadcrumbs separator="→" separatorMargin="md">
           {items}
         </Breadcrumbs>

@@ -3,7 +3,7 @@ import BackHeader from "@/components/common/header/BackHeader";
 import LivenessDetector from "@/components/liveness/LivenessDetector";
 import { useRouter } from "next/navigation";
 import css from "./page.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { useState } from "react";
 import { useSinglePage } from "@/hooks/useSinglePage";
 import RegistForm from "@/components/liveness/RegistForm";
@@ -80,7 +80,7 @@ export default function Client() {
   return (
     <>
       <BackHeader title="Registration" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap)}>
+      <div className={clsx(css.wrap)}>
         {page === 0 && <RegistForm info={info} updateInfo={updateInfo} />}
         {page === 1 && (
           <LivenessDetector

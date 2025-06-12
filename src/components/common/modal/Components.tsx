@@ -2,7 +2,7 @@
 import { ActionIcon } from "@mantine/core";
 import css from "./Components.module.scss";
 import { X } from "lucide-react";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { motion } from "motion/react";
 
 interface ContainerProps {
@@ -16,7 +16,7 @@ interface ContainerProps {
 export function ModalInner({ children, className, style, outSideClick }: ContainerProps) {
   return (
     <div
-      className={classNames(css.expand)}
+      className={clsx(css.expand)}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           outSideClick?.();
@@ -28,7 +28,7 @@ export function ModalInner({ children, className, style, outSideClick }: Contain
         animate={{ opacity: 1, transform: "translateY(0)" }}
         exit={{ opacity: 0, transform: "translateY(10px)" }}
         transition={{ duration: 0.2, ease: "easeInOut" }}
-        className={classNames(css.inner, className)}
+        className={clsx(css.inner, className)}
         style={style}
       >
         {children}
@@ -46,7 +46,7 @@ export function ModalCloseButton({ className, onClose }: ModalCloseButtonProps) 
   return (
     <ActionIcon
       variant="transparent"
-      className={classNames(css.closeButton, className)}
+      className={clsx(css.closeButton, className)}
       onClick={onClose}
     >
       <X size={20} />
@@ -60,7 +60,7 @@ interface ModalHeaderProps {
 }
 
 export function ModalHeader({ children, className }: ModalHeaderProps) {
-  return <div className={classNames(css.header, className)}>{children}</div>;
+  return <div className={clsx(css.header, className)}>{children}</div>;
 }
 
 interface ModalTitleProps {
@@ -69,7 +69,7 @@ interface ModalTitleProps {
 }
 
 export function ModalTitle({ children, className }: ModalTitleProps) {
-  return <h2 className={classNames(className, css.title)}>{children}</h2>;
+  return <h2 className={clsx(className, css.title)}>{children}</h2>;
 }
 
 interface ModalBodyProps {
@@ -79,7 +79,7 @@ interface ModalBodyProps {
 }
 export function ModalBody({ children, className, style }: ModalBodyProps) {
   return (
-    <div className={classNames(css.body, className)} style={style}>
+    <div className={clsx(css.body, className)} style={style}>
       {children}
     </div>
   );
@@ -91,5 +91,5 @@ interface ModalFooterProps {
 }
 
 export function ModalFooter({ children, className }: ModalFooterProps) {
-  return <div className={classNames(css.footer, className)}>{children}</div>;
+  return <div className={clsx(css.footer, className)}>{children}</div>;
 }

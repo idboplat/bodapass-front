@@ -2,7 +2,7 @@
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
 import { useEffect, useRef } from "react";
 import css from "./ModalContainer.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 const mutationObserverOption: MutationObserverInit = {
   childList: true,
@@ -33,7 +33,5 @@ export default function PortalModalContainer() {
     };
   }, []);
 
-  return (
-    <div id={PORTAL_MODAL_CONTAINER_ID} className={classNames(css.modalContainer)} ref={ref}></div>
-  );
+  return <div id={PORTAL_MODAL_CONTAINER_ID} className={clsx(css.modalContainer)} ref={ref}></div>;
 }

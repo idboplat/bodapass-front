@@ -8,7 +8,7 @@ import { LivenessError } from "@/libraries/error";
 import { TCompareInfo } from "@/types/common";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { useMutation } from "@tanstack/react-query";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import css from "./page.module.scss";
@@ -78,7 +78,7 @@ export default function Client() {
   return (
     <>
       <BackHeader title="얼굴 인증" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap)}>
+      <div className={clsx(css.wrap)}>
         {page === 0 && <CompareForm info={info} updateInfo={updateInfo} />}
         {page === 1 && (
           <LivenessDetector

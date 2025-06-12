@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { Eye, EyeOff } from "lucide-react";
 
 interface EyeToggleBtnProps {
   value: boolean;
@@ -14,7 +14,7 @@ export default function EyeToggleBtn({ value, onClick }: EyeToggleBtnProps) {
 
   return (
     <ActionIcon radius="lg" variant="subtle" color="gray" onClick={onClickBtn}>
-      {value ? <IconEye /> : <IconEyeOff />}
+      {value ? <Eye /> : <EyeOff />}
     </ActionIcon>
   );
 }

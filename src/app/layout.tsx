@@ -2,7 +2,8 @@ import type { Viewport } from "next";
 import { PropsWithChildren } from "react";
 import Configs from "@/components/config";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
-import { ColorSchemeScript } from "@mantine/core";
+import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
+import { THEME_LOCAL_STORAGE_KEY } from "@/constants";
 //import Script from "next/script";
 
 // css 순서변경 금지
@@ -14,7 +15,6 @@ import "@/styles/global.scss";
 // global-error css
 import "@/components/common/modal/Components.module.scss";
 import "@/components/common/modal/ModalContainer.module.scss";
-import { THEME_LOCAL_STORAGE_KEY } from "@/constants";
 
 export const metadata = getDefaultMetadata();
 
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="ko" suppressHydrationWarning data-mantine-color-scheme="light">
+    <html lang="ko" {...mantineHtmlProps}>
       <head>
         <link
           rel="stylesheet"

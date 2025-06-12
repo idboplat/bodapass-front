@@ -1,12 +1,12 @@
 import { Button, Title } from "@mantine/core";
 import Link from "next/link";
 import css from "./Header.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 export default function Header() {
   return (
     <header className={css.header}>
-      <div className={classNames(css.absoute, "default")}>
+      <div className={clsx(css.absoute, "default")}>
         <div className={css.inner}>
           <Link href="/">
             <Title component="h1">DEMO</Title>

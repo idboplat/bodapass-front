@@ -1,6 +1,5 @@
 import { ModalProps } from "@/stores/modal";
-import { Button } from "@mantine/core";
-import { RemoveScroll } from "react-remove-scroll";
+import { Button, RemoveScroll } from "@mantine/core";
 import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./Components";
 
 interface AlertModalProps {

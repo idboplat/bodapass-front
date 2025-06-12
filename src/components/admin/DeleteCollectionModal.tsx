@@ -1,6 +1,6 @@
 import { ModalProps } from "@/stores/modal";
 import { DeleteCollectionCommandOutput } from "@aws-sdk/client-rekognition";
-import { Button } from "@mantine/core";
+import { Button, RemoveScroll } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import {
   ModalBody,
@@ -9,7 +9,6 @@ import {
   ModalInner,
   ModalTitle,
 } from "../common/modal/Components";
-import { RemoveScroll } from "react-remove-scroll";
 
 type Prop = {
   collectionId: string;

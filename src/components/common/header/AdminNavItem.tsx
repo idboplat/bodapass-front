@@ -1,13 +1,13 @@
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import { NavLink } from '@mantine/core';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { NavLink } from "@mantine/core";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type NavItemProps = {
   label: string;
   href: string;
   children?: React.ReactNode;
-  direction: 'rtl' | 'ltr';
+  direction: "rtl" | "ltr";
 };
 
 export default function NavItem({ label, href, direction, children }: NavItemProps) {
@@ -20,8 +20,8 @@ export default function NavItem({ label, href, direction, children }: NavItemPro
       label={label}
       active={pathname === href}
       leftSection={
-        direction === 'ltr' && (
-          <IconChevronLeft
+        direction === "ltr" && (
+          <ChevronLeft
             width="0.8rem"
             height="0.8rem"
             stroke="1.5px"
@@ -30,8 +30,8 @@ export default function NavItem({ label, href, direction, children }: NavItemPro
         )
       }
       rightSection={
-        direction === 'rtl' && (
-          <IconChevronRight
+        direction === "rtl" && (
+          <ChevronRight
             width="0.8rem"
             height="0.8rem"
             stroke="1.5px"

@@ -1,7 +1,6 @@
 import { ModalProps } from "@/stores/modal";
-import { RemoveScroll } from "react-remove-scroll";
 import OutsideClickHandler from "react-outside-click-handler";
-import { Button } from "@mantine/core";
+import { Button, RemoveScroll } from "@mantine/core";
 import {
   ModalBody,
   ModalFooter,

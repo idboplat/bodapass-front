@@ -3,7 +3,7 @@ import Link from "next/link";
 import css from "./page.module.scss";
 import BackHeader from "@/components/common/header/BackHeader";
 import { useRouter } from "next/navigation";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 export default function Page() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <>
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
-      <div className={classNames(css.wrap)}>
+      <div className={clsx(css.wrap)}>
         <div className={css.box}>
           <Link href="/rekognition/regist" className={css.link}>
             <div className={css.item}>

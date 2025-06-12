@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
-import { RemoveScroll } from "react-remove-scroll";
 import {
   ModalBody,
   ModalFooter,
@@ -9,7 +8,7 @@ import {
   ModalInner,
   ModalTitle,
 } from "@/components/common/modal/Components";
-import { Button } from "@mantine/core";
+import { Button, RemoveScroll } from "@mantine/core";
 import { AnimatePresence } from "motion/react";
 import MantineProvider from "@/components/config/MantineProvider";
 

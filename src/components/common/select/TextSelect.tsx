@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { ArrowDown } from "lucide-react";
 import OutsideClickHandler from "react-outside-click-handler";
 import css from "./TextSelect.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 
 interface TextSelectProps {
   value: string | null;
@@ -41,13 +41,9 @@ export default function TextSelect({
       <div className={css.wrap} style={style}>
         <div className={css.selected} onClick={onToggle}>
           <span>{selectedItem}</span>
-          <IoMdArrowDropdown
-            className={classNames(css.arrow, isShow && "show")}
-            size={14}
-            color="#919492"
-          />
+          <ArrowDown className={clsx(css.arrow, isShow && "show")} size={14} color="#919492" />
         </div>
-        <div className={classNames(css.absolute, isShow && "show")}>
+        <div className={clsx(css.absolute, isShow && "show")}>
           <ul className={css.list} onClick={handleChange}>
             {items.map((text) => (
               <li key={text} className={css.item} data-value={text}>

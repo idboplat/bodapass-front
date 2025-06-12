@@ -3,7 +3,7 @@ import { useModalStore } from "@/stores/modal";
 import { useEffect } from "react";
 import { ASYNC_MODAL_CONTAINER_ID } from "@/constants";
 import css from "./ModalContainer.module.scss";
-import classNames from "classnames";
+import { clsx } from "clsx";
 import { usePathname } from "next/navigation";
 
 export default function AsyncModalContainer() {
@@ -17,7 +17,7 @@ export default function AsyncModalContainer() {
   return (
     <div
       id={ASYNC_MODAL_CONTAINER_ID}
-      className={classNames(css.modalContainer, {
+      className={clsx(css.modalContainer, {
         active: store.modals.length > 0,
       })}
     >

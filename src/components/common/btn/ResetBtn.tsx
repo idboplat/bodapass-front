@@ -1,4 +1,4 @@
-import { IoIosCloseCircle } from "react-icons/io";
+import { CircleX } from "lucide-react";
 import css from "./ResetBtn.module.scss";
 
 interface ResetButtonProps {
@@ -12,7 +12,7 @@ export default function ResetButton({ id, tabIndex = -1, onClick, isShow }: Rese
   if (!isShow) return null;
   return (
     <button className={css.btn} type="reset" id={id} onClick={onClick} tabIndex={tabIndex}>
-      <IoIosCloseCircle size={17} color="#919492" />
+      <CircleX size={17} color="#919492" />
     </button>
   );
 }

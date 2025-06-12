@@ -1,4 +1,4 @@
-import { HiOutlineClipboardDocument, HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
+import { File, FileCheck } from "lucide-react";
 import { toast } from "sonner";
 import css from "./CopyBtn.module.scss";
 
@@ -29,11 +29,7 @@ export default function CopyButton({
 
   return (
     <button className={css.btn} onClick={handleCopy} style={style} disabled={disabled}>
-      {check ? (
-        <HiOutlineClipboardDocumentCheck size={size} />
-      ) : (
-        <HiOutlineClipboardDocument size={size} />
-      )}
+      {check ? <FileCheck size={size} /> : <File size={size} />}
     </button>
   );
 }

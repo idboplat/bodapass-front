@@ -1,11 +1,7 @@
-import classNames from "classnames";
+import { clsx } from "clsx";
 import css from "./PagiPagination.module.scss";
-import {
-  MdOutlineKeyboardDoubleArrowRight as ArrowLast,
-  MdOutlineKeyboardDoubleArrowLeft as ArrowFirst,
-  MdKeyboardArrowRight as ArrowRight,
-  MdKeyboardArrowLeft as ArrowLeft,
-} from "react-icons/md";
+
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 
 interface PaginationProps {
   currentPage: number;
@@ -57,10 +53,10 @@ export default function PagePagination({
   return (
     <div className={css.wrap}>
       <button onClick={onClickFirst} disabled={disabledFirst}>
-        <ArrowFirst size={24} />
+        <ChevronsLeft size={24} />
       </button>
       <button onClick={() => onClickPage(start - groupSize)} disabled={disabledPrev}>
-        <ArrowLeft size={24} />
+        <ChevronLeft size={24} />
       </button>
       <ol>
         {paginationArr.map((num) => {
@@ -69,7 +65,7 @@ export default function PagePagination({
           return (
             <li key={"pagination" + num}>
               <button
-                className={classNames(disabledCurrent && "active")}
+                className={clsx(disabledCurrent && "active")}
                 onClick={() => onClickPage(num)}
                 disabled={disabledCurrent}
               >
@@ -80,10 +76,10 @@ export default function PagePagination({
         })}
       </ol>
       <button onClick={() => onClickPage(start + groupSize)} disabled={disabledNext}>
-        <ArrowRight size={24} />
+        <ChevronRight size={24} />
       </button>
       <button onClick={onClickLast} disabled={disabledLast}>
-        <ArrowLast size={24} />
+        <ChevronsRight size={24} />
       </button>
     </div>
   );
