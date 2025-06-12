@@ -12,6 +12,7 @@ import { clsx } from "clsx";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import css from "./page.module.scss";
+import { serverLog } from "@/libraries/logger/server";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -68,10 +69,12 @@ export default function Client() {
 
   const onErrorDetector = (error: LivenessError) => {
     console.error(error);
+    serverLog(error);
   };
 
   const onUserCancelDetector = () => {
     console.log("user cancel");
+    serverLog("user cancel");
     resetPage();
   };
 

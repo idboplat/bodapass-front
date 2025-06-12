@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { serverLog } from "@/libraries/logger/server";
+import { RefObject, useRef, useState } from "react";
 
 export const useCamera = () => {
   const videoRef = useRef<HTMLVideoElement>(null!);
@@ -31,4 +32,42 @@ export const useCamera = () => {
   };
 
   return { videoRef, canvasRef, capture };
+};
+
+export const useCameraPermission = (videoRef: RefObject<HTMLVideoElement>, isMobile: boolean) => {
+  const [isError, setIsError] = useState(false);
+  const [isDetecting, setIsDetecting] = useState(false);
+
+  const connectDevices = async () => {
+    if (isDetecting) return;
+    try {
+      setIsError(() => false);
+      setIsDetecting(() => true);
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "environment", // 후면
+          // facingMode: "user", // 전면
+          aspectRatio: isMobile ? 9 / 12 : 12 / 9,
+        },
+      });
+      videoRef.current.srcObject = stream;
+    } catch (err) {
+      console.error("camera error", err);
+      serverLog(err);
+
+      const message = "카메라 권한을 요청할 수 없습니다. \n 기기 또는 권한 설정을 확인해주세요.";
+      setIsError(() => true);
+      // modalStore.push(ErrorModal, {
+      //   props: { error: new Error(message), id: "camera-permission" },
+      // });
+    } finally {
+      setIsDetecting(() => false);
+    }
+  };
+
+  return {
+    isError,
+    isDetecting,
+    connectDevices,
+  };
 };
