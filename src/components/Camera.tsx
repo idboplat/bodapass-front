@@ -17,16 +17,6 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
   const modalStore = useSetModalStore();
   const { connectDevices, isError } = useCameraPermission(videoRef, isMobile);
 
-  useEffect(() => {
-    connectDevices();
-    return () => {
-      const tracks = (videoRef.current?.srcObject as MediaStream)?.getTracks();
-      tracks?.forEach((track: MediaStreamTrack) => {
-        track.stop();
-      });
-    };
-  }, []);
-
   return (
     <div className={css.camera}>
       <video className={css.video} ref={videoRef} autoPlay muted playsInline></video>

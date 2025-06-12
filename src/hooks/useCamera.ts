@@ -1,5 +1,5 @@
 import { serverLog } from "@/libraries/logger/server";
-import { RefObject, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 export const useCamera = () => {
   const videoRef = useRef<HTMLVideoElement>(null!);
@@ -36,13 +36,13 @@ export const useCamera = () => {
 
 export const useCameraPermission = (videoRef: RefObject<HTMLVideoElement>, isMobile: boolean) => {
   const [isError, setIsError] = useState(false);
-  const [isDetecting, setIsDetecting] = useState(false);
+  // const [isDetecting, setIsDetecting] = useState(false);
 
-  const connectDevices = async () => {
-    if (isDetecting) return;
+  const connectDevices = useCallback(async () => {
+    // if (isDetecting) return;
     try {
       setIsError(() => false);
-      setIsDetecting(() => true);
+      // setIsDetecting(() => true);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "environment", // 후면
@@ -51,23 +51,36 @@ export const useCameraPermission = (videoRef: RefObject<HTMLVideoElement>, isMob
         },
       });
       videoRef.current.srcObject = stream;
-    } catch (err) {
-      console.error("camera error", err);
-      serverLog(err);
 
-      const message = "카메라 권한을 요청할 수 없습니다. \n 기기 또는 권한 설정을 확인해주세요.";
+      return stream;
+    } catch (error) {
+      console.error("camera error", error);
+      serverLog(error);
+
       setIsError(() => true);
-      // modalStore.push(ErrorModal, {
-      //   props: { error: new Error(message), id: "camera-permission" },
-      // });
     } finally {
-      setIsDetecting(() => false);
+      // setIsDetecting(() => false);
     }
-  };
+  }, [videoRef, isMobile]);
+
+  useEffect(() => {
+    let stream: MediaStream | undefined = undefined;
+    connectDevices().then((s) => (stream = s));
+
+    console.log("videoRef", videoRef.current);
+    return () => {
+      // 카메라 연결해제
+      if (stream) {
+        stream.getTracks().forEach((track) => {
+          console.log("track", track);
+          track.stop();
+        });
+      }
+    };
+  }, [connectDevices, videoRef]);
 
   return {
     isError,
-    isDetecting,
     connectDevices,
   };
 };
