@@ -19,6 +19,12 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
 
   useEffect(() => {
     connectDevices();
+    return () => {
+      const tracks = (videoRef.current?.srcObject as MediaStream)?.getTracks();
+      tracks?.forEach((track: MediaStreamTrack) => {
+        track.stop();
+      });
+    };
   }, []);
 
   return (
