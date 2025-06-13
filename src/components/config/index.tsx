@@ -8,6 +8,7 @@ import { getServerSession } from "@/libraries/auth/auth.service";
 import Nav from "../common/header/Nav";
 import PortalModalContainer from "../common/modal/PortalModalContainer";
 import AsyncModalContainer from "../common/modal/AsyncModalContainer";
+import NoSSR from "../no-ssr";
 
 interface ConfigsProps {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ export default async function Configs({ children }: ConfigsProps) {
     <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
       <ReactQuery>
         <MantineProvider>
-          {children}
+          <NoSSR>{children}</NoSSR>
           {/* <Devtools /> */}
           <PortalModalContainer />
           <AsyncModalContainer />
