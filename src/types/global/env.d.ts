@@ -26,6 +26,14 @@ declare global {
 
       readonly NEXT_PUBLIC_SENTRY_DSN?: string;
       readonly SENTRY_AUTH_TOKEN?: string;
+
+      // nhn credentials
+      readonly NHN_API_KEY: string;
+      readonly NHN_API_SECRET: string;
+
+      // useb credentials
+      readonly USEB_API_KEY: string;
+      readonly USEB_API_SECRET: string;
     }
   }
 }

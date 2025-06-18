@@ -106,11 +106,14 @@ API Routes
 
 ### useB.
 
-1. POST /api/useb/ocr/[type]
+1. POST /api/useb/oauth
+   로그인, 토큰 발급
+
+2. POST /api/useb/ocr/[type]
    신분증 OCR
 
-2. POST /api/useb/liveness
+3. POST /api/useb/liveness
    라이브니스 체크
 
-3. POST /api/useb/face
+4. POST /api/useb/face
    이미지 1대1 매칭
