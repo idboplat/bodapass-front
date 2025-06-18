@@ -87,14 +87,14 @@ API Routes
 6. GET /api/nhn/[groupId]/faces
    특정 그룹내 모든 얼굴목록 조회
 
-7. POST /api/nhn/[groupId]/faces/search_by_images
+7. POST /api/nhn/[groupId]/faces
+   얼굴등록 + 안티스푸핑
+
+8. POST /api/nhn/[groupId]/faces/search_by_images
    이미지로 검색 + 안티스푸핑
 
-8. GET /api/nhn/[groupId]/faces/[faceId]
+9. GET /api/nhn/[groupId]/faces/[faceId]
    이미지 벡터 조회
-
-9. POST /api/nhn/[groupId]/faces/[faceId]
-   얼굴등록 + 안티스푸핑
 
 10. DELETE /api/nhn/[groupId]/faces/[faceId]
     얼굴삭제

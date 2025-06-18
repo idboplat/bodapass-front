@@ -39,6 +39,10 @@ export async function POST(req: NextRequest) {
     https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/spoofing/faces
     `,
     {
+      headers: {
+        Authorization: `Bearer ${process.env.NHN_SECRET_KEY}`,
+        "x-nhn-apikey": process.env.NHN_APP_KEY,
+      },
       json: {
         image: {
           // 반드시 아래 둘중 하나만
