@@ -2,6 +2,7 @@ import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
 // 라이브니스 체크
+// https://doc.useb.co.kr/#api-%EC%95%88%EB%A9%B4%EC%9D%B8%EC%A6%9D-2.%EC%95%88%EB%A9%B4_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%8B%88%EC%8A%A4
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const image = formData.get("image1") as File | null;
