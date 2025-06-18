@@ -34,6 +34,7 @@ declare global {
       // useb credentials
       readonly USEB_API_KEY: string;
       readonly USEB_API_SECRET: string;
+      readonly USEB_TOKEN: string;
     }
   }
 }
