@@ -1,9 +1,8 @@
-import { OCRResponseData } from "@/types/api/clova";
 import { useEffect, useRef } from "react";
 import hljs from "highlight.js";
 
 interface ResultProps {
-  data: OCRResponseData;
+  data: any;
 }
 
 export default function Result({ data }: ResultProps) {

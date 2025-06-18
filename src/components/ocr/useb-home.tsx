@@ -6,20 +6,21 @@ import { useMutation } from "@tanstack/react-query";
 import Capture from "@/components/ocr/Capture";
 import { useState } from "react";
 import Result from "@/components/ocr/Result";
-import { Anchor, Breadcrumbs, LoadingOverlay } from "@mantine/core";
-import { OCRResponseData } from "@/types/api/clova";
+import { Anchor, Breadcrumbs, LoadingOverlay, Select } from "@mantine/core";
 import Link from "next/link";
-import { v1 as uuid } from "uuid";
+import { TOCRReturn } from "@/types/api/useb";
 
 type Props = {
   isMobile: boolean;
-  type: "idCard" | "passport";
 };
 
-export default function Client({ isMobile, type }: Props) {
+type TOCR = "idcard" | "driver" | "passport" | "passport-overseas" | "alien" | "alien-back";
+
+export default function UsdBHome({ isMobile }: Props) {
   const router = useRouter();
   const camera = useCamera();
-  const [data, setData] = useState<OCRResponseData | null>(null);
+  const [data, setData] = useState<TOCRReturn | null>(null);
+  const [type, setType] = useState<TOCR>("idcard");
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -28,11 +29,8 @@ export default function Client({ isMobile, type }: Props) {
 
       const formData = new FormData();
       formData.append("image", blob, "capture.png");
-      formData.append("type", type);
-      formData.append("requestId", uuid());
-      formData.append("name", uuid());
 
-      const response = await fetch("/api/clova", {
+      const response = await fetch("/api/useb/ocr/" + type, {
         method: "POST",
         body: formData, // FormData 그대로 전송
       });
@@ -41,7 +39,7 @@ export default function Client({ isMobile, type }: Props) {
         throw new Error("이미지 업로드 실패");
       }
 
-      const json: { data: OCRResponseData } = await response.json();
+      const json: { data: TOCRReturn } = await response.json();
       return json.data;
     },
     onSuccess: (data) => setData(() => data),
@@ -72,10 +70,21 @@ export default function Client({ isMobile, type }: Props) {
         <Anchor component={Link} href="/ocr">
           OCR
         </Anchor>
-        <Anchor component={Link} href={"/ocr/" + type}>
-          {type === "idCard" ? "신분증" : "여권"}
-        </Anchor>
       </Breadcrumbs>
+      <div>
+        <Select
+          data={[
+            { value: "idcard", label: "주민등록증" },
+            { value: "driver", label: "운전면허증" },
+            { value: "passport", label: "국내여권" },
+            { value: "passport-overseas", label: "해외여권" },
+            { value: "alien", label: "외국인등록증" },
+            { value: "alien-back", label: "외국인등록증 뒷면" },
+          ]}
+          value={type}
+          onChange={(value) => setType(value as TOCR)}
+        />
+      </div>
       {data ? (
         <Result data={data} />
       ) : (

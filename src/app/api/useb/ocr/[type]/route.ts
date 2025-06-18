@@ -1,6 +1,8 @@
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
+export type TOCRReturn = {};
+
 const API_MAP = {
   idcard: "idcard-driver",
   driver: "idcard-driver",
@@ -27,23 +29,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
     return NextResponse.json({ error: "이미지 업로드 확인" }, { status: 400 });
   }
 
-  const res = await ky.post<{
-    success: boolean;
-    message: string;
-    error_code?: string;
-    extra_message?: string;
-    extra_code?: string;
-    data: {
-      idType: string;
-      juminNo1: string;
-      juMinNo2: string;
-      _juMinNo2: string;
-      issueDate: string;
-      id_real?: boolean; // 사본 판별결과
-      id_confidence?: string; // 정확도 0.5이상일시 실물
-    };
-    transaction_id: string;
-  }>(`https://api3.useb.co.kr/ocr/${path}`, {
+  const res = await ky.post<TOCRReturn>(`https://api3.useb.co.kr/ocr/${path}`, {
     headers: {
       Authorization: `Bearer ${process.env.USEB_TOKEN}`,
     },

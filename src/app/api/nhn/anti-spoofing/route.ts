@@ -1,3 +1,4 @@
+import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,31 +11,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "이미지 업로드 확인" }, { status: 400 });
   }
 
-  const res = await ky.post<{
-    header: {
-      resultCode: number;
-      resultMessage: string;
-      isSuccessful: boolean;
-    };
-    data: {
-      faceDetailCount: number;
-      faceDetails: {
-        bbox: {
-          x0: number;
-          y0: number;
-          x1: number;
-          y1: number;
-        };
-      };
-      landmarks: {
-        type: string;
-        x: number;
-        y: number;
-      }[];
-      spoofing: boolean;
-      confidence: number;
-    }[];
-  }>(
+  const res = await ky.post<TNHNAntiSpoofingReturn>(
     `
     https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/spoofing/faces
     `,

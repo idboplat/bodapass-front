@@ -26,19 +26,21 @@ export default function Page() {
         <Breadcrumbs separator="→" separatorMargin="md">
           {items}
         </Breadcrumbs>
-        <h2 className={css.title}>신분증 유형을 선택해주세요</h2>
+        <h2 className={css.title}>공급자를 선택해주세요</h2>
         <div className={css.box}>
           <Link href="/ocr/idCard" className={css.link}>
             <div className={css.item}>
-              <h3>신분증</h3>
-              <div className={css.sub}>주민등록증, 운전면허증, 외국인등록증</div>
+              <h3>CLOVA</h3>
+              <div className={css.sub}>주민등록증만 테스트 가능합니다.</div>
             </div>
           </Link>
 
-          <Link href="/ocr/passport" className={css.link}>
+          <Link href="/ocr/usb" className={css.link}>
             <div className={css.item}>
-              <h3>여권</h3>
-              <div className={css.sub}></div>
+              <h3>useB.</h3>
+              <div className={css.sub}>
+                주민등록증, 운전면허증, 외국인등록증, 국내여권, 해외여권 테스트 가능합니다.
+              </div>
             </div>
           </Link>
         </div>

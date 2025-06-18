@@ -1,4 +1,4 @@
-import Client from "./aws/page.client";
+import Client from "./page.client";
 
 export default function Page() {
   return <Client />;

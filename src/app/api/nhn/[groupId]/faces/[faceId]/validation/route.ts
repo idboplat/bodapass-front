@@ -1,3 +1,4 @@
+import { TNHNValidationReturn } from "@/types/api/nhn";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,49 +22,7 @@ export async function POST(
     );
   }
 
-  const res = await ky.post<{
-    header: {
-      resultCode: number;
-      resultMessage: string;
-      isSuccessful: boolean;
-    };
-    data: {
-      similarity: number;
-      face: {
-        bbox: {
-          x0: number;
-          y0: number;
-          x1: number;
-          y1: number;
-        };
-        confidence: number;
-        faceId: string;
-        imageId: string;
-        externalImageId: string;
-      };
-      sourceFace: {
-        bbox: {
-          x0: number;
-          y0: number;
-          x1: number;
-          y1: number;
-        };
-        landmarks: {
-          type: string;
-          x: number;
-          y: number;
-        }[];
-        orientation: {
-          x: number;
-          y: number;
-          z: number;
-        };
-        mask: boolean;
-        spoofing: boolean;
-        confidence: number;
-      };
-    };
-  }>(
+  const res = await ky.post<TNHNValidationReturn>(
     `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/${faceId}/verify`,
     {
       headers: {
