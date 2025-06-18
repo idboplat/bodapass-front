@@ -23,7 +23,7 @@ API Routes
 4. DELETE /api/aws/collections/[collectionId] - 콜렉션 삭제
    header application/json
 
-===
+---
 
 ### aws faces
 
@@ -45,7 +45,7 @@ API Routes
    input image-capture.png
    비고 임계치에 해당하는 이미지 배열이 여러개 들어온다.
 
-===
+---
 
 ### aws liveness
 
@@ -56,9 +56,61 @@ API Routes
    header application/json
    비고 라이브니스 세션에서 발급된 sessionId로 결과 조회
 
+---
+
 ### naver clova
 
 1. POST /api/clova
    header multipart/formdata
    input image-capture.png, type-string, requestId-string, name-string
    성공응답으로 촬영된 이미지가 Blob로 내려옴
+
+---
+
+### NHN
+
+1. GET /api/nhn
+   그룹목록 조회
+
+2. POST /api/nhn/anti-spoofing
+   안티스푸핑 체크
+
+3. GET /api/nhn/[groudId]
+   그룹단건 조회, 얼굴등록 갯수 반환
+
+4. POST /api/nhn/[groupId]
+   그룹생성
+
+5. DELETE /api/nhn/[groupId]
+   그룹삭제
+
+6. GET /api/nhn/[groupId]/faces
+   특정 그룹내 모든 얼굴목록 조회
+
+7. POST /api/nhn/[groupId]/faces/search_by_images
+   이미지로 검색 + 안티스푸핑
+
+8. GET /api/nhn/[groupId]/faces/[faceId]
+   이미지 벡터 조회
+
+9. POST /api/nhn/[groupId]/faces/[faceId]
+   얼굴등록 + 안티스푸핑
+
+10. DELETE /api/nhn/[groupId]/faces/[faceId]
+    얼굴삭제
+
+11. POST /api/nhn/[groupId]/faces/[faceId]/validation
+    얼굴검증, 얼굴 id와 이미지 사이 유사도 측정 + 안티스푸핑
+
+---
+
+### useB.
+
+1. POST /api/useb/ocr/[type]
+   신분증 OCR
+
+2. POST /api/useb/liveness
+   라이브니스 체크
+
+3. POST /api/useb/face
+   이미지 1대1 매칭
