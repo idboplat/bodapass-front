@@ -28,7 +28,7 @@ declare global {
       readonly SENTRY_AUTH_TOKEN?: string;
 
       // nhn credentials
-      readonly NHN_API_KEY: string;
+      readonly NHN_APP_KEY: string;
       readonly NHN_API_SECRET: string;
 
       // useb credentials
