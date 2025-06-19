@@ -68,7 +68,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
     let isCapturing = false;
     let rfAnimationFrame: number;
     let timer = performance.now();
-    let timerTrigger = 500; // 0.1초
+    let timerTrigger = 500; // 0.5초
 
     try {
       const detectLoop = async () => {
@@ -85,7 +85,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
           .detectSingleFace(
             videoRef.current,
             new faceapi.TinyFaceDetectorOptions({
-              scoreThreshold: 0.95,
+              scoreThreshold: 0.9,
             }),
           )
           .withFaceLandmarks(true);
@@ -165,7 +165,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
           // 캡처
           const captureCanvas = document.createElement("canvas");
-          const padding = 100;
+          const padding = 50;
 
           captureCanvas.width = resized.detection.box.width + padding * 2;
           captureCanvas.height = resized.detection.box.height + padding * 2;
@@ -245,6 +245,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
               setMessage("");
               videoRef.current?.play();
+              isCapturing = false;
             },
             "image/png",
             0.85,
