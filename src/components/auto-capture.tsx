@@ -68,7 +68,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
     let isCapturing = false;
     let rfAnimationFrame: number;
     let timer = performance.now();
-    let timerTrigger = 100; // 0.1초
+    let timerTrigger = 500; // 0.1초
 
     try {
       const detectLoop = async () => {
@@ -81,8 +81,6 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
         timer = now;
 
-        videoRef.current.pause();
-
         const result = await faceapi
           .detectSingleFace(
             videoRef.current,
@@ -94,6 +92,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
         // .withFaceDescriptors();
 
         if (result && result.detection.score > 0.9) {
+          videoRef.current.pause();
           isCapturing = true;
 
           const landmarks = result.landmarks;
@@ -254,7 +253,6 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
           canvasRef.current
             .getContext("2d")
             ?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-          videoRef.current?.play();
         }
       };
 
