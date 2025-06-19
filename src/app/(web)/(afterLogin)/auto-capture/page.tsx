@@ -4,6 +4,7 @@ import AutoCapture from "@/components/auto-capture";
 import { Button } from "@mantine/core";
 import Image from "next/image";
 import { useState } from "react";
+import css from "./page.module.scss";
 
 export default function Page() {
   const [images, setImages] = useState<string[]>([]);
@@ -39,8 +40,10 @@ export default function Page() {
 
   return (
     <>
-      <AutoCapture onFaceDetected={set} setMessage={onMessage} />
-      <p>{message}</p>
+      <div className={css.captureBox}>
+        <AutoCapture onFaceDetected={set} setMessage={onMessage} />
+        {message !== "" && <p className={css.message}>{message}</p>}
+      </div>
       <div>
         <Button onClick={reset}>Reset</Button>
       </div>

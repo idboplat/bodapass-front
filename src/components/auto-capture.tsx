@@ -264,6 +264,9 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
     <div className={css.capture}>
       <video className={css.video} ref={videoRef} autoPlay muted playsInline />
       <canvas className={css.canvas} ref={canvasRef} />
+      <div className={css.mask}>
+        <div className={css.ring} />
+      </div>
     </div>
   );
 }
