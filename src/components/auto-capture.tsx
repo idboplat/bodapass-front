@@ -69,20 +69,21 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
         timer = now;
         videoRef.current.play();
 
-        const detection = await faceapi
+        const result = await faceapi
           .detectSingleFace(
             videoRef.current,
-            new faceapi.TinyFaceDetectorOptions({ scoreThreshold: 0.5 }),
+            new faceapi.TinyFaceDetectorOptions({
+              scoreThreshold: 0.9,
+            }),
           )
           .withFaceLandmarks(true);
-
         // .withFaceDescriptors();
 
-        if (detection) {
+        if (result && result.detection.score > 0.9) {
           isCapturing = true;
           videoRef.current.pause();
 
-          const landmarks = detection.landmarks;
+          const landmarks = result.landmarks;
           const positions = landmarks.positions;
 
           // 1. 모든 랜드마크가 잘 감지됐는지
@@ -144,7 +145,7 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           };
 
           faceapi.matchDimensions(canvasRef.current, displaySize);
-          const resized = faceapi.resizeResults(detection, displaySize);
+          const resized = faceapi.resizeResults(result, displaySize);
           faceapi.draw.drawDetections(canvasRef.current, resized); // 프레임 그리기
 
           // 캡처
