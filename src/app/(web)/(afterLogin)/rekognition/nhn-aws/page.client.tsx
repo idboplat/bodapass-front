@@ -10,8 +10,7 @@ import { LoadingOverlay } from "@mantine/core";
 import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
-
-const COLLECTION_ID = "cre1";
+import { GROUP_ID } from "@/constants";
 
 export default function Client({ isMobile }: { isMobile: boolean }) {
   const router = useRouter();
@@ -42,7 +41,7 @@ export default function Client({ isMobile }: { isMobile: boolean }) {
         .post<{
           message: string;
           data: SearchFacesCommandOutput;
-        }>(`/api/aws/collections/${COLLECTION_ID}/faces/search_by_image`, {
+        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
           body: formData,
         })
         .json();
@@ -74,7 +73,7 @@ export default function Client({ isMobile }: { isMobile: boolean }) {
 
   return (
     <>
-      <BackHeader title="NHN 인증" onClickBack={onClickBack} />
+      <BackHeader title="NHN + AWS 인증" onClickBack={onClickBack} />
       {data ? (
         <Result data={data} />
       ) : (

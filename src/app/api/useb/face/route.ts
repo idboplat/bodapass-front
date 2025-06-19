@@ -1,3 +1,4 @@
+import { TUsebFaceMatchReturn } from "@/types/api/useb";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -24,13 +25,7 @@ export async function POST(req: NextRequest) {
   ]);
 
   const res = await ky
-    .post<{
-      success: boolean;
-      message: string;
-      isIdentical: boolean; //일치여부
-      confidence: string; // 유사도
-      transaction_id: string;
-    }>("https://api3.useb.co.kr/face/match", {
+    .post<TUsebFaceMatchReturn>("https://api3.useb.co.kr/face/match", {
       headers: {
         Authorization: `Bearer ${process.env.USEB_TOKEN}`,
       },

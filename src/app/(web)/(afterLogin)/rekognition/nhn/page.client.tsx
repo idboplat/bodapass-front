@@ -9,9 +9,7 @@ import Capture from "@/components/ocr/Capture";
 import { LoadingOverlay } from "@mantine/core";
 import { TNHNValidationReturn } from "@/types/api/nhn";
 import ky from "ky";
-
-const GROUP_ID = "1234567890";
-const FACE_ID = "1234567890";
+import { GROUP_ID, FACE_ID } from "@/constants";
 
 export default function Client({ isMobile }: { isMobile: boolean }) {
   const router = useRouter();
@@ -57,7 +55,7 @@ export default function Client({ isMobile }: { isMobile: boolean }) {
 
   return (
     <>
-      <BackHeader title="NHN 인증" onClickBack={onClickBack} />
+      <BackHeader title="NHN 단독인증" onClickBack={onClickBack} />
       {data ? (
         <Result data={data} />
       ) : (

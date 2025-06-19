@@ -15,3 +15,11 @@ export type TOCRReturn = {
   };
   transaction_id: string;
 };
+
+export type TUsebFaceMatchReturn = {
+  success: boolean;
+  message: string;
+  isIdentical: boolean; //일치여부
+  confidence: string; // 유사도
+  transaction_id: string;
+};
