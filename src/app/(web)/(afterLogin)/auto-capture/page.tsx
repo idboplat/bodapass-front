@@ -22,8 +22,10 @@ export default function Page() {
     setImages((prev) => {
       const newImages = [...prev, URL.createObjectURL(blob)];
 
-      while (prev.length >= 4) {
-        URL.revokeObjectURL(prev.shift()!);
+      // 4장을 초과하는 경우 가장 오래된 이미지부터 제거
+      while (newImages.length > 4) {
+        const removedImage = newImages.shift();
+        if (removedImage) URL.revokeObjectURL(removedImage);
       }
 
       return newImages;
