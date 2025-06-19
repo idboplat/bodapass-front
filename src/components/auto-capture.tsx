@@ -35,25 +35,31 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
   }, [modelsLoaded]);
 
   useEffect(() => {
-    if (modelsLoaded && videoRef.current) {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            facingMode: "user",
-            // aspectRatio: isMobile ? 9 / 12 : 12 / 9,
-            width: { ideal: 288 },
-            height: { ideal: 288 },
-          },
-          // width: { ideal: 320 },
-          // height: { ideal: 240 },
-        })
-        .then((stream) => {
-          videoRef.current!.srcObject = stream;
-        })
-        .catch((err) => {
-          console.error("웹캠 접근 오류:", err);
-        });
-    }
+    if (!modelsLoaded) return;
+
+    let stream: MediaStream | undefined = undefined;
+
+    const getStream = async () => {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+
+      return stream;
+    };
+
+    getStream().then((s) => {
+      stream = s;
+    });
+
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
   }, [modelsLoaded]);
 
   useEffect(() => {
@@ -181,44 +187,45 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
               captureCanvas.height,
             );
 
-          const imageData = captureCanvas
-            .getContext("2d")!
-            .getImageData(0, 0, captureCanvas.width, captureCanvas.height);
-          const gray = new Uint8ClampedArray(captureCanvas.width * captureCanvas.height);
+          // 선명도 체크
+          // const imageData = captureCanvas
+          //   .getContext("2d")!
+          //   .getImageData(0, 0, captureCanvas.width, captureCanvas.height);
+          // const gray = new Uint8ClampedArray(captureCanvas.width * captureCanvas.height);
 
-          for (let i = 0; i < gray.length; i++) {
-            const r = imageData?.data[i * 4];
-            const g = imageData.data[i * 4 + 1];
-            const b = imageData.data[i * 4 + 2];
-            // RGB → Grayscale 변환
-            gray[i] = 0.2989 * r + 0.587 * g + 0.114 * b;
-          }
+          // for (let i = 0; i < gray.length; i++) {
+          //   const r = imageData?.data[i * 4];
+          //   const g = imageData.data[i * 4 + 1];
+          //   const b = imageData.data[i * 4 + 2];
+          //   // RGB → Grayscale 변환
+          //   gray[i] = 0.2989 * r + 0.587 * g + 0.114 * b;
+          // }
 
-          let sum = 0;
-          let count = 0;
+          // let sum = 0;
+          // let count = 0;
 
-          for (let y = 1; y < captureCanvas.height - 1; y++) {
-            for (let x = 1; x < captureCanvas.width - 1; x++) {
-              const idx = y * captureCanvas.width + x;
-              const dx = gray[idx + 1] - gray[idx - 1];
-              const dy = gray[idx + captureCanvas.width] - gray[idx - captureCanvas.width];
-              const magnitude = Math.sqrt(dx * dx + dy * dy);
+          // for (let y = 1; y < captureCanvas.height - 1; y++) {
+          //   for (let x = 1; x < captureCanvas.width - 1; x++) {
+          //     const idx = y * captureCanvas.width + x;
+          //     const dx = gray[idx + 1] - gray[idx - 1];
+          //     const dy = gray[idx + captureCanvas.width] - gray[idx - captureCanvas.width];
+          //     const magnitude = Math.sqrt(dx * dx + dy * dy);
 
-              sum += magnitude;
-              count++;
-            }
-          }
+          //     sum += magnitude;
+          //     count++;
+          //   }
+          // }
 
-          const sharpness = sum / count;
+          // const sharpness = sum / count;
 
-          console.log("sharpness", sharpness);
+          // console.log("sharpness", sharpness);
 
-          if (sharpness < 2) {
-            setMessage("선명도가 낮습니다.");
-            isCapturing = false;
-            videoRef.current.play();
-            return;
-          }
+          // if (sharpness < 2) {
+          //   setMessage("선명도가 낮습니다.");
+          //   isCapturing = false;
+          //   videoRef.current.play();
+          //   return;
+          // }
 
           captureCanvas.getContext("2d")!.font = "28px Arial";
           captureCanvas.getContext("2d")!.fillText(Date.now().toString(), 100, 32);
@@ -240,8 +247,8 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
               setMessage("");
               videoRef.current?.play();
             },
-            "image/jpeg",
-            0.7,
+            "image/png",
+            0.85,
           );
         } else {
           canvasRef.current
