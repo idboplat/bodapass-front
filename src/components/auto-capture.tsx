@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import css from "./auto-capture.module.scss";
+import { isMobile } from "react-device-detect";
 
 interface AutoCaptureProps {
   onFaceDetected: (image: Blob) => void;
@@ -37,7 +38,12 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
     if (modelsLoaded && videoRef.current) {
       navigator.mediaDevices
         .getUserMedia({
-          video: true,
+          video: {
+            facingMode: "user",
+            // aspectRatio: isMobile ? 9 / 12 : 12 / 9,
+            width: { ideal: 288 },
+            height: { ideal: 288 },
+          },
           // width: { ideal: 320 },
           // height: { ideal: 240 },
         })

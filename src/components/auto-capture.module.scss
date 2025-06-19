@@ -10,8 +10,8 @@
 .capture {
   position: relative;
   width: 100%;
-  aspect-ratio: 12 / 9;
-  background-color: rgba(0, 0, 0, 0.75);
+  height: 30rem;
+  overflow: hidden;
 }
 
 .canvas {
@@ -36,9 +36,9 @@
   background-color: white; /* 불투명한 흰색 배경 */
   pointer-events: none;
 
-  /* 반지름: 180px = 11.25rem */
-  mask-image: radial-gradient(circle at center, transparent 11.25rem, black 11.3rem);
-  -webkit-mask-image: radial-gradient(circle at center, transparent 11.25rem, black 11.3rem);
+  /* 지름: 288px = 18rem */
+  mask-image: radial-gradient(circle at center, transparent 9rem, black 9.05rem);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 9rem, black 9.05rem);
 }
 
 .ring {
@@ -46,8 +46,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 24rem;
-  height: 24rem;
+  width: 19rem;
+  height: 19rem;
   border-radius: 50%;
   background-image: linear-gradient(135deg, #03e5b7 0%, #037ade 100%);
   animation: rotate 1s linear infinite;
