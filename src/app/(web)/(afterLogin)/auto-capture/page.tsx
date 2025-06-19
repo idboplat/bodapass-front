@@ -1,5 +1,4 @@
 "use client";
-
 import AutoCapture from "@/components/auto-capture";
 import { Button, LoadingOverlay } from "@mantine/core";
 import Image from "next/image";
@@ -10,17 +9,20 @@ import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { GROUP_ID } from "@/constants";
 
+type TImageBlob = { image: Blob; score: number; url: string };
 export default function Page() {
-  const [blobs, setBlobs] = useState<Blob[]>([]);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<TImageBlob[]>([]);
   const [message, setMessage] = useState("");
   const [data, setData] = useState<SearchFacesCommandOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const mutation = useMutation({
-    mutationFn: async (images: Blob[]) => {
+    mutationFn: async (images: TImageBlob[]) => {
+      const mostImages = images.sort((a, b) => b.score - a.score);
+
       const formData = new FormData();
-      formData.append("image", images[0], "capture1.png");
+      formData.append("image", mostImages[0].image, "capture.png");
+
       const json = await ky
         .post<{
           message: string;
@@ -46,49 +48,39 @@ export default function Page() {
     setError(null);
     setData(null);
 
-    setBlobs(() => []);
     setImages((prev) => {
-      prev.forEach((image) => {
-        URL.revokeObjectURL(image);
+      prev.forEach((blob) => {
+        URL.revokeObjectURL(blob.url);
       });
 
       return [];
     });
   };
 
-  const set = (blob: Blob) => {
+  const set = (args: { image: Blob; score: number }) => {
     if (mutation.isPending) return;
 
-    setBlobs((prev) => {
-      const newBlobs = [...prev, blob];
+    setImages((prev) => {
+      const newBlobs = [...prev, { ...args, url: URL.createObjectURL(args.image) }];
 
       while (newBlobs.length > 4) {
-        newBlobs.shift();
+        const removed = newBlobs.shift();
+        if (removed) {
+          URL.revokeObjectURL(removed.url);
+        }
       }
 
       return newBlobs;
-    });
-
-    setImages((prev) => {
-      const newImages = [...prev, URL.createObjectURL(blob)];
-
-      // 4장을 초과하는 경우 가장 오래된 이미지부터 제거
-      while (newImages.length > 4) {
-        const removedImage = newImages.shift();
-        if (removedImage) URL.revokeObjectURL(removedImage);
-      }
-
-      return newImages;
     });
   };
 
   useEffect(() => {
     if (data || error) return;
 
-    if (blobs.length === 4) {
-      mutation.mutate(blobs);
+    if (images.length === 4) {
+      mutation.mutate(images);
     }
-  }, [blobs]);
+  }, [images]);
 
   const onMessage = (message: string) => {
     setMessage(() => message);
@@ -111,10 +103,10 @@ export default function Page() {
       </div>
 
       <div>
-        {images.map((url, index) => (
+        {images.map((blob, index) => (
           <Image
             key={index}
-            src={url}
+            src={blob.url}
             alt={`capture${index + 1}`}
             width={320}
             height={240}

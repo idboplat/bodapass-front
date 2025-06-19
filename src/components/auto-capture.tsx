@@ -5,7 +5,7 @@ import css from "./auto-capture.module.scss";
 import { isMobile } from "react-device-detect";
 
 interface AutoCaptureProps {
-  onFaceDetected: (image: Blob) => void;
+  onFaceDetected: (args: { image: Blob; score: number }) => void;
   setMessage: (message: string) => void;
 }
 
@@ -226,13 +226,16 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
           //   return;
           // }
 
-          captureCanvas.getContext("2d")!.font = "28px Arial";
-          captureCanvas.getContext("2d")!.fillText(Date.now().toString(), 100, 32);
+          captureCanvas.getContext("2d")!.font = "20px Arial";
+          captureCanvas.getContext("2d")!.fillStyle = "red";
+          captureCanvas
+            .getContext("2d")!
+            .fillText(result.detection.score.toFixed(2) + " " + Date.now().toString(), 0, 32);
 
           captureCanvas.toBlob(
             (blob) => {
               if (blob) {
-                onFaceDetected(blob);
+                onFaceDetected({ image: blob, score: result.detection.score });
               }
 
               // 메모리 정리
