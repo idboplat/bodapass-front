@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Page() {
   const [images, setImages] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
 
   const reset = () => {
     setImages((prev) => {
@@ -32,9 +33,17 @@ export default function Page() {
     });
   };
 
+  const onMessage = (message: string) => {
+    setMessage(() => message);
+  };
+
   return (
     <>
-      <AutoCapture onFaceDetected={set} />
+      <AutoCapture onFaceDetected={set} setMessage={onMessage} />
+      <p>{message}</p>
+      <div>
+        <Button onClick={reset}>Reset</Button>
+      </div>
       <div>
         {images.map((url, index) => (
           <Image
@@ -47,9 +56,6 @@ export default function Page() {
             style={{ border: "1px solid red" }}
           />
         ))}
-      </div>
-      <div>
-        <Button onClick={reset}>Reset</Button>
       </div>
     </>
   );

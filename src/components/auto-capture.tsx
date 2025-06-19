@@ -5,13 +5,13 @@ import css from "./auto-capture.module.scss";
 
 interface AutoCaptureProps {
   onFaceDetected: (image: Blob) => void;
+  setMessage: (message: string) => void;
 }
 
-export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
+export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (modelsLoaded) return;
@@ -61,19 +61,21 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
     try {
       const detectLoop = async () => {
         rfAnimationFrame = requestAnimationFrame(detectLoop);
+
         if (!videoRef.current || !canvasRef.current) return;
 
         const now = performance.now();
         if (now - timer < timerTrigger || isCapturing) return;
 
         timer = now;
-        videoRef.current.play();
+
+        videoRef.current.pause();
 
         const result = await faceapi
           .detectSingleFace(
             videoRef.current,
             new faceapi.TinyFaceDetectorOptions({
-              scoreThreshold: 0.9,
+              scoreThreshold: 0.95,
             }),
           )
           .withFaceLandmarks(true);
@@ -81,7 +83,6 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
 
         if (result && result.detection.score > 0.9) {
           isCapturing = true;
-          videoRef.current.pause();
 
           const landmarks = result.landmarks;
           const positions = landmarks.positions;
@@ -124,18 +125,21 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           // pitch 기준 판단
 
           if (noseToEyeRatio < 0.18) {
-            setMessage(() => "고개를 내려주세요");
+            setMessage("고개를 내려주세요");
             isCapturing = false;
+            videoRef.current.play();
             return;
           } else if (noseToEyeRatio > 0.37) {
-            setMessage(() => "고개를 올려주세요");
+            setMessage("고개를 올려주세요");
             isCapturing = false;
+            videoRef.current.play();
             return;
           }
 
           if (!isFrontal) {
-            setMessage(() => "정면을 보세요");
+            setMessage("정면을 보세요");
             isCapturing = false;
+            videoRef.current.play();
             return;
           }
 
@@ -171,6 +175,45 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
               captureCanvas.height,
             );
 
+          const imageData = captureCanvas
+            .getContext("2d")!
+            .getImageData(0, 0, captureCanvas.width, captureCanvas.height);
+          const gray = new Uint8ClampedArray(captureCanvas.width * captureCanvas.height);
+
+          for (let i = 0; i < gray.length; i++) {
+            const r = imageData?.data[i * 4];
+            const g = imageData.data[i * 4 + 1];
+            const b = imageData.data[i * 4 + 2];
+            // RGB → Grayscale 변환
+            gray[i] = 0.2989 * r + 0.587 * g + 0.114 * b;
+          }
+
+          let sum = 0;
+          let count = 0;
+
+          for (let y = 1; y < captureCanvas.height - 1; y++) {
+            for (let x = 1; x < captureCanvas.width - 1; x++) {
+              const idx = y * captureCanvas.width + x;
+              const dx = gray[idx + 1] - gray[idx - 1];
+              const dy = gray[idx + captureCanvas.width] - gray[idx - captureCanvas.width];
+              const magnitude = Math.sqrt(dx * dx + dy * dy);
+
+              sum += magnitude;
+              count++;
+            }
+          }
+
+          const sharpness = sum / count;
+
+          console.log("sharpness", sharpness);
+
+          if (sharpness < 2) {
+            setMessage("선명도가 낮습니다.");
+            isCapturing = false;
+            videoRef.current.play();
+            return;
+          }
+
           captureCanvas.getContext("2d")!.font = "28px Arial";
           captureCanvas.getContext("2d")!.fillText(Date.now().toString(), 100, 32);
 
@@ -188,8 +231,8 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
               captureCanvas.height = 0;
               captureCanvas.remove();
 
-              setMessage(() => "");
-              videoRef.current!.play();
+              setMessage("");
+              videoRef.current?.play();
             },
             "image/jpeg",
             0.7,
@@ -198,6 +241,7 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           canvasRef.current
             .getContext("2d")
             ?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          videoRef.current?.play();
         }
       };
 
@@ -208,6 +252,7 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
 
     return () => {
       isCapturing = false;
+      videoRef.current?.play();
 
       if (rfAnimationFrame) {
         cancelAnimationFrame(rfAnimationFrame);
@@ -219,7 +264,6 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
     <div className={css.capture}>
       <video className={css.video} ref={videoRef} autoPlay muted playsInline />
       <canvas className={css.canvas} ref={canvasRef} />
-      <p>{message}</p>
     </div>
   );
 }
