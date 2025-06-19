@@ -66,8 +66,7 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
         if (now - timer < timerTrigger || isCapturing) return;
 
         timer = now;
-
-        console.log("detectLoop");
+        videoRef.current.play();
 
         const detection = await faceapi
           .detectSingleFace(
@@ -80,6 +79,7 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
 
         if (detection) {
           isCapturing = true;
+          videoRef.current.pause();
 
           const landmarks = detection.landmarks;
           const positions = landmarks.positions;
@@ -124,7 +124,6 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           if (noseToEyeRatio < 0.18) {
             setMessage(() => "고개를 내려주세요");
             isCapturing = false;
-
             return;
           } else if (noseToEyeRatio > 0.37) {
             setMessage(() => "고개를 올려주세요");
@@ -135,7 +134,6 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           if (!isFrontal) {
             setMessage(() => "정면을 보세요");
             isCapturing = false;
-
             return;
           }
 
@@ -149,7 +147,6 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
           faceapi.draw.drawDetections(canvasRef.current, resized); // 프레임 그리기
 
           // 캡처
-          videoRef.current.pause();
           const captureCanvas = document.createElement("canvas");
           const padding = 100;
 
