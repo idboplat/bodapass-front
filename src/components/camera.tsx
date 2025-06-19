@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from "react";
-import css from "./Camera.module.scss";
+import css from "./camera.module.scss";
 import { clsx } from "clsx";
 import { Button } from "@mantine/core";
 import { useSetModalStore } from "@/stores/modal";
@@ -19,7 +19,7 @@ export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
 
   return (
     <div className={css.camera}>
-      <video className={css.video} ref={videoRef} autoPlay muted playsInline></video>
+      <video className={css.video} ref={videoRef} autoPlay muted playsInline />
       <canvas className={css.canvas} ref={canvasRef}>
         {isError && "지원되지않는 기기입니다."}
       </canvas>

@@ -1,5 +1,5 @@
 "use client";
-import Camera from "@/components/Camera";
+import Camera from "@/components/camera";
 import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import landingAni from "@/assets/lottie/landing.json";

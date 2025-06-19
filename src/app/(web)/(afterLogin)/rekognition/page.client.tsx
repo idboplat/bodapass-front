@@ -51,6 +51,13 @@ export default function Page() {
               <div className={css.sub}></div>
             </div>
           </Link>
+
+          <Link href="/auto-capture" className={css.link}>
+            <div className={css.item}>
+              <h3>얼굴 자동인식</h3>
+              <div className={css.sub}></div>
+            </div>
+          </Link>
         </div>
       </div>
     </>

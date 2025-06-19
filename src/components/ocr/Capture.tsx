@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ActionIcon } from "@mantine/core";
 import { Camera as IconCamera } from "lucide-react";
 import { RefObject } from "react";
-import Camera from "@/components/Camera";
+import Camera from "@/components/camera";
 import css from "./Ocr.module.scss";
 import { clsx } from "clsx";
 

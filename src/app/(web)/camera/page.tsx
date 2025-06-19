@@ -1,5 +1,5 @@
 "use client";
-import Camera from "@/components/Camera";
+import Camera from "@/components/camera";
 import { useCamera } from "@/hooks/useCamera";
 
 export default function Page() {

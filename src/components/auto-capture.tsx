@@ -1,6 +1,7 @@
 // components/VideoCapture.tsx
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
+import css from "./auto-capture.module.scss";
 
 interface AutoCaptureProps {
   onFaceDetected: (image: Blob) => void;
@@ -214,14 +215,9 @@ export default function AutoCapture({ onFaceDetected }: AutoCaptureProps) {
   }, [modelsLoaded, onFaceDetected]);
 
   return (
-    <div>
-      <video ref={videoRef} width="640" height="480" autoPlay muted></video>
-      <canvas
-        ref={canvasRef}
-        width="640"
-        height="480"
-        style={{ position: "absolute", top: 0, left: 0 }}
-      />
+    <div className={css.capture}>
+      <video className={css.video} ref={videoRef} autoPlay muted playsInline />
+      <canvas className={css.canvas} ref={canvasRef} />
       <p>{message}</p>
     </div>
   );
