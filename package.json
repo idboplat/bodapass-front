@@ -73,5 +73,10 @@
     "typescript": "^5.8.3",
     "undici": "^6.21.3",
     "vitest": "^3.2.3"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "encoding": false
   }
 }

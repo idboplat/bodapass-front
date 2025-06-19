@@ -40,6 +40,13 @@ const nextConfig: NextConfig = {
     ];
   },
   webpack: (config, options) => {
+    // face-api.js
+    config.resolve.fallback = {
+      fs: false,
+      path: false,
+      encoding: false,
+    };
+
     const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.(".svg"));
     config.module.rules.push(
       {

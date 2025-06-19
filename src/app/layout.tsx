@@ -4,7 +4,7 @@ import Configs from "@/components/config";
 import { getDefaultMetadata } from "@/utils/getDefaultMetadata";
 import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import { THEME_LOCAL_STORAGE_KEY } from "@/constants";
-//import Script from "next/script";
+import Script from "next/script";
 
 // css 순서변경 금지
 import "@/styles/mantine/core.scss";
@@ -37,7 +37,8 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         {/* run dev - 개발 체크. react-scan */}
-        {/* <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async /> */}
+        <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+
         <ColorSchemeScript localStorageKey={THEME_LOCAL_STORAGE_KEY} />
       </head>
       <body suppressHydrationWarning>
