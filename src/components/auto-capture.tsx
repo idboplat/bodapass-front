@@ -68,7 +68,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
     let isCapturing = false;
     let rfAnimationFrame: number;
     let timer = performance.now();
-    let timerTrigger = 250; // 0.25초
+    let timerInterval = 200; // 0.2초
 
     try {
       const detectLoop = async () => {
@@ -77,7 +77,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
         if (!videoRef.current || !canvasRef.current) return;
 
         const now = performance.now();
-        if (now - timer < timerTrigger || isCapturing) return;
+        if (now - timer < timerInterval || isCapturing) return;
 
         timer = now;
 
