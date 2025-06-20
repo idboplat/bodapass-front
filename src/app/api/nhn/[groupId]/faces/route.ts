@@ -31,8 +31,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ grou
     `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.NHN_SECRET_KEY}`,
-        "x-nhn-apikey": process.env.NHN_APP_KEY,
+        Authorization: process.env.NHN_SECRET_KEY,
+        "x-nhn-apikey": process.env.NHN_API_KEY,
       },
     },
   );
@@ -124,8 +124,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ gro
     `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.NHN_SECRET_KEY}`,
-        "x-nhn-apikey": process.env.NHN_APP_KEY,
+        Authorization: process.env.NHN_SECRET_KEY,
+        "x-nhn-apikey": process.env.NHN_API_KEY,
       },
       json: {
         image: {

@@ -26,8 +26,8 @@ export async function POST(
     `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/${faceId}/verify`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.NHN_SECRET_KEY}`,
-        "x-nhn-apikey": process.env.NHN_APP_KEY,
+        Authorization: process.env.NHN_SECRET_KEY,
+        "x-nhn-apikey": process.env.NHN_API_KEY,
       },
       json: {
         compareImage: {
