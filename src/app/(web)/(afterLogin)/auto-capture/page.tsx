@@ -8,8 +8,10 @@ import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { GROUP_ID } from "@/constants";
+import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
 
 type TImageBlob = { image: Blob; score: number; url: string };
+
 export default function Page() {
   const [images, setImages] = useState<TImageBlob[]>([]);
   const [message, setMessage] = useState("");
@@ -24,6 +26,18 @@ export default function Page() {
       formData.append("image", mostImages[0].image, "capture.png");
 
       const json = await ky
+        .post<TNHNAntiSpoofingReturn>(`/api/nhn/anti-spoofing`, {
+          body: formData,
+        })
+        .json();
+
+      console.log("json", json);
+
+      if (json.data.faceDetailCount <= 0) {
+        throw new Error("얼굴이 인식되지 않았습니다.");
+      }
+
+      const json2 = await ky
         .post<{
           message: string;
           data: SearchFacesCommandOutput;
@@ -32,9 +46,9 @@ export default function Page() {
         })
         .json();
 
-      console.log("json", json);
+      console.log("json2", json2);
 
-      return json.data;
+      return json2.data;
     },
     onSuccess: (data) => {
       setData(() => data);

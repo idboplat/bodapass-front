@@ -1,10 +1,155 @@
-import { userAgent } from "next/server";
-import Client from "./page.client";
-import { headers } from "next/headers";
+"use client";
+import AutoCapture from "@/components/auto-capture";
+import { Button, LoadingOverlay } from "@mantine/core";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import css from "./page.module.scss";
+import { useMutation } from "@tanstack/react-query";
+import ky from "ky";
+import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
+import { GROUP_ID } from "@/constants";
+import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
 
-export default async function Page() {
-  const agent = userAgent({ headers: await headers() });
-  const isMobile = agent.device.type === "mobile" || agent.device.type === "tablet";
+type TImageBlob = { image: Blob; score: number; url: string };
 
-  return <Client isMobile={isMobile} />;
+export default function Page() {
+  const [images, setImages] = useState<TImageBlob[]>([]);
+  const [message, setMessage] = useState("");
+  const [data, setData] = useState<SearchFacesCommandOutput | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: async (images: TImageBlob[]) => {
+      const mostImages = images.sort((a, b) => b.score - a.score);
+
+      const formData = new FormData();
+      formData.append("image1", mostImages[0].image, "capture1.png");
+      formData.append("image2", mostImages[1].image, "capture2.png");
+      formData.append("image3", mostImages[2].image, "capture3.png");
+      formData.append("image4", mostImages[3].image, "capture4.png");
+
+      const json = await ky
+        .post<TNHNAntiSpoofingReturn>(`/api/useb/liveness`, {
+          body: formData,
+        })
+        .json();
+
+      console.log("json", json);
+
+      if (json.data.faceDetailCount <= 0) {
+        throw new Error("얼굴이 인식되지 않았습니다.");
+      }
+
+      const formData2 = new FormData();
+      formData2.append("image", mostImages[0].image, "capture.png");
+
+      const json2 = await ky
+        .post<{
+          message: string;
+          data: SearchFacesCommandOutput;
+        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
+          body: formData2,
+        })
+        .json();
+
+      console.log("json2", json2);
+
+      return json2.data;
+    },
+    onSuccess: (data) => {
+      setData(() => data);
+    },
+    onError: (error) => {
+      setError(() => error.message);
+    },
+  });
+
+  const reset = () => {
+    setError(null);
+    setData(null);
+
+    setImages((prev) => {
+      prev.forEach((blob) => {
+        URL.revokeObjectURL(blob.url);
+      });
+
+      return [];
+    });
+  };
+
+  const set = (args: { image: Blob; score: number }) => {
+    if (mutation.isPending) return;
+
+    setImages((prev) => {
+      const newBlobs = [...prev, { ...args, url: URL.createObjectURL(args.image) }];
+
+      while (newBlobs.length > 4) {
+        const removed = newBlobs.shift();
+        if (removed) {
+          URL.revokeObjectURL(removed.url);
+        }
+      }
+
+      return newBlobs;
+    });
+  };
+
+  useEffect(() => {
+    if (data || error) return;
+
+    if (images.length === 4) {
+      mutation.mutate(images);
+    }
+  }, [images]);
+
+  const onMessage = (message: string) => {
+    setMessage(() => message);
+  };
+
+  return (
+    <>
+      <div className={css.captureBox}>
+        {images.length < 4 && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
+        {images.length >= 4 && (
+          <div>
+            <p>모든 촬영이 종료되었습니다.</p>
+          </div>
+        )}
+        {message !== "" && <p className={css.message}>{message}</p>}
+      </div>
+
+      <div>
+        <Button onClick={reset}>Reset</Button>
+      </div>
+
+      <div>
+        {images.map((blob, index) => (
+          <Image
+            key={index}
+            src={blob.url}
+            alt={`capture${index + 1}`}
+            width={320}
+            height={240}
+            unoptimized
+            style={{ border: "1px solid red" }}
+          />
+        ))}
+      </div>
+      {error && <div>Error: {error}</div>}
+
+      {data &&
+        data.FaceMatches?.map((face, index) => (
+          <div key={`face_${index}`}>
+            <div>Similarity: {face.Similarity}</div>
+            <div>Confidence: {face.Face?.Confidence}</div>
+            <div>FaceId: {face.Face?.FaceId}</div>
+            <div>ExternalImageId: {face.Face?.ExternalImageId}</div>
+            <div>ImageId: {face.Face?.ImageId}</div>
+            <div>IndexFacesModelVersion: {face.Face?.IndexFacesModelVersion}</div>
+          </div>
+        ))}
+
+      <LoadingOverlay visible={mutation.isPending} />
+    </>
+  );
 }
