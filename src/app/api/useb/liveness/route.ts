@@ -32,8 +32,12 @@ export async function POST(req: NextRequest) {
 
   console.log("json", json);
 
-  if (json.is_live === false) {
-    return NextResponse.json({ error: "얼굴이 인식되지 않았습니다." }, { status: 500 });
+  if (json.is_live !== true) {
+    // null or false
+    return NextResponse.json(
+      { data: { FaceMatches: [{ Face: { FaceId: json.return_msg.return_msg } }] } },
+      { status: 200 },
+    );
   }
 
   const sourceImageBytes = await image.arrayBuffer();
@@ -45,5 +49,8 @@ export async function POST(req: NextRequest) {
     Image: { Bytes },
   });
 
-  return NextResponse.json(searchRes);
+  return NextResponse.json({
+    message: "이미지 검색 완료",
+    data: searchRes,
+  });
 }
