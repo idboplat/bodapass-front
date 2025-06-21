@@ -6,4 +6,4 @@ export const masterQueryKey = ["master", "ignore"] as const;
 export const GROUP_ID = "cre1";
 export const FACE_ID = "face";
 
-export const COMPARE_IMAGE_URL = process.env.NEXT_PUBLIC_VERCEL_URL + "/cloudfront/minwook.png";
+export const COMPARE_IMAGE_URL = "https://2025-cw-front.vercel.app" + "/cloudfront/minwook.png";

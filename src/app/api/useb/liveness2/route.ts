@@ -107,3 +107,24 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(json2);
 }
+
+// json {
+//   confidence: 0,
+//   is_live: null,
+//   threshold_info: null,
+//   return_msg: {
+//     return_code: 'FAIL-0011',
+//     return_msg: 'face quality for checking liveness is low.'
+//   }
+// }
+
+// multiframe zip 왜 안됨?
+// {
+//   "confidence": 0,
+//   "is_live": null,
+//   "threshold_info": null,
+//   "return_msg": {
+//       "return_code": "ERR-4024",
+//       "return_msg": "FaceSDK - Multiframe liveness: Invalid image files count"
+//   }
+// }
