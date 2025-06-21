@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { GROUP_ID } from "@/constants";
-import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
+import { TUsebFaceMatchReturn } from "@/types/api/useb";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
@@ -23,20 +23,20 @@ export default function Page() {
       const mostImages = images.sort((a, b) => b.score - a.score);
 
       const formData = new FormData();
-      formData.append("image1", mostImages[0].image, "capture1.png");
-      formData.append("image2", mostImages[1].image, "capture2.png");
-      formData.append("image3", mostImages[2].image, "capture3.png");
-      formData.append("image4", mostImages[3].image, "capture4.png");
+      formData.append("image", mostImages[0].image, "capture1.png");
+      // formData.append("face2", mostImages[1].image, "capture2.png");
+      // formData.append("face3", mostImages[2].image, "capture3.png");
+      // formData.append("face4", mostImages[3].image, "capture4.png");
 
       const json = await ky
-        .post<TNHNAntiSpoofingReturn>(`/api/useb/liveness`, {
+        .post<TUsebFaceMatchReturn>(`/api/useb/liveness`, {
           body: formData,
         })
         .json();
 
       console.log("json", json);
 
-      if (json.data.faceDetailCount <= 0) {
+      if (json.is_live === false) {
         throw new Error("얼굴이 인식되지 않았습니다.");
       }
 

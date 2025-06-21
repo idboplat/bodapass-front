@@ -17,9 +17,22 @@ export type TOCRReturn = {
 };
 
 export type TUsebFaceMatchReturn = {
-  success: boolean;
-  message: string;
-  isIdentical: boolean; //일치여부
-  confidence: string; // 유사도
-  transaction_id: string;
+  confidence: number;
+  is_live: boolean;
+  threshold_info: {
+    fin_code: string;
+    fin_name: string;
+    auto_approve: {
+      min: number;
+      max: number;
+    };
+    auto_reject: {
+      min: number;
+      max: number;
+    };
+  };
+  return_msg: {
+    return_code: string;
+    return_msg: string;
+  };
 };

@@ -29,18 +29,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
     return NextResponse.json({ error: "이미지 업로드 확인" }, { status: 400 });
   }
 
-  const res = await ky.post<TOCRReturn>(`https://api3.useb.co.kr/ocr/${path}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.USEB_TOKEN}`,
-    },
-    json: {
-      // mask_mode: true, // 마스크 모드 사용 여부
-      // image_base64: image,
-      // secret_modeoptional 암호화모드 on/off
-      // ssa_modeoptional 사본판별
-      image, // File type
-    },
-  });
+  const json = await ky
+    .post<TOCRReturn>(`https://api3.useb.co.kr/ocr/${path}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.USEB_TOKEN}`,
+      },
+      body: formData,
+    })
+    .json()
+    .catch((error) => {
+      console.log("error", error.response.body);
+      return error.response.body;
+    });
 
-  return NextResponse.json(res);
+  console.log("json", json);
+
+  return NextResponse.json(json);
 }

@@ -35,7 +35,7 @@ export default function Page() {
             </div>
           </Link>
 
-          <Link href="/ocr/usb" className={css.link}>
+          <Link href="/ocr/useb" className={css.link}>
             <div className={css.item}>
               <h3>useB.</h3>
               <div className={css.sub}>

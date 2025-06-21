@@ -54,3 +54,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message }, { status });
   }
 }
+
+// curl -X POST 'https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/3qGSjfaTkJWgGfJc/groups' -H 'Authorization: 1uGxDtT9VzCMwNtE4N08CqfdBA5WzmQT' -H 'x-nhn-apikey: 56815ece-078e-469d-a35f-1f7036a2e32e' -H 'Content-Type: application/json;charset=UTF-8'
