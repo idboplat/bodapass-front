@@ -165,7 +165,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
           // 캡처
           const captureCanvas = document.createElement("canvas");
-          const padding = 50;
+          const padding = 75;
 
           captureCanvas.width = resized.detection.box.width + padding * 2;
           captureCanvas.height = resized.detection.box.height + padding * 2;
@@ -228,9 +228,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
           captureCanvas.getContext("2d")!.font = "20px Arial";
           captureCanvas.getContext("2d")!.fillStyle = "red";
-          captureCanvas
-            .getContext("2d")!
-            .fillText(result.detection.score.toFixed(2) + " " + Date.now().toString(), 0, 32);
+          captureCanvas.getContext("2d")!.fillText(result.detection.score.toFixed(2), 0, 32);
 
           captureCanvas.toBlob(
             (blob) => {
@@ -251,7 +249,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
               isCapturing = false;
             },
             "image/png",
-            0.85,
+            1.0,
           );
         } else {
           canvasRef.current

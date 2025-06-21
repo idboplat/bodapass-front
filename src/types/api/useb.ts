@@ -36,3 +36,24 @@ export type TUsebFaceMatchReturn = {
     return_msg: string;
   };
 };
+
+export type TUsebFaceCompareReturn = {
+  similarity_confidence: number;
+  match_result: number;
+  threshold_info: {
+    fin_code: string;
+    fin_name: string;
+    auto_approve: {
+      min: number;
+      max: number;
+    };
+    auto_reject: {
+      min: number;
+      max: number;
+    };
+  };
+  return_msg: {
+    return_code: string;
+    return_msg: string;
+  };
+};

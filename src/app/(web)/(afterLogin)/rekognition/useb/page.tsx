@@ -6,16 +6,15 @@ import { useEffect, useState } from "react";
 import css from "./page.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
-import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
-import { GROUP_ID } from "@/constants";
-import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
+import { TUsebFaceCompareReturn, TUsebFaceMatchReturn } from "@/types/api/useb";
+import { COMPARE_IMAGE_URL } from "@/constants";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
 export default function Page() {
   const [images, setImages] = useState<TImageBlob[]>([]);
   const [message, setMessage] = useState("");
-  const [data, setData] = useState<SearchFacesCommandOutput | null>(null);
+  const [data, setData] = useState<TUsebFaceCompareReturn | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const mutation = useMutation({
@@ -23,38 +22,20 @@ export default function Page() {
       const mostImages = images.sort((a, b) => b.score - a.score);
 
       const formData = new FormData();
-      formData.append("image1", mostImages[0].image, "capture1.png");
-      formData.append("image2", mostImages[1].image, "capture2.png");
-      formData.append("image3", mostImages[2].image, "capture3.png");
-      formData.append("image4", mostImages[3].image, "capture4.png");
+      formData.append("image", mostImages[0].image, "capture1.png");
+      // formData.append("face2", mostImages[1].image, "capture2.png");
+      // formData.append("face3", mostImages[2].image, "capture3.png");
+      // formData.append("face4", mostImages[3].image, "capture4.png");
 
       const json = await ky
-        .post<TNHNAntiSpoofingReturn>(`/api/useb/liveness`, {
+        .post<TUsebFaceCompareReturn>(`/api/useb/liveness2`, {
           body: formData,
         })
         .json();
 
       console.log("json", json);
 
-      if (json.data.faceDetailCount <= 0) {
-        throw new Error("얼굴이 인식되지 않았습니다.");
-      }
-
-      const formData2 = new FormData();
-      formData2.append("image", mostImages[0].image, "capture.png");
-
-      const json2 = await ky
-        .post<{
-          message: string;
-          data: SearchFacesCommandOutput;
-        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
-          body: formData2,
-        })
-        .json();
-
-      console.log("json2", json2);
-
-      return json2.data;
+      return json;
     },
     onSuccess: (data) => {
       setData(() => data);
@@ -122,6 +103,8 @@ export default function Page() {
         <Button onClick={reset}>Reset</Button>
       </div>
 
+      <Image src={COMPARE_IMAGE_URL} alt="compare" width={320} height={240} unoptimized />
+
       <div>
         {images.map((blob, index) => (
           <Image
@@ -137,17 +120,7 @@ export default function Page() {
       </div>
       {error && <div>Error: {error}</div>}
 
-      {data &&
-        data.FaceMatches?.map((face, index) => (
-          <div key={`face_${index}`}>
-            <div>Similarity: {face.Similarity}</div>
-            <div>Confidence: {face.Face?.Confidence}</div>
-            <div>FaceId: {face.Face?.FaceId}</div>
-            <div>ExternalImageId: {face.Face?.ExternalImageId}</div>
-            <div>ImageId: {face.Face?.ImageId}</div>
-            <div>IndexFacesModelVersion: {face.Face?.IndexFacesModelVersion}</div>
-          </div>
-        ))}
+      {data && JSON.stringify(data, null, 2)}
 
       <LoadingOverlay visible={mutation.isPending} />
     </>
