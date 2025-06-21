@@ -7,8 +7,6 @@ import css from "./page.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
-import { GROUP_ID } from "@/constants";
-import { TUsebFaceMatchReturn } from "@/types/api/useb";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
@@ -29,32 +27,35 @@ export default function Page() {
       // formData.append("face4", mostImages[3].image, "capture4.png");
 
       const json = await ky
-        .post<TUsebFaceMatchReturn>(`/api/useb/liveness`, {
+        .post<{
+          message: string;
+          data: SearchFacesCommandOutput;
+        }>(`/api/useb/liveness`, {
           body: formData,
         })
         .json();
 
       console.log("json", json);
 
-      if (json.is_live === false) {
-        throw new Error("얼굴이 인식되지 않았습니다.");
-      }
+      // if (json.is_live === false) {
+      //   throw new Error("얼굴이 인식되지 않았습니다.");
+      // }
 
-      const formData2 = new FormData();
-      formData2.append("image", mostImages[0].image, "capture.png");
+      // const formData2 = new FormData();
+      // formData2.append("image", mostImages[0].image, "capture.png");
 
-      const json2 = await ky
-        .post<{
-          message: string;
-          data: SearchFacesCommandOutput;
-        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
-          body: formData2,
-        })
-        .json();
+      // const json2 = await ky
+      //   .post<{
+      //     message: string;
+      //     data: SearchFacesCommandOutput;
+      //   }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
+      //     body: formData2,
+      //   })
+      //   .json();
 
-      console.log("json2", json2);
+      // console.log("json2", json2);
 
-      return json2.data;
+      return json.data;
     },
     onSuccess: (data) => {
       setData(() => data);

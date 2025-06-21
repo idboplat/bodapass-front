@@ -1,3 +1,5 @@
+import { GROUP_ID } from "@/constants";
+import { rekognition } from "@/libraries/aws/rekognition";
 import { TUsebFaceMatchReturn } from "@/types/api/useb";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest) {
   //   image4.arrayBuffer().then((buffer) => Buffer.from(buffer).toString("base64")),
   // ]);
 
-  const res = await ky
+  const json = await ky
     .post<TUsebFaceMatchReturn>("https://face.useb.co.kr/liveness", {
       headers: {
         Authorization: `Bearer ${process.env.USEB_LIVENESS_TOKEN}`,
@@ -28,7 +30,20 @@ export async function POST(req: NextRequest) {
     })
     .json();
 
-  console.log("res", res);
+  console.log("json", json);
 
-  return NextResponse.json(res);
+  if (json.is_live === false) {
+    return NextResponse.json({ error: "얼굴이 인식되지 않았습니다." }, { status: 500 });
+  }
+
+  const sourceImageBytes = await image.arrayBuffer();
+  const Bytes = new Uint8Array(sourceImageBytes); // Uint8Array<ArrayBufferLike>
+
+  const searchRes = await rekognition.searchFacesByImage({
+    CollectionId: GROUP_ID,
+    FaceMatchThreshold: 85,
+    Image: { Bytes },
+  });
+
+  return NextResponse.json(searchRes);
 }
