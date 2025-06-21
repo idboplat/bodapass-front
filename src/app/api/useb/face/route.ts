@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "이미지 업로드 확인" }, { status: 400 });
   }
 
-  const imageurl = process.env.NEXT_PUBLIC_VERCEL_URL + "/cloudfront/minwook.png";
+  const imageurl = process.env.NEXT_PUBLIC_FRONT_URL + "/cloudfront/minwook.png";
 
   const [compareImage, savedImage] = await Promise.all([
     image.arrayBuffer().then((buffer) => Buffer.from(buffer).toString("base64")),

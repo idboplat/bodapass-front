@@ -21,7 +21,6 @@ declare global {
 
       //vercel env  - https://vercel.com/docs/projects/environment-variables/system-environment-variables
       readonly NEXT_PUBLIC_VERCEL_ENV: "production" | "preview" | "development";
-      readonly NEXT_PUBLIC_VERCEL_URL: string; // *.vercel.app
       readonly NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG: string; // main or dev
 
       readonly NEXT_PUBLIC_SENTRY_DSN?: string;
