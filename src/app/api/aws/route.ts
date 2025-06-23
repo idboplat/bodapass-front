@@ -1,56 +1,58 @@
+import { COMPARE_IMAGE_URL } from "@/constants";
 import { rekognitionClient } from "@/libraries/aws/rekognition";
 import { CompareFacesCommand } from "@aws-sdk/client-rekognition";
 import fs from "fs/promises";
+import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
 // 1대 1비교
 export async function POST(req: NextRequest) {
   try {
-    const imagesDir = path.join(process.cwd(), "public");
-    const sourceImagePath = path.join(imagesDir, "andy_portrait_2.jpg");
-    const targetImagePath = path.join(imagesDir, "andy_portrait_resized.jpg");
+    const formData = await req.formData();
+    const image = formData.get("image") as File;
+    if (!image) {
+      return NextResponse.json({ error: "image is required" }, { status: 400 });
+    }
 
-    // 파일이 존재하는지 확인
-    await Promise.all([fs.access(sourceImagePath), fs.access(targetImagePath)]).catch(() => {
-      return NextResponse.json({ error: "can not access files" }, { status: 403 });
-    });
-
-    // 이미지 파일을 비동기적으로 읽어 바이너리 데이터로 변환
-    const [sourceImageBytes, targetImageBytes] = await Promise.all([
-      fs.readFile(sourceImagePath),
-      fs.readFile(targetImagePath),
+    const [imageA, imageB] = await Promise.all([
+      image.arrayBuffer().then((buffer) => new Uint8Array(buffer)),
+      ky
+        .get(COMPARE_IMAGE_URL)
+        .blob()
+        .then((blob) => blob.arrayBuffer().then((buffer) => new Uint8Array(buffer))),
     ]);
 
-    const sourceArrayBuffer = new Uint8Array(sourceImageBytes);
-    const targetArrayBuffer = new Uint8Array(targetImageBytes);
+    // // 이미지 파일을 비동기적으로 읽어 바이너리 데이터로 변환
+    // const [sourceImageBytes, targetImageBytes] = await Promise.all([
+    //   fs.readFile(sourceImagePath),
+    //   fs.readFile(targetImagePath),
+    // ]);
 
-    const sourceBase64 = sourceImageBytes.toString("base64");
-    const targetBase64 = targetImageBytes.toString("base64");
+    // const sourceArrayBuffer = new Uint8Array(sourceImageBytes);
+    // const targetArrayBuffer = new Uint8Array(targetImageBytes);
+
+    // const sourceBase64 = sourceImageBytes.toString("base64");
+    // const targetBase64 = targetImageBytes.toString("base64");
 
     //buffer
     const command = new CompareFacesCommand({
       SourceImage: {
-        Bytes: sourceArrayBuffer,
+        Bytes: imageA,
       },
       TargetImage: {
-        Bytes: targetArrayBuffer,
+        Bytes: imageB,
       },
-      SimilarityThreshold: 80, // 유사도 임계값 설정
+      SimilarityThreshold: 85, // 유사도 임계값 설정
     });
 
     const response = await rekognitionClient.send(command);
-    const firstMatchSimilarity = response.FaceMatches?.[0].Similarity;
 
     // 첫 번째 매치의 유사도 반환, 한 사진에는 여러개의 얼굴이 있을 수 있다.
-    if (firstMatchSimilarity) {
-      return NextResponse.json({
-        similarity: parseFloat(firstMatchSimilarity.toFixed(2)),
-        response,
-      });
-    } else {
-      return NextResponse.json({ similarity: 0 });
-    }
+    return NextResponse.json({
+      message: "success",
+      data: response,
+    });
   } catch (error) {
     console.error(error);
 

@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
     console.log("NHN_APP_KEY", process.env.NHN_APP_KEY);
     console.log("NHN_API_KEY", process.env.NHN_API_KEY);
     console.log("NHN_SECRET_KEY", process.env.NHN_SECRET_KEY);
-    console.log("base64Image", base64Image);
 
     const res = await ky
       .post<TNHNAntiSpoofingReturn>(
@@ -50,6 +49,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(res);
   } catch (error) {
+    console.log("/api/nhn/anti-spoofing", error);
     const { message, status } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
