@@ -34,7 +34,7 @@ export default function Page() {
       console.log("json", json);
 
       json.data.faceDetails.forEach((r) => {
-        if (r.spoofing !== true) {
+        if (r.spoofing !== false) {
           throw new Error("스푸핑 감지");
         }
       });
