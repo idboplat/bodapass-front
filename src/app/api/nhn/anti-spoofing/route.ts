@@ -37,11 +37,12 @@ export async function POST(req: NextRequest) {
               // url: "https://",
               bytes: base64Image,
             },
-            aligned: true, //정렬여부 정렬 true면 얼굴 하나만 인식하는듯
+            aligned: false, //정렬여부 정렬 true면 얼굴 하나만 인식하는듯
             spoofingCondition: "balanced", // balanced, strict, weak
           },
         },
       )
+      .json()
       .catch((error) => {
         console.log("LOG!!!!", error.message);
         console.log("LOG!!!!", error.response.body);

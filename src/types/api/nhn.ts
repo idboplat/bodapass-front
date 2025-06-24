@@ -113,3 +113,75 @@ export type TNHNAntiSpoofingReturn = {
     }[];
   };
 };
+
+export type TNHNMatchReturn = {
+  header: {
+    resultCode: number;
+    resultMessage: string;
+    isSuccessful: boolean;
+  };
+  data: {
+    matchedFaceDetailCount: number;
+    matchedFaceDetails: {
+      faceDetail: {
+        bbox: {
+          x0: number;
+          y0: number;
+          x1: number;
+          y1: number;
+        };
+        landmarks: { type: string; x: number; y: number }[];
+        orientation: {
+          x: number;
+          y: number;
+          z: number;
+        };
+        mask: boolean;
+        spoofing: boolean;
+        confidence: number;
+      };
+      similarity: number;
+    }[];
+    unmatchedFaceDetailCount: number;
+    unmatchedFaceDetails: {
+      faceDetail: {
+        bbox: {
+          x0: number;
+          y0: number;
+          x1: number;
+          y1: number;
+        };
+        landmarks: { type: string; x: number; y: number }[];
+        orientation: {
+          x: number;
+          y: number;
+          z: number;
+        };
+        mask: boolean;
+        spoofing: boolean;
+        confidence: number;
+      };
+      similarity: number;
+    }[];
+    sourceFace: {
+      faceDetail: {
+        bbox: {
+          x0: number;
+          y0: number;
+          x1: number;
+          y1: number;
+        };
+        landmarks: { type: string; x: number; y: number }[];
+        orientation: {
+          x: number;
+          y: number;
+          z: number;
+        };
+        mask: boolean;
+        spoofing: boolean;
+        confidence: number;
+      };
+      similarity: number;
+    };
+  };
+};

@@ -7,15 +7,15 @@ import css from "./page.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
-import { GROUP_ID } from "@/constants";
-import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
+import { COMPARE_IMAGE_URL, GROUP_ID } from "@/constants";
+import { TNHNAntiSpoofingReturn, TNHNMatchReturn } from "@/types/api/nhn";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
 export default function Page() {
   const [images, setImages] = useState<TImageBlob[]>([]);
   const [message, setMessage] = useState("");
-  const [data, setData] = useState<SearchFacesCommandOutput | null>(null);
+  const [data, setData] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const mutation = useMutation({
@@ -25,30 +25,36 @@ export default function Page() {
       const formData = new FormData();
       formData.append("image", mostImages[0].image, "capture.png");
 
-      const json = await ky
-        .post<TNHNAntiSpoofingReturn>(`/api/nhn/anti-spoofing`, {
-          body: formData,
-        })
-        .json();
+      // const json = await ky
+      //   .post<TNHNMatchReturn>(`/api/nhn`, {
+      //     body: formData,
+      //   })
+      //   .json();
 
-      console.log("json", json);
+      // const json = await ky
+      //   .post<TNHNAntiSpoofingReturn>(`/api/nhn/anti-spoofing`, {
+      //     body: formData,
+      //   })
+      //   .json();
 
-      if (json.data.faceDetailCount <= 0) {
-        throw new Error("얼굴이 인식되지 않았습니다.");
-      }
+      // console.log("json", json);
+
+      // if (json.data.faceDetailCount <= 0) {
+      //   throw new Error("얼굴이 인식되지 않았습니다.");
+      // }
 
       const json2 = await ky
         .post<{
           message: string;
           data: SearchFacesCommandOutput;
-        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
+        }>(`/api/nhn/${GROUP_ID}/faces/search_by_image`, {
           body: formData,
         })
         .json();
 
       console.log("json2", json2);
 
-      return json2.data;
+      return json2;
     },
     onSuccess: (data) => {
       setData(() => data);
@@ -116,6 +122,8 @@ export default function Page() {
         <Button onClick={reset}>Reset</Button>
       </div>
 
+      <Image src={COMPARE_IMAGE_URL} alt="compare" width={320} height={240} unoptimized />
+
       <div>
         {images.map((blob, index) => (
           <Image
@@ -129,19 +137,21 @@ export default function Page() {
           />
         ))}
       </div>
+
       {error && <div>Error: {error}</div>}
 
       {data &&
-        data.FaceMatches?.map((face, index) => (
-          <div key={`face_${index}`}>
-            <div>Similarity: {face.Similarity}</div>
-            <div>Confidence: {face.Face?.Confidence}</div>
-            <div>FaceId: {face.Face?.FaceId}</div>
-            <div>ExternalImageId: {face.Face?.ExternalImageId}</div>
-            <div>ImageId: {face.Face?.ImageId}</div>
-            <div>IndexFacesModelVersion: {face.Face?.IndexFacesModelVersion}</div>
-          </div>
-        ))}
+        // data.FaceMatches?.map((face, index) => (
+        //   <div key={`face_${index}`}>
+        //     <div>Similarity: {face.Similarity}</div>
+        //     <div>Confidence: {face.Face?.Confidence}</div>
+        //     <div>FaceId: {face.Face?.FaceId}</div>
+        //     <div>ExternalImageId: {face.Face?.ExternalImageId}</div>
+        //     <div>ImageId: {face.Face?.ImageId}</div>
+        //     <div>IndexFacesModelVersion: {face.Face?.IndexFacesModelVersion}</div>
+        //   </div>
+        // ))
+        JSON.stringify(data, null, 2)}
 
       <LoadingOverlay visible={mutation.isPending} />
     </>

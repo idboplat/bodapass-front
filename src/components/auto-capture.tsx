@@ -166,9 +166,10 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
           // 캡처
           const captureCanvas = document.createElement("canvas");
           const padding = 75;
+          const scale = 1;
 
-          captureCanvas.width = resized.detection.box.width + padding * 2;
-          captureCanvas.height = resized.detection.box.height + padding * 2;
+          captureCanvas.width = (resized.detection.box.width + padding * 2) * scale;
+          captureCanvas.height = (resized.detection.box.height + padding * 2) * scale;
           const x = resized.detection.box.x - padding;
           const y = resized.detection.box.y - padding;
 
@@ -178,8 +179,8 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
               videoRef.current,
               x,
               y,
-              captureCanvas.width,
-              captureCanvas.height,
+              captureCanvas.width / scale,
+              captureCanvas.height / scale,
               0,
               0,
               captureCanvas.width,

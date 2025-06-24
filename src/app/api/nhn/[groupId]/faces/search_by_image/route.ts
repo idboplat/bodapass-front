@@ -18,26 +18,30 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ gro
     );
   }
 
-  const res = await ky.post<TNHNSearchReturn>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/search`,
-    {
-      headers: {
-        Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
-      },
-      json: {
-        image: {
-          bytes: image,
-        },
-        limit: 1,
-        threshold: 85, //임계치
-        orientation: true, //방향
-        mask: true, //마스크 감지
-        spoofing: true, //스푸핑 감지
-        spoofingCondition: "balanced", // balanced, strict, weak
-      },
-    },
-  );
+  const base64Image = Buffer.from(await image.arrayBuffer()).toString("base64");
 
-  return NextResponse.json(res);
+  const json = await ky
+    .post<TNHNSearchReturn>(
+      `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/search`,
+      {
+        headers: {
+          Authorization: process.env.NHN_SECRET_KEY,
+          "x-nhn-apikey": process.env.NHN_API_KEY,
+        },
+        json: {
+          image: {
+            bytes: base64Image,
+          },
+          limit: 1,
+          threshold: 85, //임계치
+          orientation: true, //방향
+          mask: true, //마스크 감지
+          spoofing: true, //스푸핑 감지
+          spoofingCondition: "balanced", // balanced, strict, weak
+        },
+      },
+    )
+    .json();
+
+  return NextResponse.json(json);
 }
