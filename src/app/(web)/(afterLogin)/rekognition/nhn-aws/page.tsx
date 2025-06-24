@@ -33,9 +33,11 @@ export default function Page() {
 
       console.log("json", json);
 
-      if (json.data.faceDetailCount <= 0) {
-        throw new Error("얼굴이 인식되지 않았습니다.");
-      }
+      json.data.faceDetails.forEach((r) => {
+        if (r.spoofing !== true) {
+          throw new Error("스푸핑 감지");
+        }
+      });
 
       const json2 = await ky
         .post<{
