@@ -7,6 +7,7 @@ import css from "./page.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { SearchFacesCommandOutput } from "@aws-sdk/client-rekognition";
+import { PHOTO_COUNT } from "@/constants";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
@@ -84,7 +85,7 @@ export default function Page() {
     setImages((prev) => {
       const newBlobs = [...prev, { ...args, url: URL.createObjectURL(args.image) }];
 
-      while (newBlobs.length > 4) {
+      while (newBlobs.length > PHOTO_COUNT) {
         const removed = newBlobs.shift();
         if (removed) {
           URL.revokeObjectURL(removed.url);
@@ -98,7 +99,7 @@ export default function Page() {
   useEffect(() => {
     if (data || error) return;
 
-    if (images.length === 4) {
+    if (images.length === PHOTO_COUNT) {
       mutation.mutate(images);
     }
   }, [images]);
@@ -110,8 +111,8 @@ export default function Page() {
   return (
     <>
       <div className={css.captureBox}>
-        {images.length < 4 && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
-        {images.length >= 4 && (
+        {images.length < PHOTO_COUNT && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
+        {images.length >= PHOTO_COUNT && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>
           </div>

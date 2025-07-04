@@ -10,24 +10,24 @@ type Props = {
 
 export default function RegistForm({ info, updateInfo }: Props) {
   const [userName, setUserName] = useState(info.userName);
-  const [collectionId, setCollectionId] = useState(info.collectionId);
+  // const [collectionId, setCollectionId] = useState(info.collectionId);
 
   const onChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(() => e.target.value);
   };
 
-  const onChangeCollectionId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCollectionId(() => e.target.value);
-  };
+  // const onChangeCollectionId = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCollectionId(() => e.target.value);
+  // };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateInfo({ userName, collectionId });
+    updateInfo({ userName });
   };
 
   return (
     <form onSubmit={onSubmit} className={css.registForm}>
-      <TextInput label="콜렉션 ID" value={collectionId} onChange={onChangeCollectionId} />
+      {/* <TextInput label="콜렉션 ID" value={collectionId} onChange={onChangeCollectionId} /> */}
       <TextInput label="이름" value={userName} onChange={onChangeUserName} />
 
       <div className={css.buttonBox}>

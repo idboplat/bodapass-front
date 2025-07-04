@@ -6,7 +6,10 @@ import RegistResult from "@/components/liveness/RegistResult";
 import { useSinglePage } from "@/hooks/useSinglePage";
 import { LivenessError } from "@/libraries/error";
 import { TCompareInfo } from "@/types/common";
-import { CompareFacesCommandOutput } from "@aws-sdk/client-rekognition";
+import {
+  CompareFacesCommandOutput,
+  SearchFacesByImageCommandOutput,
+} from "@aws-sdk/client-rekognition";
 import { useMutation } from "@tanstack/react-query";
 import { clsx } from "clsx";
 import { useRouter } from "next/navigation";
@@ -15,7 +18,7 @@ import css from "./page.module.scss";
 import { serverLog } from "@/libraries/logger/server";
 import ky from "ky";
 import Image from "next/image";
-import { COMPARE_IMAGE_URL } from "@/constants";
+import { COMPARE_IMAGE_URL, GROUP_ID } from "@/constants";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -38,19 +41,23 @@ export default function Client() {
       const formData = new FormData();
       formData.append("image", arg.image, "capture.png");
 
-      // const res = await fetch(`/api/aws/collections/${info.collectionId}/faces/search_by_image`, {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
       const json = await ky
         .post<{
           message: string;
-          data: CompareFacesCommandOutput;
-        }>(`/api/aws`, {
+          data: SearchFacesByImageCommandOutput;
+        }>(`/api/aws/collections/${GROUP_ID}/faces/search_by_image`, {
           body: formData,
         })
         .json();
+
+      // const json = await ky
+      //   .post<{
+      //     message: string;
+      //     data: CompareFacesCommandOutput;
+      //   }>(`/api/aws`, {
+      //     body: formData,
+      //   })
+      //   .json();
 
       return json.data;
     },
@@ -95,20 +102,20 @@ export default function Client() {
     <>
       <BackHeader title="얼굴 인증" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
-        {page === 0 && (
+        {/* {page === 0 && (
           <>
             <CompareForm info={info} updateInfo={updateInfo} />
             <Image src={COMPARE_IMAGE_URL} alt="compare" width={320} height={240} unoptimized />
           </>
-        )}
-        {page === 1 && (
+        )} */}
+        {page === 0 && (
           <LivenessDetector
             onSuccess={onSuccessDetector}
             onError={onErrorDetector}
             onUserCancel={onUserCancelDetector}
           />
         )}
-        {page === 2 && <RegistResult result={result} />}
+        {page === 1 && <RegistResult result={result} />}
       </div>
     </>
   );

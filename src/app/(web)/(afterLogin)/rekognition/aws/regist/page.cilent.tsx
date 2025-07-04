@@ -12,6 +12,8 @@ import RegistResult from "@/components/liveness/RegistResult";
 import { LivenessError } from "@/libraries/error";
 import { useMutation } from "@tanstack/react-query";
 import { IndexFacesCommandOutput } from "@aws-sdk/client-rekognition";
+import { GROUP_ID } from "@/constants";
+import ky from "ky";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -25,7 +27,6 @@ export default function Client() {
 
   const [info, setInfo] = useState<TRegistInfo>({
     userName: "",
-    collectionId: "",
   });
 
   const [result, setResult] = useState<any>({});
@@ -34,7 +35,7 @@ export default function Client() {
     mutationFn: async (arg: { image: Blob }) => {
       const formData = new FormData();
       formData.append("image", arg.image, "capture.png");
-      const res = await fetch(`/api/aws/collections/${info.collectionId}/faces/${info.userName}`, {
+      const res = await ky.post(`/api/aws/collections/${GROUP_ID}/faces/${info.userName}`, {
         method: "POST",
         body: formData,
       });

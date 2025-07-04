@@ -7,3 +7,5 @@ export const GROUP_ID = "cre1";
 export const FACE_ID = "face";
 
 export const COMPARE_IMAGE_URL = "https://d1e7n5w7ku9qm7.cloudfront.net" + "/minwook.png";
+
+export const PHOTO_COUNT = 3;

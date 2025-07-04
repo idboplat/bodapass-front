@@ -28,7 +28,7 @@ export default function Page() {
         </Breadcrumbs>
         <h2 className={css.title}>공급자를 선택해주세요</h2>
         <div className={css.box}>
-          <Link href="/ocr/idCard" className={css.link}>
+          <Link href="/ocr/clova" className={css.link}>
             <div className={css.item}>
               <h3>CLOVA</h3>
               <div className={css.sub}>주민등록증만 테스트 가능합니다.</div>

@@ -7,7 +7,7 @@ import css from "./page.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
 import { TUsebFaceCompareReturn, TUsebFaceMatchReturn } from "@/types/api/useb";
-import { COMPARE_IMAGE_URL } from "@/constants";
+import { COMPARE_IMAGE_URL, PHOTO_COUNT } from "@/constants";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
@@ -65,7 +65,7 @@ export default function Page() {
     setImages((prev) => {
       const newBlobs = [...prev, { ...args, url: URL.createObjectURL(args.image) }];
 
-      while (newBlobs.length > 4) {
+      while (newBlobs.length > PHOTO_COUNT) {
         const removed = newBlobs.shift();
         if (removed) {
           URL.revokeObjectURL(removed.url);
@@ -79,7 +79,7 @@ export default function Page() {
   useEffect(() => {
     if (data || error) return;
 
-    if (images.length === 4) {
+    if (images.length === PHOTO_COUNT) {
       mutation.mutate(images);
     }
   }, [images]);
@@ -91,8 +91,8 @@ export default function Page() {
   return (
     <>
       <div className={css.captureBox}>
-        {images.length < 4 && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
-        {images.length >= 4 && (
+        {images.length < PHOTO_COUNT && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
+        {images.length >= PHOTO_COUNT && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>
           </div>
@@ -103,8 +103,6 @@ export default function Page() {
       <div>
         <Button onClick={reset}>Reset</Button>
       </div>
-
-      <Image src={COMPARE_IMAGE_URL} alt="compare" width={320} height={240} unoptimized />
 
       <div>
         {images.map((blob, index) => (
