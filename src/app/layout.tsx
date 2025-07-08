@@ -38,6 +38,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         />
         {/* run dev - 개발 체크. react-scan */}
         <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
+        {/* kakao map */}
+        <Script
+          type="text/javascript"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&libraries=services&autoload=false`}
+          strategy="beforeInteractive"
+        />
 
         <ColorSchemeScript localStorageKey={THEME_LOCAL_STORAGE_KEY} />
       </head>
