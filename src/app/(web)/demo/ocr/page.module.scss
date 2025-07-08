@@ -1,0 +1,37 @@
+.wrap {
+  flex: 1;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+}
+
+.box {
+  @extend %flex-center;
+  flex-direction: column;
+}
+
+.link {
+  display: block;
+  width: 100%;
+  & + & {
+    margin-top: 1rem;
+  }
+}
+
+.item {
+  display: block;
+  border-radius: 15px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.5rem;
+  width: 100%;
+
+  h3 {
+    margin: 0px;
+  }
+}
+
+.sub {
+  min-height: 1.2rem;
+}

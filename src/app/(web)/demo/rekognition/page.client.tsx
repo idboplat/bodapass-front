@@ -17,47 +17,27 @@ export default function Page() {
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         <div className={css.box}>
-          <Link href="/rekognition/aws" className={css.link}>
+          <Link href="/demo/rekognition/aws" className={css.link}>
             <div className={css.item}>
               <h3>AWS</h3>
               <div className={css.sub}></div>
             </div>
           </Link>
 
-          <Link href="/rekognition/nhn" className={css.link}>
+          <Link href="/demo/rekognition/nhn" className={css.link}>
             <div className={css.item}>
               <h3>NHN</h3>
               <div className={css.sub}></div>
             </div>
           </Link>
 
-          <Link href="/rekognition/useb" className={css.link}>
-            <div className={css.item}>
-              <h3>useB.</h3>
-              <div className={css.sub}></div>
-            </div>
-          </Link>
-
-          <Link href="/rekognition/nhn-aws" className={css.link}>
+          <Link href="/demo/rekognition/nhn-aws" className={css.link}>
             <div className={css.item}>
               <h3>NHN + AWS</h3>
               <div className={css.sub}></div>
             </div>
           </Link>
 
-          <Link href="/rekognition/useb-aws" className={css.link}>
-            <div className={css.item}>
-              <h3>useB. + AWS</h3>
-              <div className={css.sub}></div>
-            </div>
-          </Link>
-
-          <Link href="/auto-capture" className={css.link}>
-            <div className={css.item}>
-              <h3>얼굴 자동인식</h3>
-              <div className={css.sub}></div>
-            </div>
-          </Link>
         </div>
       </div>
     </>

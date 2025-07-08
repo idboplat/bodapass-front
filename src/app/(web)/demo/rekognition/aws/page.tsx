@@ -17,14 +17,14 @@ export default function Page() {
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         <div className={css.box}>
-          <Link href="/rekognition/aws/regist" className={css.link}>
+          <Link href="/demo/rekognition/aws/regist" className={css.link}>
             <div className={css.item}>
               <h3>등록</h3>
               <div className={css.sub}></div>
             </div>
           </Link>
 
-          <Link href="/rekognition/aws/compare" className={css.link}>
+          <Link href="/demo/rekognition/aws/compare" className={css.link}>
             <div className={css.item}>
               <h3>조회</h3>
               <div className={css.sub}></div>
