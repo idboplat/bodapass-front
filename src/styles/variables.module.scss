@@ -19,4 +19,6 @@
   zIndexPopover: #{map.get(var.$z-indexes, popover)};
   zIndexOverlay: #{map.get(var.$z-indexes, overlay)};
   zIndexMax: #{map.get(var.$z-indexes, max)};
+
+  fontPretendard: var.$font-pretendard;
 }

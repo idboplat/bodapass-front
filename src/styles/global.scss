@@ -2,7 +2,6 @@
 *,
 *::before,
 *::after {
-  border: none;
   box-sizing: border-box;
 }
 
@@ -18,45 +17,9 @@ select {
   text-transform: none;
 }
 
-button {
-  background: none;
-  cursor: pointer;
-  color: inherit; // apple-system-blue override
-}
-
-button svg {
-  display: block;
-}
-
-ul,
-li,
-ol {
-  margin: 0;
-  list-style: none;
-  padding-left: 0;
-}
-
-textarea {
-  background: none;
-  border: none;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  resize: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-html {
-  font-size: 16px; // root font-size
-}
-
+/* ----- Global styles ----- */
 body {
   margin: 0;
-  padding: 0;
   font-family: var(--mantine-font-family);
   font-size: var(--mantine-font-size-md);
   line-height: var(--mantine-line-height);
@@ -65,35 +28,13 @@ body {
 
   -webkit-font-smoothing: var(--mantine-webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--mantine-moz-font-smoothing);
-
-  /* 모바일 가로모드 폰트확대 방지 */
-  -webkit-text-size-adjust: none;
-
-  // /* 롱프레스 미리보기 방지 */
-  // -webkit-touch-callout: none;
-
-  // /* 텍스트 선택 방지 */
-  // user-select: none;
-  // -webkit-user-select: none;
-  // pointer-events: none;
 }
 
 html,
 body,
-#app {
+#__next {
   width: 100%;
   height: 100%;
-}
-
-#app {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  max-width: var.$mantine-breakpoint-sm;
-  min-height: 100%;
-  margin: 0 auto;
-  border-left: 1px solid #eee;
-  border-right: 1px solid #eee;
 }
 
 @media screen and (max-device-width: 31.25em) {
@@ -109,41 +50,28 @@ body,
   }
 }
 
-[data-mantine-color-scheme="light"] .mantine-light-hidden {
-  display: none;
+a,
+button {
+  color: inherit; // -apple-system-blue override
+  display: inline-block;
+  text-decoration: none;
 }
 
-[data-mantine-color-scheme="dark"] .mantine-dark-hidden {
-  display: none;
+button svg {
+  display: block; //svg align-center
 }
 
-::-webkit-scrollbar {
-  width: 7.5px;
-  height: 7.5px;
+/* 리스트 */
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #fff;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--mantine-color-blue-3);
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-button {
-  display: none;
-  visibility: hidden;
-}
-
-:focus-visible {
-  // outline: util.palette(third, default) auto 1px;
-}
-
-.essential::before {
-  content: "*";
-  color: var(--mantine-color-red);
+textarea {
+  resize: none;
 }
 
 .blind {
@@ -155,14 +83,17 @@ body,
   clip: rect(0, 0, 0, 0);
 }
 
+/* 프린트 */
 @media print {
   * {
-    /* 프린트 컬러 안나올 때 */
     -webkit-print-color-adjust: exact;
   }
+
+  /* 프린트 컬러 안나올 때 */
 }
 
 @page {
   size: a4;
-  margin: 0; /* 프린트 내에 도메인 노출될 때 */
+  margin: 0;
+  /* 프린트 내에 도메인 노출될 때 */
 }

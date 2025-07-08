@@ -9,6 +9,8 @@ $footer-height: 56px;
 $safe-header-height: calc($header-height + $env-top);
 $safe-footer-height: calc($footer-height + $env-bottom);
 
+$font-pretendard: "Pretendard Variable", "Pretendard";
+
 $mantine-breakpoint-xs: var(--mantine-breakpoint-xs);
 $mantine-breakpoint-sm: var(--mantine-breakpoint-sm);
 $mantine-breakpoint-md: var(--mantine-breakpoint-md);
@@ -42,3 +44,7 @@ $bezier-curve: cubic-bezier(0.23, 1, 0.32, 1);
 $box-shadow: 0px 1px 2px 0 rgba(56, 52, 52, 0.4);
 
 $backdrop-color: #ffffff34;
+
+
+$backdrop-color: #ffffff34;
+$brand-color: #db4d3e;

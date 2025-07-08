@@ -59,10 +59,9 @@ export default function LoginForm() {
   return (
 
     <form className={css.form} onSubmit={handleSubmit}>
-      <TextInput variant="outline" label="아이디" id={LoginInput.email} type="text" />
+      <TextInput label="아이디" id={LoginInput.email} type="text" />
       <TextInput
         mt={28}
-        variant="outline"
         label="비밀번호"
         id={LoginInput.pw}
         type={isHidePw ? "password" : "text"}

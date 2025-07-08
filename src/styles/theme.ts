@@ -43,8 +43,7 @@ const BLANK_TRANSITION: MantineTransition = {
 export const theme = createTheme({
   scale: 1,
   /* Put your mantine theme override here */
-  fontFamily:
-    "Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif",
+  fontFamily: variable.fontPretendard,
   breakpoints: {
     xs: "30rem",
     sm: "48rem",
@@ -117,7 +116,7 @@ export const theme = createTheme({
       defaultProps: {
         withScrollArea: false,
         comboboxProps: {
-          offset: 14,
+          offset: 7,
           transitionProps: {
             transition: OPEN_MENU_TRANSITION,
             timingFunction: "ease-out",
