@@ -42,12 +42,18 @@ export default function LoginForm() {
     onMutate: () => setIsLoading(() => true),
     onSuccess: async (data, variables) => {
       await sendMessageToDevice({
-        type: "signin",
+        type: "updateDeviceSession",
         payload: {
-          sessionId: "1234567890",
-          sessionSecret: "1234567890",
-          email: variables.email,
-          password: variables.password,
+          session: {
+            id: "id",
+            email: variables.email,
+            /** 로그인 종류 */
+            provider: "email",
+            sessionId: "1234567890",
+            sessionKey: "1234567890",
+            /** 로그인한 ISO-시간 */
+            loginAt: new Date().toISOString(),
+          }
         }
       }) 
     },
