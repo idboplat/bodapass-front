@@ -6,7 +6,7 @@ interface EyeToggleBtnProps {
   onClick: () => void;
 }
 
-export default function EyeToggleBtn({ value, onClick }: EyeToggleBtnProps) {
+export default function EyeToggleButton({ value, onClick }: EyeToggleBtnProps) {
   const onClickBtn = (e: React.MouseEvent) => {
     e.stopPropagation();
     onClick();

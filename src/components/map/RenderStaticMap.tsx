@@ -1,13 +1,12 @@
 "use client";
-
-import { useRouter } from "next/navigation";
+import {sendMessageToDevice} from '@/hooks/use-device-api';
 import { StaticMap } from "react-kakao-maps-sdk";
 
 export default function RenderStaticMap() {
-  const router = useRouter();
 
   const LAT = 33.450701;
   const LNG = 126.570667;
+  
   return (
     <div>
       <h2>RenderStaticMap</h2>
@@ -30,10 +29,16 @@ export default function RenderStaticMap() {
           },
           text: "로건현장",
         }}
-        onClick={(e) => {
-          console.log("e =  == ", e);
+        onClick={async (e) => {
+          console.log("e === ", e);
           e.preventDefault();
-          router.push(`/demo/map/dynamic?lat= ${LAT}&lng=${LNG}`);
+          await sendMessageToDevice({
+            type: "navigateMapScreen",
+            payload: {
+              lat: LAT,
+              lng: LNG,
+            }
+          })
         }}
       />
     </div>

@@ -40,6 +40,3 @@ export const sendMessageToDevice = ({ type, payload, timeout = 10000 }: {type: s
     window.ReactNativeWebView?.postMessage(JSON.stringify({ type, payload }));
   });
 }
-
-
-// 

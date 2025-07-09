@@ -1,41 +1,55 @@
 "use client";
 import ErrorModal from "@/components/common/modal/ErrorModal";
-import { useApp } from "@/stores/app";
 import { useSetModalStore } from "@/stores/modal";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
-import { useStore } from "zustand";
+import { useState } from "react";
 import emailLoginFn from "@/apis/login";
-import { ActionIcon, Box, Button, CloseButton, TextInput } from "@mantine/core";
+import { Box, Button, TextInput } from "@mantine/core";
 import css from "./LoginForm.module.scss";
-import EyeToggleBtn from "../common/btn/EyeToggleBtn";
+import EyeToggleButton from "../common/btn/eye-toggle-button";
+import { z } from 'zod';
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { sendMessageToDevice } from '@/hooks/use-device-api';
+import { logger } from '@/apis/logger';
 
 
-const ID = "loginForm";
-
-enum LoginInput {
-  email = ID + "Email",
-  pw = ID + "Pw",
-}
+const signInDto = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
+})
 
 export default function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isHidePw, setIsHidePw] = useState(true);
 
+
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(signInDto),
+  })
+
   const modalStore = useSetModalStore();
-  const store = useApp();
-  const action = useStore(store, (store) => store.actions);
 
   const mutateEmailLogin = useMutation({
     mutationKey: ["emailLogin"],
     mutationFn: emailLoginFn,
     onMutate: () => setIsLoading(() => true),
-    onSuccess: () => {
-      // 로그인이 성공해도 화면이 전환될때까지 로딩처리
-      action.login();
-      router.replace("/");
+    onSuccess: async (data, variables) => {
+      await sendMessageToDevice({
+        type: "signin",
+        payload: {
+          sessionId: "1234567890",
+          sessionSecret: "1234567890",
+          email: variables.email,
+          password: variables.password,
+        }
+      }) 
     },
     onError: async (error) => {
       await modalStore.push(ErrorModal, { props: { error } });
@@ -43,33 +57,49 @@ export default function LoginForm() {
     },
   });
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
-    const email = e.target[LoginInput.email].value;
-    const password = e.target[LoginInput.pw].value;
-
+  const submit = (data: z.infer<typeof signInDto>) => {
+    
+    logger(JSON.stringify(form.formState, null, 2))
+ 
+  
     if (mutateEmailLogin.isPending) return;
-    mutateEmailLogin.mutate({ email, password });
+    mutateEmailLogin.mutate({ 
+      email: data.email, 
+      password: data.password 
+    });
   };
 
   const toggleHidePw = () => {
     setIsHidePw((prev) => !prev);
   };
+
   return (
 
-    <form className={css.form} onSubmit={handleSubmit}>
-      <TextInput label="아이디" id={LoginInput.email} type="text" />
-      <TextInput
-        mt={28}
-        label="비밀번호"
-        id={LoginInput.pw}
-        type={isHidePw ? "password" : "text"}
-        rightSection={<EyeToggleBtn value={isHidePw} onClick={toggleHidePw} />}
+    <form className={css.form} onSubmit={form.handleSubmit(submit)}>
+      <Controller 
+        control={form.control}
+        name="email"
+        render={({field}) => (
+          <TextInput {...field} label="아이디" type="text"  />
+        )}
+      />
+
+      <Controller 
+        control={form.control}
+        name="password"
+        render={({field}) => (
+          <TextInput 
+            {...field} 
+            mt={28}
+            label="비밀번호" 
+            type={isHidePw ? "password" : "text"}
+            rightSection={<EyeToggleButton value={isHidePw} onClick={toggleHidePw} />} 
+          />
+        )}
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>
-        <Button variant="filled" type="submit" disabled={isLoading} loading={isLoading}>
+        <Button variant="filled" type="submit" loading={isLoading}>
           로그인
         </Button>
       </Box>

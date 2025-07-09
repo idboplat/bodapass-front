@@ -15,10 +15,9 @@ export default function DeviceMessageReceiver(props: PropsWithChildren) {
       const item = WATING_MESSSAGE_MAP.get(data.type);
 
       if (item) {
-        item.resolve(data.payload);
         clearTimeout(item.timer);
         WATING_MESSSAGE_MAP.delete(data.type);
-        window.ReactNativeWebView?.postMessage(event.data);
+        item.resolve(data.payload);
       } else {
         switch (data.type) {
           default:
