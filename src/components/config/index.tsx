@@ -9,6 +9,7 @@ import Nav from "../common/header/Nav";
 import PortalModalContainer from "../common/modal/PortalModalContainer";
 import AsyncModalContainer from "../common/modal/AsyncModalContainer";
 import NoSSR from "../no-ssr";
+import DeviceMessageReceiver from './device-message-receiver';
 
 interface ConfigsProps {
   children: React.ReactNode;
@@ -21,16 +22,18 @@ export default async function Configs({ children }: ConfigsProps) {
   const session = await getServerSession();
 
   return (
-    <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
-      <ReactQuery>
-        <MantineProvider>
-          <NoSSR>{children}</NoSSR>
-          {/* <Devtools /> */}
-          <PortalModalContainer />
-          <AsyncModalContainer />
-          <ToastBox />
-        </MantineProvider>
-      </ReactQuery>
-    </App>
+    <DeviceMessageReceiver>
+      <App session={session} sidebar={sidebar} fiat={fiat || "KRW"}>
+        <ReactQuery>
+          <MantineProvider>
+            <NoSSR>{children}</NoSSR>
+            {/* <Devtools /> */}
+            <PortalModalContainer />
+            <AsyncModalContainer />
+            <ToastBox />
+          </MantineProvider>
+        </ReactQuery>
+      </App>
+    </DeviceMessageReceiver>
   );
 }
