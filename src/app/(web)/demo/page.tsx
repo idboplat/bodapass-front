@@ -4,7 +4,6 @@ import css from "./page.module.scss";
 import { clsx } from "clsx";
 
 export default function Page() {
-
   return (
     <>
       <div className={clsx(css.wrap)}>
@@ -19,18 +18,14 @@ export default function Page() {
           <Link href="/demo/rekognition" className={css.link}>
             <div className={css.item}>
               <h3>Face Recognition</h3>
-              <div className={css.sub}>
-                얼굴인식 테스트
-              </div>
+              <div className={css.sub}>얼굴인식 테스트</div>
             </div>
           </Link>
 
           <Link href="/demo/map" className={css.link}>
             <div className={css.item}>
               <h3>Kakao Map</h3>
-              <div className={css.sub}>
-                카카오 지도 테스트
-              </div>
+              <div className={css.sub}>카카오 지도 테스트</div>
             </div>
           </Link>
         </div>

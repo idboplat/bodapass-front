@@ -39,10 +39,9 @@ declare global {
       readonly USEB_TOKEN: string;
 
       // kakao credentials
-      readonly KAKAO_API_KEY: string;
+      readonly NEXT_PUBLIC_KAKAO_JS_KEY: string;
       readonly NEXT_PUBLIC_KAKAO_REST_API_KEY: string;
       readonly KAKAO_CLIENT_SECRET: string;
-
       readonly NEXT_PUBLIC_FRONT_URL: string;
     }
   }

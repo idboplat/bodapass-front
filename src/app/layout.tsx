@@ -41,8 +41,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         {/* kakao map */}
         <Script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_API_KEY}&libraries=services&autoload=false`}
-          strategy="beforeInteractive"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JS_KEY}&libraries=services,clusterer&autoload=false`}
         />
 
         <ColorSchemeScript localStorageKey={THEME_LOCAL_STORAGE_KEY} />

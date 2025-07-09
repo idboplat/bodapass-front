@@ -1,0 +1,41 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { StaticMap } from "react-kakao-maps-sdk";
+
+export default function RenderStaticMap() {
+  const router = useRouter();
+
+  const LAT = 33.450701;
+  const LNG = 126.570667;
+  return (
+    <div>
+      <h2>RenderStaticMap</h2>
+      <StaticMap // 지도를 표시할 Container
+        center={{
+          // 지도의 중심좌표
+          lat: LAT,
+          lng: LNG,
+        }}
+        style={{
+          // 지도의 크기
+          width: "100%",
+          height: "20rem",
+        }}
+        level={3} // 지도의 확대 레벨
+        marker={{
+          position: {
+            lat: LAT,
+            lng: LNG,
+          },
+          text: "로건현장",
+        }}
+        onClick={(e) => {
+          console.log("e =  == ", e);
+          e.preventDefault();
+          router.push(`/demo/map/dynamic?lat= ${LAT}&lng=${LNG}`);
+        }}
+      />
+    </div>
+  );
+}
