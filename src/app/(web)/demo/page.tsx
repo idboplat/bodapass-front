@@ -28,6 +28,13 @@ export default function Page() {
               <div className={css.sub}>카카오 지도 테스트</div>
             </div>
           </Link>
+
+          <Link href="/demo/post-code" className={css.link}>
+            <div className={css.item}>
+              <h3>Post Code</h3>
+              <div className={css.sub}>우편번호 테스트</div>
+            </div>
+          </Link>
         </div>
       </div>
     </>

@@ -10,13 +10,14 @@ interface ContainerProps {
   children?: React.ReactNode;
   style?: React.CSSProperties;
   outSideClick?: () => void;
+  fullSize?: boolean;
 }
 
 /** 모바일 모달 높이가 심하게 변동될경우 style={{ height: "100%" }} 추가 */
-export function ModalInner({ children, className, style, outSideClick }: ContainerProps) {
+export function ModalInner({ children, className, style, outSideClick, fullSize }: ContainerProps) {
   return (
     <div
-      className={clsx(css.expand)}
+      className={clsx(css.expand, fullSize && "full")}
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           outSideClick?.();

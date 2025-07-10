@@ -32,6 +32,7 @@ $defult-modal-max-height: 600px;
   padding: 20px var(--modal-padding) calc(20px + env(safe-area-inset-bottom)) var(--modal-padding);
 }
 
+
 @include util.dark {
   .inner {
     background: #131722 url("/images/bg_popup.png") no-repeat center 25% / cover;
@@ -39,6 +40,15 @@ $defult-modal-max-height: 600px;
 }
 
 @include util.max-width(sm) {
+  .expand:global(.full) {
+    padding: 0px;
+
+    & > .inner {
+      height: 100%;
+      border-radius: 0px;
+    }
+  }
+
   .inner {
     max-width: 100% !important; // 모바일 너비에서 너비 100% 다 차지하도록, 인라인스타일 강제 override
   }
