@@ -1,5 +1,5 @@
 "use client";
-import AutoCapture from "@/components/auto-capture";
+import Capture from "@/components/capture";
 import { Button, LoadingOverlay } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ export default function Page() {
   const [message, setMessage] = useState("");
   const [data, setData] = useState<SearchFacesCommandOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
 
   const mutation = useMutation({
     mutationFn: async (images: TImageBlob[]) => {
@@ -111,7 +112,9 @@ export default function Page() {
   return (
     <>
       <div className={css.captureBox}>
-        {images.length < PHOTO_COUNT && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
+        {images.length < PHOTO_COUNT && (
+          <Capture onFaceDetected={set} setMessage={onMessage} cameraMode={cameraMode} />
+        )}
         {images.length >= PHOTO_COUNT && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>

@@ -20,11 +20,12 @@ select {
 html {
   // rem 기준, 360px : 16px = 100vw : x
   // 가장 많이 사용되는 브라우저 너비 360px
-  font-size: calc(40 / 9 * 1vw); 
+  // calc(40 / 9 * 1vw);
+  font-size: 16px;
 }
 
 html,
-body, 
+body,
 #app {
   width: 100%;
   height: 100%;
@@ -45,6 +46,7 @@ body {
 
 #app {
   margin: 0 auto;
+  max-width: 64rem; // 1024px
 }
 
 @media screen and (max-device-width: 31.25em) {
@@ -108,8 +110,6 @@ textarea {
   /* 프린트 내에 도메인 노출될 때 */
 }
 
-
-
 /* section09/09-01-view-transition => 페이지이동애니메이션 추가 */
 @keyframes 이동하기_이전페이지 {
   from {
@@ -142,7 +142,6 @@ html::view-transition-new(root) {
   animation-name: 이동하기_다음페이지;
   animation-duration: 0.5s;
 }
-
 
 /* section09/09-02-view-transition-back => 페이지이동 뒤로가기 애니메이션 추가 */
 @keyframes 뒤로가기_이전페이지 {

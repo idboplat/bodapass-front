@@ -1,18 +1,64 @@
 // components/VideoCapture.tsx
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
-import css from "./auto-capture.module.scss";
-import { isMobile } from "react-device-detect";
+import css from "./capture.module.scss";
 
-interface AutoCaptureProps {
+const PADDING = 75;
+const SCALE = 1;
+
+interface CaptureProps {
   onFaceDetected: (args: { image: Blob; score: number }) => void;
   setMessage: (message: string) => void;
+  cameraMode: "front" | "back";
 }
 
-export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureProps) {
+export default function Capture({ onFaceDetected, setMessage, cameraMode }: CaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
+
+  const capture = () => {
+    if (!videoRef.current) return;
+    videoRef.current.pause();
+
+    const captureCanvas = document.createElement("canvas");
+    captureCanvas.width = videoRef.current.videoWidth;
+    captureCanvas.height = videoRef.current.videoHeight;
+
+    // 좌우 반전을 위한 변환 적용
+    if (cameraMode === "front") {
+      captureCanvas.getContext("2d")!.scale(-1, 1);
+      captureCanvas.getContext("2d")!.translate(-captureCanvas.width, 0);
+    }
+
+    captureCanvas
+      .getContext("2d")
+      ?.drawImage(videoRef.current, 0, 0, captureCanvas.width, captureCanvas.height);
+
+    captureCanvas.getContext("2d")!.resetTransform();
+    captureCanvas.getContext("2d")!.font = "20px Arial";
+    captureCanvas.getContext("2d")!.fillStyle = "red";
+    captureCanvas.getContext("2d")!.fillText("capture", 0, 32);
+
+    captureCanvas.toBlob(
+      (blob) => {
+        if (blob) {
+          onFaceDetected({ image: blob, score: 0 });
+        }
+
+        // 메모리 정리
+        captureCanvas.getContext("2d")?.clearRect(0, 0, captureCanvas.width, captureCanvas.height);
+        captureCanvas.width = 0;
+        captureCanvas.height = 0;
+        captureCanvas.remove();
+
+        setMessage("");
+        videoRef.current?.play();
+      },
+      "image/png",
+      1.0,
+    );
+  };
 
   useEffect(() => {
     if (modelsLoaded) return;
@@ -41,7 +87,9 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
     const getStream = async () => {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          facingMode: cameraMode === "front" ? "user" : "environment",
+        },
       });
 
       if (videoRef.current) {
@@ -165,13 +213,17 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
 
           // 캡처
           const captureCanvas = document.createElement("canvas");
-          const padding = 75;
-          const scale = 1;
 
-          captureCanvas.width = (resized.detection.box.width + padding * 2) * scale;
-          captureCanvas.height = (resized.detection.box.height + padding * 2) * scale;
-          const x = resized.detection.box.x - padding;
-          const y = resized.detection.box.y - padding;
+          captureCanvas.width = (resized.detection.box.width + PADDING * 2) * SCALE;
+          captureCanvas.height = (resized.detection.box.height + PADDING * 2) * SCALE;
+          const x = resized.detection.box.x - PADDING;
+          const y = resized.detection.box.y - PADDING;
+
+          // 좌우 반전을 위한 변환 적용
+          if (cameraMode === "front") {
+            captureCanvas.getContext("2d")!.scale(-1, 1);
+            captureCanvas.getContext("2d")!.translate(-captureCanvas.width, 0);
+          }
 
           captureCanvas
             .getContext("2d")
@@ -179,8 +231,8 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
               videoRef.current,
               x,
               y,
-              captureCanvas.width / scale,
-              captureCanvas.height / scale,
+              captureCanvas.width / SCALE,
+              captureCanvas.height / SCALE,
               0,
               0,
               captureCanvas.width,
@@ -227,6 +279,7 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
           //   return;
           // }
 
+          captureCanvas.getContext("2d")!.resetTransform();
           captureCanvas.getContext("2d")!.font = "20px Arial";
           captureCanvas.getContext("2d")!.fillStyle = "red";
           captureCanvas.getContext("2d")!.fillText(result.detection.score.toFixed(2), 0, 32);
@@ -275,12 +328,35 @@ export default function AutoCapture({ onFaceDetected, setMessage }: AutoCaptureP
   }, [modelsLoaded, onFaceDetected]);
 
   return (
-    <div className={css.capture}>
-      <video className={css.video} ref={videoRef} autoPlay muted playsInline />
-      <canvas className={css.canvas} ref={canvasRef} />
-      <div className={css.mask}>
-        <div className={css.ring} />
+    <>
+      <div className={css.capture}>
+        <video
+          className={css.video}
+          style={{ transform: cameraMode === "front" ? "scaleX(-1)" : "none" }}
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+        />
+        <canvas className={css.canvas} ref={canvasRef} />
+        <div className={css.mask}>
+          <div className={css.ring} />
+        </div>
       </div>
-    </div>
+
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "red",
+          zIndex: 1000,
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+        onClick={capture}
+      >
+        강제촬영
+      </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import AutoCapture from "@/components/auto-capture";
+import Capture from "@/components/capture";
 import { Button, LoadingOverlay } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -103,7 +103,9 @@ export default function Page() {
   return (
     <>
       <div className={css.captureBox}>
-        {images.length < 4 && <AutoCapture onFaceDetected={set} setMessage={onMessage} />}
+        {images.length < 4 && (
+          <Capture onFaceDetected={set} setMessage={onMessage} cameraMode="front" />
+        )}
         {images.length >= 4 && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>
