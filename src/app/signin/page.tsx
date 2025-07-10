@@ -1,7 +1,7 @@
 import LoginForm from "@/components/login/LoginForm";
 import css from "./page.module.scss";
+import {KAKAO_REDIRECT_URI} from '@/constants';
 
-const redirect_uri = `${process.env.NEXT_PUBLIC_FRONT_URL}/api/auth/callback/kakao`;
 
 export default async function Page() {
 
@@ -15,7 +15,7 @@ export default async function Page() {
       <div>
         <div>Kakao</div>
         <div>
-          <a href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${encodeURIComponent(redirect_uri)}&prompt=select_account`}>로그인</a>
+          <a href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${encodeURIComponent(KAKAO_REDIRECT_URI)}&prompt=select_account`}>로그인</a>
         </div>
       </div>
     </main>

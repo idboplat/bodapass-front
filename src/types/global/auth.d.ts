@@ -19,7 +19,6 @@ declare global {
 
   /** Signin Session */
   interface Session extends JWT {
-    accessToken: string;
   }
 
   /** AccessToken Payload */

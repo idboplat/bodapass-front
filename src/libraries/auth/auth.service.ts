@@ -62,8 +62,8 @@ export const sessionService = async (refreshToken: string): Promise<Session> => 
   delete session.exp;
   session.iss = new Date().toISOString();
 
-  const accessToken = await generateAccessToken(session);
-  return { accessToken, ...session };
+  // const accessToken = await generateAccessToken(session);
+  return session;
 };
 
 export const getServerSession = async (): Promise<Session | null> => {
