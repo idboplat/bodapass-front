@@ -38,7 +38,7 @@ export default function Capture({ onFaceDetected, setMessage, cameraMode }: Capt
     captureCanvas.getContext("2d")!.resetTransform();
     captureCanvas.getContext("2d")!.font = "20px Arial";
     captureCanvas.getContext("2d")!.fillStyle = "red";
-    captureCanvas.getContext("2d")!.fillText("capture", 0, 32);
+    captureCanvas.getContext("2d")!.fillText("0", 0, 32);
 
     captureCanvas.toBlob(
       (blob) => {
