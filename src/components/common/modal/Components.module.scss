@@ -39,34 +39,12 @@ $defult-modal-max-height: 600px;
   }
 }
 
-@include util.max-width(sm) {
-  .expand:global(.full) {
-    padding: 0px;
-
-    & > .inner {
-      height: 100%;
-      border-radius: 0px;
-    }
-  }
-
-  .inner {
-    max-width: 100% !important; // 모바일 너비에서 너비 100% 다 차지하도록, 인라인스타일 강제 override
-  }
-}
-
-@include util.min-width(sm) {
-  .expand {
-    --modal-padding: #{$desktop-modal-padding};
-
-    align-items: center;
-    padding: var(--modal-padding); // 상하좌우 여유공간
-  }
-
-  .inner {
-    max-width: $defult-modal-max-width;
-    max-height: $defult-modal-max-height;
-
-    border-radius: 5px;
+.expand:global(.full) {
+  padding: 0px;
+  
+  & > .inner {
+    height: 100%;
+    border-radius: 0px;
   }
 }
 
@@ -75,6 +53,7 @@ button.closeButton {
   right: 10px;
   top: 10px;
   color: #000;
+  z-index: 1;
 }
 
 @include util.dark {
