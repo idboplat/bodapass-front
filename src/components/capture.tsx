@@ -86,7 +86,7 @@ export default function Capture({ onFaceDetected, setMessage, cameraMode }: Capt
     let stream: MediaStream | undefined = undefined;
 
     const getStream = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: cameraMode === "front" ? "user" : "environment",
         },
@@ -95,20 +95,16 @@ export default function Capture({ onFaceDetected, setMessage, cameraMode }: Capt
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-
-      return stream;
     };
 
-    getStream().then((s) => {
-      stream = s;
-    });
+    getStream();
 
     return () => {
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [modelsLoaded]);
+  }, [modelsLoaded, cameraMode]);
 
   useEffect(() => {
     if (!modelsLoaded) return;

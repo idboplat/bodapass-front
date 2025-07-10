@@ -99,7 +99,7 @@ export default function Page() {
     if (data || error) return;
 
     if (images.length === PHOTO_COUNT) {
-      // mutation.mutate(images);
+      mutation.mutate(images);
     }
   }, [images]);
 
