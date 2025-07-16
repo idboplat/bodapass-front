@@ -1,7 +1,8 @@
 "use client";
 
-import {useUserLocation} from '@/hooks/use-user-location';
+import {getDistanceFromLatLonInMeter, useUserLocation} from '@/hooks/use-user-location';
 import {Button, LoadingOverlay} from '@mantine/core';
+import {useMemo} from 'react';
 import { Circle, Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 
 interface RenderMapProps {
@@ -23,8 +24,16 @@ export default function RenderMap({ lat, lng }: RenderMapProps) {
   console.log("errorCode", errorCode);
   console.log("isLoading", isLoading);
 
+  const distance = useMemo(() => {
+    if(!userLocation) return 0;
+    return getDistanceFromLatLonInMeter(userLocation, {lat, lng});
+  }, [userLocation, lat, lng]);
+
   return (
     <div style={{position: 'relative'}}>
+      <div>
+        <p>거리: {distance}m</p>
+      </div>
      {errorCode ? (
       <div>
         <p>{errorCode}</p>
