@@ -17,9 +17,9 @@
   --mantine-color-white: #fff;
   --mantine-color-black: #000;
   --mantine-line-height: 1.55;
-  --mantine-font-family: var.$font-pretendard;
-  --mantine-font-family-monospace: var.$font-pretendard;
-  --mantine-font-family-headings: var.$font-pretendard;
+  --mantine-font-family: #{var.$font-pretendard};
+  --mantine-font-family-monospace: #{var.$font-pretendard};
+  --mantine-font-family-headings: #{var.$font-pretendard};
   --mantine-heading-font-weight: 700;
   --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
   --mantine-primary-color-0: var(--mantine-color-blue-0);
