@@ -5,6 +5,40 @@
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+a,
+button {
+  color: inherit; // -apple-system-blue override
+  display: inline-block;
+  text-decoration: none;
+}
+
+button svg {
+  display: block; //svg align-center
+}
+
+/* 리스트 */
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+textarea {
+  resize: none;
+}
+
 input,
 button,
 textarea,
@@ -60,30 +94,6 @@ body {
     transition: none;
     animation: none;
   }
-}
-
-a,
-button {
-  color: inherit; // -apple-system-blue override
-  display: inline-block;
-  text-decoration: none;
-}
-
-button svg {
-  display: block; //svg align-center
-}
-
-/* 리스트 */
-ul,
-ol,
-li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-textarea {
-  resize: none;
 }
 
 .blind {
