@@ -1,4 +1,4 @@
-import CalendarIcon from "@/assets/svg/calendarIcon.svg?react";
+import CalendarIcon from "/public/assets/svg/calendar-icon.svg?react";
 import { DatePickerInput, DateValue } from "@mantine/dates";
 import DateBtn from "../btn/DateBtn";
 import css from "./HistoryFIlter.module.scss";

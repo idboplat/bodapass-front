@@ -8,7 +8,7 @@ import css from "./index.module.scss";
 import { clsx } from "clsx";
 import Lottie from "lottie-react";
 import { Button } from "@mantine/core";
-import landingAni from "@/assets/lottie/landing.json";
+import landingAni from "/public/assets/lottie/landing.json";
 
 export default function Page() {
   const router = useRouter();
