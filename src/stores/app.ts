@@ -4,32 +4,20 @@ import dayjs from "@/libraries/dayjs";
 
 export const SESSION_STORAGE_KEY = "auth-session";
 
-type State = {
-  session: string;
-  theme: "light" | "dark";
-  fiat: string;
-  sidebar: boolean;
+export type TAppState = {
+  session: string | null;
 };
 
-type Action = {
-  actions: {
-    logout: () => void;
-    login: () => void;
-    refresh: () => void;
-    toggleSidebar: () => void;
-    setFiat: (string: string) => void;
-  };
+export type TAppAction = {
+  logout: () => void;
+  login: () => void;
+  refresh: () => void;
 };
 
-type AppStore = ReturnType<typeof createAppStore>;
+export type TAppStore = TAppState & { actions: TAppAction };
 
-export const createAppStore = (initState: State) => {
-  if (typeof window !== "undefined") {
-    // 쿠키와 로컬스토리지의 세션 정보를 동기화
-    localStorage.setItem(SESSION_STORAGE_KEY, initState.session);
-  }
-
-  return createStore<State & Action>((set, get) => ({
+export const createAppStore = (initState: TAppState) => {
+  return createStore<TAppStore>((set, get) => ({
     ...initState,
     actions: {
       login: () => {
@@ -42,32 +30,22 @@ export const createAppStore = (initState: State) => {
         set(() => ({ session: "guest" }));
       },
       refresh: () => get().actions.login(),
-      toggleSidebar: () =>
-        set((pre) => {
-          const maxAge = 60 * 60 * 24 * 365; // 1년
-          document.cookie = `sidebar=${!pre.sidebar}; Max-Age=${maxAge}; Path=/;`;
-          return { sidebar: !pre.sidebar };
-        }),
-      setFiat: (newFiat) =>
-        set(() => {
-          const fiat = newFiat === "KRW" ? "KRW" : "USD";
-          document.cookie = `fiat=${fiat}; Max-Age=${60 * 60 * 24 * 365}; Path=/;`;
-          return { fiat };
-        }),
     },
   }));
 };
 
-export const AppContext = createContext<AppStore | null>(null);
+export const AppContext = createContext<ReturnType<typeof createAppStore> | null>(null);
 
-export const useApp = () => {
+export const useAppCtx = () => {
   const context = useContext(AppContext);
   if (!context) throw new Error("useApp must be used within a AppProvider");
   return context;
 };
 
-export const useSetApp = () => {
+export function useApp(): TAppStore;
+export function useApp<U>(selector: (state: TAppStore) => U): U;
+export function useApp<U>(selector?: (state: TAppStore) => U) {
   const context = useContext(AppContext);
-  if (!context) throw new Error("useSetApp must be used within a AppProvider");
-  return useStore(context, (store) => store.actions);
-};
+  if (!context) throw new Error("useApp must be used within a AppProvider");
+  return useStore(context, selector!);
+}

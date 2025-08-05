@@ -8,7 +8,7 @@ import {
   ModalHeader,
   ModalInner,
   ModalTitle,
-} from "./Components";
+} from "./components";
 
 interface ErrorModalProps {
   title?: string;

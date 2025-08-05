@@ -1,4 +1,3 @@
-"use client";
 import { useLogoutMutation } from "@/hooks/useLogoutMutation";
 
 export default function SidebarLogoutBtn() {

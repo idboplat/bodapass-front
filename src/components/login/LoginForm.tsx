@@ -1,30 +1,27 @@
-"use client";
 import ErrorModal from "@/components/common/modal/ErrorModal";
 import { useSetModalStore } from "@/stores/modal";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import emailLoginFn from "@/apis/login";
 import { Box, Button, TextInput } from "@mantine/core";
 import css from "./LoginForm.module.scss";
 import EyeToggleButton from "../common/btn/eye-toggle-button";
-import { z } from 'zod';
+import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendMessageToDevice } from '@/hooks/use-device-api';
-import { logger } from '@/apis/logger';
-
+import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { logger } from "@/apis/logger";
 
 const signInDto = z.object({
   email: z.string().min(1),
   password: z.string().min(1),
-})
+});
 
 export default function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isHidePw, setIsHidePw] = useState(true);
-
 
   const form = useForm({
     defaultValues: {
@@ -32,7 +29,7 @@ export default function LoginForm() {
       password: "",
     },
     resolver: zodResolver(signInDto),
-  })
+  });
 
   const modalStore = useSetModalStore();
 
@@ -53,9 +50,9 @@ export default function LoginForm() {
             sessionKey: "1234567890",
             /** 로그인한 ISO-시간 */
             loginAt: new Date().toISOString(),
-          }
-        }
-      }) 
+          },
+        },
+      });
     },
     onError: async (error) => {
       await modalStore.push(ErrorModal, { props: { error } });
@@ -64,14 +61,12 @@ export default function LoginForm() {
   });
 
   const submit = (data: z.infer<typeof signInDto>) => {
-    
-    logger(JSON.stringify(form.formState, null, 2))
- 
-  
+    logger(JSON.stringify(form.formState, null, 2));
+
     if (mutateEmailLogin.isPending) return;
-    mutateEmailLogin.mutate({ 
-      email: data.email, 
-      password: data.password 
+    mutateEmailLogin.mutate({
+      email: data.email,
+      password: data.password,
     });
   };
 
@@ -80,26 +75,23 @@ export default function LoginForm() {
   };
 
   return (
-
     <form className={css.form} onSubmit={form.handleSubmit(submit)}>
-      <Controller 
+      <Controller
         control={form.control}
         name="email"
-        render={({field}) => (
-          <TextInput {...field} label="아이디" type="text"  />
-        )}
+        render={({ field }) => <TextInput {...field} label="아이디" type="text" />}
       />
 
-      <Controller 
+      <Controller
         control={form.control}
         name="password"
-        render={({field}) => (
-          <TextInput 
-            {...field} 
+        render={({ field }) => (
+          <TextInput
+            {...field}
             mt={28}
-            label="비밀번호" 
+            label="비밀번호"
             type={isHidePw ? "password" : "text"}
-            rightSection={<EyeToggleButton value={isHidePw} onClick={toggleHidePw} />} 
+            rightSection={<EyeToggleButton value={isHidePw} onClick={toggleHidePw} />}
           />
         )}
       />

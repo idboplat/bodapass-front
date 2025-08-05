@@ -1,6 +1,5 @@
-"use client";
 import { ActionIcon } from "@mantine/core";
-import css from "./Components.module.scss";
+import css from "./components.module.scss";
 import { X } from "lucide-react";
 import { clsx } from "clsx";
 import { motion } from "motion/react";

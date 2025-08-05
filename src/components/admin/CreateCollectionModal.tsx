@@ -9,7 +9,7 @@ import {
   ModalHeader,
   ModalInner,
   ModalTitle,
-} from "../common/modal/Components";
+} from "../common/modal/components";
 
 type Prop = {};
 

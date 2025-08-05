@@ -1,5 +1,5 @@
 import { ModalProps } from "@/stores/modal";
-import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./Components";
+import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./components";
 import { Button, RemoveScroll } from "@mantine/core";
 
 interface ConfirmModalProps {

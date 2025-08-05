@@ -1,6 +1,5 @@
-"use client";
 import BackHeader from "@/components/common/header/BackHeader";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useCamera } from "@/hooks/useCamera";
 import { useMutation } from "@tanstack/react-query";
 import Capture from "@/components/ocr/Capture";

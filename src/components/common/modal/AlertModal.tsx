@@ -1,6 +1,6 @@
 import { ModalProps } from "@/stores/modal";
 import { Button, RemoveScroll } from "@mantine/core";
-import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./Components";
+import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./components";
 
 interface AlertModalProps {
   title?: string;

@@ -1,7 +1,6 @@
-"use client";
 import ErrorModal from "@/components/common/modal/ErrorModal";
 import { TmsError } from "@/libraries/error/TmsError";
-import { useSetApp } from "@/stores/app";
+import { useApp } from "@/stores/app";
 import { useSetModalStore } from "@/stores/modal";
 import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
@@ -14,7 +13,7 @@ const checkSessionOutCode = (error: TmsError) => {
 
 export default function ReactQuery({ children }: PropsWithChildren) {
   const modalStore = useSetModalStore();
-  const action = useSetApp();
+  const action = useApp((state) => state.actions);
 
   const [querClient] = useState(() => {
     return new QueryClient({

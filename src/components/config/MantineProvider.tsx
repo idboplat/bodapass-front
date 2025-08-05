@@ -1,4 +1,3 @@
-"use client";
 import { THEME_LOCAL_STORAGE_KEY } from "@/constants";
 import { theme } from "@/styles/theme";
 import { localStorageColorSchemeManager, MantineProvider as Provider } from "@mantine/core";

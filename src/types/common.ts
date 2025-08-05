@@ -1,5 +1,10 @@
 import { TClientPage } from "@/utils/getPage";
 import { PickerBaseProps } from "@mantine/dates";
+import { NextPage } from "next";
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
 
 export type HomeProps<T = {}> = {
   page: TClientPage;

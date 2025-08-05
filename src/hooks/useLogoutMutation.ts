@@ -1,8 +1,8 @@
-import { useSetApp } from "@/stores/app";
+import { useApp } from "@/stores/app";
 import { useMutation } from "@tanstack/react-query";
 
 export const useLogoutMutation = () => {
-  const action = useSetApp();
+  const logout = useApp((state) => state.actions.logout);
 
   const mutate = useMutation({
     mutationKey: ["signout"],
@@ -14,7 +14,7 @@ export const useLogoutMutation = () => {
     },
     onSettled: () => {
       // 성공하든 실패하든 로그아웃 처리
-      action.logout();
+      logout();
       window.location.href = "/signin";
     },
   });

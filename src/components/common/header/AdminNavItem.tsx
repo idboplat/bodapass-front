@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavLink } from "@mantine/core";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 
 type NavItemProps = {
   label: string;
@@ -11,7 +11,8 @@ type NavItemProps = {
 };
 
 export default function NavItem({ label, href, direction, children }: NavItemProps) {
-  const pathname = usePathname();
+  const router = useRouter();
+  const pathname = router.pathname;
 
   return (
     <NavLink
