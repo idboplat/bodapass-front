@@ -7,8 +7,12 @@ export default function Page() {
   const router = useRouter();
   const searchParams = router.query;
 
-  const lat = Number(searchParams.lat) ?? 33.450701;
-  const lng = Number(searchParams.lng) ?? 126.570667;
+  const lat = Number(searchParams.lat) || 33.450701;
+  const lng = Number(searchParams.lng) || 126.570667;
+
+  if (!router.isReady) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={"mobileLayout"}>
