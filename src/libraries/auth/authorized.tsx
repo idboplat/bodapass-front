@@ -62,8 +62,9 @@ export function AuthorizedWithModal({ children, fallback }: Props) {
 
 function RequireSignInModal() {
   const router = useRouter();
+  const locale = router.query.locale;
 
-  const onClick = () => router.replace("/signin");
+  const onClick = () => router.replace(`/${locale}/signin`);
 
   return (
     <RemoveScroll removeScrollBar={false}>

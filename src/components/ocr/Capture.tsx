@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ActionIcon } from "@mantine/core";
 import { Camera as IconCamera } from "lucide-react";
 import { RefObject } from "react";
@@ -19,11 +18,9 @@ export default function Capture({ canvasRef, videoRef, onClickCapture, isMobile 
       <Camera videoRef={videoRef} canvasRef={canvasRef} isMobile={isMobile} />
       <div className={css.descBox}>
         <div className={css.desc}>
-          <Link href="">
-            <p className={css.help}>
-              <u>화면이 보이지 않을때</u>
-            </p>
-          </Link>
+          <p className={css.help}>
+            <u>화면이 보이지 않을때</u>
+          </p>
 
           <p>신원정보가 명확히 보여야 합니다.</p>
 

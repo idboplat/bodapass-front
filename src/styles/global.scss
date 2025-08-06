@@ -78,7 +78,7 @@ body {
   -moz-osx-font-smoothing: var(--mantine-moz-font-smoothing);
 }
 
-#__next {
+.mobileLayout {
   margin: 0 auto;
   max-width: 64rem; // 1024px
 }

@@ -10,13 +10,14 @@ interface Props {
 /* 세션이 있으면 Home_PATH으로 리다이렉트 */
 export function UnAuthorized({ children, fallback }: Props) {
   const router = useRouter();
+  const locale = router.query.locale;
   const { data: session } = useSession();
 
   useEffect(() => {
     if (!!session) {
-      router.replace(`/`);
+      router.replace(`/${locale}`);
     }
-  }, [session, router]);
+  }, [session, router, locale]);
 
   if (session === undefined) return <>{fallback}</>;
   if (session !== null) return null;

@@ -1,0 +1,19 @@
+.main {
+  @extend %flex-center;
+  width: 100svw;
+  height: 100svh;
+  flex-direction: column;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 28px;
+  padding-bottom: 24px;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+}

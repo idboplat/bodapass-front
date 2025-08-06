@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { NextPageWithLayout } from "@/types/common";
+import { appWithTranslation } from "next-i18next";
 
 // css 순서변경 금지
 import "@/styles/mantine/core.scss";
@@ -25,7 +26,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 // https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function App({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -58,3 +59,5 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </>,
   );
 }
+
+export default appWithTranslation(App);
