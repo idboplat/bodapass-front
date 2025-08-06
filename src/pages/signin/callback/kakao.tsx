@@ -13,7 +13,7 @@ export default function Page() {
   const code = router.query.code?.toString();
 
   useEffect(() => {
-    if (code) return;
+    if (!code) return;
 
     const getSessionAndSaveDevice = async () => {
       try {
