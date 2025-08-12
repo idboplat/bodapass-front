@@ -1,3 +1,4 @@
+import { NHN_API_URL } from "@/constants";
 import { serverErrorHandler } from "@/libraries/error";
 import { TNHNAntiSpoofingReturn } from "@/types/api/nhn";
 import ky from "ky";
@@ -16,20 +17,16 @@ export async function POST(req: NextRequest) {
     const imageBuffer = await image.arrayBuffer();
     const base64Image = Buffer.from(imageBuffer).toString("base64");
 
-    console.log("NHN_APP_KEY", process.env.NHN_APP_KEY);
-    console.log("NHN_API_KEY", process.env.NHN_API_KEY);
-    console.log("NHN_SECRET_KEY", process.env.NHN_SECRET_KEY);
-
     const res = await ky
       .post<TNHNAntiSpoofingReturn>(
         `
-    https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/spoofing/faces
+    ${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/spoofing/faces
     `,
         {
           headers: {
             "Content-Type": "application/json",
             Authorization: process.env.NHN_SECRET_KEY,
-            "x-nhn-apikey": process.env.NHN_API_KEY,
+            // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
           },
           json: {
             image: {

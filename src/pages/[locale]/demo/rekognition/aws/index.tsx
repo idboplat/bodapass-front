@@ -13,7 +13,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className={"mobileLayout"}>
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         <div className={css.box}>
@@ -32,6 +32,6 @@ export default function Page() {
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }

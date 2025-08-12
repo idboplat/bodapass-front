@@ -13,7 +13,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className={"mobileLayout"}>
       <BackHeader title="Rekognition" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         <div className={css.box}>
@@ -31,14 +31,15 @@ export default function Page() {
             </div>
           </Link>
 
+          {/* 
           <Link href={`/${locale}/demo/rekognition/nhn-aws`} className={css.link}>
             <div className={css.item}>
               <h3>NHN + AWS</h3>
               <div className={css.sub}></div>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
-    </>
+    </div>
   );
 }

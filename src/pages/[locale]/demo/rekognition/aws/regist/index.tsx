@@ -78,7 +78,7 @@ export default function Client() {
   };
 
   return (
-    <>
+    <div className={"mobileLayout"}>
       <BackHeader title="Registration" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         {page === 0 && <RegistForm info={info} updateInfo={updateInfo} />}
@@ -91,6 +91,6 @@ export default function Client() {
         )}
         {page === 2 && <RegistResult result={result} />}
       </div>
-    </>
+    </div>
   );
 }

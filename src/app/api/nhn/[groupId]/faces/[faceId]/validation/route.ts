@@ -1,3 +1,4 @@
+import { NHN_API_URL } from "@/constants";
 import { TNHNValidationReturn } from "@/types/api/nhn";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
@@ -23,11 +24,11 @@ export async function POST(
   }
 
   const res = await ky.post<TNHNValidationReturn>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/${faceId}/verify`,
+    `${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces/${faceId}/verify`,
     {
       headers: {
         Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
+        // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
       },
       json: {
         compareImage: {

@@ -1,3 +1,4 @@
+import { NHN_API_URL } from "@/constants";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -18,15 +19,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ grou
       createTime: string;
       faceCount: number;
     };
-  }>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}`,
-    {
-      headers: {
-        Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
-      },
+  }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}`, {
+    headers: {
+      Authorization: process.env.NHN_SECRET_KEY,
+      // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
     },
-  );
+  });
 
   return NextResponse.json(res);
 }
@@ -41,18 +39,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ gro
       resultMessage: string;
       isSuccessful: boolean;
     };
-  }>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups`,
-    {
-      headers: {
-        Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
-      },
-      json: {
-        groupId,
-      },
+  }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups`, {
+    headers: {
+      Authorization: process.env.NHN_SECRET_KEY,
+      // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
     },
-  );
+    json: {
+      groupId,
+    },
+  });
 
   return NextResponse.json(res);
 }

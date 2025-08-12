@@ -1,3 +1,4 @@
+import { NHN_API_URL } from "@/constants";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -27,15 +28,12 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ grou
       }[];
       nextToken: string;
     };
-  }>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`,
-    {
-      headers: {
-        Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
-      },
+  }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`, {
+    headers: {
+      Authorization: process.env.NHN_SECRET_KEY,
+      // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
     },
-  );
+  });
 
   return NextResponse.json(res);
 }
@@ -120,27 +118,24 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ gro
         confidence: number;
       }[];
     };
-  }>(
-    `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`,
-    {
-      headers: {
-        Authorization: process.env.NHN_SECRET_KEY,
-        "x-nhn-apikey": process.env.NHN_API_KEY,
-      },
-      json: {
-        image: {
-          // 반드시 아래 둘중 하나만
-          // url: "https://",
-          bytes: image,
-        },
-        limit: 1, //하나만 등록
-        externalImageId,
-        orientation: false, // 방향감지여부
-        spoofing: true, // 안티스푸핑 여부
-        spoofingCondition: "balanced", // balanced, strict, weak
-      },
+  }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups/${groupId}/faces`, {
+    headers: {
+      Authorization: process.env.NHN_SECRET_KEY,
+      // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
     },
-  );
+    json: {
+      image: {
+        // 반드시 아래 둘중 하나만
+        // url: "https://",
+        bytes: image,
+      },
+      limit: 1, //하나만 등록
+      externalImageId,
+      orientation: false, // 방향감지여부
+      spoofing: true, // 안티스푸핑 여부
+      spoofingCondition: "balanced", // balanced, strict, weak
+    },
+  });
 
   return NextResponse.json(res);
 }

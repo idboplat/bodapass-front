@@ -103,7 +103,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className={"mobileLayout"}>
       <div className={css.captureBox}>
         {images.length < PHOTO_COUNT && (
           <Capture onFaceDetected={set} setMessage={onMessage} cameraMode={cameraMode} />
@@ -151,6 +151,6 @@ export default function Page() {
         ))}
 
       <LoadingOverlay visible={mutation.isPending} />
-    </>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { COMPARE_IMAGE_URL } from "@/constants";
+import { COMPARE_IMAGE_URL, NHN_API_URL } from "@/constants";
 import { TNHNMatchReturn } from "@/types/api/nhn";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
@@ -22,15 +22,12 @@ export async function GET(req: NextRequest) {
         }[];
         nextToken: string;
       };
-    }>(
-      `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups`,
-      {
-        headers: {
-          Authorization: process.env.NHN_SECRET_KEY,
-          "x-nhn-apikey": process.env.NHN_API_KEY,
-        },
+    }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups`, {
+      headers: {
+        Authorization: process.env.NHN_SECRET_KEY,
+        // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
       },
-    )
+    })
     .json();
 
   return NextResponse.json(res);
@@ -54,16 +51,13 @@ export async function POST(req: NextRequest) {
   formData2.append("spoofingCondition", "balanced");
 
   const res = await ky
-    .post<TNHNMatchReturn>(
-      `https://face-recognition-plus.api.nhncloudservice.com/v2.0/appkeys/${process.env.NHN_APP_KEY}/faces/compare`,
-      {
-        headers: {
-          Authorization: process.env.NHN_SECRET_KEY,
-          "x-nhn-apikey": process.env.NHN_API_KEY,
-        },
-        body: formData2,
+    .post<TNHNMatchReturn>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/faces/compare`, {
+      headers: {
+        Authorization: process.env.NHN_SECRET_KEY,
+        // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
       },
-    )
+      body: formData2,
+    })
     .json();
 
   return NextResponse.json(res);

@@ -13,3 +13,6 @@ export const COMPARE_IMAGE_URL = "https://d1e7n5w7ku9qm7.cloudfront.net" + "/min
 export const PHOTO_COUNT = 3;
 
 export const KAKAO_REDIRECT_URI = `${process.env.NEXT_PUBLIC_FRONT_URL}/signin/callback/kakao`;
+
+// `https://face-recognition-plus.api.nhncloudservice.com`,
+export const NHN_API_URL = "https://face-recognition.api.nhncloudservice.com";

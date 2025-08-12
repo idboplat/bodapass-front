@@ -98,7 +98,7 @@ export default function Client() {
   };
 
   return (
-    <>
+    <div className={"mobileLayout"}>
       <BackHeader title="얼굴 인증" onClickBack={onClickBack} />
       <div className={clsx(css.wrap)}>
         {/* {page === 0 && (
@@ -116,6 +116,6 @@ export default function Client() {
         )}
         {page === 1 && <RegistResult result={result} />}
       </div>
-    </>
+    </div>
   );
 }
