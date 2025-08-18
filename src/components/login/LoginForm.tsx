@@ -7,16 +7,11 @@ import emailLoginFn from "@/apis/login";
 import { Box, Button, TextInput } from "@mantine/core";
 import css from "./LoginForm.module.scss";
 import EyeToggleButton from "../common/btn/eye-toggle-button";
-import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { logger } from "@/apis/logger";
-
-const signInDto = z.object({
-  email: z.string().min(1),
-  password: z.string().min(1),
-});
+import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -25,7 +20,7 @@ export default function LoginForm() {
 
   const form = useForm({
     defaultValues: {
-      email: "",
+      externalId: "",
       password: "",
     },
     resolver: zodResolver(signInDto),
@@ -34,24 +29,12 @@ export default function LoginForm() {
   const modalStore = useSetModalStore();
 
   const mutateEmailLogin = useMutation({
-    mutationKey: ["emailLogin"],
     mutationFn: emailLoginFn,
     onMutate: () => setIsLoading(() => true),
     onSuccess: async (data, variables) => {
       await sendMessageToDevice({
         type: "updateDeviceSession",
-        payload: {
-          session: {
-            id: "id",
-            email: variables.email,
-            /** 로그인 종류 */
-            provider: "email",
-            sessionId: "1234567890",
-            sessionKey: "1234567890",
-            /** 로그인한 ISO-시간 */
-            loginAt: new Date().toISOString(),
-          },
-        },
+        payload: data,
       });
     },
     onError: async (error) => {
@@ -60,13 +43,25 @@ export default function LoginForm() {
     },
   });
 
-  const submit = (data: z.infer<typeof signInDto>) => {
+  const submit = (data: TSignInDto) => {
     logger(JSON.stringify(form.formState, null, 2));
 
     if (mutateEmailLogin.isPending) return;
+
+    const trimmedExternalId = data.externalId.trim();
+    const trimmedPassword = data.password.trim();
+
+    if (!trimmedExternalId) {
+      throw new Error("이메일을 입력해주세요.");
+    }
+
+    if (!trimmedPassword) {
+      throw new Error("비밀번호를 입력해주세요.");
+    }
+
     mutateEmailLogin.mutate({
-      email: data.email,
-      password: data.password,
+      externalId: trimmedExternalId,
+      password: trimmedPassword,
     });
   };
 
@@ -78,7 +73,7 @@ export default function LoginForm() {
     <form className={css.form} onSubmit={form.handleSubmit(submit)}>
       <Controller
         control={form.control}
-        name="email"
+        name="externalId"
         render={({ field }) => <TextInput {...field} label="아이디" type="text" />}
       />
 

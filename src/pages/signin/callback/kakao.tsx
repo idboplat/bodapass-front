@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
 import { logger } from "@/apis/logger";
+import { frontApi } from "@/apis/fetcher";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
@@ -17,8 +18,8 @@ export default function Page() {
 
     const getSessionAndSaveDevice = async () => {
       try {
-        const json = await ky
-          .post<{ session: Session }>("/api/auth/token/kakao", {
+        const json = await frontApi
+          .post<{ session: Session }>("api/auth/token/kakao", {
             headers: { "X-CODE": code },
           })
           .json();
@@ -27,7 +28,7 @@ export default function Page() {
 
         await sendMessageToDevice({
           type: "updateDeviceSession",
-          payload: { session: json.session },
+          payload: json,
         });
       } catch (error) {
         if (error instanceof Error) {

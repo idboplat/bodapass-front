@@ -32,11 +32,11 @@ export const checkBearerAuth = (auth: string | null) => {
   }
 };
 
-export const signService = async (corpCd: string, externId: string) => {
+export const signService = async (externalId: string, password: string) => {
   const res = await callTms({
-    svcId: "TBW_000001_R01",
+    svcId: "TCM200001SSP01",
     session: null,
-    data: [corpCd, externId],
+    data: [externalId, password],
   });
 
   const loginData = res.svcRspnData;
@@ -46,11 +46,14 @@ export const signService = async (corpCd: string, externId: string) => {
   }
 
   return {
-    corpCd,
-    externId,
-    sessionId: loginData[0].F01,
-    sessionKey: loginData[0].F02,
-    id: loginData[0].F03,
+    externalId: loginData[0].F02,
+    userId: loginData[0].F03,
+    userNm: loginData[0].F04,
+    loginTp: loginData[0].F05,
+    sessionId: loginData[0].F06,
+    sessionKey: loginData[0].F07,
+    workerTp: loginData[0].F08,
+    brokerId: loginData[0].F09,
   };
 };
 

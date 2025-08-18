@@ -1,34 +1,26 @@
-import { checkBasicAuth, signService } from "@/libraries/auth/auth.service";
-import { REFRESH_COOKIE_NAME, REFRESH_TOKEN_MAX_AGE } from "@/libraries/auth/config";
-import { generateRefreshToken } from "@/libraries/auth/jwt.service";
-import { serverErrorHandler } from "@/libraries/error";
-import { cookies } from "next/headers";
+import { signInDto } from "@/libraries/auth/auth.dto";
+import { signService } from "@/libraries/auth/auth.service";
+import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
     const isSecure = req.nextUrl.protocol === "https:";
-    const { corpCd, externId } = checkBasicAuth(req.headers.get("authorization"));
-    const signinData = await signService(corpCd, externId);
+    const dto = signInDto.safeParse(req.body);
 
-    const payload: JWT = {
+    if (!dto.success) {
+      throw new BadRequestError(dto.error.message);
+    }
+
+    const signinData = await signService(dto.data.externalId, dto.data.password);
+
+    const session: JWT = {
       ...signinData,
-      provider: "email",
-      email: externId,
       loginAt: new Date().toISOString(),
       iss: new Date().toISOString(),
     };
 
-    const newRefreshToken = await generateRefreshToken(payload);
-
-    (await cookies()).set(REFRESH_COOKIE_NAME, newRefreshToken, {
-      maxAge: REFRESH_TOKEN_MAX_AGE,
-      httpOnly: true,
-      secure: isSecure,
-      sameSite: "lax",
-    });
-
-    return NextResponse.json({ message: "Signin success" });
+    return NextResponse.json({ session });
   } catch (error) {
     console.error(error);
     const { status, message } = serverErrorHandler(error);
