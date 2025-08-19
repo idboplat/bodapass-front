@@ -1,9 +1,6 @@
-import ErrorModal from "@/components/common/modal/ErrorModal";
-import { useSetModalStore } from "@/stores/modal";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import emailLoginFn from "@/apis/login";
 import { Box, Button, TextInput } from "@mantine/core";
 import css from "./LoginForm.module.scss";
 import EyeToggleButton from "../common/btn/eye-toggle-button";
@@ -12,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { logger } from "@/apis/logger";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
+import { frontApi } from "@/apis/fetcher";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -26,10 +24,14 @@ export default function LoginForm() {
     resolver: zodResolver(signInDto),
   });
 
-  const modalStore = useSetModalStore();
-
   const mutateEmailLogin = useMutation({
-    mutationFn: emailLoginFn,
+    mutationFn: (dto: TSignInDto) =>
+      frontApi
+        .post<{ session: Session }>("api/auth/signin", {
+          json: dto,
+        })
+        .json()
+        .then((json) => json.session),
     onMutate: () => setIsLoading(() => true),
     onSuccess: async (data, variables) => {
       await sendMessageToDevice({
@@ -38,7 +40,7 @@ export default function LoginForm() {
       });
     },
     onError: async (error) => {
-      await modalStore.push(ErrorModal, { props: { error } });
+      alert(error.message);
       setIsLoading(() => false);
     },
   });

@@ -1,6 +1,7 @@
-import callTms from "../callTms";
+import "server-only";
+import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { InternalServerError } from "../error";
-import { generateAccessToken, parseJwtToken } from "./jwt.service";
+import { parseJwtToken } from "./jwt.service";
 import { cookies } from "next/headers";
 import { REFRESH_COOKIE_NAME } from "./config";
 import { redirect } from "next/navigation";
@@ -32,11 +33,16 @@ export const checkBearerAuth = (auth: string | null) => {
   }
 };
 
-export const signService = async (externalId: string, password: string) => {
-  const res = await callTms({
+export const signService = async (
+  externalId: string,
+  password: string,
+  loginTp: "1" | "2" | "3",
+) => {
+  const res = await callTms<StringRspnData<9>>({
     svcId: "TCM200001SSP01",
     session: null,
-    data: [externalId, password],
+    data: [externalId, password, loginTp],
+    locale: "ko",
   });
 
   const loginData = res.svcRspnData;
@@ -46,13 +52,14 @@ export const signService = async (externalId: string, password: string) => {
   }
 
   return {
+    corpCd: loginData[0].F01,
     externalId: loginData[0].F02,
     userId: loginData[0].F03,
     userNm: loginData[0].F04,
-    loginTp: loginData[0].F05,
+    loginTp: loginData[0].F05 as "1" | "2" | "3",
     sessionId: loginData[0].F06,
     sessionKey: loginData[0].F07,
-    workerTp: loginData[0].F08,
+    workerTp: loginData[0].F08 as "1" | "2" | "3",
     brokerId: loginData[0].F09,
   };
 };

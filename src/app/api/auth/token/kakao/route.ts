@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       })
       .json();
 
-    const signinData = await signService(tokenInfoJson.email, tokenInfoJson.sub);
+    const signinData = await signService(tokenInfoJson.email, tokenInfoJson.sub, "2");
 
     const session: JWT = {
       ...signinData,

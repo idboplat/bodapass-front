@@ -5,14 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const isSecure = req.nextUrl.protocol === "https:";
-    const dto = signInDto.safeParse(req.body);
+    const body = await req.json();
+    const dto = signInDto.safeParse(body);
 
     if (!dto.success) {
       throw new BadRequestError(dto.error.message);
     }
 
-    const signinData = await signService(dto.data.externalId, dto.data.password);
+    const signinData = await signService(dto.data.externalId, dto.data.password, "1");
 
     const session: JWT = {
       ...signinData,
@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ session });
   } catch (error) {
-    console.error(error);
     const { status, message } = serverErrorHandler(error);
+    console.error("server error", status, message);
     return NextResponse.json({ message }, { status: status });
   }
 }

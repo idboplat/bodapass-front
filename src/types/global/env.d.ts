@@ -4,7 +4,6 @@ declare global {
       readonly NODE_ENV: "development" | "production" | "test";
       readonly TZ?: string;
 
-      readonly WAS_HTTP_URL: string;
       readonly AUTH_ACCESS_SECRET: string;
       readonly AUTH_REFRESH_SECRET: string;
 
@@ -42,7 +41,9 @@ declare global {
       readonly NEXT_PUBLIC_KAKAO_JS_KEY: string;
       readonly NEXT_PUBLIC_KAKAO_REST_API_KEY: string;
       readonly KAKAO_CLIENT_SECRET: string;
+
       readonly NEXT_PUBLIC_FRONT_URL: string;
+      readonly NEXT_PUBLIC_WAS_HTTP_URL: string;
     }
   }
 }

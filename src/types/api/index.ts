@@ -1,4 +1,4 @@
-import type { RspnData } from "@/libraries/callTms";
+import type { RspnData } from "@/libraries/call-tms";
 
 export type Range<N extends number, Current extends number[] = []> = Current["length"] extends N // 현재 배열 길이가 N이면
   ? Exclude<Current[number] | N, 0> // 배열에 0을 제외, N을 추가한 후 유니온으로 변환
