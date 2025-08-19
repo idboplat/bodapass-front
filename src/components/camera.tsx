@@ -2,8 +2,6 @@ import { RefObject, useEffect, useState } from "react";
 import css from "./camera.module.scss";
 import { clsx } from "clsx";
 import { Button } from "@mantine/core";
-import { useSetModalStore } from "@/stores/modal";
-import { serverLog } from "@/libraries/logger/server";
 import { RefreshCw } from "lucide-react";
 import { useCameraPermission } from "@/hooks/useCamera";
 
@@ -14,7 +12,6 @@ interface CameraProps {
 }
 
 export default function Camera({ canvasRef, videoRef, isMobile }: CameraProps) {
-  const modalStore = useSetModalStore();
   const { connectDevices, isError } = useCameraPermission(videoRef, isMobile);
 
   return (

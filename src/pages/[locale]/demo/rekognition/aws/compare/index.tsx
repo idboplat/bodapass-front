@@ -14,10 +14,10 @@ import { clsx } from "clsx";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import css from "./index.module.scss";
-import { serverLog } from "@/libraries/logger/server";
 import ky from "ky";
 import Image from "next/image";
 import { COMPARE_IMAGE_URL, GROUP_ID } from "@/constants";
+import { logger } from "@/apis/logger";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -88,12 +88,12 @@ export default function Client() {
 
   const onErrorDetector = (error: LivenessError) => {
     console.error(error);
-    serverLog(error);
+    logger(error.error.message);
   };
 
   const onUserCancelDetector = () => {
     console.log("user cancel");
-    serverLog("user cancel");
+    logger("user cancel");
     resetPage();
   };
 

@@ -4,7 +4,6 @@ import ErrorModal from "@/components/common/modal/ErrorModal";
 import { useLiveness } from "@/hooks/useLiveness";
 import { RECOGNITION_REGION } from "@/libraries/aws/config";
 import { LivenessError } from "@/libraries/error";
-import { useSetModalStore } from "@/stores/modal";
 import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
@@ -20,15 +19,12 @@ interface Props {
 
 function Success({ onSuccess, onError, onUserCancel }: Props) {
   const { query, mutation, credentialProvider } = useLiveness();
-  const modalStore = useSetModalStore();
 
   const onAnalysisComplete = async () => {
     if (mutation.isPending) return;
+
     if (!query.data) {
-      modalStore.push(ErrorModal, {
-        id: "live-session-error",
-        props: { error: new Error("세션이 연결되지 않았습니다.") },
-      });
+      alert("세션이 연결되지 않았습니다.");
       return;
     }
 
