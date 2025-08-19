@@ -112,7 +112,9 @@ export const genarateBody = (args: {
 
 // TMS API를 위한 ky 인스턴스 생성
 export const tmsApi = ky.create({
-  prefixUrl: process.env.NEXT_PUBLIC_WAS_HTTP_URL,
+  prefixUrl: process.env.NEXT_PUBLIC_FRONT_URL.startsWith("https://cw-front.loganstone.org")
+    ? process.env.NEXT_PUBLIC_WAS_HTTP_URL
+    : process.env.NEXT_PUBLIC_WAS_URL + "/was", // proxy설정, CORS 문제 해결
   hooks: {
     beforeRequest: [
       (request) => {
