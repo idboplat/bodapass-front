@@ -15,6 +15,7 @@ import { useTranslation } from "next-i18next";
 export default function Page() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { data: session } = useSession();
 
   const onClick = async () => {
     try {
@@ -40,7 +41,6 @@ export default function Page() {
       <Header />
       <main className={clsx(css.main)}>
         <Lottie animationData={landingAni} loop />
-        {/* <Button onClick={onClick2}>{t("common:0001")}</Button> */}
       </main>
     </div>
   );

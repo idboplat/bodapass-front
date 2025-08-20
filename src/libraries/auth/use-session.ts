@@ -1,16 +1,34 @@
-import { frontApi } from "@/apis/fetcher";
+import { logger } from "@/apis/logger";
+import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
+import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { QueryFunction, useQuery, queryOptions } from "@tanstack/react-query";
 
 export const sessionQueryKey = ["session"] as const;
 
 const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never> = async () => {
-  const json = await frontApi
-    .get<{ messasge: string; session: Session | null }>("api/auth/session", {
-      credentials: "include",
-    })
-    .json();
+  const session = await new Promise<Session | null>(async (resolve, reject) => {
+    try {
+      if (window.ReactNativeWebView) {
+        const payload = await sendMessageToDevice<{
+          message: string;
+          session: Session | null;
+        }>({
+          type: "getDeviceSession",
+          payload: null,
+        });
 
-  return json.session;
+        resolve(payload.session);
+      } else {
+        const session = localStorage.getItem(SESSION_LOCAL_STORAGE_KEY);
+        resolve(session ? JSON.parse(session) : null);
+      }
+    } catch (error) {
+      logger(error instanceof Error ? error.message : "Failed to fetch session");
+      reject(error);
+    }
+  });
+
+  return session;
 };
 
 export const sessionQueryOptions = () =>
