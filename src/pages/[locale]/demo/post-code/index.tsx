@@ -4,6 +4,7 @@ import { RemoveScroll, TextInput } from "@mantine/core";
 import { useRef, useState } from "react";
 import DaumPostcodeEmbed, { Address, DaumPostcodeEmbedProps } from "react-daum-postcode";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
+import PostCodeModal from "@/components/common/modal/post-code-modal";
 
 export default function Page() {
   const [showPostCode, setShowPostCode] = useState(false);
@@ -34,22 +35,6 @@ export default function Page() {
         )}
       </div>
     </div>
-  );
-}
-
-interface PostCodeModalProps extends DaumPostcodeEmbedProps {
-  onClose: () => void;
-}
-
-function PostCodeModal({ onClose, ...props }: PostCodeModalProps) {
-  return (
-    <RemoveScroll removeScrollBar={false}>
-      <ModalInner outSideClick={onClose} fullSize style={{ padding: "0px" }}>
-        <ModalCloseButton onClose={onClose} />
-        <ModalHeader />
-        <DaumPostcodeEmbed {...props} style={{ height: "100%" }} />
-      </ModalInner>
-    </RemoveScroll>
   );
 }
 

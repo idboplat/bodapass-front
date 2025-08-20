@@ -51,7 +51,7 @@ export interface CallTmsArg {
   /** session이 없을때는 null로 */
   session: Session | null;
   svcId: string;
-  locale: "ko";
+  locale: string;
   data: string[];
   /** @default pgSize - 15 */
   pgSize?: number;
@@ -63,6 +63,7 @@ export interface CallTmsArg {
 }
 
 const argumentCustom = (args: string[]) => {
+  console.log("args", args);
   const result: Record<string, string> = {};
   args.forEach((item, i) => {
     const index = i + 1;
@@ -79,7 +80,7 @@ const getHashSha256 = (data: string) => {
 
 export const genarateBody = (args: {
   svcId: string;
-  locale: "ko";
+  locale: string;
   pgSize?: number;
   session: Session | null;
   pgSn?: number;
