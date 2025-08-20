@@ -1,6 +1,6 @@
-import BackHeader from "@/components/common/header/BackHeader";
+import BackHeader from "@/components/common/back-header";
 import { useRouter } from "next/router";
-import { useCamera } from "@/hooks/useCamera";
+import { useCamera } from "@/hooks/use-camera";
 import { useMutation } from "@tanstack/react-query";
 import Capture from "@/components/ocr/Capture";
 import { useState } from "react";

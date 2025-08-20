@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Box, Button, TextInput } from "@mantine/core";
-import css from "./LoginForm.module.scss";
-import EyeToggleButton from "../common/btn/eye-toggle-button";
+import { Box, Button, PasswordInput, TextInput } from "@mantine/core";
+import css from "./signin-form.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
@@ -11,10 +10,9 @@ import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
 import { frontApi } from "@/apis/fetcher";
 import { nativeLogger } from "@/apis/native-logger";
 
-export default function LoginForm() {
+export default function SigninForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isHidePw, setIsHidePw] = useState(true);
 
   const form = useForm({
     defaultValues: {
@@ -67,10 +65,6 @@ export default function LoginForm() {
     });
   };
 
-  const toggleHidePw = () => {
-    setIsHidePw((prev) => !prev);
-  };
-
   return (
     <form className={css.form} onSubmit={form.handleSubmit(submit)}>
       <Controller
@@ -82,15 +76,7 @@ export default function LoginForm() {
       <Controller
         control={form.control}
         name="password"
-        render={({ field }) => (
-          <TextInput
-            {...field}
-            mt={28}
-            label="비밀번호"
-            type={isHidePw ? "password" : "text"}
-            rightSection={<EyeToggleButton value={isHidePw} onClick={toggleHidePw} />}
-          />
-        )}
+        render={({ field }) => <PasswordInput {...field} mt={28} label="비밀번호" />}
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>

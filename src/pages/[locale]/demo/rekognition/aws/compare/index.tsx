@@ -1,8 +1,8 @@
-import BackHeader from "@/components/common/header/BackHeader";
+import BackHeader from "@/components/common/back-header";
 import CompareForm from "@/components/liveness/CompareForm";
 import LivenessDetector from "@/components/liveness/LivenessDetector";
 import RegistResult from "@/components/liveness/RegistResult";
-import { useSinglePage } from "@/hooks/useSinglePage";
+import { useSinglePage } from "@/hooks/use-single-page";
 import { LivenessError } from "@/libraries/error";
 import { TCompareInfo } from "@/types/common";
 import {

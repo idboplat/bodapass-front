@@ -1,6 +1,6 @@
-import App from "./App";
-import ReactQuery from "./ReactQuery";
-import MantineProvider from "./MantineProvider";
+import App from "./app";
+import ReactQuery from "./react-query";
+import MantineProvider from "./mantine-provider";
 import DeviceMessageReceiver from "./device-message-receiver";
 
 interface ConfigsProps {

@@ -1,4 +1,4 @@
-import css from "./Backdrop.module.scss";
+import css from "./backdrop.module.scss";
 
 interface BackdropProps {
   onClick?: () => void;

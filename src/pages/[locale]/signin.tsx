@@ -1,4 +1,4 @@
-import LoginForm from "@/components/login/LoginForm";
+import SigninForm from "@/components/signin/signin-form";
 import css from "./index.module.scss";
 import { KAKAO_REDIRECT_URI } from "@/constants";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
@@ -11,7 +11,7 @@ export default function Page() {
     <main className={css.main}>
       <div className={css.inner}>
         <h1 className={css.title}>{t("auth:0001")}</h1>
-        <LoginForm />
+        <SigninForm />
       </div>
 
       <div>

@@ -1,4 +1,4 @@
-import { ModalProps } from "@/stores/modal";
+import { ModalProps } from "@/types/common";
 import { Button, TextInput, RemoveScroll } from "@mantine/core";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";

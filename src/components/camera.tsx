@@ -3,7 +3,7 @@ import css from "./camera.module.scss";
 import { clsx } from "clsx";
 import { Button } from "@mantine/core";
 import { RefreshCw } from "lucide-react";
-import { useCameraPermission } from "@/hooks/useCamera";
+import { useCameraPermission } from "@/hooks/use-camera";
 
 interface CameraProps {
   canvasRef: RefObject<HTMLCanvasElement>;

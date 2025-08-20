@@ -1,5 +1,5 @@
 import { Button, Loader } from "@mantine/core";
-import css from "./ScreenError.module.scss";
+import css from "./screen-error.module.scss";
 import { FallbackProps } from "react-error-boundary";
 
 interface Props extends FallbackProps {}

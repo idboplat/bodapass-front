@@ -1,5 +1,5 @@
 import { Loader } from "@mantine/core";
-import css from "./ScreenLoading.module.scss";
+import css from "./screen-loading.module.scss";
 
 export default function ScreenLoading() {
   return (

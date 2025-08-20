@@ -1,6 +1,6 @@
 import Link from "next/link";
 import css from "./index.module.scss";
-import BackHeader from "@/components/common/header/BackHeader";
+import BackHeader from "@/components/common/back-header";
 import { useRouter } from "next/router";
 import { clsx } from "clsx";
 

@@ -1,6 +1,6 @@
 import { Button, Title } from "@mantine/core";
 import Link from "next/link";
-import css from "./Header.module.scss";
+import css from "./header.module.scss";
 import { clsx } from "clsx";
 import { useRouter } from "next/router";
 

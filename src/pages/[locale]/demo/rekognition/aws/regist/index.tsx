@@ -1,10 +1,10 @@
-import BackHeader from "@/components/common/header/BackHeader";
+import BackHeader from "@/components/common/back-header";
 import LivenessDetector from "@/components/liveness/LivenessDetector";
 import { useRouter } from "next/router";
 import css from "./index.module.scss";
 import { clsx } from "clsx";
 import { useState } from "react";
-import { useSinglePage } from "@/hooks/useSinglePage";
+import { useSinglePage } from "@/hooks/use-single-page";
 import RegistForm from "@/components/liveness/RegistForm";
 import { TRegistInfo } from "@/types/common";
 import RegistResult from "@/components/liveness/RegistResult";

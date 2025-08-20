@@ -1,7 +1,7 @@
-import ScreenError from "@/components/common/error/ScreenError";
-import ScreenLoading from "@/components/common/loading/ScreenLoading";
-import ErrorModal from "@/components/common/modal/ErrorModal";
-import { useLiveness } from "@/hooks/useLiveness";
+import ScreenError from "@/components/common/screen-error";
+import ScreenLoading from "@/components/common/screen-loading";
+import ErrorModal from "@/components/common/modal/error-modal";
+import { useLiveness } from "@/hooks/use-liveness";
 import { RECOGNITION_REGION } from "@/libraries/aws/config";
 import { LivenessError } from "@/libraries/error";
 import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";

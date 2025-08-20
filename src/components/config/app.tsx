@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { AppContext, createAppStore, SESSION_STORAGE_KEY } from "@/stores/app";
+import { AppContext, createAppStore } from "@/stores/app";
 
 interface AppProps {
   children: React.ReactNode;

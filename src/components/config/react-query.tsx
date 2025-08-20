@@ -21,7 +21,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           if (error instanceof TmsError) {
             if (checkSessionOutCode(error)) {
               //TODO: signout
-              action.logout();
+              // action.logout();
               window.location.href = "/sessionout";
               return;
             }
@@ -58,7 +58,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
             if (error instanceof TmsError) {
               if (checkSessionOutCode(error)) {
                 //TODO: signout
-                action.logout();
+                // action.logout();
                 window.location.href = "/sessionout";
                 return;
               }

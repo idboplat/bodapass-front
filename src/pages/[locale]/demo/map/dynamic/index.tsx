@@ -1,5 +1,5 @@
-import RenderMap from "@/components/map/RenderMap";
-import RenderStaticMap from "@/components/map/RenderStaticMap";
+import RenderMap from "@/components/map/render-map";
+import RenderStaticMap from "@/components/map/render-static-map";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useRouter } from "next/router";
 

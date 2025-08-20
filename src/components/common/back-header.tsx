@@ -1,5 +1,5 @@
 import { ActionIcon, Title } from "@mantine/core";
-import css from "./Header.module.scss";
+import css from "./header.module.scss";
 import { ArrowLeft } from "lucide-react";
 import { clsx } from "clsx";
 

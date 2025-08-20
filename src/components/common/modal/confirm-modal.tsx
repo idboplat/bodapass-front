@@ -1,4 +1,4 @@
-import { ModalProps } from "@/stores/modal";
+import { ModalProps } from "@/types/common";
 import { ModalBody, ModalFooter, ModalHeader, ModalInner, ModalTitle } from "./components";
 import { Button, RemoveScroll } from "@mantine/core";
 

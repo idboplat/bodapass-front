@@ -1,4 +1,4 @@
-import { ModalProps } from "@/stores/modal";
+import { ModalProps } from "@/types/common";
 import { DeleteFacesCommandOutput } from "@aws-sdk/client-rekognition";
 import { Button, RemoveScroll } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";

@@ -1,5 +1,5 @@
 import Camera from "@/components/camera";
-import { useCamera } from "@/hooks/useCamera";
+import { useCamera } from "@/hooks/use-camera";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 
 export default function Page() {
