@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { Box, Button, PasswordInput, TextInput } from "@mantine/core";
+import { Box, Button, PasswordInput, Select, TextInput } from "@mantine/core";
 import css from "./signup-form.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -126,6 +126,7 @@ export default function SignupForm({ type }: Props) {
               label="아이디"
               type="text"
               error={form.formState.errors.externalId?.message}
+              required
             />
           )}
         />
@@ -139,6 +140,7 @@ export default function SignupForm({ type }: Props) {
               mt={28}
               label="비밀번호"
               error={form.formState.errors.password?.message}
+              required
             />
           )}
         />
@@ -152,6 +154,7 @@ export default function SignupForm({ type }: Props) {
               mt={28}
               label="비밀번호 확인"
               error={form.formState.errors.passwordConfirm?.message}
+              required
             />
           )}
         />
@@ -165,20 +168,22 @@ export default function SignupForm({ type }: Props) {
               mt={28}
               label="닉네임"
               error={form.formState.errors.userName?.message}
+              required
             />
           )}
         />
 
         <div className={css.telInputField}>
           <div>
-            <label id="phone-label">전화번호</label>
+            <label id="phone-label">
+              전화번호 <span style={{ color: "red" }}>*</span>
+            </label>
           </div>
 
           <div className={css.telInputBox}>
             <Controller
               control={form.control}
               name="tel1"
-              rules={{ pattern: /^[0-9]$/ }}
               render={({ field }) => (
                 <TextInput
                   {...field}
@@ -186,6 +191,7 @@ export default function SignupForm({ type }: Props) {
                   onChange={(e) => onTelChange(e, field.onChange, 4)}
                   inputMode="numeric"
                   aria-labelledby="phone-label"
+                  required
                 />
               )}
             />
@@ -202,6 +208,7 @@ export default function SignupForm({ type }: Props) {
                   onChange={(e) => onTelChange(e, field.onChange, 4)}
                   inputMode="numeric"
                   aria-labelledby="phone-label"
+                  required
                 />
               )}
             />
@@ -218,6 +225,7 @@ export default function SignupForm({ type }: Props) {
                   onChange={(e) => onTelChange(e, field.onChange, 4)}
                   inputMode="numeric"
                   aria-labelledby="phone-label"
+                  required
                 />
               )}
             />
@@ -234,6 +242,7 @@ export default function SignupForm({ type }: Props) {
                 onChange={undefined}
                 onFocus={openPostCode}
                 error={form.formState.errors.zipCode?.message}
+                required
               />
             )}
           />
@@ -249,6 +258,7 @@ export default function SignupForm({ type }: Props) {
                 onChange={undefined}
                 onFocus={openPostCode}
                 error={form.formState.errors.address?.message}
+                required
               />
             )}
           />
@@ -262,6 +272,7 @@ export default function SignupForm({ type }: Props) {
                 mt={28}
                 label="상세주소"
                 error={form.formState.errors.addressDetail?.message}
+                required
               />
             )}
           />
@@ -276,6 +287,26 @@ export default function SignupForm({ type }: Props) {
                 label="국가코드"
                 error={form.formState.errors.contryCode?.message}
                 disabled
+              />
+            )}
+          />
+
+          <Controller
+            control={form.control}
+            name="workerTp"
+            render={({ field }) => (
+              <Select
+                {...field}
+                mt={28}
+                label="근로 구분"
+                error={form.formState.errors.brokerId?.message}
+                data={[
+                  { value: "1", label: "팀장" },
+                  { value: "2", label: "팀원" },
+                  { value: "3", label: "일용직" },
+                ]}
+                required
+                allowDeselect={false}
               />
             )}
           />
