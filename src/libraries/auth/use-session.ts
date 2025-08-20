@@ -1,4 +1,4 @@
-import { logger } from "@/apis/logger";
+import { nativeLogger } from "@/apis/native-logger";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { QueryFunction, useQuery, queryOptions } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never>
         resolve(session ? JSON.parse(session) : null);
       }
     } catch (error) {
-      logger(error instanceof Error ? error.message : "Failed to fetch session");
+      nativeLogger(error instanceof Error ? error.message : "Failed to fetch session");
       reject(error);
     }
   });

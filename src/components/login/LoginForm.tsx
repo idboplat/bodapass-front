@@ -7,9 +7,9 @@ import EyeToggleButton from "../common/btn/eye-toggle-button";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
-import { logger } from "@/apis/logger";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
 import { frontApi } from "@/apis/fetcher";
+import { nativeLogger } from "@/apis/native-logger";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function LoginForm() {
   });
 
   const submit = (data: TSignInDto) => {
-    logger(JSON.stringify(form.formState, null, 2));
+    nativeLogger(JSON.stringify(form.formState, null, 2));
 
     if (mutateEmailLogin.isPending) return;
 

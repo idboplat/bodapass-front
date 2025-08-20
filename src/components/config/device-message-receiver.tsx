@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect } from "react";
-import { logger } from "@/apis/logger";
 import { TDeviceMessageData, WATING_MESSSAGE_MAP } from "@/hooks/use-device-api";
 import { APP_ORIGIN } from "@/constants";
+import { nativeLogger } from "@/apis/native-logger";
 
 export default function DeviceMessageReceiver({ children }: PropsWithChildren) {
   useEffect(() => {
@@ -24,8 +24,8 @@ export default function DeviceMessageReceiver({ children }: PropsWithChildren) {
           }
         }
       } catch (error) {
-        await logger("error === ");
-        await logger(error instanceof Error ? error.message : String(error));
+        nativeLogger("error === ");
+        nativeLogger(error instanceof Error ? error.message : String(error));
       }
     };
 

@@ -1,4 +1,3 @@
-import { logger } from "@/apis/logger";
 import Header from "@/components/common/header";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
@@ -7,10 +6,10 @@ import { useEffect } from "react";
 import css from "./index.module.scss";
 import { clsx } from "clsx";
 import Lottie from "lottie-react";
-import { Button } from "@mantine/core";
 import landingAni from "/public/assets/lottie/landing.json";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
+import { nativeLogger } from "@/apis/native-logger";
 
 export default function Page() {
   const router = useRouter();
@@ -24,17 +23,19 @@ export default function Page() {
         payload: { message: "hello" },
       });
 
-      logger("result === ");
-      logger(JSON.stringify(result, null, 2));
+      nativeLogger("result === ");
+      nativeLogger(JSON.stringify(result, null, 2));
     } catch (error) {
-      logger("error response === ");
-      logger(error instanceof Error ? error.message : String(error));
+      nativeLogger("error response === ");
+      nativeLogger(error instanceof Error ? error.message : String(error));
     }
   };
 
   const onClick2 = () => {
     alert("test");
   };
+
+  nativeLogger(JSON.stringify(session, null, 2));
 
   return (
     <div className={"mobileLayout"}>

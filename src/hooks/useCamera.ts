@@ -1,4 +1,4 @@
-import { logger } from "@/apis/logger";
+import { nativeLogger } from "@/apis/native-logger";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 export const useCamera = () => {
@@ -55,7 +55,7 @@ export const useCameraPermission = (videoRef: RefObject<HTMLVideoElement>, isMob
       return stream;
     } catch (error) {
       console.error("camera error", error);
-      logger(error instanceof Error ? error.message : "camera error");
+      nativeLogger(error instanceof Error ? error.message : "camera error");
 
       setIsError(() => true);
     } finally {

@@ -17,7 +17,7 @@ import css from "./index.module.scss";
 import ky from "ky";
 import Image from "next/image";
 import { COMPARE_IMAGE_URL, GROUP_ID } from "@/constants";
-import { logger } from "@/apis/logger";
+import { nativeLogger } from "@/apis/native-logger";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;
@@ -88,12 +88,12 @@ export default function Client() {
 
   const onErrorDetector = (error: LivenessError) => {
     console.error(error);
-    logger(error.error.message);
+    nativeLogger(error.error.message);
   };
 
   const onUserCancelDetector = () => {
     console.log("user cancel");
-    logger("user cancel");
+    nativeLogger("user cancel");
     resetPage();
   };
 

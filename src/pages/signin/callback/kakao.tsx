@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
-import { logger } from "@/apis/logger";
 import { frontApi } from "@/apis/fetcher";
+import { nativeLogger } from "@/apis/native-logger";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
@@ -32,7 +32,7 @@ export default function Page() {
         });
       } catch (error) {
         if (error instanceof Error) {
-          logger(error.message);
+          nativeLogger(error.message);
           alert(error.message);
         }
         const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
