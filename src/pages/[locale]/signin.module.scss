@@ -17,3 +17,14 @@
   text-align: center;
   font-size: 24px;
 }
+
+.kakaoSigninButton {
+  background-color: #fee500;
+  color: #000000 85%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  gap: 5px;
+}
