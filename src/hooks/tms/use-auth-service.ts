@@ -14,6 +14,7 @@ export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
           { headers: { "X-CODE": code } },
         )
         .json(),
+    retry: 0, // 카카오 로그인 실패 시 재시도 방지
   });
 
   return { mutation };

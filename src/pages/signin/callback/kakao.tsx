@@ -11,14 +11,16 @@ import { LoadingOverlay } from "@mantine/core";
 // 번역안함.
 export default function Page() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
   const code = router.query.code?.toString();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const { mutation } = useKakaoLoginMutation({ locale });
 
   useEffect(() => {
     if (!code) return;
+    if (isLoading) return; // !!중요!! 한번만 성공하도록함, 두번 호출되는 것을 방지!!
     if (mutation.isPending) return;
 
     setIsLoading(() => true);
@@ -46,7 +48,7 @@ export default function Page() {
         },
       },
     );
-  }, [mutation, code, locale, router]);
+  }, [mutation, code, locale, router, isLoading]);
 
   return (
     <div

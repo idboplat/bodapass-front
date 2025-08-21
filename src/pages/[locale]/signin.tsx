@@ -6,11 +6,21 @@ import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import KakaoLoginIcon from "/public/assets/svg/kakao.svg?react";
+import { Button, UnstyledButton } from "@mantine/core";
 
 export default function Page() {
   const router = useRouter();
   const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
+
+  const onClickKakaoLogin = () => {
+    const kakaoLoginUrl = new URL("https://kauth.kakao.com/oauth/authorize");
+    kakaoLoginUrl.searchParams.set("response_type", "code");
+    kakaoLoginUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
+    kakaoLoginUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
+    kakaoLoginUrl.searchParams.set("prompt", "select_account");
+    window.location.href = kakaoLoginUrl.toString();
+  };
 
   return (
     <main className={css.main}>
@@ -28,15 +38,10 @@ export default function Page() {
         <br />
 
         <div>
-          <a
-            className={css.kakaoSigninButton}
-            href={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
-              process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY
-            }&redirect_uri=${encodeURIComponent(KAKAO_REDIRECT_URI)}&prompt=select_account`}
-          >
+          <UnstyledButton className={css.kakaoSigninButton} onClick={onClickKakaoLogin}>
             <KakaoLoginIcon />
             <span>{t("auth:0002")}</span>
-          </a>
+          </UnstyledButton>
         </div>
       </div>
 
