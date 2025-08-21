@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Box, Button, LoadingOverlay, PasswordInput, Select, TextInput } from "@mantine/core";
 import css from "./signup-form.module.scss";
-import { Controller, useForm, Control } from "react-hook-form";
+import { Controller, useForm, Control, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpDto, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { nativeLogger } from "@/apis/native-logger";
@@ -13,11 +13,16 @@ import { useCheckBrokerMutation, useSigninMutation } from "@/hooks/tms/use-auth-
 import { onNoSpaceChange, onTelChange } from "@/utils/input-handler";
 
 interface Props {
-  /** 이메일 1, 소셜 2, 전화번호 3 */
-  type: "1" | "2" | "3";
+  initState: {
+    loginTp: TSignUpDto["loginTp"];
+    workerTp: TSignUpDto["workerTp"];
+    brokerId: TSignUpDto["brokerId"];
+    externalId: TSignUpDto["externalId"];
+    password: TSignUpDto["password"];
+  };
 }
 
-export default function SignupForm({ type }: Props) {
+export default function SignupForm({ initState }: Props) {
   const router = useRouter();
   const [showPostCode, setShowPostCode] = useState(false);
   const [isValidateBrokerId, setIsValidateBrokerId] = useState(false);
@@ -30,16 +35,19 @@ export default function SignupForm({ type }: Props) {
     mode: "onTouched", // 초기 로딩 시 불필요한 검증 방지
     resolver: zodResolver(signUpDto),
     defaultValues: {
+      // step1
       contryCode: "82",
-      loginTp: type,
-      workerTp: "1" as const,
-      brokerId: "",
+      loginTp: initState.loginTp,
+      workerTp: initState.workerTp,
+      brokerId: initState.brokerId,
 
-      externalId: "",
-      password: "",
-      passwordConfirm: "",
+      // step2
+      externalId: initState.externalId,
+      password: initState.password,
+      passwordConfirm: initState.password,
       userName: "",
 
+      // step3
       tel1: "",
       tel2: "",
       tel3: "",
@@ -48,6 +56,8 @@ export default function SignupForm({ type }: Props) {
       addressDetail: "",
     },
   });
+
+  const workerTp = form.watch("workerTp");
 
   const { mutation: mutationSignup, isLoading: isLoadingSignup } = useSigninMutation({ locale });
   const { mutation: mutationCheckBroker } = useCheckBrokerMutation({ locale });
@@ -75,6 +85,7 @@ export default function SignupForm({ type }: Props) {
         { brokerId },
         {
           onSuccess: () => {
+            form.clearErrors("brokerId");
             setIsValidateBrokerId(() => true);
           },
         },
@@ -87,6 +98,11 @@ export default function SignupForm({ type }: Props) {
   const step1Next = async () => {
     const isValid = await form.trigger(["contryCode", "loginTp", "workerTp", "brokerId"]);
     if (!isValid) return;
+
+    if (form.getValues("workerTp") === "") {
+      form.setError("workerTp", { message: "근로 구분을 선택해주세요." });
+      return;
+    }
 
     if (form.getValues("brokerId").length > 0 && !isValidateBrokerId) {
       form.setError("brokerId", { message: "추천인 아이디가 검증되지 않았습니다." });
@@ -132,6 +148,14 @@ export default function SignupForm({ type }: Props) {
     });
   };
 
+  useEffect(() => {
+    if (workerTp !== "2") {
+      form.setValue("brokerId", "");
+      form.clearErrors("brokerId");
+      setIsValidateBrokerId(() => false);
+    }
+  }, [workerTp, form]);
+
   return (
     <>
       <div className={css.form}>
@@ -145,7 +169,12 @@ export default function SignupForm({ type }: Props) {
           />
         )}
         {step === 2 && (
-          <Step2 control={form.control} onClickNext={step2Next} onClickPrev={step2Prev} />
+          <Step2
+            control={form.control}
+            onClickNext={step2Next}
+            onClickPrev={step2Prev}
+            loginTp={initState.loginTp}
+          />
         )}
         {step === 3 && (
           <Step3
@@ -181,6 +210,8 @@ function Step1({
   onClickBrokerInputButton: (brokerId: string) => void;
   onClickNext: () => void;
 }) {
+  const workerTp = useWatch({ control, name: "workerTp" });
+
   return (
     <div>
       <Controller
@@ -207,7 +238,7 @@ function Step1({
             label="근로 구분"
             error={fieldState.error?.message}
             data={[
-              { value: "1", label: "팀장" },
+              { value: "1", label: "반장" },
               { value: "2", label: "팀원" },
               { value: "3", label: "일용직" },
             ]}
@@ -216,34 +247,35 @@ function Step1({
           />
         )}
       />
-
-      <Controller
-        control={control}
-        name="brokerId"
-        render={({ field, fieldState }) => (
-          <TextInput
-            {...field}
-            classNames={{ wrapper: css.brokerInput }}
-            mt={28}
-            label="추천인 아이디"
-            autoComplete="off"
-            error={fieldState.error?.message}
-            disabled={isValidateBrokerId}
-            placeholder="teamleader1@gmail.com"
-            rightSection={
-              <Button
-                size="compact-xs"
-                variant="subtle"
-                type="button"
-                loading={isLoadingBrokerCheck}
-                onClick={() => onClickBrokerInputButton(field.value)}
-              >
-                {isValidateBrokerId ? "Reset" : "Check"}
-              </Button>
-            }
-          />
-        )}
-      />
+      {workerTp === "2" && (
+        <Controller
+          control={control}
+          name="brokerId"
+          render={({ field, fieldState }) => (
+            <TextInput
+              {...field}
+              classNames={{ wrapper: css.brokerInput }}
+              mt={28}
+              label="반장 아이디"
+              autoComplete="off"
+              error={fieldState.error?.message}
+              disabled={isValidateBrokerId}
+              placeholder="teamleader1@gmail.com"
+              rightSection={
+                <Button
+                  size="compact-xs"
+                  variant="subtle"
+                  type="button"
+                  loading={isLoadingBrokerCheck}
+                  onClick={() => onClickBrokerInputButton(field.value)}
+                >
+                  {isValidateBrokerId ? "Reset" : "Check"}
+                </Button>
+              }
+            />
+          )}
+        />
+      )}
 
       <Box mt={28} style={{ textAlign: "right" }}>
         <Button variant="filled" type="button" onClick={onClickNext}>
@@ -258,10 +290,12 @@ function Step2({
   control,
   onClickNext,
   onClickPrev,
+  loginTp,
 }: {
   control: Control<TSignUpDto>;
   onClickNext: () => void;
   onClickPrev: () => void;
+  loginTp: TSignUpDto["loginTp"];
 }) {
   return (
     <div>
@@ -277,6 +311,7 @@ function Step2({
             onChange={(e) => onNoSpaceChange(e, field.onChange)}
             error={fieldState.error?.message}
             required
+            disabled={loginTp !== "1"}
           />
         )}
       />
@@ -292,24 +327,27 @@ function Step2({
             onChange={(e) => onNoSpaceChange(e, field.onChange)}
             error={fieldState.error?.message}
             required
+            disabled={loginTp !== "1"}
           />
         )}
       />
 
-      <Controller
-        control={control}
-        name="passwordConfirm"
-        render={({ field, fieldState }) => (
-          <PasswordInput
-            {...field}
-            mt={28}
-            label="비밀번호 확인"
-            onChange={(e) => onNoSpaceChange(e, field.onChange)}
-            error={fieldState.error?.message}
-            required
-          />
-        )}
-      />
+      {loginTp === "1" && (
+        <Controller
+          control={control}
+          name="passwordConfirm"
+          render={({ field, fieldState }) => (
+            <PasswordInput
+              {...field}
+              mt={28}
+              label="비밀번호 확인"
+              onChange={(e) => onNoSpaceChange(e, field.onChange)}
+              error={fieldState.error?.message}
+              required
+            />
+          )}
+        />
+      )}
 
       <Controller
         control={control}
