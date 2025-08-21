@@ -63,7 +63,6 @@ export interface CallTmsArg {
 }
 
 const argumentCustom = (args: string[]) => {
-  console.log("args", args);
   const result: Record<string, string> = {};
   args.forEach((item, i) => {
     const index = i + 1;

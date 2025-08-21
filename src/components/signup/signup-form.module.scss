@@ -1,3 +1,7 @@
+.form {
+  position: relative;
+}
+
 .telInputField {
   margin-top: 28px;
 }
@@ -7,4 +11,8 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+}
+
+.brokerInput {
+  --input-right-section-size: 4rem;
 }

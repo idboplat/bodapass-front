@@ -9,7 +9,7 @@ export const signInDto = z.object({
 export type TSignUpDto = z.infer<typeof signUpDto>;
 export const signUpDto = z.object({
   externalId: z.string().min(1),
-  userName: z.string().min(1),
+  userName: z.string().min(1).regex(/^\S+$/, "공백 없이 입력해주세요."),
   loginTp: z.enum(["1", "2", "3"]),
   workerTp: z.enum(["1", "2", "3"]),
   password: z.string().min(1),

@@ -1,5 +1,4 @@
 import { TmsError } from "@/libraries/error/tms-error";
-import { useApp } from "@/stores/app";
 import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
 
@@ -10,8 +9,6 @@ const checkSessionOutCode = (error: TmsError) => {
 };
 
 export default function ReactQuery({ children }: PropsWithChildren) {
-  const action = useApp((state) => state.actions);
-
   const [querClient] = useState(() => {
     return new QueryClient({
       queryCache: new QueryCache({
