@@ -14,14 +14,14 @@ export default function Page() {
   const workerTp = (router.query.workerTp?.toString() || "") as TSignUpDto["workerTp"];
   const brokerId = (router.query.brokerId?.toString() || "") as TSignUpDto["brokerId"];
   const externalId = (router.query.externalId?.toString() || "") as TSignUpDto["externalId"];
-  const password = (router.query.password?.toString() || "") as TSignUpDto["password"];
+  const code = (router.query.code?.toString() || "") as TSignUpDto["password"];
 
   if (!router.isReady) return null;
 
   return (
     <main className={css.main}>
       <div className={css.inner}>
-        <h1 className={css.title}>{t("auth:1001")}</h1>
+        <h1 className={css.title}>{loginTp === "1" ? t("auth:1001") : t("auth:1002")}</h1>
 
         <SignupForm
           initState={{
@@ -29,7 +29,7 @@ export default function Page() {
             workerTp,
             brokerId,
             externalId,
-            password,
+            password: code,
           }}
         />
 

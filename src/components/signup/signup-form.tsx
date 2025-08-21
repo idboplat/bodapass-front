@@ -316,21 +316,23 @@ function Step2({
         )}
       />
 
-      <Controller
-        control={control}
-        name="password"
-        render={({ field, fieldState }) => (
-          <PasswordInput
-            {...field}
-            mt={28}
-            label="비밀번호"
-            onChange={(e) => onNoSpaceChange(e, field.onChange)}
-            error={fieldState.error?.message}
-            required
-            disabled={loginTp !== "1"}
-          />
-        )}
-      />
+      {loginTp === "1" && (
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <PasswordInput
+              {...field}
+              mt={28}
+              label="비밀번호"
+              onChange={(e) => onNoSpaceChange(e, field.onChange)}
+              error={fieldState.error?.message}
+              required
+              disabled={loginTp !== "1"}
+            />
+          )}
+        />
+      )}
 
       {loginTp === "1" && (
         <Controller

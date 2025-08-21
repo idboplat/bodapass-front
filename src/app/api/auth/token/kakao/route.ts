@@ -1,5 +1,5 @@
 import { KAKAO_REDIRECT_URI } from "@/constants";
-import { signService } from "@/libraries/auth/auth.service";
+import { signService, validateExternalId } from "@/libraries/auth/auth.service";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
@@ -56,6 +56,22 @@ export async function POST(request: NextRequest) {
         body: new URLSearchParams({ id_token: tokenJson.id_token }).toString(),
       })
       .json();
+
+    const result = await validateExternalId(tokenInfoJson.email);
+
+    if (!result) {
+      const redirectUrl = new URL("/ko/signup", request.url);
+      redirectUrl.searchParams.set("loginTp", "2");
+      redirectUrl.searchParams.set("externalId", tokenInfoJson.email);
+      redirectUrl.searchParams.set("code", tokenInfoJson.sub);
+
+      return NextResponse.json({
+        token: {
+          externalId: tokenInfoJson.email,
+          code: tokenInfoJson.sub,
+        },
+      });
+    }
 
     const signinData = await signService(tokenInfoJson.email, tokenInfoJson.sub, "2");
 

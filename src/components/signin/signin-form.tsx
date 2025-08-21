@@ -1,18 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { Box, Button, PasswordInput, TextInput } from "@mantine/core";
+import { Box, Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
 import css from "./signin-form.module.scss";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
-import { frontApi } from "@/apis/fetcher";
 import { nativeLogger } from "@/apis/native-logger";
+import { useEmailLoginMutation } from "@/hooks/tms/use-auth-service";
 
 export default function SigninForm() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const locale = router.query.locale?.toString() || "ko";
 
   const form = useForm({
     defaultValues: {
@@ -22,31 +19,12 @@ export default function SigninForm() {
     resolver: zodResolver(signInDto),
   });
 
-  const mutateEmailLogin = useMutation({
-    mutationFn: (dto: TSignInDto) =>
-      frontApi
-        .post<{ session: Session }>("api/auth/signin", {
-          json: dto,
-        })
-        .json()
-        .then((json) => json.session),
-    onMutate: () => setIsLoading(() => true),
-    onSuccess: async (data, variables) => {
-      await sendMessageToDevice({
-        type: "updateDeviceSession",
-        payload: data,
-      });
-    },
-    onError: async (error) => {
-      alert(error.message);
-      setIsLoading(() => false);
-    },
-  });
+  const { isLoading, mutation } = useEmailLoginMutation({ locale });
 
   const submit = (data: TSignInDto) => {
     nativeLogger(JSON.stringify(form.formState, null, 2));
 
-    if (mutateEmailLogin.isPending) return;
+    if (mutation.isPending) return;
 
     const trimmedExternalId = data.externalId.trim();
     const trimmedPassword = data.password.trim();
@@ -59,7 +37,7 @@ export default function SigninForm() {
       throw new Error("비밀번호를 입력해주세요.");
     }
 
-    mutateEmailLogin.mutate({
+    mutation.mutate({
       externalId: trimmedExternalId,
       password: trimmedPassword,
     });
@@ -84,6 +62,8 @@ export default function SigninForm() {
           로그인
         </Button>
       </Box>
+
+      <LoadingOverlay visible={isLoading} />
     </form>
   );
 }

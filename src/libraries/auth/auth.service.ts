@@ -33,6 +33,21 @@ export const checkBearerAuth = (auth: string | null) => {
   }
 };
 
+export const validateExternalId = async (externalId: string) => {
+  const res = await callTms<StringRspnData<1>>({
+    svcId: "TCM200000SSQ01",
+    session: null,
+    data: [externalId],
+    locale: "ko",
+  });
+
+  if (res.svcRspnData === null) {
+    throw new InternalServerError("validation is failed");
+  }
+
+  return res.svcRspnData[0].F01 === "Y";
+};
+
 export const signService = async (
   externalId: string,
   password: string,

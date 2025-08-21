@@ -1,7 +1,53 @@
-import { TSignUpDto } from "@/libraries/auth/auth.dto";
+import { frontApi } from "@/apis/fetcher";
+import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { sendMessageToDevice } from "../use-device-api";
+
+export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
+  const mutation = useMutation({
+    mutationFn: ({ code }: { code: string }) =>
+      frontApi
+        .post<{ session: Session } | { token: { externalId: string; code: string } }>(
+          "api/auth/token/kakao",
+          { headers: { "X-CODE": code } },
+        )
+        .json(),
+  });
+
+  return { mutation };
+};
+
+export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const mutation = useMutation({
+    mutationFn: (dto: TSignInDto) =>
+      frontApi
+        .post<{ session: Session }>("api/auth/signin", {
+          json: dto,
+        })
+        .json()
+        .then((json) => json.session),
+    onMutate: () => setIsLoading(() => true),
+    onSuccess: async (data, _variables) => {
+      await sendMessageToDevice({
+        type: "updateDeviceSession",
+        payload: data,
+      });
+    },
+    onError: async (error) => {
+      alert(error.message);
+      setIsLoading(() => false);
+    },
+  });
+
+  return {
+    isLoading,
+    mutation,
+  };
+};
 
 export const useSigninMutation = ({ locale }: { locale: string }) => {
   /** 데이터 패칭 여부가 아니라 성공 여부에 따라 로딩 처리 */

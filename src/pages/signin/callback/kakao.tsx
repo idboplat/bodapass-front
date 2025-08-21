@@ -1,47 +1,62 @@
 import { sendMessageToDevice } from "@/hooks/use-device-api";
-import ky from "ky";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
-import { frontApi } from "@/apis/fetcher";
 import { nativeLogger } from "@/apis/native-logger";
+import { useKakaoLoginMutation } from "@/hooks/tms/use-auth-service";
+import { LoadingOverlay } from "@mantine/core";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
 export default function Page() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
   const code = router.query.code?.toString();
+
+  const { mutation } = useKakaoLoginMutation({ locale });
 
   useEffect(() => {
     if (!code) return;
+    if (mutation.isPending) return;
 
-    const getSessionAndSaveDevice = async () => {
-      try {
-        const json = await frontApi
-          .post<{ session: Session }>("api/auth/token/kakao", {
-            headers: { "X-CODE": code },
-          })
-          .json();
+    setIsLoading(() => true);
 
-        console.log("json", json);
-
-        await sendMessageToDevice({
-          type: "updateDeviceSession",
-          payload: json,
-        });
-      } catch (error) {
-        if (error instanceof Error) {
+    mutation.mutate(
+      { code },
+      {
+        onSuccess: (data) => {
+          if ("token" in data) {
+            router.push(
+              `/${locale}/signup?loginTp=2&externalId=${data.token.externalId}&code=${data.token.code}`,
+            );
+          } else {
+            sendMessageToDevice({
+              type: "updateDeviceSession",
+              payload: data,
+            });
+          }
+        },
+        onError: (error) => {
+          setIsLoading(() => false);
           nativeLogger(error.message);
           alert(error.message);
-        }
-        const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
-        router.replace(`/${locale}/signin`);
-      }
-    };
+          router.replace(`/${locale}/signin`);
+        },
+      },
+    );
+  }, [mutation, code, locale, router]);
 
-    getSessionAndSaveDevice();
-  }, [code, router]);
-
-  return <div>Loading...</div>;
+  return (
+    <div
+      style={{
+        minWidth: "100svw",
+        minHeight: "100svh",
+        position: "relative",
+      }}
+    >
+      <LoadingOverlay visible={isLoading} />
+    </div>
+  );
 }
