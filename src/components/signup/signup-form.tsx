@@ -9,7 +9,7 @@ import { nativeLogger } from "@/apis/native-logger";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { Address } from "react-daum-postcode";
-import { useCheckBrokerMutation, useSigninMutation } from "@/hooks/tms/use-auth-service";
+import { useCheckBrokerMutation, useSignupMutation } from "@/hooks/tms/use-auth-service";
 import { onNoSpaceChange, onTelChange } from "@/utils/input-handler";
 
 interface Props {
@@ -59,7 +59,7 @@ export default function SignupForm({ initState }: Props) {
 
   const workerTp = form.watch("workerTp");
 
-  const { mutation: mutationSignup, isLoading: isLoadingSignup } = useSigninMutation({ locale });
+  const { mutation: mutationSignup, isLoading: isLoadingSignup } = useSignupMutation({ locale });
   const { mutation: mutationCheckBroker } = useCheckBrokerMutation({ locale });
 
   const openPostCode = () => {

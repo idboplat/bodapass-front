@@ -1,8 +1,9 @@
 import { KAKAO_REDIRECT_URI } from "@/constants";
-import { signService, validateExternalId } from "@/libraries/auth/auth.service";
+import { socialSignInService, validateExternalId } from "@/libraries/auth/auth.service";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
+import dayjs from "@/libraries/dayjs";
 
 type TTokenPayload = {
   iss: string;
@@ -73,13 +74,15 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const signinData = await signService(tokenInfoJson.email, tokenInfoJson.sub, "2");
+    const signinData = await socialSignInService(tokenInfoJson.email, tokenInfoJson.sub);
+
+    const iso = dayjs().toISOString();
 
     const session: JWT = {
       ...signinData,
       /** 로그인한 ISO-시간 */
-      loginAt: new Date().toISOString(),
-      iss: new Date().toISOString(),
+      loginAt: iso,
+      iss: iso,
     };
 
     return NextResponse.json({ session });

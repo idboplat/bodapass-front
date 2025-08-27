@@ -1,7 +1,8 @@
 import { signInDto } from "@/libraries/auth/auth.dto";
-import { signService } from "@/libraries/auth/auth.service";
+import { emailSignInService } from "@/libraries/auth/auth.service";
 import { BadRequestError, serverErrorHandler } from "@/libraries/error";
 import { NextRequest, NextResponse } from "next/server";
+import dayjs from "@/libraries/dayjs";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,12 +13,14 @@ export async function POST(req: NextRequest) {
       throw new BadRequestError(dto.error.message);
     }
 
-    const signinData = await signService(dto.data.externalId, dto.data.password, "1");
+    const signinData = await emailSignInService(dto.data.externalId, dto.data.password);
+
+    const iso = dayjs().toISOString();
 
     const session: JWT = {
       ...signinData,
-      loginAt: new Date().toISOString(),
-      iss: new Date().toISOString(),
+      loginAt: iso,
+      iss: iso,
     };
 
     return NextResponse.json({ session });

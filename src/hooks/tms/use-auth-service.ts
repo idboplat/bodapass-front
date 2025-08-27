@@ -50,7 +50,7 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
   };
 };
 
-export const useSigninMutation = ({ locale }: { locale: string }) => {
+export const useSignupMutation = ({ locale }: { locale: string }) => {
   /** 데이터 패칭 여부가 아니라 성공 여부에 따라 로딩 처리 */
   const [isLoading, setIsLoading] = useState(false);
 
