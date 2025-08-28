@@ -1,6 +1,5 @@
 import path from "node:path";
 import type { NextConfig } from "next";
-import { Rewrite } from "next/dist/lib/load-custom-routes";
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -30,18 +29,6 @@ const nextConfig: NextConfig = {
     fetches: {
       fullUrl: true,
     },
-  },
-  async rewrites() {
-    const lists: Rewrite[] = [];
-
-    if (!process.env.NEXT_PUBLIC_FRONT_URL.startsWith("https://cw-front.loganstone.org")) {
-      lists.push({
-        source: "/was/:path*",
-        destination: "https://cw-was.loganstone.org/:path*",
-      });
-    }
-
-    return lists;
   },
   webpack: (config, options) => {
     // face-api.js

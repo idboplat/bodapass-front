@@ -116,7 +116,7 @@ export const tmsApi = ky.create({
     typeof window === "undefined" || // server side
     process.env.NEXT_PUBLIC_FRONT_URL.startsWith("https://cw-front.loganstone.org") // 브라우저 개발환경
       ? process.env.NEXT_PUBLIC_WAS_HTTP_URL
-      : process.env.NEXT_PUBLIC_FRONT_URL + "/was", // proxy설정, CORS 문제 해결
+      : process.env.NEXT_PUBLIC_FRONT_URL + "/proxy", // proxy설정, CORS 문제 해결
   hooks: {
     beforeRequest: [
       (request) => {
