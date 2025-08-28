@@ -6,6 +6,7 @@ import { i18nConfig } from "/next-i18next.config";
 import { nativeLogger } from "@/apis/native-logger";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth-service";
 import { LoadingOverlay } from "@mantine/core";
+import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
@@ -34,10 +35,22 @@ export default function Page() {
               `/${locale}/signup?loginTp=2&externalId=${data.token.externalId}&code=${data.token.code}`,
             );
           } else {
-            sendMessageToDevice({
-              type: "updateDeviceSession",
-              payload: data,
-            });
+            // 로그인성공
+
+            if (!!window.ReactNativeWebView) {
+              sendMessageToDevice({
+                type: "updateDeviceSession",
+                payload: data,
+              });
+            } else {
+              // 테스트 로그인
+              localStorage.setItem(SESSION_LOCAL_STORAGE_KEY, JSON.stringify(data));
+              const result = confirm("테스트 로그인 성공");
+
+              if (result) {
+                window.location.href = "/";
+              }
+            }
           }
         },
         onError: (error) => {

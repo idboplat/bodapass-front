@@ -4,6 +4,7 @@ import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { sendMessageToDevice } from "../use-device-api";
+import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 
 export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
   const mutation = useMutation({
@@ -33,10 +34,20 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
         .then((json) => json.session),
     onMutate: () => setIsLoading(() => true),
     onSuccess: async (data, _variables) => {
-      await sendMessageToDevice({
-        type: "updateDeviceSession",
-        payload: data,
-      });
+      if (!!window.ReactNativeWebView) {
+        await sendMessageToDevice({
+          type: "updateDeviceSession",
+          payload: data,
+        });
+      } else {
+        // 테스트 로그인
+        localStorage.setItem(SESSION_LOCAL_STORAGE_KEY, JSON.stringify(data));
+        const result = confirm("테스트 로그인 성공");
+
+        if (result) {
+          window.location.href = "/";
+        }
+      }
     },
     onError: async (error) => {
       alert(error.message);

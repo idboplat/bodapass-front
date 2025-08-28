@@ -8,7 +8,7 @@ export const sessionQueryKey = ["session"] as const;
 const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never> = async () => {
   const session = await new Promise<Session | null>(async (resolve, reject) => {
     try {
-      if (window.ReactNativeWebView) {
+      if (!!window.ReactNativeWebView) {
         const payload = await sendMessageToDevice<{
           message: string;
           session: Session | null;
@@ -19,6 +19,7 @@ const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never>
 
         resolve(payload.session);
       } else {
+        // 테스트 로그인
         const session = localStorage.getItem(SESSION_LOCAL_STORAGE_KEY);
         resolve(session ? JSON.parse(session) : null);
       }
