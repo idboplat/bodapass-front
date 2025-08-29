@@ -1,0 +1,30 @@
+.wrap {
+  padding: 0.5rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #000;
+  padding: 0.5rem;
+}
+
+.info {
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  button {
+    flex: 1;
+    padding: 1rem;
+  }
+}
