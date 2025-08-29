@@ -52,12 +52,12 @@ export default function Page() {
             svcRqstList: [
               {
                 svcTranKey: 1,
-                svcId: "TCM200101SSQ01",
+                svcId: "TCW000001SSQ01",
                 svcIntfcVer: "1.0.0",
                 svcMdtyYn: true,
                 svcRqstPageSize: 1,
                 svcRqstPageSn: 1,
-                svcRqstData: [{ F01: "grs0412@naver.com", F02: "minwook" }],
+                svcRqstData: [{ F01: "USER_2580000020", F02: "minwook" }],
               },
             ],
           },
