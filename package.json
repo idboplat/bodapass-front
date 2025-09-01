@@ -36,7 +36,7 @@
     "jsonwebtoken": "^9.0.2",
     "jszip": "^3.10.1",
     "kakao.maps.d.ts": "^0.1.40",
-    "ky": "1.4.0",
+    "ky": "1.7.5",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.514.0",
     "motion": "^12.17.0",

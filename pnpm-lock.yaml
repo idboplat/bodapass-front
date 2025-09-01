@@ -84,8 +84,8 @@ importers:
         specifier: ^0.1.40
         version: 0.1.40
       ky:
-        specifier: 1.4.0
-        version: 1.4.0
+        specifier: 1.7.5
+        version: 1.7.5
       lottie-react:
         specifier: ^2.4.1
         version: 2.4.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -5582,8 +5582,8 @@ packages:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
 
-  ky@1.4.0:
-    resolution: {integrity: sha512-tPhhoGUiEiU/WXR4rt8klIoLdnTtyu+9jVKHd/wauEjYud32jyn63mzKWQweaQrHWxBQtYoVtdcEnYX1LosnFQ==}
+  ky@1.7.5:
+    resolution: {integrity: sha512-HzhziW6sc5m0pwi5M196+7cEBtbt0lCYi67wNsiwMUmz833wloE0gbzJPWKs1gliFKQb34huItDQX97LyOdPdA==}
     engines: {node: '>=18'}
 
   language-subtag-registry@0.3.23:
@@ -14489,7 +14489,7 @@ snapshots:
 
   kleur@3.0.3: {}
 
-  ky@1.4.0: {}
+  ky@1.7.5: {}
 
   language-subtag-registry@0.3.23: {}
 
