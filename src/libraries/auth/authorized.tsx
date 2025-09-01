@@ -20,13 +20,15 @@ interface Props {
 
 export function Authorized({ children, fallback }: Props) {
   const router = useRouter();
+  const locale = router.query.locale as string;
   const { data: session } = useSession();
 
   useEffect(() => {
+    if (!locale) return;
     if (session === null) {
-      router.replace("/signin");
+      router.replace(`/${locale}/signin`);
     }
-  }, [session, router]);
+  }, [session, router, locale]);
 
   if (session === undefined) return <>{fallback}</>;
   if (session === null) return null;

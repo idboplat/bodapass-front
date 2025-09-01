@@ -11,7 +11,7 @@ import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
 import { nativeLogger } from "@/apis/native-logger";
 import { useQuery } from "@tanstack/react-query";
-import { StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-tms";
+import { callR2, StringRspnData } from "@/libraries/call-tms";
 
 export default function Page() {
   const router = useRouter();
@@ -41,30 +41,19 @@ export default function Page() {
 
   const { data: query2 } = useQuery({
     queryKey: ["image"],
-    queryFn: () => {
-      const json = tmsApi
-        .post<TmsResponse<StringRspnData<2>>>("api/r2_load_img", {
-          json: {
-            apiTranKey: 1,
-            apiLangCd: "KO",
-            apiCorpCd: "25800000",
-            apiUserId: "guest",
-            svcRqstList: [
-              {
-                svcTranKey: 1,
-                svcId: "TCW000001SSQ01",
-                svcIntfcVer: "1.0.0",
-                svcMdtyYn: true,
-                svcRqstPageSize: 1,
-                svcRqstPageSn: 1,
-                svcRqstData: [{ F01: "USER_2580000020", F02: "minwook" }],
-              },
-            ],
-          },
-        })
-        .json()
-        .then((res) => res.svcRspnList[0].svcRspnData![0]);
-      return json;
+    queryFn: async () => {
+      const res = await callR2<StringRspnData<2>>({
+        svcId: "TCW000001SSQ01",
+        session: null,
+        locale: "ko",
+        data: ["USER_2580000021", "minwook"],
+      });
+
+      const data = res.svcRspnData?.[0];
+
+      if (!data) throw new Error("FCM999");
+
+      return data;
     },
   });
 
