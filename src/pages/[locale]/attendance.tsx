@@ -14,7 +14,7 @@ const getEmployeesByCorpCd = async ({ session }: { session: Session }) => {
     svcId: "TCM200101SMQ01",
     session,
     locale: "ko",
-    data: ["25800002", "25800005", ""],
+    data: ["25800002", "25800005", "", ""],
   });
 
   const data = result.svcRspnData || [];

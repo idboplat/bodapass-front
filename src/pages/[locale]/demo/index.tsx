@@ -38,6 +38,13 @@ export default function Page() {
               <div className={css.sub}>우편번호 테스트</div>
             </div>
           </Link>
+
+          <Link href={`/${locale}/demo/camera`} className={css.link}>
+            <div className={css.item}>
+              <h3>R2 Upload</h3>
+              <div className={css.sub}>R2 Upload 테스트</div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
