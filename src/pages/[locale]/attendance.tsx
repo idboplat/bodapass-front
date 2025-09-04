@@ -204,7 +204,7 @@ const Content = () => {
                   data-type="out"
                   loading={isUpdateAttPending}
                   onClick={async () => {
-                    if (window.ReactNativeWebView) {
+                    if (!!window.ReactNativeWebView) {
                       const result = await sendMessageToDevice<{
                         message: string;
                         location: {

@@ -11,7 +11,6 @@ import { useTranslation } from "next-i18next";
 import { nativeLogger } from "@/hooks/use-device-api";
 import { useQuery } from "@tanstack/react-query";
 import { callR2, StringRspnData } from "@/libraries/call-tms";
-import { Button } from "@mantine/core";
 
 export default function Page() {
   const router = useRouter();
@@ -69,13 +68,6 @@ export default function Page() {
             style={{ width: "400px", height: "400px" }}
           />
         )}
-        <Button
-          onClick={() => {
-            nativeAlert("test");
-          }}
-        >
-          알림 보내기
-        </Button>
       </main>
     </div>
   );

@@ -56,7 +56,7 @@ export const sendMessageToDevice = <T>({
 };
 
 export const nativeAlert = (message: string) => {
-  if (window.ReactNativeWebView) {
+  if (!!window.ReactNativeWebView) {
     sendMessageToDevice({
       type: "nativeAlert",
       payload: message,
@@ -67,7 +67,7 @@ export const nativeAlert = (message: string) => {
 };
 
 export const nativeLogger = (log: string) => {
-  if (window.ReactNativeWebView) {
+  if (!!window.ReactNativeWebView) {
     sendMessageToDevice({
       type: "nativeLogger",
       payload: log,

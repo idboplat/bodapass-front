@@ -1,4 +1,5 @@
-import { nativeAlert } from "@/hooks/use-device-api";
+import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
+import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { TmsError } from "@/libraries/error/tms-error";
 import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
@@ -18,10 +19,15 @@ export default function ReactQuery({ children }: PropsWithChildren) {
 
           if (error instanceof TmsError) {
             if (checkSessionOutCode(error)) {
-              //TODO: signout
-              // action.logout();
-              window.location.href = "/sessionout";
-              return;
+              if (!!window.ReactNativeWebView) {
+                sendMessageToDevice({
+                  type: "deleteDeviceSession",
+                  payload: null,
+                });
+              } else {
+                localStorage.removeItem(SESSION_LOCAL_STORAGE_KEY);
+                window.location.href = "/sessionout";
+              }
             }
           }
 
@@ -55,10 +61,15 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           onError: async (error) => {
             if (error instanceof TmsError) {
               if (checkSessionOutCode(error)) {
-                //TODO: signout
-                // action.logout();
-                window.location.href = "/sessionout";
-                return;
+                if (!!window.ReactNativeWebView) {
+                  sendMessageToDevice({
+                    type: "deleteDeviceSession",
+                    payload: null,
+                  });
+                } else {
+                  localStorage.removeItem(SESSION_LOCAL_STORAGE_KEY);
+                  window.location.href = "/sessionout";
+                }
               }
             }
 
