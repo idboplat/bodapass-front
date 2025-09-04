@@ -1,7 +1,6 @@
 import { PropsWithChildren, useEffect } from "react";
-import { TDeviceMessageData, WATING_MESSSAGE_MAP } from "@/hooks/use-device-api";
+import { TDeviceMessageData, WATING_MESSSAGE_MAP, nativeLogger } from "@/hooks/use-device-api";
 import { APP_ORIGIN } from "@/constants";
-import { nativeLogger } from "@/apis/native-logger";
 
 export default function DeviceMessageReceiver({ children }: PropsWithChildren) {
   useEffect(() => {
@@ -9,12 +8,15 @@ export default function DeviceMessageReceiver({ children }: PropsWithChildren) {
       try {
         const data: TDeviceMessageData<unknown> = JSON.parse(event.data);
 
-        if (data.origin !== APP_ORIGIN) return;
+        if (data.origin !== APP_ORIGIN) {
+          console.warn("unknown origin", data.origin);
+          return;
+        }
 
         const item = WATING_MESSSAGE_MAP.get(data.type);
 
         if (item) {
-          clearTimeout(item.timer);
+          if (item.timer) clearTimeout(item.timer);
           WATING_MESSSAGE_MAP.delete(data.type);
           item.resolve(data.payload);
         } else {

@@ -1,3 +1,4 @@
+import { nativeAlert } from "@/hooks/use-device-api";
 import { TmsError } from "@/libraries/error/tms-error";
 import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
@@ -27,7 +28,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
           // 에러 모달을 무시하고 싶을 때 queryKey에 ignore를 추가
           if (querykey.includes("ignore")) return;
 
-          alert(error.message);
+          nativeAlert(error.message);
         },
       }),
       defaultOptions: {
@@ -61,7 +62,7 @@ export default function ReactQuery({ children }: PropsWithChildren) {
               }
             }
 
-            alert(error.message);
+            nativeAlert(error.message);
           },
         },
       },

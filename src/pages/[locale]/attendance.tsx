@@ -1,4 +1,3 @@
-import { nativeLogger } from "@/apis/native-logger";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useSession } from "@/libraries/auth/use-session";
 import { callTms, StringRspnData, tmsApi } from "@/libraries/call-tms";
@@ -8,7 +7,7 @@ import css from "./attendance.module.scss";
 import { Button, LoadingOverlay, Select, Tabs, TextInput } from "@mantine/core";
 import { toast } from "sonner";
 import { useState } from "react";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { sendMessageToDevice, nativeLogger, nativeAlert } from "@/hooks/use-device-api";
 
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
@@ -229,11 +228,11 @@ const Content = () => {
                       if (!result.location) return; // 권한 설정 안됬을때
 
                       nativeLogger(JSON.stringify(result, null, 2));
-                      alert(
+                      nativeAlert(
                         `${result.message} \n x: ${result.location.coords.longitude} \n y: ${result.location.coords.latitude}`,
                       );
                     } else {
-                      alert("APP을 찾을 수 없습니다.");
+                      nativeAlert("APP을 찾을 수 없습니다.");
                     }
                   }}
                 >

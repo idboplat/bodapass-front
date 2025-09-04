@@ -3,7 +3,7 @@ import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { sendMessageToDevice } from "../use-device-api";
+import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 
 export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
@@ -50,7 +50,7 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
       }
     },
     onError: async (error) => {
-      alert(error.message);
+      nativeAlert(error.message);
       setIsLoading(() => false);
     },
   });
@@ -87,7 +87,7 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
       }),
     onMutate: () => setIsLoading(() => true),
     onError: (error) => {
-      alert(error.message);
+      nativeAlert(error.message);
       setIsLoading(() => false);
     },
   });

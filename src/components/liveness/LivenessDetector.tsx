@@ -8,6 +8,7 @@ import { FaceLivenessDetectorCore } from "@aws-amplify/ui-react-liveness";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { nativeAlert } from "@/hooks/use-device-api";
 
 // https://ui.docs.amplify.aws/react/connected-components/liveness/customization/
 
@@ -24,7 +25,7 @@ function Success({ onSuccess, onError, onUserCancel }: Props) {
     if (mutation.isPending) return;
 
     if (!query.data) {
-      alert("세션이 연결되지 않았습니다.");
+      nativeAlert("세션이 연결되지 않았습니다.");
       return;
     }
 

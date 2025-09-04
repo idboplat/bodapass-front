@@ -54,3 +54,25 @@ export const sendMessageToDevice = <T>({
     window.ReactNativeWebView?.postMessage(JSON.stringify({ type, payload }));
   });
 };
+
+export const nativeAlert = (message: string) => {
+  if (window.ReactNativeWebView) {
+    sendMessageToDevice({
+      type: "nativeAlert",
+      payload: message,
+    });
+  } else {
+    alert(message);
+  }
+};
+
+export const nativeLogger = (log: string) => {
+  if (window.ReactNativeWebView) {
+    sendMessageToDevice({
+      type: "nativeLogger",
+      payload: log,
+    });
+  } else {
+    console.log("[NATIVE LOG]", log);
+  }
+};

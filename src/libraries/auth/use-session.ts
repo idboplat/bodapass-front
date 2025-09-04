@@ -1,4 +1,4 @@
-import { nativeLogger } from "@/apis/native-logger";
+import { nativeLogger } from "@/hooks/use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { QueryFunction, useQuery, queryOptions } from "@tanstack/react-query";

@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useSession } from "@/libraries/auth/use-session";
+import { nativeAlert } from "@/hooks/use-device-api";
 
 type TImageBlob = { image: Blob; score: number; url: string };
 
@@ -59,7 +60,7 @@ function Home() {
     },
     onSuccess: (data) => {
       setData(() => data);
-      alert("이미지 업로드 성공");
+      nativeAlert("이미지 업로드 성공");
     },
     onError: (error) => {
       setError(() => error.message);

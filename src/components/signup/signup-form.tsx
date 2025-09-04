@@ -5,7 +5,7 @@ import css from "./signup-form.module.scss";
 import { Controller, useForm, Control, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpDto, TSignUpDto } from "@/libraries/auth/auth.dto";
-import { nativeLogger } from "@/apis/native-logger";
+import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { Address } from "react-daum-postcode";
@@ -142,7 +142,7 @@ export default function SignupForm({ initState }: Props) {
 
     mutationSignup.mutate(form.getValues(), {
       onSuccess: () => {
-        alert("회원가입이 완료되었습니다.");
+        nativeAlert("회원가입이 완료되었습니다.");
         router.replace(`/${locale}/signin`);
       },
     });

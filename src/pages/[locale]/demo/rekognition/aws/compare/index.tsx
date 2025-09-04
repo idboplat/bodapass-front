@@ -17,7 +17,7 @@ import css from "./index.module.scss";
 import ky from "ky";
 import Image from "next/image";
 import { COMPARE_IMAGE_URL, GROUP_ID } from "@/constants";
-import { nativeLogger } from "@/apis/native-logger";
+import { nativeLogger } from "@/hooks/use-device-api";
 
 const START_PAGE = 0;
 const LAST_PAGE = 3;

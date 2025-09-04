@@ -1,4 +1,4 @@
-import { nativeLogger } from "@/apis/native-logger";
+import { nativeLogger } from "@/hooks/use-device-api";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 export const useCamera = () => {

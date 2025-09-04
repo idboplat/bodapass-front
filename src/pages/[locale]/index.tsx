@@ -1,17 +1,17 @@
 import Header from "@/components/common/header";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import css from "./index.module.scss";
 import { clsx } from "clsx";
 import Lottie from "lottie-react";
 import landingAni from "/public/assets/lottie/landing.json";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
-import { nativeLogger } from "@/apis/native-logger";
+import { nativeLogger } from "@/hooks/use-device-api";
 import { useQuery } from "@tanstack/react-query";
 import { callR2, StringRspnData } from "@/libraries/call-tms";
+import { Button } from "@mantine/core";
 
 export default function Page() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function Page() {
   };
 
   const onClick2 = () => {
-    alert("test");
+    nativeAlert("test");
   };
 
   // nativeLogger(JSON.stringify(session, null, 2));
@@ -69,6 +69,13 @@ export default function Page() {
             style={{ width: "400px", height: "400px" }}
           />
         )}
+        <Button
+          onClick={() => {
+            nativeAlert("test");
+          }}
+        >
+          알림 보내기
+        </Button>
       </main>
     </div>
   );
