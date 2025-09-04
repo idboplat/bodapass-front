@@ -1,8 +1,8 @@
 export interface IWatingItem {
   resolve: (data: any) => void;
   reject: (error: Error) => void;
-  timer: number | NodeJS.Timeout;
-  timeout: number;
+  timer: NodeJS.Timeout | null;
+  timeout: number | "infinity";
 }
 
 /** id , resolve function mapper  */
@@ -21,20 +21,25 @@ export const sendMessageToDevice = <T>({
 }: {
   type: string;
   payload: any;
-  timeout?: number;
+  /** infinity일때 timeout 없음 */
+  timeout?: number | "infinity";
 }) => {
   return new Promise<T>((resolve, reject) => {
     if (!window.ReactNativeWebView) throw new Error("ReactNativeWebView is not defined");
 
-    const timer = setTimeout(() => {
-      WATING_MESSSAGE_MAP.delete(type);
-      reject(new Error("timeout"));
-    }, timeout);
+    let timer: NodeJS.Timeout | null = null;
+
+    if (timeout !== "infinity") {
+      timer = setTimeout(() => {
+        WATING_MESSSAGE_MAP.delete(type);
+        reject(new Error("timeout"));
+      }, timeout);
+    }
 
     const cache = WATING_MESSSAGE_MAP.get(type);
 
     if (cache) {
-      clearTimeout(cache.timer);
+      if (cache.timer) clearTimeout(cache.timer);
       WATING_MESSSAGE_MAP.delete(type);
       reject(new Error("duplicate message type"));
     }

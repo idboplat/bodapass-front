@@ -8,6 +8,7 @@ import css from "./attendance.module.scss";
 import { Button, LoadingOverlay, Select, Tabs, TextInput } from "@mantine/core";
 import { toast } from "sonner";
 import { useState } from "react";
+import { sendMessageToDevice } from "@/hooks/use-device-api";
 
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
@@ -197,6 +198,46 @@ const Content = () => {
                   }
                 >
                   퇴근
+                </Button>
+                <Button
+                  variant="filled"
+                  color="green"
+                  data-type="out"
+                  loading={isUpdateAttPending}
+                  onClick={async () => {
+                    if (window.ReactNativeWebView) {
+                      const result = await sendMessageToDevice<{
+                        message: string;
+                        location: {
+                          timestamp: number;
+                          coords: {
+                            longitude: number;
+                            latitude: number;
+                            heading: number;
+                            accuracy: number;
+                            altitude: number;
+                            altitudeAccuracy: number;
+                            speed: number;
+                          };
+                        };
+                      }>({
+                        type: "getDeviceLocation",
+                        payload: null,
+                        timeout: "infinity", // 10초 이상 대기
+                      });
+
+                      if (!result.location) return; // 권한 설정 안됬을때
+
+                      nativeLogger(JSON.stringify(result, null, 2));
+                      alert(
+                        `${result.message} \n x: ${result.location.coords.longitude} \n y: ${result.location.coords.latitude}`,
+                      );
+                    } else {
+                      alert("APP을 찾을 수 없습니다.");
+                    }
+                  }}
+                >
+                  위치정보 조회
                 </Button>
               </div>
             </div>

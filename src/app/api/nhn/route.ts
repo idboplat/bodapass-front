@@ -8,8 +8,9 @@ export async function GET(req: NextRequest) {
   // url 파라매터로 페이지네이션
   // limit 1~200
   // next-token 다음 페이지 토큰
+
   const res = await ky
-    .post<{
+    .get<{
       header: {
         resultCode: number;
         resultMessage: string;
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest) {
         }[];
         nextToken: string;
       };
-    }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups`, {
+    }>(`${NHN_API_URL}/v2.0/appkeys/${process.env.NHN_APP_KEY}/groups?limit=100`, {
       headers: {
         Authorization: process.env.NHN_SECRET_KEY,
         // "x-nhn-apikey": process.env.NHN_API_KEY, // 안티 스푸핑
