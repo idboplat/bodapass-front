@@ -8,6 +8,7 @@ import { Button, LoadingOverlay, Select, Tabs, TextInput } from "@mantine/core";
 import { toast } from "sonner";
 import { useState } from "react";
 import { sendMessageToDevice, nativeLogger, nativeAlert } from "@/hooks/use-device-api";
+import { useRouter } from "next/router";
 
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
@@ -72,6 +73,7 @@ export default function Attendance() {
 const Content = () => {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [mastCorpCd, setMastCorpCd] = useState<string>("");
   const [corpCd, setCorpCd] = useState<string>("");
@@ -106,6 +108,8 @@ const Content = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
       toast.success("출퇴근 정보가 업데이트되었습니다.");
+
+      router.push(`/ko/capture`);
     },
   });
 
