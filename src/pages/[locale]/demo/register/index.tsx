@@ -1,31 +1,31 @@
 // components/VideoCapture.tsx
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
-import css from "./capture.module.scss";
+import css from "./index.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callTms2, StringRspnData, callR2 } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
+import { TextInput } from "@mantine/core";
 
 const PADDING = 75;
 const SCALE = 1;
 
-interface CaptureProps {
-  attCd: "I" | "O" | "A";
-  mastCorpCd: string;
-  corpCd: string;
-  userId: string;
+interface RegisterProps {
+  // attCd: "I" | "O" | "A";
+  // mastCorpCd: string;
+  // corpCd: string;
+  // userId: string;
   // onFaceDetected: (args: { image: Blob; score: number }) => void;
   // setMessage: (message: string) => void;
   // cameraMode: "front" | "back";
 }
 
-export default function Capture() {
+export default function Register() {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId } = router.query;
 
   if (!router.isReady) {
     return <div>Loading...</div>;
@@ -34,28 +34,19 @@ export default function Capture() {
   return (
     <Authorized>
       <Content
-        attCd={attCd as "I" | "O" | "A"}
-        mastCorpCd={mastCorpCd as string}
-        corpCd={corpCd as string}
-        userId={userId as string}
-        // onFaceDetected={onFaceDetected}
-        // setMessage={setMessage}
+      // userId={userId as string}
+      // onFaceDetected={onFaceDetected}
+      // setMessage={setMessage}
       />
     </Authorized>
   );
 }
 
-function Content({
-  attCd,
-  mastCorpCd,
-  corpCd,
-  userId,
-}: // onFaceDetected,
+function Content({}: // onFaceDetected,
 // setMessage,
 // cameraMode,
-CaptureProps) {
+RegisterProps) {
   const { data: session } = useSession();
-  const queryClient = useQueryClient();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
 
   const router = useRouter();
@@ -67,23 +58,15 @@ CaptureProps) {
   if (!session) throw new Error("Session is not found");
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (args: {
-      mastCorpCd: string;
-      corpCd: string;
-      userId: string;
-      attCd: "I" | "O" | "A";
-      bigTxt: string;
-    }) =>
-      callTms<StringRspnData<1>>({
-        svcId: "TCM200101SSP01",
+    mutationFn: (args: { userId: string; bigTxt: string }) =>
+      callTms2<StringRspnData<1>>({
+        svcId: "TEW900001SSP01",
         session,
         locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.bigTxt],
+        data: [args.userId, "jpeg", args.bigTxt],
       }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-      toast.success("출퇴근 정보가 업데이트되었습니다.");
-      router.push(`/ko/attendance`);
+      toast.success("등록이 완료되었습니다.");
     },
   });
 
@@ -110,15 +93,23 @@ CaptureProps) {
     captureCanvas.getContext("2d")!.fillStyle = "red";
     captureCanvas.getContext("2d")!.fillText("0", 0, 32);
 
-    // 해상도 정보 출력
+    // Base64로 변환
+    const base64String = captureCanvas.toDataURL("image/jpeg", 1.0);
+    console.log("base64String", base64String);
+
+    // Base64 문자열에서 실제 형식 추출
+    const mimeType = base64String.split(",")[0].split(":")[1].split(";")[0];
+    const format = mimeType.split("/")[1].toUpperCase();
+    const extension = `.${mimeType.split("/")[1]}`;
+
     console.log("촬영 이미지 해상도:", {
       width: captureCanvas.width,
       height: captureCanvas.height,
       aspectRatio: (captureCanvas.width / captureCanvas.height).toFixed(2),
+      mimeType: mimeType,
+      format: format,
+      extension: extension,
     });
-
-    // Base64로 변환
-    const base64String = captureCanvas.toDataURL("image/png", 1.0);
 
     // Blob도 생성 (onFaceDetected 콜백용)
     captureCanvas.toBlob(
@@ -136,17 +127,14 @@ CaptureProps) {
         setMessage("");
         videoRef.current?.play();
       },
-      "image/png",
+      "image/jpeg",
       1.0,
     );
 
     // Base64 문자열을 bigTxt로 전달하여 API 호출
     mutate({
-      mastCorpCd,
-      corpCd,
-      userId,
+      userId: session.userId,
       bigTxt: base64String.split(",")[1],
-      attCd,
     });
   };
 
@@ -421,6 +409,9 @@ CaptureProps) {
       <div className={css.back} onClick={router.back}>
         <ArrowLeft /> Back
       </div>
+      <div className={css.userIdInput}>
+        <TextInput label="사용자 ID" type="text" value={session.userId} disabled />
+      </div>
       <div className={css.capture}>
         <video
           className={css.video}
@@ -448,8 +439,6 @@ CaptureProps) {
       <div
         style={{
           width: "100%",
-          //   height: "100%",
-          //   backgroundColor: "red",
           zIndex: 1000,
           textAlign: "center",
           cursor: "pointer",

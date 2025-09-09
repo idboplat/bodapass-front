@@ -45,6 +45,13 @@ export default function Page() {
               <div className={css.sub}>R2 Upload 테스트</div>
             </div>
           </Link>
+
+          <Link href={`/${locale}/demo/register`} className={css.link}>
+            <div className={css.item}>
+              <h3>Face Register</h3>
+              <div className={css.sub}>얼굴 등록 테스트</div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

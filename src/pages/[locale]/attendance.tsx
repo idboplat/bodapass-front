@@ -79,6 +79,17 @@ const Content = () => {
   const [corpCd, setCorpCd] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
+  const onClickAttBtn = (
+    attCd: "I" | "O" | "A",
+    mastCorpCd: string,
+    corpCd: string,
+    userId: string,
+  ) => {
+    router.push(
+      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}`,
+    );
+  };
+
   if (!session) throw new Error("Session is not found");
 
   const { data: siteInfo, isPending: isSiteInfoPending } = useQuery({
@@ -92,26 +103,26 @@ const Content = () => {
     enabled: !!mastCorpCd && !!corpCd,
   });
 
-  const { mutate: updateAtt, isPending: isUpdateAttPending } = useMutation({
-    mutationFn: (args: {
-      masterCorpCd: string;
-      corpCd: string;
-      userId: string;
-      attCd: "I" | "O" | "A";
-    }) =>
-      callTms<StringRspnData<1>>({
-        svcId: "TCM200101SSP01",
-        session,
-        locale: "ko",
-        data: [args.masterCorpCd, args.corpCd, args.userId, args.attCd],
-      }),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-      toast.success("출퇴근 정보가 업데이트되었습니다.");
+  // const { mutate: updateAtt, isPending: isUpdateAttPending } = useMutation({
+  //   mutationFn: (args: {
+  //     masterCorpCd: string;
+  //     corpCd: string;
+  //     userId: string;
+  //     attCd: "I" | "O" | "A";
+  //   }) =>
+  //     callTms<StringRspnData<1>>({
+  //       svcId: "TCM200101SSP01",
+  //       session,
+  //       locale: "ko",
+  //       data: [args.masterCorpCd, args.corpCd, args.userId, args.attCd],
+  //     }),
+  //   onSuccess: async () => {
+  //     await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
+  //     toast.success("출퇴근 정보가 업데이트되었습니다.");
 
-      router.push(`/ko/capture`);
-    },
-  });
+  //     router.push(`/ko/capture`);
+  //   },
+  // });
 
   const handleSearch = () => {
     queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01", session, mastCorpCd, corpCd] });
@@ -174,15 +185,15 @@ const Content = () => {
                   variant="filled"
                   color="blue"
                   data-type="in"
-                  loading={isUpdateAttPending}
-                  onClick={() =>
-                    updateAtt({
-                      masterCorpCd: d.mastCorpCd,
-                      corpCd: d.corpCd,
-                      userId: d.userId,
-                      attCd: "I",
-                    })
-                  }
+                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId)}
+                  // onClick={() =>
+                  //   updateAtt({
+                  //     masterCorpCd: d.mastCorpCd,
+                  //     corpCd: d.corpCd,
+                  //     userId: d.userId,
+                  //     attCd: "I",
+                  //   })
+                  // }
                 >
                   출근
                 </Button>
@@ -190,15 +201,15 @@ const Content = () => {
                   variant="filled"
                   color="red"
                   data-type="out"
-                  loading={isUpdateAttPending}
-                  onClick={() =>
-                    updateAtt({
-                      masterCorpCd: d.mastCorpCd,
-                      corpCd: d.corpCd,
-                      userId: d.userId,
-                      attCd: "O",
-                    })
-                  }
+                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId)}
+                  // onClick={() =>
+                  //   updateAtt({
+                  //     masterCorpCd: d.mastCorpCd,
+                  //     corpCd: d.corpCd,
+                  //     userId: d.userId,
+                  //     attCd: "O",
+                  //   })
+                  // }
                 >
                   퇴근
                 </Button>
@@ -206,7 +217,6 @@ const Content = () => {
                   variant="filled"
                   color="green"
                   data-type="out"
-                  loading={isUpdateAttPending}
                   onClick={async () => {
                     if (!!window.ReactNativeWebView) {
                       const result = await sendMessageToDevice<{
