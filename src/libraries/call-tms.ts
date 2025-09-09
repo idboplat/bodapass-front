@@ -277,7 +277,7 @@ export const callTms2 = async <T extends RspnData<any>>(args: CallTmsArg) => {
   }
 
   const tmsResult = await tmsApi
-    .post<TmsResponse<T>>("api/TEW900001SSP01", {
+    .post<TmsResponse<T>>("api/TCW000001SSP01", {
       headers,
       body: jsonBody,
       signal: args.signal,

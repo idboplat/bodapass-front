@@ -60,7 +60,7 @@ RegisterProps) {
   const { mutate, isPending } = useMutation({
     mutationFn: (args: { userId: string; bigTxt: string }) =>
       callTms2<StringRspnData<1>>({
-        svcId: "TEW900001SSP01",
+        svcId: "TCW000001SSP01",
         session,
         locale: "ko",
         data: [args.userId, "jpeg", args.bigTxt],
@@ -448,10 +448,16 @@ RegisterProps) {
         }}
         onClick={capture}
       >
-        <div>
-          <Camera width="24" height="24" />
-        </div>
-        <div>촬영</div>
+        {!isPending ? (
+          <>
+            <div>
+              <Camera width="24" height="24" />
+            </div>
+            <div>촬영</div>
+          </>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </>
   );
