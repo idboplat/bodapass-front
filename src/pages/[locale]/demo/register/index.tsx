@@ -5,11 +5,12 @@ import css from "./index.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, StringRspnData, TmsResponse } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
 import { TextInput } from "@mantine/core";
+import { tmsApi } from "@/libraries/call-tms";
 
 const PADDING = 75;
 const SCALE = 1;
@@ -48,6 +49,7 @@ function Content({}: // onFaceDetected,
 RegisterProps) {
   const { data: session } = useSession();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -58,14 +60,29 @@ RegisterProps) {
   if (!session) throw new Error("Session is not found");
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (args: { userId: string; bigTxt: string }) =>
-      callTms<StringRspnData<1>>({
-        svcId: "TCW000001SSP01",
-        session,
-        locale: "ko",
-        data: [args.userId, "jpeg", args.bigTxt],
-        pathName: "TCW000001SSP01",
-      }),
+    mutationFn: async (args: { userId: string; bigTxt: Blob }) => {
+      // callTms<StringRspnData<1>>({
+      //   svcId: "TCW000001SSP01",
+      //   session,
+      //   locale: "ko",
+      //   data: [args.userId, "jpeg", args.bigTxt],
+      //   pathName: "TCW000001SSP01",
+      // })
+      console.group("bigTxt : ", args.bigTxt);
+      const url = URL.createObjectURL(args.bigTxt);
+      setPreviewUrl(url);
+      const formData = new FormData();
+      formData.append("F01", args.userId);
+      formData.append("F02", "jpeg");
+      formData.append("F03", args.bigTxt, "face.jpeg");
+      const tmsResult = await tmsApi
+        .post<TmsResponse<StringRspnData<1>>>("api/TCW000001SSP01", {
+          body: formData,
+        })
+        .json();
+      const tmsData = tmsResult?.svcRspnList?.[0];
+      return tmsData;
+    },
     onSuccess: async () => {
       toast.success("등록이 완료되었습니다.");
       router.push("/ko/demo/register");
@@ -77,8 +94,8 @@ RegisterProps) {
     videoRef.current.pause();
 
     const captureCanvas = document.createElement("canvas");
-    captureCanvas.width = videoRef.current.videoWidth;
-    captureCanvas.height = videoRef.current.videoHeight;
+    captureCanvas.width = videoRef.current.videoWidth * 2;
+    captureCanvas.height = videoRef.current.videoHeight * 2;
 
     // 좌우 반전을 위한 변환 적용
     if (cameraMode === "front") {
@@ -129,6 +146,10 @@ RegisterProps) {
       (blob) => {
         if (blob) {
           // onFaceDetected({ image: blob, score: 0 });
+          mutate({
+            userId: session.userId,
+            bigTxt: blob,
+          });
         }
 
         // 메모리 정리
@@ -145,10 +166,10 @@ RegisterProps) {
     );
 
     // Base64 문자열을 bigTxt로 전달하여 API 호출
-    mutate({
-      userId: session.userId,
-      bigTxt: base64String.split(",")[1],
-    });
+    // mutate({
+    //   userId: session.userId,
+    //   bigTxt: base64String.split(",")[1],
+    // });
   };
 
   useEffect(() => {
@@ -465,6 +486,7 @@ RegisterProps) {
             <span>처리 중...</span>
           </div>
         )}
+        {/* {previewUrl && <img src={previewUrl} alt="preview" />} */}
       </div>
     </>
   );

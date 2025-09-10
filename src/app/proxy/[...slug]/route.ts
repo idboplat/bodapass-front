@@ -7,10 +7,15 @@ export const POST = async (
   { params }: { params: Promise<{ slug: string[] }> },
 ) => {
   try {
-    const json = await request.json();
+    const formData = await request.formData();
+    const formData2 = new FormData();
 
-    const hash = request.headers.get("x-content-hash");
-    const sesId = request.headers.get("X-TMS-SES-ID");
+    for (const [key, value] of formData.entries()) {
+      formData2.append(key, value);
+    }
+
+    // const header = request.headers;
+    // const contentType = header.get("Content-Type");
 
     const pathname = (await params).slug.join("/");
 
@@ -18,19 +23,18 @@ export const POST = async (
 
     console.log("[PROXY]", url);
 
-    const response = await tmsApi
-      .post(pathname, {
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          "X-Content-Hash": hash || "",
-          "X-TMS-SES-ID": sesId || "",
-        },
-        cache: "no-cache",
-        json,
-      })
-      .json();
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
 
-    return NextResponse.json(response);
+    const json = await response.json();
+    // .post(pathname, {
+    //   body: formData2,
+    // })
+    // .json();
+
+    return NextResponse.json(json);
   } catch (error) {
     console.error(error);
     const { message, status } = serverErrorHandler(error);

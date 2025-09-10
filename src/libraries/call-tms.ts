@@ -114,6 +114,7 @@ export const genarateBody = (args: {
 // TMS API를 위한 ky 인스턴스 생성
 export const tmsApi = ky.create({
   prefixUrl:
+    true ||
     typeof window === "undefined" || // server side
     process.env.NEXT_PUBLIC_FRONT_URL.startsWith("https://cw-front.loganstone.org") // 브라우저 개발환경
       ? process.env.NEXT_PUBLIC_WAS_HTTP_URL
@@ -121,8 +122,25 @@ export const tmsApi = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        // 기본 헤더만 설정
-        request.headers.set("Content-type", "application/json; charset=UTF-8");
+        console.log("request.headers", request.headers);
+        // FormData인 경우 헤더를 설정하지 않음
+        const contentType = request.headers.get("Content-type");
+        if (contentType && contentType.includes("multipart/form-data")) {
+          console.log("multipart/form-data detected, skipping header setting");
+          return;
+        }
+
+        // FormData인 경우 헤더를 설정하지 않음
+        if (request.body instanceof FormData) {
+          console.log("FormData detected, skipping header setting");
+          return;
+        }
+
+        if (!request.headers.get("Content-type")) {
+          // 기본 헤더가 없으면 json으로
+          console.log("기본헤더 추가함..!!");
+          request.headers.set("Content-type", "application/json; charset=UTF-8");
+        }
       },
     ],
     beforeRetry: [],
