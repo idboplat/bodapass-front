@@ -38,37 +38,37 @@ export default function Page() {
 
   // nativeLogger(JSON.stringify(session, null, 2));
 
-  const { data: query2 } = useQuery({
-    queryKey: ["image"],
-    queryFn: async () => {
-      const res = await callTms<StringRspnData<2>>({
-        svcId: "TCW000001SSQ01",
-        session: null,
-        locale: "ko",
-        data: ["USER_2580000021", "minwook"],
-        pathName: "r2_bucket",
-      });
+  // const { data: query2 } = useQuery({
+  //   queryKey: ["image"],
+  //   queryFn: async () => {
+  //     const res = await callTms<StringRspnData<2>>({
+  //       svcId: "TCW000001SSQ01",
+  //       session: null,
+  //       locale: "ko",
+  //       data: ["USER_2580000021", "minwook"],
+  //       pathName: "r2_bucket",
+  //     });
 
-      const data = res.svcRspnData?.[0];
+  //     const data = res.svcRspnData?.[0];
 
-      if (!data) throw new Error("FCM999");
+  //     if (!data) throw new Error("FCM999");
 
-      return data;
-    },
-  });
+  //     return data;
+  //   },
+  // });
 
   return (
     <div className={"mobileLayout"}>
       <Header />
       <main className={clsx(css.main)}>
         <Lottie animationData={landingAni} loop />
-        {query2?.F02 && (
+        {/* {query2?.F02 && (
           <img
             src={`data:image/jpeg;base64,${query2.F02}`}
             alt="image"
             style={{ width: "400px", height: "400px" }}
           />
-        )}
+        )} */}
       </main>
     </div>
   );

@@ -49,7 +49,6 @@ function Content({}: // onFaceDetected,
 RegisterProps) {
   const { data: session } = useSession();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -69,8 +68,7 @@ RegisterProps) {
       //   pathName: "TCW000001SSP01",
       // })
       console.group("bigTxt : ", args.bigTxt);
-      const url = URL.createObjectURL(args.bigTxt);
-      setPreviewUrl(url);
+
       const formData = new FormData();
       formData.append("F01", args.userId);
       formData.append("F02", "jpeg");
@@ -486,7 +484,6 @@ RegisterProps) {
             <span>처리 중...</span>
           </div>
         )}
-        {/* {previewUrl && <img src={previewUrl} alt="preview" />} */}
       </div>
     </>
   );
