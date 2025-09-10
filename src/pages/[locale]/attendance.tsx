@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { sendMessageToDevice, nativeLogger, nativeAlert } from "@/hooks/use-device-api";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
 
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
@@ -37,7 +38,7 @@ const getEmployeesByCorpCd = async ({
   userId: string;
 }) => {
   // teamleader1@gmail.com 고정 테스트
-  const result = await callTms<StringRspnData<10>>({
+  const result = await callTms<StringRspnData<12>>({
     svcId: "TCM200101SMQ01",
     session,
     locale: "ko",
@@ -57,6 +58,7 @@ const getEmployeesByCorpCd = async ({
     cntr: d.F08 === "Y",
     ins: d.F09 === "Y",
     userNm: d.F10,
+    faceImgNm: d.F11,
   }));
 };
 
@@ -84,9 +86,10 @@ const Content = () => {
     mastCorpCd: string,
     corpCd: string,
     userId: string,
+    faceImgNm: string,
   ) => {
     router.push(
-      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}`,
+      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}&faceImgNm=${faceImgNm}`,
     );
   };
 
@@ -103,27 +106,6 @@ const Content = () => {
     enabled: !!mastCorpCd && !!corpCd,
   });
 
-  // const { mutate: updateAtt, isPending: isUpdateAttPending } = useMutation({
-  //   mutationFn: (args: {
-  //     masterCorpCd: string;
-  //     corpCd: string;
-  //     userId: string;
-  //     attCd: "I" | "O" | "A";
-  //   }) =>
-  //     callTms<StringRspnData<1>>({
-  //       svcId: "TCM200101SSP01",
-  //       session,
-  //       locale: "ko",
-  //       data: [args.masterCorpCd, args.corpCd, args.userId, args.attCd],
-  //     }),
-  //   onSuccess: async () => {
-  //     await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-  //     toast.success("출퇴근 정보가 업데이트되었습니다.");
-
-  //     router.push(`/ko/capture`);
-  //   },
-  // });
-
   const handleSearch = () => {
     queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01", session, mastCorpCd, corpCd] });
   };
@@ -131,92 +113,113 @@ const Content = () => {
   return (
     <>
       <div className={css.wrap}>
-        {/* <Tabs>
-        <Tabs.List>
-          <Tabs.Tab value="I">출근</Tabs.Tab>
-          <Tabs.Tab value="O">퇴근</Tabs.Tab>
-        </Tabs.List>
-      </Tabs> */}
-        <div>
-          <Select
-            label="현장"
-            placeholder="현장을 선택하세요."
-            data={siteInfo?.map((d) => ({
-              label: d.siteNm,
-              value: d.siteNm,
-            }))}
-            disabled={isSiteInfoPending}
-            onChange={(value) => {
-              const d = siteInfo?.find((d) => d.siteNm === value);
-              setCorpCd(d?.corpCd || "");
-              setMastCorpCd(d?.mastCorpCd || "");
-            }}
-            mb={15}
-          />
+        <div className={css.header}>
+          <h1 className={css.title}>출근부 관리</h1>
+          <p className={css.subtitle}>직원 출퇴근을 관리하세요</p>
         </div>
-        <div>
-          <TextInput
-            label="사용자ID"
-            placeholder="사용자ID를 입력하세요."
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            mb={15}
-          />
-          <Button onClick={handleSearch}>조회</Button>
+
+        <div className={css.searchSection}>
+          <div className={css.searchCard}>
+            <div className={css.formGroup}>
+              <Select
+                label="현장 선택"
+                placeholder="현장을 선택하세요"
+                data={siteInfo?.map((d) => ({
+                  label: d.siteNm,
+                  value: d.siteNm,
+                }))}
+                disabled={isSiteInfoPending}
+                onChange={(value) => {
+                  const d = siteInfo?.find((d) => d.siteNm === value);
+                  setCorpCd(d?.corpCd || "");
+                  setMastCorpCd(d?.mastCorpCd || "");
+                }}
+                className={css.select}
+              />
+            </div>
+
+            <div className={css.formGroup}>
+              <TextInput
+                label="사용자 ID"
+                placeholder="사용자ID를 입력하세요"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                className={css.textInput}
+              />
+            </div>
+
+            <Button onClick={handleSearch} className={css.searchButton} size="lg">
+              🔍 조회하기
+            </Button>
+          </div>
         </div>
-        <div className={css.list}>
+        <div className={css.employeeList}>
           {attList?.map((d) => (
-            <div key={d.userId} className={css.item}>
-              <div className={css.info}>
-                <div>주_회사코드: {d.mastCorpCd}</div>
-                <div>회사코드: {d.corpCd}</div>
-                <div>사용자ID: {d.userId}</div>
-                <div>종목_코드: {d.instCd}</div>
-                <div>주문_가격: {d.ordrPrc}</div>
-                <div>작업_시작_일자: {d.wrkStrDd}</div>
-                <div>작업_종료_일자: {d.wrkEndDd}</div>
-                <div>계약여부: {d.cntr ? "Y" : "N"}</div>
-                <div>보험여부: {d.ins ? "Y" : "N"}</div>
-                <div>사용자명: {d.userNm}</div>
+            <div key={d.userId} className={css.employeeCard}>
+              <div className={css.employeeHeader}>
+                <div className={css.employeeAvatar}>{d.userNm?.charAt(0) || "?"}</div>
+                <div className={css.employeeInfo}>
+                  <h3 className={css.employeeName}>{d.userNm}</h3>
+                  <p className={css.employeeId}>ID: {d.userId}</p>
+                </div>
+                <div className={css.statusBadge}>
+                  {d.faceImgNm ? (
+                    <span className={css.registered}>등록됨</span>
+                  ) : (
+                    <span className={css.unregistered}>미등록</span>
+                  )}
+                </div>
               </div>
 
-              <div className={css.buttonBox}>
-                <Button
-                  variant="filled"
-                  color="blue"
-                  data-type="in"
-                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId)}
-                  // onClick={() =>
-                  //   updateAtt({
-                  //     masterCorpCd: d.mastCorpCd,
-                  //     corpCd: d.corpCd,
-                  //     userId: d.userId,
-                  //     attCd: "I",
-                  //   })
-                  // }
+              <div className={css.employeeDetails}>
+                <div className={css.detailRow}>
+                  <span className={css.detailLabel}>회사코드</span>
+                  <span className={css.detailValue}>{d.corpCd}</span>
+                </div>
+                <div className={css.detailRow}>
+                  <span className={css.detailLabel}>작업기간</span>
+                  <span className={css.detailValue}>
+                    {dayjs(d.wrkStrDd).format("YYYY-MM-DD")} ~{" "}
+                    {dayjs(d.wrkEndDd).format("YYYY-MM-DD")}
+                  </span>
+                </div>
+                <div className={css.detailRow}>
+                  <span className={css.detailLabel}>계약여부</span>
+                  <span
+                    className={`${css.detailValue} ${d.cntr ? css.contractYes : css.contractNo}`}
+                  >
+                    {d.cntr ? "계약" : "미계약"}
+                  </span>
+                </div>
+                <div className={css.detailRow}>
+                  <span className={css.detailLabel}>보험여부</span>
+                  <span
+                    className={`${css.detailValue} ${d.ins ? css.contractYes : css.contractNo}`}
+                  >
+                    {d.ins ? "계약" : "미계약"}
+                  </span>
+                </div>
+              </div>
+
+              <div className={css.actionButtons}>
+                <button
+                  className={`${css.actionButton} ${css.checkInButton}`}
+                  disabled={d.faceImgNm === ""}
+                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId, d.faceImgNm)}
                 >
-                  출근
-                </Button>
-                <Button
-                  variant="filled"
-                  color="red"
-                  data-type="out"
-                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId)}
-                  // onClick={() =>
-                  //   updateAtt({
-                  //     masterCorpCd: d.mastCorpCd,
-                  //     corpCd: d.corpCd,
-                  //     userId: d.userId,
-                  //     attCd: "O",
-                  //   })
-                  // }
+                  <span>출근</span>
+                </button>
+
+                <button
+                  className={`${css.actionButton} ${css.checkOutButton}`}
+                  disabled={d.faceImgNm === ""}
+                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId, d.faceImgNm)}
                 >
-                  퇴근
-                </Button>
-                <Button
-                  variant="filled"
-                  color="green"
-                  data-type="out"
+                  <span>퇴근</span>
+                </button>
+
+                <button
+                  className={`${css.actionButton} ${css.locationButton}`}
                   onClick={async () => {
                     if (!!window.ReactNativeWebView) {
                       const result = await sendMessageToDevice<{
@@ -236,10 +239,10 @@ const Content = () => {
                       }>({
                         type: "getDeviceLocation",
                         payload: null,
-                        timeout: "infinity", // 10초 이상 대기
+                        timeout: "infinity",
                       });
 
-                      if (!result.location) return; // 권한 설정 안됬을때
+                      if (!result.location) return;
 
                       nativeLogger(JSON.stringify(result, null, 2));
                       nativeAlert(
@@ -250,8 +253,8 @@ const Content = () => {
                     }
                   }}
                 >
-                  위치정보 조회
-                </Button>
+                  <span>위치</span>
+                </button>
               </div>
             </div>
           ))}

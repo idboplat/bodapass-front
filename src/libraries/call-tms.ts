@@ -60,6 +60,7 @@ export interface CallTmsArg {
   /** instanceOf를 통해 분기처리 가능 */
   ignore?: boolean;
   signal?: AbortSignal;
+  pathName?: string;
 }
 
 const argumentCustom = (args: string[]) => {
@@ -151,133 +152,7 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
   }
 
   const tmsResult = await tmsApi
-    .post<TmsResponse<T>>("api/call_tms_svc", {
-      headers,
-      body: jsonBody,
-      signal: args.signal,
-    })
-    .json();
-
-  const tmsData = tmsResult?.svcRspnList?.[0];
-
-  if (tmsData === undefined) {
-    const message = "tmsData is undefined \n Requested resource not found";
-    throw new TmsError({ requestSvcId: args.svcId, message, ignore: args.ignore });
-  }
-
-  if (tmsData.svcId && tmsData.svcId !== args.svcId) {
-    const message = `svcid is unMatched \n requested svcId === ${args.svcId} \n responsed svcId === ${tmsData.svcId} \n Requested resource not matched`;
-    throw new TmsError({
-      requestSvcId: args.svcId,
-      responseSvcId: tmsData.svcId,
-      message,
-      ignore: args.ignore,
-    });
-  }
-
-  if (tmsData.svcErrYn === true) {
-    //조회자료가 없을 경우, 에러처리 하지않는다.
-    const isExclude = EXCLUDE_RSPN_CDS.includes(tmsData.svcRspnCd);
-
-    if (isExclude === false) {
-      const message = tmsData.svcRspnMsg;
-      throw new TmsError({
-        requestSvcId: args.svcId,
-        responseSvcId: tmsData.svcId,
-        message,
-        ignore: args.ignore,
-      });
-    }
-  }
-
-  return tmsData;
-};
-
-export const callR2 = async <T extends RspnData<any>>(args: CallTmsArg) => {
-  const jsonBody = JSON.stringify(
-    genarateBody({
-      svcId: args.svcId,
-      locale: args.locale,
-      pgSize: args.pgSize,
-      session: args.session,
-      data: args.data,
-      pgSn: args.pgSn,
-    }),
-  );
-
-  const headers: HeadersInit = {};
-
-  if (args.session) {
-    //2차인증 통과시 암호화
-    headers["X-Content-Hash"] = getHashSha256(jsonBody + args.session.sessionKey);
-    headers["X-TMS-SES-ID"] = args.session.sessionId;
-  }
-
-  const tmsResult = await tmsApi
-    .post<TmsResponse<T>>("api/r2_bucket", {
-      headers,
-      body: jsonBody,
-      signal: args.signal,
-    })
-    .json();
-
-  const tmsData = tmsResult?.svcRspnList?.[0];
-
-  if (tmsData === undefined) {
-    const message = "tmsData is undefined \n Requested resource not found";
-    throw new TmsError({ requestSvcId: args.svcId, message, ignore: args.ignore });
-  }
-
-  if (tmsData.svcId && tmsData.svcId !== args.svcId) {
-    const message = `svcid is unMatched \n requested svcId === ${args.svcId} \n responsed svcId === ${tmsData.svcId} \n Requested resource not matched`;
-    throw new TmsError({
-      requestSvcId: args.svcId,
-      responseSvcId: tmsData.svcId,
-      message,
-      ignore: args.ignore,
-    });
-  }
-
-  if (tmsData.svcErrYn === true) {
-    //조회자료가 없을 경우, 에러처리 하지않는다.
-    const isExclude = EXCLUDE_RSPN_CDS.includes(tmsData.svcRspnCd);
-
-    if (isExclude === false) {
-      const message = tmsData.svcRspnMsg;
-      throw new TmsError({
-        requestSvcId: args.svcId,
-        responseSvcId: tmsData.svcId,
-        message,
-        ignore: args.ignore,
-      });
-    }
-  }
-
-  return tmsData;
-};
-
-export const callTms2 = async <T extends RspnData<any>>(args: CallTmsArg) => {
-  const jsonBody = JSON.stringify(
-    genarateBody({
-      svcId: args.svcId,
-      locale: args.locale,
-      pgSize: args.pgSize,
-      session: args.session,
-      data: args.data,
-      pgSn: args.pgSn,
-    }),
-  );
-
-  const headers: HeadersInit = {};
-
-  if (args.session) {
-    //2차인증 통과시 암호화
-    headers["X-Content-Hash"] = getHashSha256(jsonBody + args.session.sessionKey);
-    headers["X-TMS-SES-ID"] = args.session.sessionId;
-  }
-
-  const tmsResult = await tmsApi
-    .post<TmsResponse<T>>("api/TCW000001SSP01", {
+    .post<TmsResponse<T>>(`api/${args.pathName || "call_tms_svc"}`, {
       headers,
       body: jsonBody,
       signal: args.signal,

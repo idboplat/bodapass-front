@@ -18,14 +18,12 @@ interface CaptureProps {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
-  // onFaceDetected: (args: { image: Blob; score: number }) => void;
-  // setMessage: (message: string) => void;
-  // cameraMode: "front" | "back";
+  faceImgNm: string;
 }
 
 export default function Capture() {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId } = router.query;
+  const { attCd, mastCorpCd, corpCd, userId, faceImgNm } = router.query;
 
   if (!router.isReady) {
     return <div>Loading...</div>;
@@ -38,22 +36,13 @@ export default function Capture() {
         mastCorpCd={mastCorpCd as string}
         corpCd={corpCd as string}
         userId={userId as string}
-        // onFaceDetected={onFaceDetected}
-        // setMessage={setMessage}
+        faceImgNm={faceImgNm as string}
       />
     </Authorized>
   );
 }
 
-function Content({
-  attCd,
-  mastCorpCd,
-  corpCd,
-  userId,
-}: // onFaceDetected,
-// setMessage,
-// cameraMode,
-CaptureProps) {
+function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
@@ -72,13 +61,15 @@ CaptureProps) {
       corpCd: string;
       userId: string;
       attCd: "I" | "O" | "A";
+      faceImgNm: string;
       bigTxt: string;
     }) =>
       callTms<StringRspnData<1>>({
         svcId: "TCM200101SSP01",
         session,
         locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.bigTxt],
+        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgNm, args.bigTxt],
+        pathName: "TCM200101SSP01",
       }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
@@ -118,7 +109,7 @@ CaptureProps) {
     });
 
     // Base64로 변환
-    const base64String = captureCanvas.toDataURL("image/png", 1.0);
+    const base64String = captureCanvas.toDataURL("image/jpeg", 1.0);
 
     // Blob도 생성 (onFaceDetected 콜백용)
     captureCanvas.toBlob(
@@ -136,7 +127,7 @@ CaptureProps) {
         setMessage("");
         videoRef.current?.play();
       },
-      "image/png",
+      "image/jpeg",
       1.0,
     );
 
@@ -145,8 +136,9 @@ CaptureProps) {
       mastCorpCd,
       corpCd,
       userId,
-      bigTxt: base64String.split(",")[1],
       attCd,
+      faceImgNm,
+      bigTxt: base64String.split(",")[1],
     });
   };
 
@@ -418,8 +410,11 @@ CaptureProps) {
 
   return (
     <>
-      <div className={css.back} onClick={router.back}>
-        <ArrowLeft /> Back
+      <div className={css.header}>
+        <button className={css.backButton} onClick={router.back}>
+          <ArrowLeft size={20} />
+          <span>뒤로가기</span>
+        </button>
       </div>
       <div className={css.capture}>
         <video
@@ -436,33 +431,27 @@ CaptureProps) {
         </div>
       </div>
 
-      <div className={css.cameraToggle}>
-        <div>현재 카메라 방향 : {cameraMode === "front" ? "앞" : "뒤"}</div>
-        <div
-          className={css.cameraToggleButton}
-          onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
-        >
-          <SwitchCamera />
-        </div>
-      </div>
-      <div
-        style={{
-          width: "100%",
-          //   height: "100%",
-          //   backgroundColor: "red",
-          zIndex: 1000,
-          textAlign: "center",
-          cursor: "pointer",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-        onClick={capture}
-      >
-        <div>
-          <Camera width="24" height="24" />
-        </div>
-        <div>촬영</div>
+      <div className={css.controls}>
+        {!isPending ? (
+          <>
+            <button
+              className={css.cameraToggleButton}
+              onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
+              aria-label="카메라 전환"
+            >
+              <SwitchCamera width="24" height="24" />
+            </button>
+            <button className={css.captureButton} onClick={capture} aria-label="사진 촬영">
+              <Camera width="24" height="24" />
+              <span>촬영</span>
+            </button>
+          </>
+        ) : (
+          <div className={css.loading}>
+            <div className={css.spinner}></div>
+            <span>처리 중...</span>
+          </div>
+        )}
       </div>
     </>
   );

@@ -5,7 +5,7 @@ import css from "./index.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, callTms2, StringRspnData, callR2 } from "@/libraries/call-tms";
+import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
@@ -59,14 +59,16 @@ RegisterProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (args: { userId: string; bigTxt: string }) =>
-      callTms2<StringRspnData<1>>({
+      callTms<StringRspnData<1>>({
         svcId: "TCW000001SSP01",
         session,
         locale: "ko",
         data: [args.userId, "jpeg", args.bigTxt],
+        pathName: "TCW000001SSP01",
       }),
     onSuccess: async () => {
       toast.success("등록이 완료되었습니다.");
+      router.push("/ko/demo/register");
     },
   });
 
@@ -109,6 +111,17 @@ RegisterProps) {
       mimeType: mimeType,
       format: format,
       extension: extension,
+    });
+
+    // Base64 용량 정보 출력
+    const base64Size = base64String.length;
+    const base64SizeKB = (base64Size / 1024).toFixed(2);
+    const base64SizeMB = (base64Size / (1024 * 1024)).toFixed(2);
+
+    console.log("Base64 이미지 용량:", {
+      base64Size: base64Size,
+      base64SizeKB: base64SizeKB + " KB",
+      base64SizeMB: base64SizeMB + " MB",
     });
 
     // Blob도 생성 (onFaceDetected 콜백용)
@@ -406,11 +419,15 @@ RegisterProps) {
 
   return (
     <>
-      <div className={css.back} onClick={router.back}>
-        <ArrowLeft /> Back
-      </div>
-      <div className={css.userIdInput}>
-        <TextInput label="사용자 ID" type="text" value={session.userId} disabled />
+      <div className={css.header}>
+        <button className={css.backButton} onClick={router.back}>
+          <ArrowLeft size={20} />
+          <span>뒤로가기</span>
+        </button>
+        <div className={css.userInfo}>
+          <div className={css.userIdLabel}>사용자 ID</div>
+          <div className={css.userIdValue}>{session.userId}</div>
+        </div>
       </div>
       <div className={css.capture}>
         <video
@@ -427,36 +444,26 @@ RegisterProps) {
         </div>
       </div>
 
-      <div className={css.cameraToggle}>
-        <div>현재 카메라 방향 : {cameraMode === "front" ? "앞" : "뒤"}</div>
-        <div
-          className={css.cameraToggleButton}
-          onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
-        >
-          <SwitchCamera />
-        </div>
-      </div>
-      <div
-        style={{
-          width: "100%",
-          zIndex: 1000,
-          textAlign: "center",
-          cursor: "pointer",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-        onClick={capture}
-      >
+      <div className={css.controls}>
         {!isPending ? (
           <>
-            <div>
+            <button
+              className={css.cameraToggleButton}
+              onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
+              aria-label="카메라 전환"
+            >
+              <SwitchCamera width="24" height="24" />
+            </button>
+            <button className={css.captureButton} onClick={capture} aria-label="사진 촬영">
               <Camera width="24" height="24" />
-            </div>
-            <div>촬영</div>
+              <span>촬영</span>
+            </button>
           </>
         ) : (
-          <div>Loading...</div>
+          <div className={css.loading}>
+            <div className={css.spinner}></div>
+            <span>처리 중...</span>
+          </div>
         )}
       </div>
     </>

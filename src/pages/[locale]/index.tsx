@@ -10,7 +10,7 @@ import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
 import { nativeLogger } from "@/hooks/use-device-api";
 import { useQuery } from "@tanstack/react-query";
-import { callR2, StringRspnData } from "@/libraries/call-tms";
+import { callTms, StringRspnData } from "@/libraries/call-tms";
 
 export default function Page() {
   const router = useRouter();
@@ -41,11 +41,12 @@ export default function Page() {
   const { data: query2 } = useQuery({
     queryKey: ["image"],
     queryFn: async () => {
-      const res = await callR2<StringRspnData<2>>({
+      const res = await callTms<StringRspnData<2>>({
         svcId: "TCW000001SSQ01",
         session: null,
         locale: "ko",
         data: ["USER_2580000021", "minwook"],
+        pathName: "r2_bucket",
       });
 
       const data = res.svcRspnData?.[0];
@@ -63,7 +64,7 @@ export default function Page() {
         <Lottie animationData={landingAni} loop />
         {query2?.F02 && (
           <img
-            src={`data:image/png;base64,${query2.F02}`}
+            src={`data:image/jpeg;base64,${query2.F02}`}
             alt="image"
             style={{ width: "400px", height: "400px" }}
           />
