@@ -60,5 +60,4 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-// export default appWithTranslation(App);
-export default App;
+export default appWithTranslation(App);

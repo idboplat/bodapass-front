@@ -9,6 +9,7 @@ import { callTms, StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-t
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
+import { nativeAlert } from "@/hooks/use-device-api";
 
 const PADDING = 75;
 const SCALE = 1;
@@ -89,7 +90,8 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
       }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-      toast.success("출퇴근 정보가 업데이트되었습니다.");
+      // toast.success("출퇴근 정보가 업데이트되었습니다.");
+      nativeAlert("출퇴근 정보가 업데이트되었습니다.");
       router.back();
     },
   });

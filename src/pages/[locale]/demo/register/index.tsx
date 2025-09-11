@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
 import { TextInput } from "@mantine/core";
 import { tmsApi } from "@/libraries/call-tms";
+import { nativeAlert } from "@/hooks/use-device-api";
 
 const PADDING = 75;
 const SCALE = 1;
@@ -82,8 +83,8 @@ RegisterProps) {
       return tmsData;
     },
     onSuccess: async () => {
-      toast.success("등록이 완료되었습니다.");
-      router.push("/ko/demo/register");
+      nativeAlert("등록이 완료되었습니다.");
+      router.back();
     },
   });
 
