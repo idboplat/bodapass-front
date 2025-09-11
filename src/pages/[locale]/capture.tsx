@@ -90,7 +90,7 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
       toast.success("출퇴근 정보가 업데이트되었습니다.");
-      router.push(`/ko/attendance`);
+      router.back();
     },
   });
 
