@@ -177,6 +177,16 @@ const Content = () => {
                   <span className={css.detailValue}>{d.corpCd}</span>
                 </div>
                 <div className={css.detailRow}>
+                  <span className={css.detailLabel}>직종</span>
+                  <span className={`${css.detailValue} ${css.instCdValue}`}>{d.instCd}</span>
+                </div>
+                <div className={css.detailRow}>
+                  <span className={css.detailLabel}>일당</span>
+                  <span className={`${css.detailValue} ${css.ordrPrcValue}`}>
+                    {d.ordrPrc ? `${Number(d.ordrPrc).toLocaleString()}원` : "미설정"}
+                  </span>
+                </div>
+                <div className={css.detailRow}>
                   <span className={css.detailLabel}>작업기간</span>
                   <span className={css.detailValue}>
                     {dayjs(d.wrkStrDd).format("YYYY-MM-DD")} ~{" "}

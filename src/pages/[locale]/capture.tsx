@@ -5,7 +5,7 @@ import css from "./capture.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
@@ -56,21 +56,37 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
   if (!session) throw new Error("Session is not found");
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (args: {
+    mutationFn: async (args: {
       mastCorpCd: string;
       corpCd: string;
       userId: string;
       attCd: "I" | "O" | "A";
       faceImgNm: string;
-      bigTxt: string;
-    }) =>
-      callTms<StringRspnData<1>>({
-        svcId: "TCM200101SSP01",
-        session,
-        locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgNm, args.bigTxt],
-        pathName: "TCM200101SSP01",
-      }),
+      bigTxt: Blob;
+    }) => {
+      const formData = new FormData();
+      formData.append("F01", args.mastCorpCd);
+      formData.append("F02", args.corpCd);
+      formData.append("F03", args.userId);
+      formData.append("F04", args.attCd);
+      formData.append("F05", args.faceImgNm);
+      formData.append("F06", args.bigTxt, "face.jpeg");
+
+      const tmsResult = await tmsApi
+        .post<TmsResponse<StringRspnData<1>>>("api/TCM200101SSP01", {
+          body: formData,
+        })
+        .json();
+      const tmsData = tmsResult?.svcRspnList?.[0];
+      return tmsData;
+    },
+    // callTms<StringRspnData<1>>({
+    //   svcId: "TCM200101SSP01",
+    //   session,
+    //   locale: "ko",
+    //   data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgNm, args.bigTxt],
+    //   pathName: "TCM200101SSP01",
+    // }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
       toast.success("출퇴근 정보가 업데이트되었습니다.");
@@ -116,6 +132,14 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
       (blob) => {
         if (blob) {
           // onFaceDetected({ image: blob, score: 0 });
+          mutate({
+            mastCorpCd,
+            corpCd,
+            userId,
+            attCd,
+            faceImgNm,
+            bigTxt: blob,
+          });
         }
 
         // 메모리 정리
@@ -132,14 +156,14 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
     );
 
     // Base64 문자열을 bigTxt로 전달하여 API 호출
-    mutate({
-      mastCorpCd,
-      corpCd,
-      userId,
-      attCd,
-      faceImgNm,
-      bigTxt: base64String.split(",")[1],
-    });
+    // mutate({
+    //   mastCorpCd,
+    //   corpCd,
+    //   userId,
+    //   attCd,
+    //   faceImgNm,
+    //   bigTxt: base64String.split(",")[1],
+    // });
   };
 
   useEffect(() => {
@@ -411,11 +435,14 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
   return (
     <>
       <div className={css.header}>
-        <button className={css.backButton} onClick={router.back}>
-          <ArrowLeft size={20} />
-          <span>뒤로가기</span>
-        </button>
+        <div className={css.headerPosition}>
+          <button className={css.backButton} onClick={router.back}>
+            <ArrowLeft size={20} />
+            <span>뒤로가기</span>
+          </button>
+        </div>
       </div>
+
       <div className={css.capture}>
         <video
           className={css.video}

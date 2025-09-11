@@ -439,13 +439,15 @@ RegisterProps) {
   return (
     <>
       <div className={css.header}>
-        <button className={css.backButton} onClick={router.back}>
-          <ArrowLeft size={20} />
-          <span>뒤로가기</span>
-        </button>
-        <div className={css.userInfo}>
-          <div className={css.userIdLabel}>사용자 ID</div>
-          <div className={css.userIdValue}>{session.userId}</div>
+        <div className={css.headerPosition}>
+          <button className={css.backButton} onClick={router.back}>
+            <ArrowLeft size={20} />
+            <span>뒤로가기</span>
+          </button>
+          <div className={css.userInfo}>
+            <div className={css.userIdLabel}>사용자 ID</div>
+            <div className={css.userIdValue}>{session.userId}</div>
+          </div>
         </div>
       </div>
       <div className={css.capture}>
