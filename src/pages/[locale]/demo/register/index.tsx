@@ -5,7 +5,7 @@ import css from "./index.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, StringRspnData, TmsResponse } from "@/libraries/call-tms";
+import { callTms, callWas, StringRspnData, TmsResponse } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
@@ -61,27 +61,15 @@ RegisterProps) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (args: { userId: string; bigTxt: Blob }) => {
-      // callTms<StringRspnData<1>>({
-      //   svcId: "TCW000001SSP01",
-      //   session,
-      //   locale: "ko",
-      //   data: [args.userId, "jpeg", args.bigTxt],
-      //   pathName: "TCW000001SSP01",
-      // })
-      console.group("bigTxt : ", args.bigTxt);
-
-      const formData = new FormData();
-      formData.append("F01", args.userId);
-      formData.append("F02", "jpeg");
-      formData.append("F03", args.bigTxt, "face.jpeg");
-      const tmsResult = await tmsApi
-        .post<TmsResponse<StringRspnData<1>>>("api/TCW000001SSP01", {
-          body: formData,
-        })
-        .json();
-      const tmsData = tmsResult?.svcRspnList?.[0];
-      return tmsData;
+      callWas<StringRspnData<1>>({
+        svcId: "TCW000001SSP01",
+        session,
+        locale: "ko",
+        data: [args.userId, "jpeg", ""],
+        formData: [args.bigTxt],
+      });
     },
+
     onSuccess: async () => {
       nativeAlert("등록이 완료되었습니다.");
       router.back();

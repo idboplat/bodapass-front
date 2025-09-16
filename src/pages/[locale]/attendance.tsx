@@ -1,15 +1,13 @@
 import { Authorized } from "@/libraries/auth/authorized";
 import { useSession } from "@/libraries/auth/use-session";
-import { callTms, StringRspnData, tmsApi } from "@/libraries/call-tms";
-import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import css from "./attendance.module.scss";
-import { Button, LoadingOverlay, Select, Tabs, TextInput } from "@mantine/core";
-import { toast } from "sonner";
-import { useState } from "react";
-import { sendMessageToDevice, nativeLogger, nativeAlert } from "@/hooks/use-device-api";
+import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { getStaticPaths, makeStaticProps } from "@/libraries/i18n/get-static";
+import { Button, LoadingOverlay, Select, TextInput } from "@mantine/core";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import dayjs from "dayjs";
+import { useState } from "react";
+import css from "./attendance.module.scss";
 
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
@@ -43,6 +41,7 @@ const getEmployeesByCorpCd = async ({
     session,
     locale: "ko",
     data: [args.mastCorpCd, args.corpCd, args.userId],
+    pathName: "TCM200101SMQ01",
   });
 
   const data = result.svcRspnData || [];
@@ -58,7 +57,7 @@ const getEmployeesByCorpCd = async ({
     cntr: d.F08 === "Y",
     ins: d.F09 === "Y",
     userNm: d.F10,
-    faceImgNm: d.F11,
+    bigTxt: d.F11,
   }));
 };
 
@@ -86,10 +85,9 @@ const Content = () => {
     mastCorpCd: string,
     corpCd: string,
     userId: string,
-    faceImgNm: string,
   ) => {
     router.push(
-      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}&faceImgNm=${faceImgNm}`,
+      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}`,
     );
   };
 
@@ -157,13 +155,26 @@ const Content = () => {
           {attList?.map((d) => (
             <div key={d.userId} className={css.employeeCard}>
               <div className={css.employeeHeader}>
-                <div className={css.employeeAvatar}>{d.userNm?.charAt(0) || "?"}</div>
+                <div className={css.employeeAvatar}>
+                  {d.bigTxt ? (
+                    <Image
+                      src={`data:image/jpeg;base64,${d.bigTxt}`}
+                      alt={d.userNm || "User"}
+                      className={css.avatarImage}
+                      width={56}
+                      height={56}
+                      unoptimized
+                    />
+                  ) : (
+                    <span>{d.userNm?.charAt(0) || "?"}</span>
+                  )}
+                </div>
                 <div className={css.employeeInfo}>
                   <h3 className={css.employeeName}>{d.userNm}</h3>
                   <p className={css.employeeId}>ID: {d.userId}</p>
                 </div>
                 <div className={css.statusBadge}>
-                  {d.faceImgNm ? (
+                  {d.bigTxt ? (
                     <span className={css.registered}>등록됨</span>
                   ) : (
                     <span className={css.unregistered}>미등록</span>
@@ -172,10 +183,10 @@ const Content = () => {
               </div>
 
               <div className={css.employeeDetails}>
-                <div className={css.detailRow}>
+                {/* <div className={css.detailRow}>
                   <span className={css.detailLabel}>회사코드</span>
                   <span className={css.detailValue}>{d.corpCd}</span>
-                </div>
+                </div> */}
                 <div className={css.detailRow}>
                   <span className={css.detailLabel}>직종</span>
                   <span className={`${css.detailValue} ${css.instCdValue}`}>{d.instCd}</span>
@@ -186,7 +197,7 @@ const Content = () => {
                     {d.ordrPrc ? `${Number(d.ordrPrc).toLocaleString()}원` : "미설정"}
                   </span>
                 </div>
-                <div className={css.detailRow}>
+                {/* <div className={css.detailRow}>
                   <span className={css.detailLabel}>작업기간</span>
                   <span className={css.detailValue}>
                     {dayjs(d.wrkStrDd).format("YYYY-MM-DD")} ~{" "}
@@ -208,27 +219,27 @@ const Content = () => {
                   >
                     {d.ins ? "계약" : "미계약"}
                   </span>
-                </div>
+                </div> */}
               </div>
 
               <div className={css.actionButtons}>
                 <button
                   className={`${css.actionButton} ${css.checkInButton}`}
-                  disabled={d.faceImgNm === ""}
-                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId, d.faceImgNm)}
+                  disabled={d.bigTxt === ""}
+                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId)}
                 >
                   <span>출근</span>
                 </button>
 
                 <button
                   className={`${css.actionButton} ${css.checkOutButton}`}
-                  disabled={d.faceImgNm === ""}
-                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId, d.faceImgNm)}
+                  disabled={d.bigTxt === ""}
+                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId)}
                 >
                   <span>퇴근</span>
                 </button>
 
-                <button
+                {/* <button
                   className={`${css.actionButton} ${css.locationButton}`}
                   onClick={async () => {
                     if (!!window.ReactNativeWebView) {
@@ -254,7 +265,7 @@ const Content = () => {
 
                       if (!result.location) return;
 
-                      nativeLogger(JSON.stringify(result, null, 2));
+                      nativeLogger(JSON.stringify(result, null, 2));          
                       nativeAlert(
                         `${result.message} \n x: ${result.location.coords.longitude} \n y: ${result.location.coords.latitude}`,
                       );
@@ -264,7 +275,7 @@ const Content = () => {
                   }}
                 >
                   <span>위치</span>
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

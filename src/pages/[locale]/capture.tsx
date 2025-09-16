@@ -5,7 +5,7 @@ import css from "./capture.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-tms";
+import { callTms, callWas, StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-tms";
 import { useSession } from "@/libraries/auth/use-session";
 import { toast } from "sonner";
 import { Authorized } from "@/libraries/auth/authorized";
@@ -19,12 +19,11 @@ interface CaptureProps {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
-  faceImgNm: string;
 }
 
 export default function Capture() {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId, faceImgNm } = router.query;
+  const { attCd, mastCorpCd, corpCd, userId } = router.query;
 
   if (!router.isReady) {
     return <div>Loading...</div>;
@@ -37,13 +36,12 @@ export default function Capture() {
         mastCorpCd={mastCorpCd as string}
         corpCd={corpCd as string}
         userId={userId as string}
-        faceImgNm={faceImgNm as string}
       />
     </Authorized>
   );
 }
 
-function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps) {
+function Content({ attCd, mastCorpCd, corpCd, userId }: CaptureProps) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
@@ -62,31 +60,14 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
       corpCd: string;
       userId: string;
       attCd: "I" | "O" | "A";
-      faceImgNm: string;
-      bigTxt: string;
+      faceImgFile: Blob;
     }) =>
-      //   const formData = new FormData();
-      //   formData.append("F01", args.mastCorpCd);
-      //   formData.append("F02", args.corpCd);
-      //   formData.append("F03", args.userId);
-      //   formData.append("F04", args.attCd);
-      //   formData.append("F05", args.faceImgNm);
-      //   formData.append("F06", args.bigTxt, "face.jpeg");
-
-      //   const tmsResult = await tmsApi
-      //     .post<TmsResponse<StringRspnData<1>>>("api/TCM200101SSP01", {
-      //       body: formData,
-      //     })
-      //     .json();
-      //   const tmsData = tmsResult?.svcRspnList?.[0];
-      //   return tmsData;
-      // },
-      callTms<StringRspnData<1>>({
+      callWas<StringRspnData<1>>({
         svcId: "TCM200101SSP01",
         session,
         locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgNm, args.bigTxt],
-        pathName: "TCM200101SSP01",
+        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, ""],
+        formData: [args.faceImgFile],
       }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
@@ -126,22 +107,18 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
       aspectRatio: (captureCanvas.width / captureCanvas.height).toFixed(2),
     });
 
-    // Base64로 변환
-    const base64String = captureCanvas.toDataURL("image/jpeg", 1.0);
-
     // Blob도 생성 (onFaceDetected 콜백용)
     captureCanvas.toBlob(
       (blob) => {
         if (blob) {
           // onFaceDetected({ image: blob, score: 0 });
-          // mutate({
-          //   mastCorpCd,
-          //   corpCd,
-          //   userId,
-          //   attCd,
-          //   faceImgNm,
-          //   bigTxt: blob,
-          // });
+          mutate({
+            mastCorpCd,
+            corpCd,
+            userId,
+            attCd,
+            faceImgFile: blob,
+          });
         }
 
         // 메모리 정리
@@ -157,15 +134,14 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgNm }: CaptureProps)
       1.0,
     );
 
-    // Base64 문자열을 bigTxt로 전달하여 API 호출
-    mutate({
-      mastCorpCd,
-      corpCd,
-      userId,
-      attCd,
-      faceImgNm,
-      bigTxt: base64String.split(",")[1],
-    });
+    // Base64 문자열을 faceImgFile로 전달하여 API 호출
+    // mutate({
+    //   mastCorpCd,
+    //   corpCd,
+    //   userId,
+    //   attCd,
+    //   faceImgFile: base64String.split(",")[1],
+    // });
   };
 
   useEffect(() => {

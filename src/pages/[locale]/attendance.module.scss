@@ -104,6 +104,14 @@
   font-size: 1.5rem;
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(3, 229, 183, 0.3);
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .employeeInfo {

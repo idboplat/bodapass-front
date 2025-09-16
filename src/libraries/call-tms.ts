@@ -63,6 +63,10 @@ export interface CallTmsArg {
   pathName?: string;
 }
 
+export interface CallWasArg extends CallTmsArg {
+  formData: (string | Blob)[];
+}
+
 const argumentCustom = (args: string[]) => {
   const result: Record<string, string> = {};
   args.forEach((item, i) => {
@@ -122,6 +126,17 @@ export const tmsApi = ky.create({
   },
 });
 
+// TMS API를 위한 ky 인스턴스 생성
+export const wasApi = ky.create({
+  prefixUrl: process.env.NEXT_PUBLIC_WAS_HTTP_URL,
+  hooks: {
+    beforeRequest: [],
+    beforeRetry: [],
+    afterResponse: [],
+    beforeError: [],
+  },
+});
+
 export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
   const jsonBody = JSON.stringify(
     genarateBody({
@@ -146,6 +161,79 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
     .post<TmsResponse<T>>(`api/${args.pathName || "call_tms_svc"}`, {
       headers,
       body: jsonBody,
+      signal: args.signal,
+    })
+    .json();
+
+  const tmsData = tmsResult?.svcRspnList?.[0];
+
+  if (tmsData === undefined) {
+    const message = "tmsData is undefined \n Requested resource not found";
+    throw new TmsError({ requestSvcId: args.svcId, message, ignore: args.ignore });
+  }
+
+  if (tmsData.svcId && tmsData.svcId !== args.svcId) {
+    const message = `svcid is unMatched \n requested svcId === ${args.svcId} \n responsed svcId === ${tmsData.svcId} \n Requested resource not matched`;
+    throw new TmsError({
+      requestSvcId: args.svcId,
+      responseSvcId: tmsData.svcId,
+      message,
+      ignore: args.ignore,
+    });
+  }
+
+  if (tmsData.svcErrYn === true) {
+    //조회자료가 없을 경우, 에러처리 하지않는다.
+    const isExclude = EXCLUDE_RSPN_CDS.includes(tmsData.svcRspnCd);
+
+    if (isExclude === false) {
+      const message = tmsData.svcRspnMsg;
+      throw new TmsError({
+        requestSvcId: args.svcId,
+        responseSvcId: tmsData.svcId,
+        message,
+        ignore: args.ignore,
+      });
+    }
+  }
+
+  return tmsData;
+};
+
+export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
+  const wasBody = JSON.stringify(
+    genarateBody({
+      svcId: args.svcId,
+      locale: args.locale,
+      pgSize: args.pgSize,
+      session: args.session,
+      data: args.data,
+      pgSn: args.pgSn,
+    }),
+  );
+
+  // jsonBody formdata F01에 예약
+  const formData = new FormData();
+  formData.append("F01", wasBody);
+
+  // 나머지 was데이터를 F02부터 반복문으로 추가
+  for (let i = 1; i < args.formData.length; i++) {
+    const key = i + 1 < 10 ? `F0${i + 1}` : `F${i + 1}`;
+    formData.append(key, args.formData[i]);
+  }
+
+  const headers: HeadersInit = {};
+
+  if (args.session) {
+    //2차인증 통과시 암호화
+    headers["X-Content-Hash"] = getHashSha256(wasBody + args.session.sessionKey);
+    headers["X-TMS-SES-ID"] = args.session.sessionId;
+  }
+
+  const tmsResult = await wasApi
+    .post<TmsResponse<T>>(`api/${args.svcId}`, {
+      headers,
+      body: formData,
       signal: args.signal,
     })
     .json();
