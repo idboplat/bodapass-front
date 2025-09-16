@@ -218,8 +218,8 @@ export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
   formData.append("F01", wasBody);
 
   // 나머지 was데이터를 F02부터 반복문으로 추가
-  for (let i = 1; i < args.formData.length; i++) {
-    const key = i + 1 < 10 ? `F0${i + 1}` : `F${i + 1}`;
+  for (let i = 0; i < args.formData.length; i++) {
+    const key = i + 2 < 10 ? `F0${i + 2}` : `F${i + 2}`;
     formData.append(key, args.formData[i]);
   }
 
