@@ -57,7 +57,8 @@ const getEmployeesByCorpCd = async ({
     cntr: d.F08 === "Y",
     ins: d.F09 === "Y",
     userNm: d.F10,
-    bigTxt: d.F11,
+    faceImgFile: d.F11,
+    bigTxt: d.F12,
   }));
 };
 
@@ -85,10 +86,16 @@ const Content = () => {
     mastCorpCd: string,
     corpCd: string,
     userId: string,
+    faceImgFile: string,
   ) => {
-    router.push(
-      `/ko/capture?attCd=${attCd}&mastCorpCd=${mastCorpCd}&corpCd=${corpCd}&userId=${userId}`,
-    );
+    const searchParams = new URLSearchParams();
+    searchParams.set("attCd", attCd);
+    searchParams.set("mastCorpCd", mastCorpCd);
+    searchParams.set("corpCd", corpCd);
+    searchParams.set("userId", userId);
+    searchParams.set("faceImgFile", faceImgFile);
+
+    router.push(`/ko/capture?${searchParams.toString()}`);
   };
 
   if (!session) throw new Error("Session is not found");
@@ -226,7 +233,9 @@ const Content = () => {
                 <button
                   className={`${css.actionButton} ${css.checkInButton}`}
                   disabled={d.bigTxt === ""}
-                  onClick={() => onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId)}
+                  onClick={() =>
+                    onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId, d.faceImgFile)
+                  }
                 >
                   <span>출근</span>
                 </button>
@@ -234,7 +243,9 @@ const Content = () => {
                 <button
                   className={`${css.actionButton} ${css.checkOutButton}`}
                   disabled={d.bigTxt === ""}
-                  onClick={() => onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId)}
+                  onClick={() =>
+                    onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId, d.faceImgFile)
+                  }
                 >
                   <span>퇴근</span>
                 </button>

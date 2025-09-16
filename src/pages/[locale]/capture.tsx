@@ -1,15 +1,14 @@
 // components/VideoCapture.tsx
-import { useEffect, useRef, useState } from "react";
+import { nativeAlert } from "@/hooks/use-device-api";
+import { Authorized } from "@/libraries/auth/authorized";
+import { useSession } from "@/libraries/auth/use-session";
+import { callWas, StringRspnData } from "@/libraries/call-tms";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as faceapi from "face-api.js";
-import css from "./capture.module.scss";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { callTms, callWas, StringRspnData, tmsApi, TmsResponse } from "@/libraries/call-tms";
-import { useSession } from "@/libraries/auth/use-session";
-import { toast } from "sonner";
-import { Authorized } from "@/libraries/auth/authorized";
-import { nativeAlert } from "@/hooks/use-device-api";
+import { useEffect, useRef, useState } from "react";
+import css from "./capture.module.scss";
 
 const PADDING = 75;
 const SCALE = 1;
@@ -19,11 +18,12 @@ interface CaptureProps {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
+  faceImgFile: string;
 }
 
 export default function Capture() {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId } = router.query;
+  const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
 
   if (!router.isReady) {
     return <div>Loading...</div>;
@@ -36,12 +36,13 @@ export default function Capture() {
         mastCorpCd={mastCorpCd as string}
         corpCd={corpCd as string}
         userId={userId as string}
+        faceImgFile={faceImgFile as string}
       />
     </Authorized>
   );
 }
 
-function Content({ attCd, mastCorpCd, corpCd, userId }: CaptureProps) {
+function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
@@ -60,14 +61,15 @@ function Content({ attCd, mastCorpCd, corpCd, userId }: CaptureProps) {
       corpCd: string;
       userId: string;
       attCd: "I" | "O" | "A";
-      faceImgFile: Blob;
+      faceImgFile: string;
+      img: Blob;
     }) =>
       callWas<StringRspnData<1>>({
         svcId: "TCM200101SSP01",
         session,
         locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, ""],
-        formData: [args.faceImgFile],
+        data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgFile],
+        formData: [args.img],
         apiPathName: "WCM200101SSP01",
       }),
     onSuccess: async () => {
@@ -118,7 +120,8 @@ function Content({ attCd, mastCorpCd, corpCd, userId }: CaptureProps) {
             corpCd,
             userId,
             attCd,
-            faceImgFile: blob,
+            faceImgFile,
+            img: blob,
           });
         }
 
