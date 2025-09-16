@@ -68,6 +68,7 @@ function Content({ attCd, mastCorpCd, corpCd, userId }: CaptureProps) {
         locale: "ko",
         data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, ""],
         formData: [args.faceImgFile],
+        apiPathName: "WCM200101SSP01",
       }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });

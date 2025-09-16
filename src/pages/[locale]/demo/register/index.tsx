@@ -67,6 +67,7 @@ RegisterProps) {
         locale: "ko",
         data: [args.userId, "jpeg", ""],
         formData: [args.bigTxt],
+        apiPathName: "WCW000001SSP01",
       });
     },
 

@@ -65,6 +65,7 @@ export interface CallTmsArg {
 
 export interface CallWasArg extends CallTmsArg {
   formData: (string | Blob)[];
+  apiPathName: string;
 }
 
 const argumentCustom = (args: string[]) => {
@@ -231,7 +232,7 @@ export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
   }
 
   const tmsResult = await wasApi
-    .post<TmsResponse<T>>(`api/${args.svcId}`, {
+    .post<TmsResponse<T>>(`api/${args.apiPathName}`, {
       headers,
       body: formData,
       signal: args.signal,
