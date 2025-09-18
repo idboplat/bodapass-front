@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  rewrites: async () => {
+    return [
+      {
+        source: "/middleware/:path*",
+        destination: "http://64.110.72.61:3100/:path*",
+      },
+    ];
+  },
   webpack: (config, options) => {
     // face-api.js
     config.resolve.fallback = {

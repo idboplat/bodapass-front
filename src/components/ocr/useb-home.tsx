@@ -8,6 +8,7 @@ import Result from "@/components/ocr/Result";
 import { Anchor, Breadcrumbs, LoadingOverlay, Select } from "@mantine/core";
 import Link from "next/link";
 import { TOCRReturn } from "@/types/api/useb";
+import ky from "ky";
 
 type Props = {
   isMobile: boolean;
@@ -26,19 +27,43 @@ export default function UsdBHome({ isMobile }: Props) {
       const blob = await camera.capture();
       if (!blob) throw new Error("이미지 캡쳐 실패");
 
-      const formData = new FormData();
-      formData.append("image", blob, "capture.png");
+      // const formData = new FormData();
+      // formData.append("image", blob, "capture.png");
 
-      const response = await fetch("/api/useb/ocr/" + type, {
-        method: "POST",
-        body: formData, // FormData 그대로 전송
-      });
+      const arrayBuffer = await blob.arrayBuffer();
+      const base64 = Buffer.from(arrayBuffer).toString("base64");
 
-      if (!response.ok) {
-        throw new Error("이미지 업로드 실패");
+      let endpoint: string;
+
+      switch (type) {
+        case "idcard":
+        case "driver":
+          endpoint = "idcard-driver";
+          break;
+        case "passport":
+          endpoint = "passport";
+          break;
+        case "passport-overseas":
+          endpoint = "passport-overseas";
+          break;
+        case "alien":
+          endpoint = "alien";
+          break;
+        case "alien-back":
+          endpoint = "alien-back";
+          break;
       }
 
-      const json: { data: TOCRReturn } = await response.json();
+      const json = await ky
+        .post<{ data: TOCRReturn }>("/middleware/apiUseb/ocr", {
+          json: {
+            type: endpoint,
+            ssa_mode: true,
+            image_base64: base64,
+          },
+        })
+        .json();
+
       return json.data;
     },
     onSuccess: (data) => setData(() => data),
