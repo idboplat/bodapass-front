@@ -52,6 +52,13 @@ export default function Page() {
               <div className={css.sub}>얼굴 등록 테스트</div>
             </div>
           </Link>
+
+          <Link href={`/${locale}/demo/push`} className={css.link}>
+            <div className={css.item}>
+              <h3>Push 알림</h3>
+              <div className={css.sub}>Push 알림 테스트</div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
