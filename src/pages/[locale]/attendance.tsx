@@ -36,7 +36,7 @@ const getEmployeesByCorpCd = async ({
   userId: string;
 }) => {
   // teamleader1@gmail.com 고정 테스트
-  const result = await callTms<StringRspnData<12>>({
+  const result = await callTms<StringRspnData<14>>({
     svcId: "TCM200101SMQ01",
     session,
     locale: "ko",
@@ -54,11 +54,13 @@ const getEmployeesByCorpCd = async ({
     ordrPrc: d.F05,
     wrkStrDd: d.F06,
     wrkEndDd: d.F07,
-    cntr: d.F08 === "Y",
-    ins: d.F09 === "Y",
+    cntr: d.F08,
+    ins: d.F09,
     userNm: d.F10,
-    faceImgFile: d.F11,
-    bigTxt: d.F12,
+    wrkStrDtm: d.F11,
+    wrkEndDtm: d.F12,
+    faceImgFile: d.F13,
+    bigTxt: d.F14,
   }));
 };
 
@@ -214,7 +216,7 @@ const Content = () => {
                 <div className={css.detailRow}>
                   <span className={css.detailLabel}>계약여부</span>
                   <span
-                    className={`${css.detailValue} ${d.cntr ? css.contractYes : css.contractNo}`}
+                    className={`${css.detailValue} ${d.cntr === "Y" ? css.contractYes : css.contractNo}`}
                   >
                     {d.cntr ? "계약" : "미계약"}
                   </span>
@@ -222,7 +224,7 @@ const Content = () => {
                 <div className={css.detailRow}>
                   <span className={css.detailLabel}>보험여부</span>
                   <span
-                    className={`${css.detailValue} ${d.ins ? css.contractYes : css.contractNo}`}
+                    className={`${css.detailValue} ${d.ins === "Y" ? css.contractYes : css.contractNo}`}
                   >
                     {d.ins ? "계약" : "미계약"}
                   </span>
@@ -232,7 +234,7 @@ const Content = () => {
               <div className={css.actionButtons}>
                 <button
                   className={`${css.actionButton} ${css.checkInButton}`}
-                  disabled={d.bigTxt === ""}
+                  disabled={d.wrkStrDtm !== ""}
                   onClick={() =>
                     onClickAttBtn("I", d.mastCorpCd, d.corpCd, d.userId, d.faceImgFile)
                   }
@@ -242,7 +244,7 @@ const Content = () => {
 
                 <button
                   className={`${css.actionButton} ${css.checkOutButton}`}
-                  disabled={d.bigTxt === ""}
+                  disabled={d.wrkStrDtm === "" || d.wrkEndDtm !== ""}
                   onClick={() =>
                     onClickAttBtn("O", d.mastCorpCd, d.corpCd, d.userId, d.faceImgFile)
                   }
