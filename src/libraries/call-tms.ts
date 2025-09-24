@@ -104,7 +104,7 @@ export const genarateBody = (args: {
     svcRqstPageSize: args.pgSize ?? 15, //default 15
     svcRqstPageSn: args.pgSn || 1,
     svcRqstData: [argumentCustom(args.data)], // svcRqstData 배열 초기화
-    svcRqstCsvYn: args.csvDown || false,
+    svcCsvDownYn: args.csvDown || false,
   };
 
   const apiBody = {
