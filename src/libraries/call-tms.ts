@@ -61,6 +61,7 @@ export interface CallTmsArg {
   ignore?: boolean;
   signal?: AbortSignal;
   pathName?: string;
+  csvDown?: boolean;
 }
 
 export interface CallWasArg extends CallTmsArg {
@@ -90,6 +91,7 @@ export const genarateBody = (args: {
   session: Session | null;
   pgSn?: number;
   data: any[];
+  csvDown?: boolean;
 }) => {
   /** YYYYMMDDHHmmssSSS */
   const currentTime = dayjs().utc().format("YYYYMMDDHHmmssSSS");
@@ -102,6 +104,7 @@ export const genarateBody = (args: {
     svcRqstPageSize: args.pgSize ?? 15, //default 15
     svcRqstPageSn: args.pgSn || 1,
     svcRqstData: [argumentCustom(args.data)], // svcRqstData 배열 초기화
+    svcRqstCsvYn: args.csvDown || false,
   };
 
   const apiBody = {
@@ -147,6 +150,7 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
       session: args.session,
       data: args.data,
       pgSn: args.pgSn,
+      csvDown: args.csvDown,
     }),
   );
 
@@ -210,6 +214,7 @@ export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
       session: args.session,
       data: args.data,
       pgSn: args.pgSn,
+      csvDown: args.csvDown,
     }),
   );
 
