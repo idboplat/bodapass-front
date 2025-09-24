@@ -1,3 +1,7 @@
+### node ver.
+
+v22.14
+
 키 발급 문서
 
 https://docs.google.com/document/d/1WnlhoEiEPwL2qwO-Mbh5f32Q5H6wNAV8tvCqMKGv7Ys/edit?tab=t.0
