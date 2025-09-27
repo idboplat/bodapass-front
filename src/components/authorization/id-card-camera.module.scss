@@ -1,0 +1,16 @@
+.nav {
+  padding: 1rem;
+}
+
+.cameraBox {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+.shutterBox {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}

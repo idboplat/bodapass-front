@@ -9,12 +9,11 @@ import { Anchor, Breadcrumbs, LoadingOverlay, Select } from "@mantine/core";
 import Link from "next/link";
 import { TOCRReturn } from "@/types/api/useb";
 import ky from "ky";
+import { TOCR } from "../authorization/dto";
 
 type Props = {
   isMobile: boolean;
 };
-
-type TOCR = "idcard" | "driver" | "passport" | "passport-overseas" | "alien" | "alien-back";
 
 export default function UsdBHome({ isMobile }: Props) {
   const router = useRouter();

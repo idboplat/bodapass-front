@@ -9,6 +9,7 @@ interface RenderMapProps {
 }
 
 // https://findlatlng.org/
+// https://generalcoder.tistory.com/4
 // http://localhost:3000/demo/map/dynamic?lng=127.04329080111161&lat=37.54910909586898
 export default function RenderMap({ lat, lng }: RenderMapProps) {
   useKakaoLoader({

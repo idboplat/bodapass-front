@@ -1,0 +1,22 @@
+.imageBox {
+  position: relative;
+  height: 15rem;
+  background-color: #333333;
+
+  img {
+    object-fit: contain;
+  }
+}
+
+.formBox {
+  padding: 1rem;
+
+  :global(.app-TextInput-root) {
+    margin-top: 1rem;
+  }
+}
+
+.submitButtonBox {
+  padding: 1rem;
+  text-align: end;
+}
