@@ -4,14 +4,13 @@ import { Authorized } from "@/libraries/auth/authorized";
 import { useSession } from "@/libraries/auth/use-session";
 import { callWas, StringRspnData } from "@/libraries/call-tms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as faceapi from "face-api.js";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
 
-const PADDING = 75;
-const SCALE = 1;
+// const PADDING = 75;
+// const SCALE = 1;
 
 interface CaptureProps {
   attCd: "I" | "O" | "A";
@@ -148,51 +147,51 @@ function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProp
     // });
   };
 
-  useEffect(() => {
-    if (modelsLoaded) return;
+  // useEffect(() => {
+  //   if (modelsLoaded) return;
 
-    const loadModels = async () => {
-      if (!faceapi.nets.tinyFaceDetector.isLoaded) {
-        await faceapi.nets.tinyFaceDetector.loadFromUri("/models/tiny_face_detector");
-      }
+  //   const loadModels = async () => {
+  //     if (!faceapi.nets.tinyFaceDetector.isLoaded) {
+  //       await faceapi.nets.tinyFaceDetector.loadFromUri("/models/tiny_face_detector");
+  //     }
 
-      if (!faceapi.nets.faceLandmark68TinyNet.isLoaded) {
-        await faceapi.nets.faceLandmark68TinyNet.loadFromUri("/models/face_landmark_68_tiny");
-      }
-      // await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-      // await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);      setModelsLoaded(true);
-      setModelsLoaded(true);
-      console.log("face-api 모델 로드 완료");
-    };
+  //     if (!faceapi.nets.faceLandmark68TinyNet.isLoaded) {
+  //       await faceapi.nets.faceLandmark68TinyNet.loadFromUri("/models/face_landmark_68_tiny");
+  //     }
+  //     // await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+  //     // await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);      setModelsLoaded(true);
+  //     setModelsLoaded(true);
+  //     console.log("face-api 모델 로드 완료");
+  //   };
 
-    loadModels();
-  }, [modelsLoaded]);
+  //   loadModels();
+  // }, [modelsLoaded]);
 
-  useEffect(() => {
-    if (!modelsLoaded) return;
+  // useEffect(() => {
+  //   if (!modelsLoaded) return;
 
-    let stream: MediaStream | undefined = undefined;
+  //   let stream: MediaStream | undefined = undefined;
 
-    const getStream = async () => {
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: cameraMode === "front" ? "user" : "environment",
-        },
-      });
+  //   const getStream = async () => {
+  //     stream = await navigator.mediaDevices.getUserMedia({
+  //       video: {
+  //         facingMode: cameraMode === "front" ? "user" : "environment",
+  //       },
+  //     });
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    };
+  //     if (videoRef.current) {
+  //       videoRef.current.srcObject = stream;
+  //     }
+  //   };
 
-    getStream();
+  //   getStream();
 
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, [modelsLoaded, cameraMode]);
+  //   return () => {
+  //     if (stream) {
+  //       stream.getTracks().forEach((track) => track.stop());
+  //     }
+  //   };
+  // }, [modelsLoaded, cameraMode]);
 
   // 자동 얼굴 감지 로직 - 수동 촬영만 가능하도록 주석처리
   /*

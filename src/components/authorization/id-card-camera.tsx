@@ -2,7 +2,7 @@ import { useCamera } from "@/hooks/use-camera";
 import Camera from "../camera";
 import BackHeader from "../common/back-header";
 import { useRouter } from "next/router";
-import { ActionIcon, Select } from "@mantine/core";
+import { ActionIcon, LoadingOverlay, Select } from "@mantine/core";
 import { useState } from "react";
 import { TOCR, TScannedResult } from "./dto";
 import { useMutation } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ import css from "./id-card-camera.module.scss";
 import { Camera as IconCamera } from "lucide-react";
 import IdcardFrame from "./camera-frame";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { callWas, StringRspnData } from "@/libraries/call-tms";
 
 interface Props {
   brkrId: string;
@@ -28,53 +29,50 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
       const blob = await camera.capture();
       if (!blob) throw new Error("이미지 캡쳐 실패");
 
-      // const formData = new FormData();
-      // formData.append("image", blob, "capture.png");
-
-      // const arrayBuffer = await blob.arrayBuffer();
-      // const base64 = Buffer.from(arrayBuffer).toString("base64");
-
-      let endpoint: string;
+      let tp: "1" | "2" | "3";
 
       switch (type) {
         case "idcard":
+          tp = "1";
         case "driver":
-          endpoint = "idcard-driver";
+          tp = "2";
           break;
-        case "passport":
-          endpoint = "passport";
-          break;
-        case "passport-overseas":
-          endpoint = "passport-overseas";
-          break;
+        // case "passport":
+        //   endpoint = "passport";
+        //   break;
+        // case "passport-overseas":
+        //   endpoint = "passport-overseas";
+        //   break;
         case "alien":
-          endpoint = "alien";
+          tp = "3";
           break;
-        case "alien-back":
-          endpoint = "alien-back";
-          break;
+        // case "alien-back":
+        //   endpoint = "alien-back";
+        //   break;
+        default:
+          throw new Error("존재하지 않는 타입");
       }
 
-      const formData = new FormData();
-      formData.append("F01", blob);
+      const result = await callWas<StringRspnData<3>>({
+        svcId: "WCW000002SSQ01", // 매칭되는 svcId 없음
+        locale: "ko",
+        session: null,
+        data: [brkrId, tp],
+        formData: [blob],
+        apiPathName: "WCW000002SSQ01",
+      });
 
-      // const json = await ky
-      //   .post<{ data: TOCRReturn }>("/middleware/apiUseb/ocr", {
-      //     json: {
-      //       type: endpoint,
-      //       ssa_mode: true,
-      //       image_base64: base64,
-      //     },
-      //   })
-      //   .json();
+      const data = result.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
 
       // return json.data;
       return {
-        id1: "951228",
-        id2: "1000000",
-        name: "홍길동",
-        addr: "서울시 강남구 역삼동",
+        name: data.F01,
+        id: data.F02,
+        addr: data.F03,
         image: blob,
+        type: tp,
       };
     },
     onSuccess: (data) => scanned(data),
@@ -116,10 +114,19 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
       </div>
 
       <div className={css.shutterBox}>
-        <ActionIcon variant="touch" w="5rem" h="5rem" onClick={onClickCapture} radius={9999}>
+        <ActionIcon
+          variant="touch"
+          w="5rem"
+          h="5rem"
+          onClick={onClickCapture}
+          radius={9999}
+          loading={mutation.isPending}
+        >
           <IconCamera width="2.5rem" height="2.5rem" />
         </ActionIcon>
       </div>
+
+      <LoadingOverlay visible={mutation.isPending} />
     </>
   );
 }

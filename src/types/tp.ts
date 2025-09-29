@@ -1,4 +1,4 @@
-type Entity = [string, string][];
+export type Entity = [string, string][];
 
 /**  회사 그룹 구분 */
 export const CORP_GRP_ITEM: Entity = [
@@ -53,6 +53,12 @@ export const ORDR_PRC_TP: Entity = [
 export const USEABLE_TP: Entity = [
   ["Y", "사용가능"],
   ["N", "사용제한"],
+];
+
+export const IdCardEntity: Entity = [
+  ["1", "주민등록증"],
+  ["2", "운전면허증"],
+  ["3", "외국인등록증"],
 ];
 
 export const findEntity = (entity: Entity, value: string) => {
