@@ -1,6 +1,6 @@
 import { useSession } from "@/libraries/auth/use-session";
 import { callTms, StringRspnData } from "@/libraries/call-tms";
-import { Button, LoadingOverlay, Select, TextInput } from "@mantine/core";
+import { Button, LoadingOverlay, SegmentedControl, Select, TextInput } from "@mantine/core";
 import { useIsFetching, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import css from "./home.module.scss";
 import { ChevronDown, ChevronUp, Loader } from "lucide-react";
 import Link from "next/link";
 
+/** 현장 정보 조회 */
 const getSiteInfo = async ({ session }: { session: Session }) => {
   const result = await callTms<StringRspnData<4>>({
     svcId: "TCM200100SMQ01",
@@ -27,6 +28,7 @@ const getSiteInfo = async ({ session }: { session: Session }) => {
   }));
 };
 
+/** 팀원 출퇴근 목록 조회 */
 const getEmployeesByCorpCd = async ({
   session,
   ...args
@@ -66,13 +68,15 @@ const getEmployeesByCorpCd = async ({
 
 export const Home = () => {
   const { data: session } = useSession();
+  if (!session) throw new Error("Session is not found");
+
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const siteId = (router.query.siteId as string | undefined) || "";
-  const [userId, setUserId] = useState<string>("");
 
-  if (!session) throw new Error("Session is not found");
+  const [attCd, setAttCd] = useState<"A" | "I" | "O">("A");
+  const [userId, setUserId] = useState<string>("");
 
   const { data: siteInfo, isPending: isSiteInfoPending } = useQuery({
     queryKey: ["TCM200100SMQ01", session, siteId],
@@ -84,7 +88,12 @@ export const Home = () => {
     [siteInfo, siteId],
   );
 
+  // 직원 목록 조회 쿼리 호출 수
+  // 0보다 크면 가져오는 중
   const isAttListFetching = useIsFetching({ queryKey: ["TCM200101SMQ01"] });
+
+  // 출퇴근 버튼, 출퇴근 필터링 세그먼트 표시 여부
+  const isVisibleAttBtn = currentSite && isAttListFetching < 1;
 
   const handleSearch = () => {
     if (!isSiteInfoPending) return;
@@ -159,12 +168,25 @@ export const Home = () => {
                 size: "sm",
                 type: "dots",
               }}
-              //   disabled={isAttListLoading}
             >
               🔍 조회하기
             </Button>
           </div>
         </div>
+
+        {isVisibleAttBtn && (
+          <div className={css.segmentedControl}>
+            <SegmentedControl
+              data={[
+                { label: "전체", value: "A" },
+                { label: "출근", value: "I" },
+                { label: "퇴근", value: "O" },
+              ]}
+              value={attCd}
+              onChange={(value) => setAttCd(value as "A" | "I" | "O")}
+            />
+          </div>
+        )}
 
         {currentSite && (
           <AttendanceList
@@ -172,14 +194,18 @@ export const Home = () => {
             currentSite={currentSite}
             siteId={siteId}
             userId={userId}
+            attCd={attCd}
           />
         )}
       </div>
 
-      <div className={css.attendanceControl}>
-        <button onClick={() => router.push("/ko/capture")}>출근</button>
-        <button onClick={() => router.push("/ko/capture")}>퇴근</button>
-      </div>
+      {isVisibleAttBtn && (
+        <div className={css.attendanceControl}>
+          <button onClick={() => router.push("/ko/capture")}>출근</button>
+          <button onClick={() => router.push("/ko/capture")}>퇴근</button>
+        </div>
+      )}
+
       <LoadingOverlay visible={isSiteInfoPending} />
     </>
   );
@@ -190,6 +216,7 @@ const AttendanceList = ({
   currentSite,
   siteId,
   userId,
+  attCd,
 }: {
   session: Session;
   currentSite: {
@@ -199,6 +226,7 @@ const AttendanceList = ({
   };
   siteId: string;
   userId: string;
+  attCd: "A" | "I" | "O";
 }) => {
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const router = useRouter();
@@ -243,9 +271,26 @@ const AttendanceList = ({
       }),
     enabled: !!currentSite.mastCorpCd && !!siteId,
   });
+
+  // 필터링 로직
+  const filteredAttList = useMemo(() => {
+    if (!attList) return [];
+
+    switch (attCd) {
+      case "A": // 전체
+        return attList;
+      case "I": // 출근
+        return attList.filter((d) => d.wrkStrDtm === "");
+      case "O": // 퇴근
+        return attList.filter((d) => d.wrkStrDtm !== "" && d.wrkEndDtm === "");
+      default:
+        return attList;
+    }
+  }, [attList, attCd]);
+
   return (
     <div className={css.employeeList}>
-      {attList?.map((d) => {
+      {filteredAttList?.map((d) => {
         const isExpanded = expandedCards.has(d.userId);
         return (
           <div key={d.userId} className={css.employeeCard}>
