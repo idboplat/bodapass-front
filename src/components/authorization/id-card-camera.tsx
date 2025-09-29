@@ -10,12 +10,14 @@ import clsx from "clsx";
 import css from "./id-card-camera.module.scss";
 import { Camera as IconCamera } from "lucide-react";
 import IdcardFrame from "./camera-frame";
+import { sendMessageToDevice } from "@/hooks/use-device-api";
 
 interface Props {
+  brkrId: string;
   scanned: (result: TScannedResult) => void;
 }
 
-export default function IdcardCamera({ scanned }: Props) {
+export default function IdcardCamera({ scanned, brkrId }: Props) {
   const router = useRouter();
   const camera = useCamera();
 
@@ -78,9 +80,11 @@ export default function IdcardCamera({ scanned }: Props) {
     onSuccess: (data) => scanned(data),
   });
 
-  const onClickBack = () => {
-    router.back();
-  };
+  const onClickBack = () =>
+    sendMessageToDevice({
+      type: "authorizationEnd",
+      payload: null,
+    });
 
   const onClickCapture = () => {
     if (mutation.isPending) return;
@@ -90,6 +94,7 @@ export default function IdcardCamera({ scanned }: Props) {
   return (
     <>
       <BackHeader title="신분증" onClickBack={onClickBack} />
+      <div>반장 ID: {brkrId}</div>
       <div className={css.nav}>
         <Select
           data={[

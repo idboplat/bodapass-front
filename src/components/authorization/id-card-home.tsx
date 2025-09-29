@@ -3,6 +3,7 @@ import { TIdCardDto, TScannedResult } from "./dto";
 import { useState } from "react";
 import IdcardCamera from "./id-card-camera";
 import IdCardForm from "./id-card-form";
+import Redirect from "../common/redirect";
 
 export default function IdcardHome() {
   const dto = useDto<TIdCardDto>();
@@ -11,12 +12,14 @@ export default function IdcardHome() {
   const resetScanned = () => setScannedResult(null);
   const setScanned = (result: TScannedResult) => setScannedResult(() => result);
 
+  if (!dto.brkrId) return <Redirect to="/not-found" />;
+
   return (
     <div className={"mobileLayout"}>
       {!!scannedResult ? (
-        <IdCardForm resetScanned={resetScanned} scannedResult={scannedResult} />
+        <IdCardForm resetScanned={resetScanned} scannedResult={scannedResult} brkrId={dto.brkrId} />
       ) : (
-        <IdcardCamera scanned={setScanned} />
+        <IdcardCamera scanned={setScanned} brkrId={dto.brkrId} />
       )}
     </div>
   );

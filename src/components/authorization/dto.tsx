@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const idCardDto = z.object({
-  brkrId: z.number().optional(),
+  brkrId: z.string().optional(),
 });
 
 export type TIdCardDto = z.infer<typeof idCardDto>;

@@ -7,11 +7,12 @@ import { useForm } from "react-hook-form";
 import { Button, TextInput } from "@mantine/core";
 
 interface Props {
+  brkrId: string;
   scannedResult: TScannedResult;
   resetScanned: () => void;
 }
 
-export default function IdCardForm({ scannedResult, resetScanned }: Props) {
+export default function IdCardForm({ scannedResult, resetScanned, brkrId }: Props) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const form = useForm({
     defaultValues: {
@@ -38,6 +39,7 @@ export default function IdCardForm({ scannedResult, resetScanned }: Props) {
   return (
     <>
       <BackHeader title="신분증" onClickBack={resetScanned} />
+      <div>반장 ID: {brkrId}</div>
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="신분증" fill />}</div>
       <div className={css.formBox}>
         <TextInput {...form.register("id1")} label="id1" />
