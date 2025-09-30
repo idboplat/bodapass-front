@@ -4,6 +4,7 @@ import { useState } from "react";
 import IdcardCamera from "./id-card-camera";
 import IdCardForm from "./id-card-form";
 import Redirect from "../common/redirect";
+import { Authorized } from "@/libraries/auth/authorized";
 
 export default function IdcardHome() {
   const dto = useDto<TIdCardDto>();

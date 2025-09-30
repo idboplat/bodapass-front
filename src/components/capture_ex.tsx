@@ -1,90 +1,21 @@
 // components/VideoCapture.tsx
-import { nativeAlert } from "@/hooks/use-device-api";
-import { Authorized } from "@/libraries/auth/authorized";
-import { useSession } from "@/libraries/auth/use-session";
-import { callWas, StringRspnData } from "@/libraries/call-tms";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import * as faceapi from "face-api.js";
 import css from "./capture.module.scss";
 
-// const PADDING = 75;
-// const SCALE = 1;
+const PADDING = 75;
+const SCALE = 1;
 
 interface CaptureProps {
-  //   attCd: "I" | "O" | "A";
-  //   mastCorpCd: string;
-  //   corpCd: string;
-  //   userId: string;
-  //   faceImgFile: string;
-  mutate: (args: any) => void;
-  isPending: boolean;
+  onFaceDetected: (args: { image: Blob; score: number }) => void;
+  setMessage: (message: string) => void;
+  cameraMode: "front" | "back";
 }
 
-export default function CaptureComponent({ mutate, isPending }: CaptureProps) {
-  const router = useRouter();
-  //   const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
-
-  if (!router.isReady) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <Authorized>
-      <Content
-        // attCd={attCd as "I" | "O" | "A"}
-        // mastCorpCd={mastCorpCd as string}
-        // corpCd={corpCd as string}
-        // userId={userId as string}
-        // faceImgFile={faceImgFile as string}
-        mutate={mutate}
-        isPending={isPending}
-      />
-    </Authorized>
-  );
-}
-
-// function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {
-function Content({ mutate, isPending }: CaptureProps) {
-  const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
-
-  const queryClient = useQueryClient();
-  const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
-
-  const router = useRouter();
+export default function Capture({ onFaceDetected, setMessage, cameraMode }: CaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [message, setMessage] = useState("");
-
-  if (!session) throw new Error("Session is not found");
-
-  //   const { mutate, isPending } = useMutation({
-  //     mutationFn: async (args: {
-  //       mastCorpCd: string;
-  //       corpCd: string;
-  //       userId: string;
-  //       attCd: "I" | "O" | "A";
-  //       faceImgFile: string;
-  //       img: Blob;
-  //     }) =>
-  //       callWas<StringRspnData<1>>({
-  //         svcId: "TCM200101SSP01",
-  //         session,
-  //         locale: "ko",
-  //         data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgFile],
-  //         formData: [args.img],
-  //         apiPathName: "WCM200101SSP01",
-  //       }),
-  //     onSuccess: async () => {
-  //       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-  //       // toast.success("출퇴근 정보가 업데이트되었습니다.");
-  //       nativeAlert("출퇴근 정보가 업데이트되었습니다.");
-  //       router.back();
-  //     },
-  //   });
 
   const capture = () => {
     if (!videoRef.current) return;
@@ -109,19 +40,10 @@ function Content({ mutate, isPending }: CaptureProps) {
     captureCanvas.getContext("2d")!.fillStyle = "red";
     captureCanvas.getContext("2d")!.fillText("0", 0, 32);
 
-    // 해상도 정보 출력
-    console.log("촬영 이미지 해상도:", {
-      width: captureCanvas.width,
-      height: captureCanvas.height,
-      aspectRatio: (captureCanvas.width / captureCanvas.height).toFixed(2),
-    });
-
-    // Blob도 생성 (onFaceDetected 콜백용)
     captureCanvas.toBlob(
       (blob) => {
         if (blob) {
-          // onFaceDetected({ image: blob, score: 0 });
-          mutate({ image: blob });
+          onFaceDetected({ image: blob, score: 0 });
         }
 
         // 메모리 정리
@@ -133,41 +55,34 @@ function Content({ mutate, isPending }: CaptureProps) {
         setMessage("");
         videoRef.current?.play();
       },
-      "image/jpeg",
+      "image/png",
       1.0,
     );
-
-    // Base64 문자열을 faceImgFile로 전달하여 API 호출
-    // mutate({
-    //   mastCorpCd,
-    //   corpCd,
-    //   userId,
-    //   attCd,
-    //   faceImgFile: base64String.split(",")[1],
-    // });
   };
 
-  // useEffect(() => {
-  //   if (modelsLoaded) return;
+  useEffect(() => {
+    if (modelsLoaded) return;
 
-  //   const loadModels = async () => {
-  //     if (!faceapi.nets.tinyFaceDetector.isLoaded) {
-  //       await faceapi.nets.tinyFaceDetector.loadFromUri("/models/tiny_face_detector");
-  //     }
+    const loadModels = async () => {
+      if (!faceapi.nets.tinyFaceDetector.isLoaded) {
+        await faceapi.nets.tinyFaceDetector.loadFromUri("/models/tiny_face_detector");
+      }
 
-  //     if (!faceapi.nets.faceLandmark68TinyNet.isLoaded) {
-  //       await faceapi.nets.faceLandmark68TinyNet.loadFromUri("/models/face_landmark_68_tiny");
-  //     }
-  //     // await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-  //     // await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);      setModelsLoaded(true);
-  //     setModelsLoaded(true);
-  //     console.log("face-api 모델 로드 완료");
-  //   };
+      if (!faceapi.nets.faceLandmark68TinyNet.isLoaded) {
+        await faceapi.nets.faceLandmark68TinyNet.loadFromUri("/models/face_landmark_68_tiny");
+      }
+      // await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+      // await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);      setModelsLoaded(true);
+      setModelsLoaded(true);
+      console.log("face-api 모델 로드 완료");
+    };
 
-  //   loadModels();
-  // }, [modelsLoaded]);
+    loadModels();
+  }, [modelsLoaded]);
 
   useEffect(() => {
+    if (!modelsLoaded) return;
+
     let stream: MediaStream | undefined = undefined;
 
     const getStream = async () => {
@@ -189,11 +104,7 @@ function Content({ mutate, isPending }: CaptureProps) {
         stream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [cameraMode]);
-
-  //   자동 얼굴 감지 로직 - 수동 촬영만 가능하도록 주석처리
-  /*
-
+  }, [modelsLoaded, cameraMode]);
 
   useEffect(() => {
     if (!modelsLoaded) return;
@@ -411,19 +322,9 @@ function Content({ mutate, isPending }: CaptureProps) {
       }
     };
   }, [modelsLoaded, onFaceDetected]);
-  */
 
   return (
     <>
-      <div className={css.header}>
-        <div className={css.headerPosition}>
-          <button className={css.backButton} onClick={router.back}>
-            <ArrowLeft size={20} />
-            <span>뒤로가기</span>
-          </button>
-        </div>
-      </div>
-
       <div className={css.capture}>
         <video
           className={css.video}
@@ -439,27 +340,18 @@ function Content({ mutate, isPending }: CaptureProps) {
         </div>
       </div>
 
-      <div className={css.controls}>
-        {!isPending ? (
-          <>
-            <button
-              className={css.cameraToggleButton}
-              onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
-              aria-label="카메라 전환"
-            >
-              <SwitchCamera width="24" height="24" />
-            </button>
-            <button className={css.captureButton} onClick={capture} aria-label="사진 촬영">
-              <Camera width="24" height="24" />
-              <span>촬영</span>
-            </button>
-          </>
-        ) : (
-          <div className={css.loading}>
-            <div className={css.spinner}></div>
-            <span>처리 중...</span>
-          </div>
-        )}
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "red",
+          zIndex: 1000,
+          textAlign: "center",
+          cursor: "pointer",
+        }}
+        onClick={capture}
+      >
+        강제촬영
       </div>
     </>
   );

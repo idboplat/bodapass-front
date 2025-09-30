@@ -1,6 +1,5 @@
 import { ActionIcon, Button, LoadingOverlay } from "@mantine/core";
 import BackHeader from "../common/back-header";
-import Capture from "../capture";
 import { TFaceDto } from "./dto";
 import { useRouter } from "next/router";
 import { useDto } from "@/hooks/use-dto";
@@ -11,8 +10,14 @@ import { callWas } from "@/libraries/call-tms";
 import css from "./face-home.module.scss";
 import { StringRspn } from "@/types/api";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { useSession } from "@/libraries/auth/use-session";
+import { Authorized } from "@/libraries/auth/authorized";
+import CaptureComponent from "@/components/capture";
 
 export default function FaceHome() {
+  const { data: session } = useSession();
+  if (!session) throw new Error("Session is not found");
+
   const router = useRouter();
   const dto = useDto<TFaceDto>();
 
@@ -25,7 +30,7 @@ export default function FaceHome() {
         apiPathName: "WCW000002SSP01",
         data: [args.userId, "jpeg", ""],
         locale: "ko",
-        session: null,
+        session,
         formData: [args.image],
       });
 
@@ -35,15 +40,17 @@ export default function FaceHome() {
 
       return { faceId: data.F01, userId: args.userId };
     },
-    onSuccess: (data) => router.replace(`/authorization/${data.userId}/bank`),
+    onSuccess: (data) => router.replace(`/ko/authorization/${data.userId}/bank`),
   });
 
-  const onClickBack = () =>
-    sendMessageToDevice({
-      type: "authorizationEnd",
-      payload: null,
-    });
-
+  const onClickBack = () => {
+    if (window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: "authorizationEnd",
+        payload: null,
+      });
+    }
+  };
   const setImage = (args: { image: Blob; score: number }) => {
     if (!dto.userId) return;
     if (mutation.isPending) return;
@@ -51,23 +58,22 @@ export default function FaceHome() {
     mutation.mutate({ image: args.image, userId: dto.userId });
   };
 
-  if (!dto.userId) return <Redirect to="/not-found" />;
-
   return (
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {dto.userId}</div>
+      {/* 
+        <div className={css.captureBox}>
+          <Capture onFaceDetected={setImage} cameraMode={cameraMode} setMessage={() => {}} />
+        </div>
 
-      <div className={css.captureBox}>
-        <Capture onFaceDetected={setImage} cameraMode={cameraMode} setMessage={() => {}} />
-      </div>
+        <div>
+          <Button onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}>
+            {cameraMode === "front" ? "Back" : "Front"}
+          </Button>
+        </div> */}
 
-      <div>
-        <Button onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}>
-          {cameraMode === "front" ? "Back" : "Front"}
-        </Button>
-      </div>
-
+      <CaptureComponent mutate={setImage} isPending={mutation.isPending} />
       <LoadingOverlay visible={mutation.isPending} />
     </div>
   );

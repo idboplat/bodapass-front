@@ -1,4 +1,4 @@
-import Capture from "@/components/capture";
+// import Capture from "@/components/capture";
 import { Button, LoadingOverlay } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -91,9 +91,9 @@ export default function Page() {
   return (
     <div className={"mobileLayout"}>
       <div className={css.captureBox}>
-        {images.length < PHOTO_COUNT && (
+        {/* {images.length < PHOTO_COUNT && (
           <Capture onFaceDetected={set} setMessage={onMessage} cameraMode={cameraMode} />
-        )}
+        )} */}
         {images.length >= PHOTO_COUNT && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>

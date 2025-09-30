@@ -103,9 +103,9 @@ export default function Page() {
   return (
     <>
       <div className={css.captureBox}>
-        {images.length < 4 && (
+        {/* {images.length < 4 && (
           <Capture onFaceDetected={set} setMessage={onMessage} cameraMode="front" />
-        )}
+        )} */}
         {images.length >= 4 && (
           <div>
             <p>모든 촬영이 종료되었습니다.</p>

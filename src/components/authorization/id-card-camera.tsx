@@ -12,6 +12,7 @@ import { Camera as IconCamera } from "lucide-react";
 import IdcardFrame from "./camera-frame";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { callWas, StringRspnData } from "@/libraries/call-tms";
+import { useSession } from "@/libraries/auth/use-session";
 
 interface Props {
   brkrId: string;
@@ -19,6 +20,9 @@ interface Props {
 }
 
 export default function IdcardCamera({ scanned, brkrId }: Props) {
+  const { data: session } = useSession();
+  if (!session) throw new Error("Session is not found");
+
   const router = useRouter();
   const camera = useCamera();
 
@@ -26,6 +30,7 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
 
   const mutation = useMutation({
     mutationFn: async () => {
+      console.log("mutationFn");
       const blob = await camera.capture();
       if (!blob) throw new Error("이미지 캡쳐 실패");
 
@@ -34,6 +39,7 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
       switch (type) {
         case "idcard":
           tp = "1";
+          break;
         case "driver":
           tp = "2";
           break;
@@ -56,7 +62,7 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
       const result = await callWas<StringRspnData<3>>({
         svcId: "WCW000002SSQ01", // 매칭되는 svcId 없음
         locale: "ko",
-        session: null,
+        session,
         data: [brkrId, tp],
         formData: [blob],
         apiPathName: "WCW000002SSQ01",
@@ -69,20 +75,25 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
       // return json.data;
       return {
         name: data.F01,
-        id: data.F02,
-        addr: data.F03,
+        id1: data.F02,
+        id2: data.F03,
         image: blob,
         type: tp,
       };
     },
-    onSuccess: (data) => scanned(data),
+    onSuccess: (data) => {
+      scanned(data);
+    },
   });
 
-  const onClickBack = () =>
-    sendMessageToDevice({
-      type: "authorizationEnd",
-      payload: null,
-    });
+  const onClickBack = () => {
+    if (window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: "authorizationEnd",
+        payload: null,
+      });
+    }
+  };
 
   const onClickCapture = () => {
     if (mutation.isPending) return;

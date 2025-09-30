@@ -26,7 +26,7 @@ export default function Capture({ canvasRef, videoRef, onClickCapture, isMobile 
 
           <p>신분증의 내 모서리가 모두 나와야 합니다.</p>
 
-          <p>신분증이 가려지지 안항야 합니다.</p>
+          <p>신분증이 가려지지 않아야 합니다.</p>
           <div className={css.shutterBox}>
             <ActionIcon variant="touch" w="5rem" h="5rem" onClick={onClickCapture} radius={9999}>
               <IconCamera width="4rem" height="4rem" />

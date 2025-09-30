@@ -1,4 +1,4 @@
-import Capture from "@/components/capture";
+// import Capture from "@/components/capture";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import css from "./index.module.scss";
 import { useEffect, useState } from "react";
@@ -117,7 +117,7 @@ function Home() {
   return (
     <div className={"mobileLayout"}>
       <div className={css.captureBox}>
-        <Capture onFaceDetected={set} setMessage={onMessage} cameraMode={cameraMode} />
+        {/* <Capture onFaceDetected={set} setMessage={onMessage} cameraMode={cameraMode} /> */}
       </div>
     </div>
   );

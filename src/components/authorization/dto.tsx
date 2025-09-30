@@ -10,14 +10,17 @@ export type TOCR = "idcard" | "driver" | "passport" | "passport-overseas" | "ali
 
 export type TScannedResult = {
   name: string;
-  id: string;
-  addr: string;
+  id1: string;
+  id2: string;
   image: Blob;
   type: "1" | "2" | "3";
 };
 
 export const bankDto = z.object({
-  userId: z.string().optional(),
+  userId: z.string(),
+  bankCd: z.string().optional(),
+  bankNm: z.string().optional(),
+  bankAccountNo: z.string().optional(),
 });
 
 export type TBankDto = z.infer<typeof bankDto>;
