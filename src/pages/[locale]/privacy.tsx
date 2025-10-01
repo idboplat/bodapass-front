@@ -1,6 +1,6 @@
-import css from "./private.module.scss";
+import css from "./privacy.module.scss";
 
-export default function Private() {
+export default function Privacy() {
   return (
     <div className={css.container}>
       <div className={css.header}>

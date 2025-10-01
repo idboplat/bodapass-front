@@ -34,6 +34,9 @@ export default function Page() {
         />
 
         <Link href={`/${locale}/signin`}>이미 아이디가 있으신가요?</Link>
+        <a target="_blank" href={`/${locale}/privacy`}>
+          개인정보 처리방침
+        </a>
       </div>
     </main>
   );

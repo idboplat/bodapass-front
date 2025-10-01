@@ -1,6 +1,10 @@
 import { PickerBaseProps } from "@mantine/dates";
 import { NextPage } from "next";
 
+export type Function<T> = (...arg: any) => T;
+export type Promised<T extends Function<any>> = Awaited<ReturnType<T>>;
+export type Filler = "";
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
 };

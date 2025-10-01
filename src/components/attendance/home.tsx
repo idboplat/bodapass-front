@@ -1,5 +1,5 @@
 import { useSession } from "@/libraries/auth/use-session";
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
 import { Button, LoadingOverlay, SegmentedControl, Select, TextInput } from "@mantine/core";
 import { useIsFetching, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo } from "react";
 import css from "./home.module.scss";
 import { ChevronDown, ChevronUp, Loader } from "lucide-react";
 import Link from "next/link";
+import clsx from "clsx";
 
 /** 현장 정보 조회 */
 const getSiteInfo = async ({ session }: { session: Session }) => {
@@ -38,12 +39,13 @@ const getEmployeesByCorpCd = async ({
   userId: string;
 }) => {
   // teamleader1@gmail.com 고정 테스트
-  const result = await callTms<StringRspnData<14>>({
-    svcId: "TCM200101SMQ01",
+  const result = await callWas<StringRspnData<14>>({
     session,
-    locale: "ko",
+    apiPathName: "WCM200101SMQ01",
+    formData: [],
+    svcId: "TCM200101SMQ01",
     data: [args.mastCorpCd, args.corpCd, args.userId],
-    pathName: "TCM200101SMQ01",
+    locale: "ko",
   });
 
   const data = result.svcRspnData || [];
@@ -121,7 +123,8 @@ export const Home = () => {
 
   return (
     <>
-      <div className={css.wrap}>
+      <div className={css.background} />
+      <div className={clsx("mobileLayout", css.wrap)}>
         <div className={css.header}>
           <h1 className={css.title}>출근부 관리</h1>
           <p className={css.subtitle}>직원 출퇴근을 관리하세요</p>
@@ -198,14 +201,12 @@ export const Home = () => {
           />
         )}
       </div>
-
       {isVisibleAttBtn && (
         <div className={css.attendanceControl}>
           <button onClick={() => router.push("/ko/capture")}>출근</button>
           <button onClick={() => router.push("/ko/capture")}>퇴근</button>
         </div>
       )}
-
       <LoadingOverlay visible={isSiteInfoPending} />
     </>
   );

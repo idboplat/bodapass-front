@@ -32,7 +32,6 @@ $defult-modal-max-height: 600px;
   padding: 20px var(--modal-padding) calc(20px + env(safe-area-inset-bottom)) var(--modal-padding);
 }
 
-
 @include util.dark {
   .inner {
     background: #131722 url("/images/bg_popup.png") no-repeat center 25% / cover;
@@ -41,7 +40,7 @@ $defult-modal-max-height: 600px;
 
 .expand:global(.full) {
   padding: 0px;
-  
+
   & > .inner {
     height: 100%;
     border-radius: 0px;
@@ -90,9 +89,6 @@ button.closeButton {
 .body {
   overflow-y: auto;
   flex: 1;
-  &::-webkit-scrollbar {
-    width: 5px; /* 스크롤바 너비 설정 */
-  }
 }
 
 @include util.dark {
