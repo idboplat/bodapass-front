@@ -1,18 +1,14 @@
-import { ActionIcon, Button, LoadingOverlay } from "@mantine/core";
+import CaptureComponent from "@/components/capture";
+import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { useDto } from "@/hooks/use-dto";
+import { useSession } from "@/libraries/auth/use-session";
+import { callWas } from "@/libraries/call-tms";
+import { StringRspn } from "@/types/api";
+import { LoadingOverlay } from "@mantine/core";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import BackHeader from "../common/back-header";
 import { TFaceDto } from "./dto";
-import { useRouter } from "next/router";
-import { useDto } from "@/hooks/use-dto";
-import { useMutation } from "@tanstack/react-query";
-import Redirect from "../common/redirect";
-import { useState } from "react";
-import { callWas } from "@/libraries/call-tms";
-import css from "./face-home.module.scss";
-import { StringRspn } from "@/types/api";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
-import { useSession } from "@/libraries/auth/use-session";
-import { Authorized } from "@/libraries/auth/authorized";
-import CaptureComponent from "@/components/capture";
 
 export default function FaceHome() {
   const { data: session } = useSession();
@@ -20,8 +16,6 @@ export default function FaceHome() {
 
   const router = useRouter();
   const dto = useDto<TFaceDto>();
-
-  const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
 
   const mutation = useMutation({
     mutationFn: async (args: { image: Blob; userId: string }) => {
@@ -40,7 +34,7 @@ export default function FaceHome() {
 
       return { faceId: data.F01, userId: args.userId };
     },
-    onSuccess: (data) => router.replace(`/ko/authorization/${data.userId}/bank`),
+    onSuccess: (data) => router.replace(`/ko/authorization/crew/${data.userId}/bank`),
   });
 
   const onClickBack = () => {
@@ -53,8 +47,8 @@ export default function FaceHome() {
   };
   const setImage = (args: { image: Blob; score: number }) => {
     if (!dto.userId) return;
-    if (mutation.isPending) return;
 
+    if (mutation.isPending) return;
     mutation.mutate({ image: args.image, userId: dto.userId });
   };
 
@@ -62,17 +56,6 @@ export default function FaceHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {dto.userId}</div>
-      {/* 
-        <div className={css.captureBox}>
-          <Capture onFaceDetected={setImage} cameraMode={cameraMode} setMessage={() => {}} />
-        </div>
-
-        <div>
-          <Button onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}>
-            {cameraMode === "front" ? "Back" : "Front"}
-          </Button>
-        </div> */}
-
       <CaptureComponent mutate={setImage} isPending={mutation.isPending} />
       <LoadingOverlay visible={mutation.isPending} />
     </div>

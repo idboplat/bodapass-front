@@ -87,7 +87,7 @@ export default function IdCardForm({ scannedResult, resetScanned, brkrId }: Prop
       return data;
     },
     onSuccess: (data) => {
-      router.replace(`/${locale}/authorization/${data.F01}/face`);
+      router.replace(`/${locale}/authorization/crew/${data.F01}/face`);
     },
     onError: (error) => {
       console.log("error", error);

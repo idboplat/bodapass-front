@@ -103,7 +103,7 @@ export default function IdcardCamera({ scanned, brkrId }: Props) {
   return (
     <>
       <BackHeader title="신분증" onClickBack={onClickBack} />
-      <div>반장 ID: {brkrId}</div>
+      <div className={css.brkrId}>반장 ID: {brkrId}</div>
       <div className={css.nav}>
         <Select
           data={[
