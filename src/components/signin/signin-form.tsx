@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
 import { nativeLogger } from "@/hooks/use-device-api";
-import { useEmailLoginMutation } from "@/hooks/tms/use-auth-service";
+import { useEmailLoginMutation } from "@/hooks/tms/use-auth";
 
 export default function SigninForm() {
   const router = useRouter();

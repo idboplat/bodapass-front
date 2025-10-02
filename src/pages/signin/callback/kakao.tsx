@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
 import { nativeLogger } from "@/hooks/use-device-api";
-import { useKakaoLoginMutation } from "@/hooks/tms/use-auth-service";
+import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 

@@ -9,7 +9,7 @@ import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { Address } from "react-daum-postcode";
-import { useCheckBrokerMutation, useSignupMutation } from "@/hooks/tms/use-auth-service";
+import { useCheckBrokerMutation, useSignupMutation } from "@/hooks/tms/use-auth";
 import { onNoSpaceChange, onTelChange } from "@/utils/input-handler";
 
 interface Props {
