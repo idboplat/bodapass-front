@@ -1,23 +1,10 @@
 import { Authorized } from "@/libraries/auth/authorized";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import css from "./search-home.module.scss";
 import SearchHome from "@/components/attendance/search-home";
-
-// const PADDING = 75;
-// const SCALE = 1;
-
-interface CaptureProps {
-  attCd: "I" | "O" | "A";
-  mastCorpCd: string;
-  corpCd: string;
-  userId: string;
-  faceImgFile: string;
-}
+import { Button } from "@mantine/core";
 
 export default function Capture() {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
 
   if (!router.isReady) {
     return <div>Loading...</div>;
@@ -25,14 +12,13 @@ export default function Capture() {
 
   return (
     <Authorized>
-      {/* <SearchHome
-        attCd={attCd as "I" | "O" | "A"}
-        mastCorpCd={mastCorpCd as string}
-        corpCd={corpCd as string}
-        userId={userId as string}
-        faceImgFile={faceImgFile as string}
-      /> */}
-      <SearchHome />
+      <div className={"mobileLayout"}>
+        <div>
+          {/* TODO: 퇴근이 모두 완료되면 기기에 이벤트 전송 */}
+          <Button>완료</Button>
+        </div>
+        <SearchHome attCd="O" />
+      </div>
     </Authorized>
   );
 }

@@ -3,15 +3,20 @@ import { useSession } from "@/libraries/auth/use-session";
 import { callWas, StringRspnData } from "@/libraries/call-tms";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import CaptureComponent from "../capture";
+import Capture from "../capture";
 import css from "./search-home.module.scss";
 
-export default function SearchHome() {
+interface SearchHomeProps {
+  attCd: "I" | "O";
+}
+
+export default function SearchHome({ attCd }: SearchHomeProps) {
   const router = useRouter();
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
 
-  const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
+  const mastCorpCd = router.query.mastCorpCd as string;
+  const corpCd = router.query.corpCd as string;
 
   const queryClient = useQueryClient();
 
@@ -28,13 +33,7 @@ export default function SearchHome() {
         svcId: "TCM200101SSP01",
         session,
         locale: "ko",
-        data: [
-          mastCorpCd as string,
-          corpCd as string,
-          userId as string,
-          attCd as string,
-          faceImgFile as string,
-        ],
+        data: [mastCorpCd, corpCd],
         formData: [args.img],
         apiPathName: "WCM200101SSP01",
       }),
@@ -52,7 +51,7 @@ export default function SearchHome() {
     mutate({ img: args.image });
   };
 
-  return <CaptureComponent mutate={setImage} isPending={isPending} />;
+  return <Capture mutate={setImage} isPending={isPending} session={session} />;
 }
 
 // function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {

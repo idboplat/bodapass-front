@@ -9,7 +9,7 @@ import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
-import CaptureComponent from "@/components/capture";
+import Capture from "@/components/capture";
 
 // const PADDING = 75;
 // const SCALE = 1;
@@ -22,7 +22,7 @@ interface CaptureProps {
   faceImgFile: string;
 }
 
-export default function Capture() {
+export default function CaptureHome() {
   const router = useRouter();
   const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
 
@@ -90,7 +90,7 @@ function Content() {
     mutate({ img: args.image });
   };
 
-  return <CaptureComponent mutate={setImage} isPending={isPending} />;
+  return <Capture mutate={setImage} isPending={isPending} session={session} />;
 }
 
 // function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {

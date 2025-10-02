@@ -1,4 +1,4 @@
-import CaptureComponent from "@/components/capture";
+import Capture from "@/components/capture";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useDto } from "@/hooks/use-dto";
 import { useSession } from "@/libraries/auth/use-session";
@@ -56,7 +56,7 @@ export default function FaceHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {dto.userId}</div>
-      <CaptureComponent mutate={setImage} isPending={mutation.isPending} />
+      <Capture mutate={setImage} isPending={mutation.isPending} session={session} />
       <LoadingOverlay visible={mutation.isPending} />
     </div>
   );

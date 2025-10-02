@@ -1,16 +1,8 @@
-// components/VideoCapture.tsx
-import { nativeAlert } from "@/hooks/use-device-api";
-import { Authorized } from "@/libraries/auth/authorized";
-import { useSession } from "@/libraries/auth/use-session";
-import { callWas, StringRspnData } from "@/libraries/call-tms";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
-
-// const PADDING = 75;
-// const SCALE = 1;
 
 interface CaptureProps {
   //   attCd: "I" | "O" | "A";
@@ -20,36 +12,10 @@ interface CaptureProps {
   //   faceImgFile: string;
   mutate: (args: any) => void;
   isPending: boolean;
+  session: Session;
 }
 
-export default function CaptureComponent({ mutate, isPending }: CaptureProps) {
-  const router = useRouter();
-  //   const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
-
-  if (!router.isReady) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <Authorized>
-      <Content
-        // attCd={attCd as "I" | "O" | "A"}
-        // mastCorpCd={mastCorpCd as string}
-        // corpCd={corpCd as string}
-        // userId={userId as string}
-        // faceImgFile={faceImgFile as string}
-        mutate={mutate}
-        isPending={isPending}
-      />
-    </Authorized>
-  );
-}
-
-// function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {
-function Content({ mutate, isPending }: CaptureProps) {
-  const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
-
+export default function Capture({ mutate, isPending, session }: CaptureProps) {
   const queryClient = useQueryClient();
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
 
@@ -58,8 +24,6 @@ function Content({ mutate, isPending }: CaptureProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
   const [message, setMessage] = useState("");
-
-  if (!session) throw new Error("Session is not found");
 
   //   const { mutate, isPending } = useMutation({
   //     mutationFn: async (args: {
