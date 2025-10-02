@@ -10,7 +10,7 @@ export default function AttendancePage() {
 
   return (
     <Authorized>
-      <div>
+      <div className={"mobileLayout"}>
         <Home />
       </div>
     </Authorized>

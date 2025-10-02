@@ -124,7 +124,7 @@ export const Home = () => {
   return (
     <>
       <div className={css.background} />
-      <div className={clsx("mobileLayout", css.wrap)}>
+      <div className={css.wrap}>
         <div className={css.header}>
           <h1 className={css.title}>출근부 관리</h1>
           <p className={css.subtitle}>직원 출퇴근을 관리하세요</p>
