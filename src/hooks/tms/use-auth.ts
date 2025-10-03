@@ -1,5 +1,5 @@
 import { frontApi } from "@/apis/fetcher";
-import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
+import { TSignInDto, TCrewSignUpDto } from "@/libraries/auth/auth.dto";
 import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -66,14 +66,28 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: (dto: TSignUpDto) =>
+    mutationFn: (dto: {
+      externalId: string;
+      userName: string;
+      /** 이메일 1, 소셜 2, 전화번호 3 */
+      loginTp: "1" | "2" | "3";
+      /** 반장 1, 팀원 2, 일용직 3 */
+      workerTp: "1" | "2" | "3";
+      password: string;
+      contryCode: string;
+      address: string;
+      addressDetail: string;
+      tel: string;
+      zipCode: string;
+      brkrId: string;
+    }) =>
       callTms<StringRspnData<1>>({
         svcId: "TCM200001SSP00",
         session: null,
         locale,
         data: [
           dto.externalId,
-          [dto.tel1, dto.tel2, dto.tel3].join(""),
+          dto.tel,
           dto.userName,
           dto.loginTp,
           dto.password,
@@ -82,7 +96,7 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
           dto.zipCode,
           dto.contryCode,
           dto.workerTp,
-          dto.brokerId,
+          dto.brkrId,
         ],
       }),
     onMutate: () => setIsLoading(() => true),

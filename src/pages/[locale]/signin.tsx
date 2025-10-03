@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import KakaoLoginIcon from "/public/assets/svg/kakao.svg?react";
 import { Button, UnstyledButton } from "@mantine/core";
+import { GradientBackground } from "@/components/background";
 
 export default function Page() {
   const router = useRouter();
@@ -23,34 +24,38 @@ export default function Page() {
   };
 
   return (
-    <main className={css.main}>
-      <div className={css.inner}>
-        <h1 className={css.title}>{t("auth:0001")}</h1>
-        <SigninForm />
-      </div>
+    <div className={"mobileLayout"}>
+      <GradientBackground />
 
-      <br />
-      <br />
+      <div className={css.wrap}>
+        <div className={css.inner}>
+          <div className={css.header}>
+            <div className={css.logo}>👤</div>
+            <h1 className={css.title}>{t("auth:0001")}</h1>
+            <p className={css.subtitle}>계정에 로그인하여 서비스를 이용하세요</p>
+          </div>
 
-      <div>
-        <div>소셜 계정으로 로그인</div>
+          <SigninForm />
 
-        <br />
+          <div className={css.divider}>
+            <span>또는</span>
+          </div>
 
-        <div>
-          <UnstyledButton className={css.kakaoSigninButton} onClick={onClickKakaoLogin}>
-            <KakaoLoginIcon />
-            <span>{t("auth:0002")}</span>
-          </UnstyledButton>
+          <div className={css.socialSection}>
+            <div className={css.socialTitle}>소셜 계정으로 로그인</div>
+            <UnstyledButton className={css.kakaoSigninButton} onClick={onClickKakaoLogin}>
+              <KakaoLoginIcon />
+              <span>{t("auth:0002")}</span>
+            </UnstyledButton>
+          </div>
+
+          <div className={css.signupLink}>
+            <span>계정이 없으신가요? </span>
+            <Link href={`/${locale}/signup`}>회원가입</Link>
+          </div>
         </div>
       </div>
-
-      <br />
-
-      <div>
-        <Link href={`/${locale}/signup`}>회원가입</Link>
-      </div>
-    </main>
+    </div>
   );
 }
 

@@ -10,6 +10,7 @@ import css from "./home-asis.module.scss";
 import { ChevronDown, ChevronUp, Loader } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
+import { GradientBackground } from "../background";
 
 /** 팀원 출퇴근 목록 조회 */
 const getEmployeesByCorpCd = async ({
@@ -94,7 +95,7 @@ export const Home = () => {
 
   return (
     <>
-      <div className={css.background} />
+      <GradientBackground />
       <div className={css.wrap}>
         <div className={css.header}>
           <h1 className={css.title}>출근부 관리</h1>

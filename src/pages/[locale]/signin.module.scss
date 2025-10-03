@@ -1,34 +1,164 @@
-.main {
+.wrap {
   @extend %flex-center;
-  min-width: 100svw;
   min-height: 100svh;
   flex-direction: column;
+  position: relative;
+  padding: 10px;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  gap: 28px;
-  padding-block: 24px;
+  width: 100%;
+  max-width: 400px;
+  min-height: 640px;
+  padding: 20px 10px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.title {
+.header {
   text-align: center;
+  margin-bottom: 8px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  margin-bottom: 16px;
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
   font-size: 24px;
 }
 
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.socialSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.socialTitle {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
 .kakaoSigninButton {
-  background-color: #fee500;
-  color: #000000 85%;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #fee500 0%, #fdd835 100%);
+  color: #3c1e1e;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 5px 8px;
-  gap: 5px;
+  justify-content: center;
+  padding: 16px 24px;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(254, 229, 0, 0.3);
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(254, 229, 0, 0.4);
+  }
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(254, 229, 0, 0.3);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.signupLink {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 16px;
+  color: #6b7280;
+
+  span {
+    color: #6b7280;
+  }
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      color: #764ba2;
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ddd, transparent);
+  }
+
+  span {
+    padding: 0 16px;
+    color: #999;
+    font-size: 14px;
   }
 }

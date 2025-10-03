@@ -1,45 +1,46 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { Box, Button, LoadingOverlay, PasswordInput, Select, TextInput } from "@mantine/core";
-import css from "./signup-form.module.scss";
-import { Controller, useForm, Control, useWatch } from "react-hook-form";
+import { useRef, useState } from "react";
+import { Box, Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
+import css from "./crew-signup-form.module.scss";
+import { Controller, useForm, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpDto, TSignUpDto } from "@/libraries/auth/auth.dto";
+import { crewSignUpDto, TCrewSignUpDto } from "@/libraries/auth/auth.dto";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
-import Portal from "../common/modal/portal";
-import PostCodeModal from "../common/modal/post-code-modal";
+import Portal from "@/components/common/modal/portal";
+import PostCodeModal from "@/components/common/modal/post-code-modal";
 import { Address } from "react-daum-postcode";
 import { useCheckBrokerMutation, useSignupMutation } from "@/hooks/tms/use-auth";
 import { onNoSpaceChange, onTelChange } from "@/utils/input-handler";
 
 interface Props {
   initState: {
-    loginTp: TSignUpDto["loginTp"];
-    workerTp: TSignUpDto["workerTp"];
-    brokerId: TSignUpDto["brokerId"];
-    externalId: TSignUpDto["externalId"];
-    password: TSignUpDto["password"];
+    loginTp: TCrewSignUpDto["loginTp"];
+    brokerId: TCrewSignUpDto["brkrId"];
+    externalId: TCrewSignUpDto["externalId"];
+    password: TCrewSignUpDto["password"];
   };
+  workerTp: "2" | "3";
 }
 
-export default function SignupForm({ initState }: Props) {
+export default function SignupForm({ initState, workerTp }: Props) {
   const router = useRouter();
+  const asPath = router.asPath;
+  const locale = router.query.locale?.toString() || "ko";
+
+  const postCodeInputRef = useRef<HTMLInputElement>(null);
+
   const [showPostCode, setShowPostCode] = useState(false);
   const [isValidateBrokerId, setIsValidateBrokerId] = useState(false);
   const [step, setStep] = useState(1);
 
-  const locale = router.query.locale?.toString() || "ko";
-  const postCodeInputRef = useRef<HTMLInputElement>(null);
-
   const form = useForm({
     mode: "onTouched", // 초기 로딩 시 불필요한 검증 방지
-    resolver: zodResolver(signUpDto),
+    resolver: zodResolver(crewSignUpDto),
     defaultValues: {
       // step1
       contryCode: "82",
       loginTp: initState.loginTp,
-      workerTp: initState.workerTp,
-      brokerId: initState.brokerId,
+      brkrId: initState.brokerId,
 
       // step2
       externalId: initState.externalId,
@@ -56,8 +57,6 @@ export default function SignupForm({ initState }: Props) {
       addressDetail: "",
     },
   });
-
-  const workerTp = form.watch("workerTp");
 
   const { mutation: mutationSignup, isLoading: isLoadingSignup } = useSignupMutation({ locale });
   const { mutation: mutationCheckBroker } = useCheckBrokerMutation({ locale });
@@ -85,7 +84,7 @@ export default function SignupForm({ initState }: Props) {
         { brokerId },
         {
           onSuccess: () => {
-            form.clearErrors("brokerId");
+            form.clearErrors("brkrId");
             setIsValidateBrokerId(() => true);
           },
         },
@@ -96,20 +95,22 @@ export default function SignupForm({ initState }: Props) {
   };
 
   const step1Next = async () => {
-    const isValid = await form.trigger(["contryCode", "loginTp", "workerTp", "brokerId"]);
-    if (!isValid) return;
+    if (workerTp === "2") {
+      // 팀원의 경우
+      const isValid = await form.trigger(["contryCode", "loginTp", "brkrId"]);
+      if (!isValid) return;
 
-    if (form.getValues("workerTp") === "") {
-      form.setError("workerTp", { message: "근로 구분을 선택해주세요." });
-      return;
-    }
-
-    if (form.getValues("brokerId").length > 0 && !isValidateBrokerId) {
-      form.setError("brokerId", { message: "추천인 아이디가 검증되지 않았습니다." });
-      return;
+      if (form.getValues("brkrId").length > 0 && !isValidateBrokerId) {
+        form.setError("brkrId", { message: "반장 아이디가 검증되지 않았습니다." });
+        return;
+      }
     }
 
     setStep(() => 2);
+  };
+
+  const step1Prev = () => {
+    router.back();
   };
 
   const step2Next = async () => {
@@ -140,32 +141,46 @@ export default function SignupForm({ initState }: Props) {
 
     if (mutationSignup.isPending) return;
 
-    mutationSignup.mutate(form.getValues(), {
-      onSuccess: () => {
-        nativeAlert("회원가입이 완료되었습니다.");
-        router.replace(`/${locale}/signin`);
+    mutationSignup.mutate(
+      {
+        ...form.getValues(),
+        tel: [form.getValues("tel1"), form.getValues("tel2"), form.getValues("tel3")].join(""),
+        workerTp,
       },
-    });
+      {
+        onSuccess: () => {
+          nativeAlert("회원가입이 완료되었습니다.");
+          router.replace(`/${locale}/signin`);
+        },
+      },
+    );
   };
 
-  useEffect(() => {
-    if (workerTp !== "2") {
-      form.setValue("brokerId", "");
-      form.clearErrors("brokerId");
-      setIsValidateBrokerId(() => false);
-    }
-  }, [workerTp, form]);
+  const onClickWorpTpToggle = () => {
+    form.setValue("brkrId", "");
+    form.clearErrors("brkrId");
+    setIsValidateBrokerId(() => false);
+
+    const [pathname, search] = asPath.split("?");
+    const searchParams = new URLSearchParams(search);
+    searchParams.set("workerTp", workerTp === "2" ? "3" : "2");
+    const url = pathname + "?" + searchParams.toString();
+    router.push(url);
+  };
 
   return (
     <>
       <div className={css.form}>
         {step === 1 && (
           <Step1
+            workerTp={workerTp}
             control={form.control}
             isValidateBrokerId={isValidateBrokerId}
             isLoadingBrokerCheck={mutationCheckBroker.isPending}
             onClickBrokerInputButton={onClickBrokerInputButton}
             onClickNext={step1Next}
+            onClickPrev={step1Prev}
+            toggleWorkerTp={onClickWorpTpToggle}
           />
         )}
         {step === 2 && (
@@ -198,20 +213,24 @@ export default function SignupForm({ initState }: Props) {
 }
 
 function Step1({
+  workerTp,
   control,
   isValidateBrokerId,
   isLoadingBrokerCheck,
   onClickBrokerInputButton,
   onClickNext,
+  onClickPrev,
+  toggleWorkerTp,
 }: {
-  control: Control<TSignUpDto>;
+  workerTp: "2" | "3";
+  control: Control<TCrewSignUpDto>;
   isValidateBrokerId: boolean;
   isLoadingBrokerCheck: boolean;
   onClickBrokerInputButton: (brokerId: string) => void;
   onClickNext: () => void;
+  onClickPrev: () => void;
+  toggleWorkerTp: () => void;
 }) {
-  const workerTp = useWatch({ control, name: "workerTp" });
-
   return (
     <div>
       <Controller
@@ -228,35 +247,16 @@ function Step1({
         )}
       />
 
-      <Controller
-        control={control}
-        name="workerTp"
-        render={({ field, fieldState }) => (
-          <Select
-            {...field}
-            mt={28}
-            label="근로 구분"
-            error={fieldState.error?.message}
-            data={[
-              { value: "1", label: "반장" },
-              { value: "2", label: "팀원" },
-              { value: "3", label: "일용직" },
-            ]}
-            required
-            allowDeselect={false}
-          />
-        )}
-      />
       {workerTp === "2" && (
         <Controller
           control={control}
-          name="brokerId"
+          name="brkrId"
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
               classNames={{ wrapper: css.brokerInput }}
               mt={28}
-              label="반장 아이디"
+              label="반장 아이디 (선택)"
               autoComplete="off"
               error={fieldState.error?.message}
               disabled={isValidateBrokerId}
@@ -269,7 +269,7 @@ function Step1({
                   loading={isLoadingBrokerCheck}
                   onClick={() => onClickBrokerInputButton(field.value)}
                 >
-                  {isValidateBrokerId ? "Reset" : "Check"}
+                  {isValidateBrokerId ? "초기화" : "검증"}
                 </Button>
               }
             />
@@ -278,6 +278,14 @@ function Step1({
       )}
 
       <Box mt={28} style={{ textAlign: "right" }}>
+        <Button variant="subtle" type="button" onClick={toggleWorkerTp} mr={12}>
+          {workerTp === "2" ? "일용직이신가요?" : "팀원이신가요?"}
+        </Button>
+
+        <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+          이전
+        </Button>
+
         <Button variant="filled" type="button" onClick={onClickNext}>
           다음
         </Button>
@@ -292,10 +300,10 @@ function Step2({
   onClickPrev,
   loginTp,
 }: {
-  control: Control<TSignUpDto>;
+  control: Control<TCrewSignUpDto>;
   onClickNext: () => void;
   onClickPrev: () => void;
-  loginTp: TSignUpDto["loginTp"];
+  loginTp: TCrewSignUpDto["loginTp"];
 }) {
   return (
     <div>
@@ -385,7 +393,7 @@ function Step3({
   onClickPrev,
   onClickSave,
 }: {
-  control: Control<TSignUpDto>;
+  control: Control<TCrewSignUpDto>;
   openPostCode: () => void;
   onClickPrev: () => void;
   onClickSave: () => void;
@@ -458,7 +466,8 @@ function Step3({
               {...field}
               mt={28}
               label="우편번호"
-              onChange={undefined}
+              value={undefined}
+              defaultValue={field.value}
               onFocus={openPostCode}
               error={fieldState.error?.message}
               required
@@ -474,7 +483,8 @@ function Step3({
               {...field}
               mt={28}
               label="주소"
-              onChange={undefined}
+              value={undefined}
+              defaultValue={field.value}
               onFocus={openPostCode}
               error={fieldState.error?.message}
               required

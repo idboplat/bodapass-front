@@ -48,17 +48,37 @@ export default function SigninForm() {
       <Controller
         control={form.control}
         name="externalId"
-        render={({ field }) => <TextInput {...field} label="아이디" type="text" />}
+        render={({ field }) => (
+          <TextInput
+            {...field}
+            label="아이디"
+            type="text"
+            classNames={{
+              label: css["mantine-TextInput-label"],
+              input: css["mantine-TextInput-input"],
+            }}
+          />
+        )}
       />
 
       <Controller
         control={form.control}
         name="password"
-        render={({ field }) => <PasswordInput {...field} mt={28} label="비밀번호" />}
+        render={({ field }) => (
+          <PasswordInput
+            {...field}
+            mt={28}
+            label="비밀번호"
+            classNames={{
+              label: css["mantine-PasswordInput-label"],
+              input: css["mantine-PasswordInput-input"],
+            }}
+          />
+        )}
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>
-        <Button variant="filled" type="submit" loading={isLoading}>
+        <Button className={css.loginButton} variant="filled" type="submit" loading={isLoading}>
           로그인
         </Button>
       </Box>
