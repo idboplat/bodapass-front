@@ -11,7 +11,7 @@ interface Props {
   dto: Required<TContractDto>;
 }
 
-export function LeaderConclude({ session, dto }: Props) {
+export function CrewConclude({ session, dto }: Props) {
   const { canvasRef, hasSignature, clearSignature, saveSignature, eventHandlers } = useSignature({
     width: 200,
     height: 100,
@@ -32,7 +32,7 @@ export function LeaderConclude({ session, dto }: Props) {
         onSuccess: (data) => {
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
-              type: "leaderContractEnd",
+              type: "crewContractEnd",
               payload: null,
             });
           }
@@ -44,7 +44,7 @@ export function LeaderConclude({ session, dto }: Props) {
   return (
     <>
       <div>
-        <div>반장 계약</div>
+        <div>팀원 계약</div>
         <div>회사 {dto.mastCorpCd}</div>
         <div>현장 {dto.corpCd}</div>
 
@@ -52,7 +52,7 @@ export function LeaderConclude({ session, dto }: Props) {
 
         <div>수령인 {dto.userId}</div>
 
-        <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={100} />
+        <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} />
 
         {hasSignature && (
           <div className={css.signatureButtons}>

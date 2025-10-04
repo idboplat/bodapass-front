@@ -1,0 +1,38 @@
+.signatureContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.signatureLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.canvasWrapper {
+  position: relative;
+  display: inline-block;
+
+  border-radius: 8px;
+  background: #fff;
+
+  canvas {
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.signatureCanvas {
+  display: block;
+  cursor: crosshair;
+  border-radius: 6px;
+}
+
+// 터치 디바이스에서의 스타일 조정
+@media (hover: none) and (pointer: coarse) {
+  .signatureCanvas {
+    cursor: pointer;
+  }
+}

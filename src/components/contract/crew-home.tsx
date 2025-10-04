@@ -4,7 +4,7 @@ import { TContractDto } from "./dto";
 import { useDto } from "@/hooks/use-dto";
 import Redirect from "../common/redirect";
 
-export function LeaderContractHome() {
+export function CrewContractHome() {
   const { mastCorpCd, corpCd, userId } = useDto<TContractDto>();
   const { data: session } = useSession();
 
