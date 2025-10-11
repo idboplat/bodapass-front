@@ -23,11 +23,11 @@ $theme-light-selector: ":where([data-mantine-color-scheme='light'])";
 $theme-dark-selector: ":where([data-mantine-color-scheme='dark'])";
 
 $breakpoints: (
-  xs: "30rem",
-  sm: "48rem",
-  md: "64rem",
-  lg: "74rem",
-  xl: "90rem"
+  xs: 30rem,
+  sm: 48rem,
+  md: 64rem,
+  lg: 74rem,
+  xl: 90rem,
 );
 
 $mobile-boundary: sm; // breakpoint for mobile devices
@@ -37,7 +37,7 @@ $z-indexes: (
   float: 200,
   sidebar: 500,
   modal: 9000,
-  toast: 9999
+  toast: 9999,
 );
 
 $bezier-curve: cubic-bezier(0.23, 1, 0.32, 1);
