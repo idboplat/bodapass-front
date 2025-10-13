@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { Box, Button, LoadingOverlay, PasswordInput, Select, TextInput } from "@mantine/core";
+import { useState } from "react";
+import { Box, Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
 import css from "./leader-signup-form.module.scss";
-import { Controller, useForm, Control, useWatch } from "react-hook-form";
+import { Controller, useForm, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { leaderSignUpDto, TLeaderSignUpDto } from "@/libraries/auth/auth.dto";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { Address } from "react-daum-postcode";
-import { useCheckBrokerMutation, useSignupMutation } from "@/hooks/tms/use-auth";
+import { useSignupMutation } from "@/hooks/tms/use-auth";
 import { onNoSpaceChange, onTelChange } from "@/utils/input-handler";
 
 interface Props {
@@ -26,7 +26,6 @@ export default function SignupForm({ initState }: Props) {
   const [step, setStep] = useState(1);
 
   const locale = router.query.locale?.toString() || "ko";
-  const postCodeInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm({
     mode: "onTouched", // 초기 로딩 시 불필요한 검증 방지
@@ -53,10 +52,8 @@ export default function SignupForm({ initState }: Props) {
   });
 
   const { mutation: mutationSignup, isLoading: isLoadingSignup } = useSignupMutation({ locale });
-  const { mutation: mutationCheckBroker } = useCheckBrokerMutation({ locale });
 
   const openPostCode = () => {
-    postCodeInputRef.current?.blur();
     setShowPostCode(() => true);
   };
 
@@ -370,7 +367,9 @@ function Step3({
               {...field}
               mt={28}
               label="우편번호"
+              value={undefined}
               onChange={undefined}
+              defaultValue={field.value}
               onFocus={openPostCode}
               error={fieldState.error?.message}
               required
@@ -386,7 +385,9 @@ function Step3({
               {...field}
               mt={28}
               label="주소"
+              value={undefined}
               onChange={undefined}
+              defaultValue={field.value}
               onFocus={openPostCode}
               error={fieldState.error?.message}
               required

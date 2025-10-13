@@ -1,6 +1,4 @@
-import BankHome from "@/components/authorization/bank-home";
-import { bankDto } from "@/components/authorization/dto";
-import { DtoValidator } from "@/components/common/dto-validator";
+import LeaderBankHome from "@/components/authorization/leader-bank-home";
 import { useRouter } from "next/router";
 import { Authorized } from "@/libraries/auth/authorized";
 
@@ -12,9 +10,7 @@ export default function LeaderBankRegisterPage() {
 
   return (
     <Authorized>
-      <DtoValidator dto={bankDto}>
-        <BankHome />
-      </DtoValidator>
+      <LeaderBankHome />
     </Authorized>
   );
 }

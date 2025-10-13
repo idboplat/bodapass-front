@@ -1,6 +1,4 @@
-import { faceDto } from "@/components/authorization/dto";
-import FaceHome from "@/components/authorization/face-home";
-import { DtoValidator } from "@/components/common/dto-validator";
+import LeaderFaceHome from "@/components/authorization/leader-face-home";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useRouter } from "next/router";
 
@@ -12,9 +10,7 @@ export default function LeaderFaceRegisterPage() {
 
   return (
     <Authorized>
-      <DtoValidator dto={faceDto}>
-        <FaceHome />
-      </DtoValidator>
+      <LeaderFaceHome />
     </Authorized>
   );
 }

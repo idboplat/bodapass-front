@@ -1,6 +1,4 @@
-import { idCardDto } from "@/components/authorization/dto";
-import IdcardHome from "@/components/authorization/id-card-home";
-import { DtoValidator } from "@/components/common/dto-validator";
+import LeaderIdcardHome from "@/components/authorization/leader-id-card-home";
 import { useRouter } from "next/router";
 import { Authorized } from "@/libraries/auth/authorized";
 
@@ -12,9 +10,7 @@ export default function LeaderIdRegisterCardPage() {
 
   return (
     <Authorized>
-      <DtoValidator dto={idCardDto}>
-        <IdcardHome />
-      </DtoValidator>
+      <LeaderIdcardHome />
     </Authorized>
   );
 }

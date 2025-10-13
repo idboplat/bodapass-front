@@ -1,35 +1,40 @@
 import Image from "next/image";
 import BackHeader from "../common/back-header";
 import { TScannedResult } from "./dto";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./id-card-form.module.scss";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { findEntity, IdCardEntity } from "@/types/tp";
-import { useMutation } from "@tanstack/react-query";
-import { callWas, StringRspnData } from "@/libraries/call-tms";
-import { useRouter } from "next/router";
 import { Address } from "react-daum-postcode";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
-import { useSession } from "@/libraries/auth/use-session";
 import { replaceToTelNumber } from "@/utils/regexp";
 
 interface Props {
-  brkrId: string;
+  brkrId?: string;
   scannedResult: TScannedResult;
   resetScanned: () => void;
+  onSubmit: (arg: {
+    id1: string;
+    id2: string;
+    name: string;
+    addr: string;
+    addrDtil: string;
+    tel: string;
+    type: "1" | "2" | "3";
+    image: Blob;
+  }) => void;
+  isLoading: boolean;
 }
 
-export default function IdCardForm({ scannedResult, resetScanned, brkrId }: Props) {
-  const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
-
-  const router = useRouter();
-  const locale = router.query.locale;
-
-  const postCodeInputRef = useRef<HTMLInputElement>(null);
-
+export default function IdCardForm({
+  scannedResult,
+  resetScanned,
+  onSubmit,
+  brkrId,
+  isLoading,
+}: Props) {
   const [showPostCode, setShowPostCode] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const form = useForm({
@@ -37,66 +42,25 @@ export default function IdCardForm({ scannedResult, resetScanned, brkrId }: Prop
       id1: scannedResult.id1,
       id2: scannedResult.id2,
       name: scannedResult.name,
+      zipCd: "",
       addr: "",
       addrDtil: "",
       tel: "",
     },
   });
 
-  const openPostCode = () => {
-    postCodeInputRef.current?.blur();
-    setShowPostCode(() => true);
-  };
-
+  const openPostCode = () => setShowPostCode(() => true);
   const closePostCode = () => setShowPostCode(() => false);
 
   const selectPostCode = (data: Address) => {
     form.setValue("addr", data.address);
-    form.clearErrors(["addr", "addrDtil"]);
+    form.setValue("zipCd", data.zonecode);
+    form.clearErrors(["addr", "zipCd"]);
     closePostCode();
   };
 
   const onTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     form.setValue("tel", replaceToTelNumber(e.target.value));
-  };
-
-  const mutation = useMutation({
-    mutationFn: async () => {
-      const res = await callWas<StringRspnData<1>>({
-        svcId: "TCW000002SSP02",
-        apiPathName: "WCW000002SSP02",
-        session,
-        locale: "ko",
-        data: [
-          brkrId,
-          "jpeg",
-          scannedResult.name,
-          scannedResult.id1 + scannedResult.id2,
-          scannedResult.type,
-          form.getValues("addr"),
-          form.getValues("addrDtil"),
-          form.getValues("tel").replaceAll("-", ""),
-        ],
-        formData: [scannedResult.image],
-      });
-
-      const data = res.svcRspnData?.[0];
-
-      if (!data) throw new Error("FW999");
-
-      return data;
-    },
-    onSuccess: (data) => {
-      router.replace(`/${locale}/authorization/crew/${data.F01}/face`);
-    },
-    onError: (error) => {
-      console.log("error", error);
-    },
-  });
-
-  const onSubmit = () => {
-    console.log(form.getValues());
-    mutation.mutate();
   };
 
   useEffect(() => {
@@ -129,22 +93,60 @@ export default function IdCardForm({ scannedResult, resetScanned, brkrId }: Prop
           </div>
         </div>
 
-        <Button variant="outline" size="xs" type="button" onClick={openPostCode} mt={"1rem"}>
-          주소 검색
-        </Button>
+        <Controller
+          control={form.control}
+          name="zipCd"
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              label="우편번호"
+              value={undefined}
+              onChange={undefined}
+              defaultValue={field.value}
+              onFocus={openPostCode}
+            />
+          )}
+        />
 
-        <TextInput {...form.register("addr")} label="주소" />
+        <Controller
+          control={form.control}
+          name="addr"
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              label="주소"
+              value={undefined}
+              onChange={undefined}
+              defaultValue={field.value}
+              onFocus={openPostCode}
+            />
+          )}
+        />
+
         <TextInput {...form.register("addrDtil")} label="상세주소" />
-        <TextInput {...form.register("tel")} label="전화번호" onChange={onTelChange} />
+
+        <TextInput
+          {...form.register("tel")}
+          label="전화번호"
+          onChange={onTelChange}
+          inputMode="numeric"
+        />
       </div>
 
       <div className={css.submitButtonBox}>
-        <Button variant="filled" type="button" onClick={onSubmit} loading={mutation.isPending}>
+        <Button
+          variant="filled"
+          type="button"
+          onClick={() =>
+            onSubmit({ ...form.getValues(), type: scannedResult.type, image: scannedResult.image })
+          }
+          loading={isLoading}
+        >
           제출
         </Button>
       </div>
 
-      <LoadingOverlay visible={mutation.isPending} />
+      <LoadingOverlay visible={isLoading} />
 
       {showPostCode && (
         <Portal>
