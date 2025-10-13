@@ -61,7 +61,7 @@ export default function Page() {
               </div>
             </button>
 
-            <button className={css.roleButton} onClick={nextPage("crew")}>
+            {/* <button className={css.roleButton} onClick={nextPage("crew")}>
               <div className={css.buttonIcon}>
                 <svg
                   width="24"
@@ -84,7 +84,7 @@ export default function Page() {
                 <div className={css.buttonTitle}>팀원 (일용직)</div>
                 <div className={css.buttonSubtitle}>배치되는 현장에서 근무합니다</div>
               </div>
-            </button>
+            </button> */}
           </div>
 
           <div className={css.linkContainer}>
