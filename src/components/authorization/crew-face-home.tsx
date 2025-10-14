@@ -40,7 +40,7 @@ export default function CrewFaceHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {userId}</div>
-      <Capture mutate={setImage} isPending={WCW000002SSP01.isPending} session={session} />
+      <Capture onCapture={setImage} isLoading={WCW000002SSP01.isPending} session={session} />
       <LoadingOverlay visible={WCW000002SSP01.isPending} />
     </div>
   );

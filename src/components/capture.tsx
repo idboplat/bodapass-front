@@ -1,54 +1,21 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
 
 interface CaptureProps {
-  //   attCd: "I" | "O" | "A";
-  //   mastCorpCd: string;
-  //   corpCd: string;
-  //   userId: string;
-  //   faceImgFile: string;
-  mutate: (args: any) => void;
-  isPending: boolean;
-  session: Session;
+  onCapture: (args: any) => void;
+  isLoading: boolean;
 }
 
-export default function Capture({ mutate, isPending, session }: CaptureProps) {
-  const queryClient = useQueryClient();
+export default function Capture({ onCapture, isLoading }: CaptureProps) {
   const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
 
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [modelsLoaded, setModelsLoaded] = useState(false);
+  // const [modelsLoaded, setModelsLoaded] = useState(false);
   const [message, setMessage] = useState("");
-
-  //   const { mutate, isPending } = useMutation({
-  //     mutationFn: async (args: {
-  //       mastCorpCd: string;
-  //       corpCd: string;
-  //       userId: string;
-  //       attCd: "I" | "O" | "A";
-  //       faceImgFile: string;
-  //       img: Blob;
-  //     }) =>
-  //       callWas<StringRspnData<1>>({
-  //         svcId: "TCM200101SSP01",
-  //         session,
-  //         locale: "ko",
-  //         data: [args.mastCorpCd, args.corpCd, args.userId, args.attCd, args.faceImgFile],
-  //         formData: [args.img],
-  //         apiPathName: "WCM200101SSP01",
-  //       }),
-  //     onSuccess: async () => {
-  //       await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-  //       // toast.success("출퇴근 정보가 업데이트되었습니다.");
-  //       nativeAlert("출퇴근 정보가 업데이트되었습니다.");
-  //       router.back();
-  //     },
-  //   });
 
   const capture = () => {
     if (!videoRef.current) return;
@@ -85,7 +52,7 @@ export default function Capture({ mutate, isPending, session }: CaptureProps) {
       (blob) => {
         if (blob) {
           // onFaceDetected({ image: blob, score: 0 });
-          mutate({ image: blob });
+          onCapture({ image: blob });
         }
 
         // 메모리 정리
@@ -404,7 +371,7 @@ export default function Capture({ mutate, isPending, session }: CaptureProps) {
       </div>
 
       <div className={css.controls}>
-        {!isPending ? (
+        {!isLoading ? (
           <>
             <button
               className={css.cameraToggleButton}

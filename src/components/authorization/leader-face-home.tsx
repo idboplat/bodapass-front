@@ -40,7 +40,7 @@ export default function LeaderFaceHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {userId}</div>
-      <Capture mutate={setImage} isPending={WCW000001SSP01.isPending} session={session} />
+      <Capture onCapture={setImage} isLoading={WCW000001SSP01.isPending} session={session} />
       <LoadingOverlay visible={WCW000001SSP01.isPending} />
     </div>
   );

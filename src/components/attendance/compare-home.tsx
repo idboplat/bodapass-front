@@ -1,96 +1,45 @@
-//@ts-ignore
-// components/VideoCapture.tsx
 import { nativeAlert } from "@/hooks/use-device-api";
-import { Authorized } from "@/libraries/auth/authorized";
 import { useSession } from "@/libraries/auth/use-session";
-import { callWas, StringRspnData } from "@/libraries/call-tms";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import css from "./capture.module.scss";
-import Capture from "@/components/capture";
+import Capture from "../capture";
+import { useTCM200101SSP01 } from "@/hooks/tms/use-attendance";
 
-// const PADDING = 75;
-// const SCALE = 1;
-
-interface CaptureProps {
-  attCd: "I" | "O" | "A";
-  mastCorpCd: string;
-  corpCd: string;
-  userId: string;
-  faceImgFile: string;
+interface Props {
+  attCd: "I" | "O";
 }
 
-export default function CaptureHome() {
+export default function CompareHome({ attCd }: Props) {
   const router = useRouter();
-  const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
 
-  if (!router.isReady) {
-    return <div>Loading...</div>;
-  }
+  const mastCorpCd = router.query.mastCorpCd?.toString() || "";
+  const corpCd = router.query.corpCd?.toString() || "";
+  const userId = router.query.userId?.toString() || "";
+  const faceImgFile = router.query.faceImgFile?.toString() || "";
 
-  return (
-    <Authorized>
-      {/* <Content
-        attCd={attCd as "I" | "O" | "A"}
-        mastCorpCd={mastCorpCd as string}
-        corpCd={corpCd as string}
-        userId={userId as string}
-        faceImgFile={faceImgFile as string}
-      /> */}
-      <Content />
-    </Authorized>
-  );
-}
-
-function Content() {
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
-  const router = useRouter();
 
-  const { attCd, mastCorpCd, corpCd, userId, faceImgFile } = router.query;
-
-  const queryClient = useQueryClient();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (args: {
-      // mastCorpCd: string;
-      // corpCd: string;
-      // userId: string;
-      // attCd: "I" | "O" | "A";
-      // faceImgFile: string;
-      img: Blob;
-    }) =>
-      callWas<StringRspnData<1>>({
-        svcId: "TCM200101SSP01",
-        session,
-        locale: "ko",
-        data: [
-          mastCorpCd as string,
-          corpCd as string,
-          userId as string,
-          attCd as string,
-          faceImgFile as string,
-        ],
-        formData: [args.img],
-        apiPathName: "WCM200101SSP01",
-      }),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["TCM200101SMQ01"] });
-      // toast.success("출퇴근 정보가 업데이트되었습니다.");
-      nativeAlert("출퇴근 정보가 업데이트되었습니다.");
-      router.back();
-    },
-  });
+  const TCM200101SSP01 = useTCM200101SSP01();
 
   const setImage = (args: { image: Blob; userId: string }) => {
-    if (isPending) return;
+    if (TCM200101SSP01.isPending) return;
 
-    mutate({ img: args.image });
+    TCM200101SSP01.mutate(
+      { img: args.image, mastCorpCd, corpCd, userId, attCd, faceImgFile, session },
+      {
+        onSuccess: async () => {
+          nativeAlert("출퇴근 정보가 업데이트되었습니다.");
+          router.back();
+        },
+      },
+    );
   };
 
-  return <Capture mutate={setImage} isPending={isPending} session={session} />;
+  return (
+    <div className={"mobileLayout"}>
+      <Capture onCapture={setImage} isLoading={TCM200101SSP01.isPending} />
+    </div>
+  );
 }
 
 // function Content({ attCd, mastCorpCd, corpCd, userId, faceImgFile }: CaptureProps) {

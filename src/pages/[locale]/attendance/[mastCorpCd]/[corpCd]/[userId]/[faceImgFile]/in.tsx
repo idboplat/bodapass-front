@@ -1,19 +1,15 @@
-//@ts-ignore
-import { Home } from "@/components/attendance/home-asis";
+import CompareHome from "@/components/attendance/compare-home";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useRouter } from "next/router";
 
-// asis
-export default function AttendanceInPage() {
+export default function CompareInPage() {
   const router = useRouter();
 
   if (!router.isReady) return <div>Loading...</div>;
 
   return (
     <Authorized>
-      <div className={"mobileLayout"}>
-        <Home />
-      </div>
+      <CompareHome attCd="I" />
     </Authorized>
   );
 }
