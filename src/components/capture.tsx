@@ -1,4 +1,4 @@
-import { ArrowLeft, Camera, SwitchCamera } from "lucide-react";
+import { Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
@@ -346,15 +346,6 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
 
   return (
     <>
-      <div className={css.header}>
-        <div className={css.headerPosition}>
-          <button className={css.backButton} onClick={router.back}>
-            <ArrowLeft size={20} />
-            <span>뒤로가기</span>
-          </button>
-        </div>
-      </div>
-
       <div className={css.capture}>
         <video
           className={css.video}
