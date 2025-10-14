@@ -1,5 +1,4 @@
 import { Button, LoadingOverlay } from "@mantine/core";
-import { TContractDto } from "./dto";
 import css from "./leader-conclude.module.scss";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
@@ -8,10 +7,12 @@ import { useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 
 interface Props {
   session: Session;
-  dto: Required<TContractDto>;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
 }
 
-export function CrewConclude({ session, dto }: Props) {
+export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Props) {
   const { canvasRef, hasSignature, clearSignature, saveSignature, eventHandlers } = useSignature({
     width: 200,
     height: 100,
@@ -27,7 +28,7 @@ export function CrewConclude({ session, dto }: Props) {
     if (mutation.isPending) return;
 
     mutation.mutate(
-      { ...dto, type, session },
+      { mastCorpCd, corpCd, userId, type, session },
       {
         onSuccess: (data) => {
           if (!!window.ReactNativeWebView) {
@@ -45,12 +46,12 @@ export function CrewConclude({ session, dto }: Props) {
     <>
       <div>
         <div>팀원 계약</div>
-        <div>회사 {dto.mastCorpCd}</div>
-        <div>현장 {dto.corpCd}</div>
+        <div>회사 {mastCorpCd}</div>
+        <div>현장 {corpCd}</div>
 
         <div>TODO: 단건조회후 내용 표시</div>
 
-        <div>수령인 {dto.userId}</div>
+        <div>수령인 {userId}</div>
 
         <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} />
 

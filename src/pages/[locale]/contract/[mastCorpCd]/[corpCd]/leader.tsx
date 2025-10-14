@@ -1,5 +1,3 @@
-import { DtoValidator } from "@/components/common/dto-validator";
-import { contractDto } from "@/components/contract/dto";
 import { LeaderContractHome } from "@/components/contract/leader-home";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useRouter } from "next/router";
@@ -11,11 +9,7 @@ export default function LeaderContractPage() {
 
   return (
     <Authorized>
-      <DtoValidator dto={contractDto}>
-        <div className={"mobileLayout"}>
-          <LeaderContractHome />
-        </div>
-      </DtoValidator>
+      <LeaderContractHome />
     </Authorized>
   );
 }
