@@ -25,7 +25,7 @@ export default function LeaderFaceHome() {
     }
   };
 
-  const setImage = (args: { image: Blob; score: number }) => {
+  const onCapture = (args: { image: Blob }) => {
     if (WCW000001SSP01.isPending) return;
 
     WCW000001SSP01.mutate(
@@ -40,7 +40,7 @@ export default function LeaderFaceHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="얼굴등록" onClickBack={onClickBack} />
       <div>유저 ID: {userId}</div>
-      <Capture onCapture={setImage} isLoading={WCW000001SSP01.isPending} session={session} />
+      <Capture onCapture={onCapture} isLoading={WCW000001SSP01.isPending} />
       <LoadingOverlay visible={WCW000001SSP01.isPending} />
     </div>
   );

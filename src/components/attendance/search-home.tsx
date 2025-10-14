@@ -22,7 +22,7 @@ export default function SearchHome({ attCd }: Props) {
 
   const TCM200101SSP01 = useTCM200101SSP01();
 
-  const setImage = (args: { image: Blob; userId: string }) => {
+  const onCapture = (args: { image: Blob }) => {
     if (TCM200101SSP01.isPending) return;
 
     TCM200101SSP01.mutate(
@@ -46,7 +46,7 @@ export default function SearchHome({ attCd }: Props) {
 
   return (
     <div className={"mobileLayout"}>
-      <Capture onCapture={setImage} isLoading={TCM200101SSP01.isPending} />
+      <Capture onCapture={onCapture} isLoading={TCM200101SSP01.isPending} />
       <div>
         <Button onClick={onClickComplete}>완료</Button>
       </div>

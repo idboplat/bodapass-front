@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
 
 interface CaptureProps {
-  onCapture: (args: any) => void;
+  onCapture: (args: { image: Blob }) => void;
   isLoading: boolean;
 }
 
