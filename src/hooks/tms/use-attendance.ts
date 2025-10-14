@@ -7,6 +7,7 @@ export const useTCM200101SSP01 = () =>
     mutationFn: async (args: {
       mastCorpCd: string;
       corpCd: string;
+      /** 팀원 아이디 */
       userId: string;
       attCd: "I" | "O" | "A";
       faceImgFile: string;
@@ -37,7 +38,13 @@ export const useTCM200201SSP01 = () =>
         svcId: "TCM200101SSP01",
         session: args.session,
         locale: "ko",
-        data: [args.mastCorpCd, args.corpCd, args.attCd],
+        data: [
+          args.mastCorpCd,
+          args.corpCd,
+          "", // 검색된 팀원 아이디
+          args.attCd,
+          "", // 검색된 팀원 얼굴 이미지 파일
+        ],
         formData: [args.img],
       }),
   });

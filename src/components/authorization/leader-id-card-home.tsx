@@ -5,12 +5,14 @@ import IdCardForm from "./id-card-form";
 import { useSession } from "@/libraries/auth/use-session";
 import { useCamera } from "@/hooks/use-camera";
 import { useRouter } from "next/router";
-import { nativeAlert } from "@/hooks/use-device-api";
+import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useWCW000001SSP02, useWCW000002SSQ01 } from "@/hooks/tms/use-authorization";
+import BackHeader from "../common/back-header";
 
 export default function LeaderIdcardHome() {
   const router = useRouter();
   const locale = router.query.locale;
+  const next = router.query.next?.toString() === "true";
 
   const [scannedResult, setScannedResult] = useState<TScannedResult | null>(null);
   const [type, setType] = useState<TOCR>("idcard");
@@ -22,7 +24,6 @@ export default function LeaderIdcardHome() {
   const WCW000002SSQ01 = useWCW000002SSQ01();
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const resetScanned = () => setScannedResult(null);
   const setScanned = (result: TScannedResult) => setScannedResult(() => result);
 
   const onClickCapture = async () => {
@@ -69,6 +70,25 @@ export default function LeaderIdcardHome() {
     }
   };
 
+  const end = () => {
+    if (!!window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: "authorizationEnd",
+        payload: null,
+      });
+    } else {
+      router.back();
+    }
+  };
+
+  const onClickBack = () => {
+    if (scannedResult) {
+      setScannedResult(() => null);
+    } else {
+      end();
+    }
+  };
+
   const onSubmit = (arg: {
     id1: string;
     id2: string;
@@ -84,7 +104,11 @@ export default function LeaderIdcardHome() {
       { ...arg, session },
       {
         onSuccess: (data) => {
-          router.replace(`/${locale}/authorization/leader/face`);
+          if (next) {
+            router.replace(`/${locale}/authorization/leader/face?next=true`);
+          } else {
+            end();
+          }
         },
         onError: (error) => {
           console.log("error", error);
@@ -95,9 +119,10 @@ export default function LeaderIdcardHome() {
 
   return (
     <div className={"mobileLayout"}>
+      <BackHeader title="신분증" onClickBack={onClickBack} />
+
       {!!scannedResult ? (
         <IdCardForm
-          resetScanned={resetScanned}
           scannedResult={scannedResult}
           onSubmit={onSubmit}
           isLoading={WCW000001SSP02.isPending}

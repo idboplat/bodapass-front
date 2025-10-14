@@ -1,13 +1,11 @@
 import { ActionIcon } from "@mantine/core";
 import BackHeader from "../common/back-header";
 import Camera from "../camera";
-import { useRouter } from "next/router";
 import clsx from "clsx";
 import IdcardFrame from "./camera-frame";
 import { Camera as IconCamera } from "lucide-react";
 import css from "./bank-home.module.scss";
 import { useCamera } from "@/hooks/use-camera";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 
 interface Props {
@@ -15,19 +13,11 @@ interface Props {
   userId: string;
 }
 
-export default function BankCamera({ setBankImage: setBankImage, userId }: Props) {
+export default function BankCamera({ setBankImage, userId }: Props) {
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
 
-  const router = useRouter();
-
   const camera = useCamera();
-
-  const onClickBack = () =>
-    sendMessageToDevice({
-      type: "authorizationEnd",
-      payload: null,
-    });
 
   const onClickCapture = async () => {
     try {
@@ -44,8 +34,7 @@ export default function BankCamera({ setBankImage: setBankImage, userId }: Props
   };
 
   return (
-    <div className={"mobileLayout"}>
-      <BackHeader title="통장등록" onClickBack={onClickBack} />
+    <>
       <div>유저 ID: {userId}</div>
 
       <div className={clsx(css.cameraBox)}>
@@ -67,6 +56,6 @@ export default function BankCamera({ setBankImage: setBankImage, userId }: Props
       </div>
 
       {/* <LoadingOverlay visible={mutation.isPending} /> */}
-    </div>
+    </>
   );
 }

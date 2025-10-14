@@ -7,12 +7,14 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useRouter } from "next/router";
 import { useWCW000001SSP03 } from "@/hooks/tms/use-authorization";
 import { TBankForm } from "./dto";
+import BackHeader from "../common/back-header";
 
 interface Props {}
 
 export default function LeaderBankHome({}: Props) {
   const router = useRouter();
   const locale = router.query.locale;
+  const next = router.query.next?.toString() === "true";
 
   const [bankImage, setBankImage] = useState<Blob | null>(null);
 
@@ -31,6 +33,25 @@ export default function LeaderBankHome({}: Props) {
 
   const WCW000001SSP03 = useWCW000001SSP03();
 
+  const end = () => {
+    if (!!window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: "authorizationEnd",
+        payload: null,
+      });
+    } else {
+      router.back();
+    }
+  };
+
+  const onClickBack = () => {
+    if (bankImage) {
+      setBankImage(() => null);
+    } else {
+      end();
+    }
+  };
+
   const onSubmit = (args: {
     bankCd: string;
     bankNm: string;
@@ -43,28 +64,26 @@ export default function LeaderBankHome({}: Props) {
       { ...args, userId, session },
       {
         onSuccess: () => {
-          if (window.ReactNativeWebView) {
-            sendMessageToDevice({
-              type: "authorizationEnd",
-              payload: null,
-            });
+          if (next) {
+            router.replace(`/ko/authorization/leader/${userId}/privacy?next=true`);
+          } else {
+            end();
           }
         },
       },
     );
   };
 
-  const resetBankImage = () => setBankImage(null);
-
   return (
     <FormProvider {...form}>
       <div className={"mobileLayout"}>
+        <BackHeader title="통장등록" onClickBack={onClickBack} />
+
         {!bankImage ? (
           <BankCamera setBankImage={setBankImage} userId={userId} />
         ) : (
           <BankForm
             bankImage={bankImage}
-            resetBankImage={resetBankImage}
             onSubmit={onSubmit}
             isLoading={WCW000001SSP03.isPending}
           />

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import BackHeader from "../common/back-header";
 import { TScannedResult } from "./dto";
 import { useEffect, useState } from "react";
 import css from "./id-card-form.module.scss";
@@ -14,7 +13,6 @@ import { replaceToTelNumber } from "@/utils/regexp";
 interface Props {
   brkrId?: string;
   scannedResult: TScannedResult;
-  resetScanned: () => void;
   onSubmit: (arg: {
     id1: string;
     id2: string;
@@ -28,13 +26,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export default function IdCardForm({
-  scannedResult,
-  resetScanned,
-  onSubmit,
-  brkrId,
-  isLoading,
-}: Props) {
+export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading }: Props) {
   const [showPostCode, setShowPostCode] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const form = useForm({
@@ -74,7 +66,6 @@ export default function IdCardForm({
 
   return (
     <>
-      <BackHeader title="신분증" onClickBack={resetScanned} />
       <div className={css.infoBox}>
         <div>반장 ID: {brkrId}</div>
         <div>신분증 종류: {findEntity(IdCardEntity, scannedResult.type)?.[1]}</div>

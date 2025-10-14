@@ -2,13 +2,11 @@ import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import BackHeader from "../common/back-header";
 import css from "./id-card-form.module.scss";
 import { TBankForm } from "./dto";
 
 interface Props {
   bankImage: Blob;
-  resetBankImage: () => void;
   onSubmit: (args: {
     bankCd: string;
     bankNm: string;
@@ -18,7 +16,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export default function BankForm({ bankImage, resetBankImage, onSubmit, isLoading }: Props) {
+export default function BankForm({ bankImage, onSubmit, isLoading }: Props) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const form = useFormContext<TBankForm>();
@@ -34,7 +32,6 @@ export default function BankForm({ bankImage, resetBankImage, onSubmit, isLoadin
 
   return (
     <>
-      <BackHeader title="통장 등록" onClickBack={resetBankImage} />
       {/* <div className={css.infoBox}>
         <div>반장 ID: {brkrId}</div>
         <div>신분증 종류: {findEntity(IdCardEntity, scannedResult.type)?.[1]}</div>

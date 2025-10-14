@@ -1,14 +1,12 @@
 import { useCamera } from "@/hooks/use-camera";
 import Camera from "../camera";
-import BackHeader from "../common/back-header";
 import { ActionIcon, LoadingOverlay, Select } from "@mantine/core";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { TOCR } from "./dto";
 import clsx from "clsx";
 import css from "./id-card-camera.module.scss";
 import { Camera as IconCamera } from "lucide-react";
 import IdcardFrame from "./camera-frame";
-import { sendMessageToDevice } from "@/hooks/use-device-api";
 
 interface Props {
   camera: ReturnType<typeof useCamera>;
@@ -27,18 +25,8 @@ export default function IdcardCamera({
   brkrId,
   isLoading,
 }: Props) {
-  const onClickBack = () => {
-    if (window.ReactNativeWebView) {
-      sendMessageToDevice({
-        type: "authorizationEnd",
-        payload: null,
-      });
-    }
-  };
-
   return (
     <>
-      <BackHeader title="신분증" onClickBack={onClickBack} />
       {brkrId && <div className={css.brkrId}>반장 ID: {brkrId}</div>}
       <div className={css.nav}>
         <Select
