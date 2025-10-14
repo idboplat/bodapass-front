@@ -9,7 +9,7 @@ export const useTCM200101SSP01 = () =>
       corpCd: string;
       /** 팀원 아이디 */
       userId: string;
-      attCd: "I" | "O" | "A";
+      attCd: "I" | "O";
       faceImgFile: string;
       session: Session;
       img: Blob;
@@ -24,18 +24,19 @@ export const useTCM200101SSP01 = () =>
       }),
   });
 
-export const useTCM200201SSP01 = () =>
+/** 1 대 다 출퇴근 */
+export const useTCM200101SSP02 = () =>
   useMutation({
     mutationFn: async (args: {
       mastCorpCd: string;
       corpCd: string;
-      attCd: "I" | "O" | "A";
+      attCd: "I" | "O";
       session: Session;
       img: Blob;
     }) =>
       callWas<StringRspnData<1>>({
-        apiPathName: "WCM200101SSP01",
-        svcId: "TCM200101SSP01",
+        apiPathName: "WCM200101SSP02",
+        svcId: "TCM200101SSP02",
         session: args.session,
         locale: "ko",
         data: [
