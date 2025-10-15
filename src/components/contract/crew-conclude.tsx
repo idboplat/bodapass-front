@@ -53,9 +53,9 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
 
         <div>수령인 {userId}</div>
 
-        <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} />
+        {/* <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} /> */}
 
-        {hasSignature && (
+        {/* {hasSignature && (
           <div className={css.signatureButtons}>
             <Button onClick={clearSignature} variant="outline" color="red">
               지우기
@@ -64,7 +64,7 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
               저장
             </Button>
           </div>
-        )}
+        )} */}
 
         <div className={css.buttonBox}>
           <Button onClick={onClick("REJ")} loading={mutation.isPending}>
