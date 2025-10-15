@@ -4,7 +4,7 @@ import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
 import { useRouter } from "next/router";
-import { Button, Checkbox } from "@mantine/core";
+import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -88,7 +88,7 @@ export default function LeaderPrivacyHome() {
                 <span className={css.infoValue}>{TCM200801SSQ01.data.addrDtil}</span>
               </div>
               <Link
-                href={`/${locale}/authorization/leader/${userId}/id-card?next=webview`}
+                href={`/${locale}/authorization/leader/id-card?next=webview`}
                 className={css.editButton}
               >
                 신분증 수정
@@ -111,7 +111,7 @@ export default function LeaderPrivacyHome() {
                 </span>
               </div>
               <Link
-                href={`/${locale}/authorization/leader/${userId}/face?next=webview`}
+                href={`/${locale}/authorization/leader/face?next=webview`}
                 className={css.editButton}
               >
                 얼굴 수정
@@ -148,7 +148,7 @@ export default function LeaderPrivacyHome() {
                 </>
               )}
               <Link
-                href={`/${locale}/authorization/leader/${userId}/bank?next=webview`}
+                href={`/${locale}/authorization/leader/bank?next=webview`}
                 className={css.editButton}
               >
                 통장 수정
