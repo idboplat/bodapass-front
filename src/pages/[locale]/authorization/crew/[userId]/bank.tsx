@@ -1,5 +1,4 @@
 import CrewBankHome from "@/components/authorization/crew-bank-home";
-import { DtoValidator } from "@/components/common/dto-validator";
 import { useRouter } from "next/router";
 import { Authorized } from "@/libraries/auth/authorized";
 

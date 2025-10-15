@@ -8,12 +8,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { TBankForm } from "./dto";
 import BackHeader from "../common/back-header";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CrewBankHome() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   /** 근로자의 유저 ID */
   const userId = router.query.userId?.toString() || "";
-  const next = router.query.next?.toString() === "true";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [bankImage, setBankImage] = useState<Blob | null>(null);
 
@@ -60,9 +63,12 @@ export default function CrewBankHome() {
     WCW000002SSP03.mutate(
       { ...args, userId, session },
       {
-        onSuccess: () => {
-          if (next) {
+        onSuccess: async () => {
+          if (next === "true") {
             router.replace(`/ko/authorization/crew/${userId}/privacy?next=true`);
+          } else if (next === "webview") {
+            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            router.back();
           } else {
             end();
           }

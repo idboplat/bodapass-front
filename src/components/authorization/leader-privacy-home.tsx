@@ -10,7 +10,9 @@ import { useState } from "react";
 
 export default function LeaderPrivacyHome() {
   const router = useRouter();
+
   const locale = router.query.locale?.toString() || "ko";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [isAgree, setIsAgree] = useState(false);
 
@@ -61,7 +63,9 @@ export default function LeaderPrivacyHome() {
             </div>
 
             <div>
-              <Link href={`/${locale}/authorization/leader/${userId}/id-card`}>신분증 수정</Link>
+              <Link href={`/${locale}/authorization/leader/${userId}/id-card?next=webview`}>
+                신분증 수정
+              </Link>
             </div>
           </div>
 
@@ -69,7 +73,9 @@ export default function LeaderPrivacyHome() {
             {/* 얼굴 등록 */}
             <div>얼굴등록여부: {TCM200801SSQ01.data.faceRgstYn === "Y" ? "인증" : "미인증"}</div>
             <div>
-              <Link href={`/${locale}/authorization/leader/${userId}/face`}>얼굴 수정</Link>
+              <Link href={`/${locale}/authorization/leader/${userId}/face?next=webview`}>
+                얼굴 수정
+              </Link>
             </div>
           </div>
 
@@ -82,7 +88,9 @@ export default function LeaderPrivacyHome() {
             <div>계좌번호: {TCM200801SSQ01.data.bankAcctNo}</div>
 
             <div>
-              <Link href={`/${locale}/authorization/leader/${userId}/bank`}>통장 수정</Link>
+              <Link href={`/${locale}/authorization/leader/${userId}/bank?next=webview`}>
+                통장 수정
+              </Link>
             </div>
           </div>
 

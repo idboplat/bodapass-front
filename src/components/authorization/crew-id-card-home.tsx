@@ -9,14 +9,13 @@ import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useWCW000002SSP02, useWCW000002SSQ01 } from "@/hooks/tms/use-authorization";
 import BackHeader from "../common/back-header";
 
-interface Props {
-  brkrId: string;
-}
+interface Props {}
 
-export default function CrewIdcardHome({ brkrId }: Props) {
+export default function CrewIdcardHome({}: Props) {
   const router = useRouter();
+
   const locale = router.query.locale;
-  const next = router.query.next?.toString() === "true";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [scannedResult, setScannedResult] = useState<TScannedResult | null>(null);
   const [type, setType] = useState<TOCR>("idcard");
@@ -24,6 +23,8 @@ export default function CrewIdcardHome({ brkrId }: Props) {
   const camera = useCamera();
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
+  /** 반장의 유저아이디 */
+  const brkrId = session.brokerId;
 
   const WCW000002SSQ01 = useWCW000002SSQ01();
   const WCW000002SSP02 = useWCW000002SSP02();
@@ -100,6 +101,7 @@ export default function CrewIdcardHome({ brkrId }: Props) {
     addr: string;
     addrDtil: string;
     tel: string;
+    zipCd: string;
     type: "1" | "2" | "3";
     image: Blob;
   }) => {

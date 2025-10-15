@@ -21,6 +21,7 @@ interface Props {
     addrDtil: string;
     tel: string;
     type: "1" | "2" | "3";
+    zipCd: string;
     image: Blob;
   }) => void;
   isLoading: boolean;

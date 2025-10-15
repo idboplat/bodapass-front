@@ -49,6 +49,7 @@ export const useWCW000001SSP02 = () =>
       tel: string;
       image: Blob;
       type: "1" | "2" | "3";
+      zipCd: string;
       session: Session;
     }) => {
       const res = await callWas<StringRspnData<1>>({
@@ -65,6 +66,7 @@ export const useWCW000001SSP02 = () =>
           args.addr,
           args.addrDtil,
           args.tel.replaceAll("-", ""),
+          args.zipCd,
           "",
         ],
         formData: [args.image],
@@ -88,6 +90,7 @@ export const useWCW000002SSP02 = () =>
       addr: string;
       addrDtil: string;
       tel: string;
+      zipCd: string;
       image: Blob;
       type: "1" | "2" | "3";
       brkrId: string;
@@ -107,6 +110,7 @@ export const useWCW000002SSP02 = () =>
           args.addr,
           args.addrDtil,
           args.tel.replaceAll("-", ""),
+          args.zipCd,
         ],
         formData: [args.image],
       });

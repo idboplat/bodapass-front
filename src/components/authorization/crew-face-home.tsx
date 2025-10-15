@@ -5,12 +5,15 @@ import { LoadingOverlay } from "@mantine/core";
 import { useRouter } from "next/router";
 import BackHeader from "../common/back-header";
 import { useWCW000002SSP01 } from "@/hooks/tms/use-authorization";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CrewFaceHome() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   /** 근로자의 유저 ID */
   const userId = router.query.userId?.toString() || "";
-  const next = router.query.next?.toString() === "true";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
@@ -34,9 +37,12 @@ export default function CrewFaceHome() {
     WCW000002SSP01.mutate(
       { image: args.image, userId, session },
       {
-        onSuccess: (data) => {
-          if (next) {
+        onSuccess: async (data) => {
+          if (next === "true") {
             router.replace(`/ko/authorization/crew/${data.userId}/bank?next=true`);
+          } else if (next === "webview") {
+            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            router.back();
           } else {
             end();
           }

@@ -8,13 +8,16 @@ import { useRouter } from "next/router";
 import { useWCW000001SSP03 } from "@/hooks/tms/use-authorization";
 import { TBankForm } from "./dto";
 import BackHeader from "../common/back-header";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {}
 
 export default function LeaderBankHome({}: Props) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const locale = router.query.locale;
-  const next = router.query.next?.toString() === "true";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [bankImage, setBankImage] = useState<Blob | null>(null);
 
@@ -63,9 +66,12 @@ export default function LeaderBankHome({}: Props) {
     WCW000001SSP03.mutate(
       { ...args, userId, session },
       {
-        onSuccess: () => {
-          if (next) {
+        onSuccess: async () => {
+          if (next === "true") {
             router.replace(`/ko/authorization/leader/${userId}/privacy?next=true`);
+          } else if (next === "webview") {
+            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            router.back();
           } else {
             end();
           }

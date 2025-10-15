@@ -5,10 +5,13 @@ import { LoadingOverlay } from "@mantine/core";
 import { useRouter } from "next/router";
 import BackHeader from "../common/back-header";
 import { useWCW000001SSP01 } from "@/hooks/tms/use-authorization";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function LeaderFaceHome() {
   const router = useRouter();
-  const next = router.query.next?.toString() === "true";
+  const queryClient = useQueryClient();
+
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
@@ -34,9 +37,12 @@ export default function LeaderFaceHome() {
     WCW000001SSP01.mutate(
       { image: args.image, userId, session },
       {
-        onSuccess: (data) => {
-          if (next) {
+        onSuccess: async (data) => {
+          if (next === "true") {
             router.replace(`/ko/authorization/leader/bank?next=true`);
+          } else if (next === "webview") {
+            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            router.back();
           } else {
             end();
           }

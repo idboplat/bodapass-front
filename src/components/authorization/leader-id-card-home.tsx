@@ -8,11 +8,14 @@ import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useWCW000001SSP02, useWCW000002SSQ01 } from "@/hooks/tms/use-authorization";
 import BackHeader from "../common/back-header";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function LeaderIdcardHome() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const locale = router.query.locale;
-  const next = router.query.next?.toString() === "true";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [scannedResult, setScannedResult] = useState<TScannedResult | null>(null);
   const [type, setType] = useState<TOCR>("idcard");
@@ -97,15 +100,19 @@ export default function LeaderIdcardHome() {
     addrDtil: string;
     tel: string;
     type: "1" | "2" | "3";
+    zipCd: string;
     image: Blob;
   }) => {
     if (WCW000001SSP02.isPending) return;
     WCW000001SSP02.mutate(
       { ...arg, session },
       {
-        onSuccess: (data) => {
-          if (next) {
+        onSuccess: async (data) => {
+          if (next === "true") {
             router.replace(`/${locale}/authorization/leader/face?next=true`);
+          } else if (next === "webview") {
+            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            router.back();
           } else {
             end();
           }

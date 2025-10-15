@@ -13,6 +13,7 @@ export default function CrewPrivacyHome() {
   /** 근로자의 유저 ID */
   const userId = router.query.userId?.toString() || "";
   const locale = router.query.locale?.toString() || "ko";
+  const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [isAgree, setIsAgree] = useState(false);
 
@@ -60,19 +61,15 @@ export default function CrewPrivacyHome() {
               </p>
               <p>상세주소: {TCM200801SSQ01.data.addrDtil}</p>
             </div>
-
-            <div>
-              <Link href={`/${locale}/authorization/${brkrId}/crew/${userId}/id-card`}>
-                신분증 수정
-              </Link>
-            </div>
           </div>
 
           <div>
             {/* 얼굴 등록 */}
             <div>얼굴등록여부: {TCM200801SSQ01.data.faceRgstYn === "Y" ? "인증" : "미인증"}</div>
             <div>
-              <Link href={`/${locale}/authorization/crew/${userId}/face`}>얼굴 수정</Link>
+              <Link href={`/${locale}/authorization/crew/${userId}/face?next=webview`}>
+                얼굴 수정
+              </Link>
             </div>
           </div>
 
@@ -85,7 +82,9 @@ export default function CrewPrivacyHome() {
             <div>계좌번호: {TCM200801SSQ01.data.bankAcctNo}</div>
 
             <div>
-              <Link href={`/${locale}/authorization/crew/${userId}/bank`}>통장 수정</Link>
+              <Link href={`/${locale}/authorization/crew/${userId}/bank?next=webview`}>
+                통장 수정
+              </Link>
             </div>
           </div>
 
