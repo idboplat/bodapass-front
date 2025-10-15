@@ -135,6 +135,40 @@
   }
 }
 
+.priceSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.priceTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "₩";
+    font-size: 1.2rem;
+  }
+}
+
+.priceInput {
+  :global(.app-Input-wrapper) {
+    --input-right-section-size: 4rem;
+  }
+
+  :global(.app-Input-input) {
+    text-align: right;
+  }
+}
+
 .agreementSection {
   background: white;
   border-radius: 12px;
@@ -224,31 +258,4 @@
   padding: 3rem;
   color: #64748b;
   font-size: 0.9rem;
-}
-
-// 반응형 디자인
-@media (max-width: 480px) {
-  .container {
-    padding: 0.75rem;
-  }
-
-  .infoCard {
-    padding: 1rem;
-  }
-
-  .infoRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .infoValue {
-    text-align: left;
-    margin-left: 0;
-  }
-
-  .submitButton {
-    width: 100%;
-    min-width: auto;
-  }
 }

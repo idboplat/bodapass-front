@@ -1,6 +1,6 @@
 import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { Promised } from "@/types/common";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export type TTCM200801SSQ01Data = Promised<typeof getTCM200801SSQ01>;
 export const getTCM200801SSQ01 = async ({ session }: { session: Session; userId: string }) => {
@@ -46,4 +46,22 @@ export const useTCM200801SSQ01 = (args: { session: Session; userId: string }) =>
   useQuery({
     queryKey: ["TCM200801SSQ01", args.session, args.userId],
     queryFn: () => getTCM200801SSQ01(args),
+  });
+
+export const useTCM200200SSP01 = () =>
+  useMutation({
+    mutationFn: async (args: { session: Session; userId: string; price: string }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCM200200SSP01",
+        session: args.session,
+        locale: "ko",
+        data: [args.session.userId, args.userId, args.price],
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
   });

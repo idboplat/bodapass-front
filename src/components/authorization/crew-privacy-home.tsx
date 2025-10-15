@@ -3,10 +3,11 @@ import BackHeader from "../common/back-header";
 import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import { useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
-import { Checkbox } from "@mantine/core";
+import { useTCM200200SSP01, useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
+import { Button, Checkbox, TextInput } from "@mantine/core";
 import Link from "next/link";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { addComma, checkAmount, deleteIntegerZero } from "@/utils/regexp";
 
 export default function CrewPrivacyHome() {
   const router = useRouter();
@@ -16,15 +17,18 @@ export default function CrewPrivacyHome() {
   const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [isAgree, setIsAgree] = useState(false);
+  const [price, setPrice] = useState("0");
+  const [isSaved, setIsSaved] = useState(false);
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
-  const brkrId = session.userId;
 
   const TCM200801SSQ01 = useTCM200801SSQ01({
     session,
     userId,
   });
+
+  const TCM200200SSP01 = useTCM200200SSP01();
 
   const end = () => {
     if (!!window.ReactNativeWebView) {
@@ -38,12 +42,61 @@ export default function CrewPrivacyHome() {
   };
 
   const onSubmit = () => {
+    if (!isSaved) {
+      nativeAlert("수당을 저장해주세요.");
+      return;
+    }
+
     if (!isAgree) {
       nativeAlert("동의해주세요.");
       return;
     }
 
     end();
+  };
+
+  const onTogglePrice = () => {
+    if (TCM200200SSP01.isPending) return;
+
+    if (isSaved) {
+      setIsSaved(() => false);
+      return;
+    }
+
+    TCM200200SSP01.mutate(
+      {
+        session,
+        userId,
+        price: price.replaceAll(",", ""),
+      },
+      {
+        onSuccess: () => {
+          setIsSaved(() => true);
+        },
+      },
+    );
+  };
+
+  const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    const isValid = checkAmount({
+      amount: value,
+      maximumNumberLength: 15,
+      maximumDecimalLength: 0,
+    });
+
+    if (!isValid) return;
+
+    setPrice(() => deleteIntegerZero(value));
+  };
+
+  const onFocusPrice = () => {
+    setPrice((pre) => pre.replaceAll(",", ""));
+  };
+
+  const onBlurPrice = () => {
+    setPrice((pre) => addComma(pre.replaceAll(",", "")));
   };
 
   if (TCM200801SSQ01.isPending) {
@@ -148,6 +201,27 @@ export default function CrewPrivacyHome() {
                 통장 수정
               </Link>
             </div>
+          </div>
+
+          {/* 수당 섹션 */}
+          <div className={css.priceSection}>
+            <div className={css.priceTitle}>기본수당 (원)</div>
+            <TextInput
+              value={price}
+              classNames={{ root: css.priceInput }}
+              onChange={onChangePrice}
+              size="lg"
+              onFocus={onFocusPrice}
+              onBlur={onBlurPrice}
+              disabled={TCM200200SSP01.isPending || isSaved}
+              rightSection={
+                <div>
+                  <Button size="xs" loading={TCM200200SSP01.isPending} onClick={onTogglePrice}>
+                    {isSaved ? "수정" : "저장"}
+                  </Button>
+                </div>
+              }
+            />
           </div>
 
           {/* 동의 섹션 */}
