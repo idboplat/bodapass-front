@@ -1,7 +1,7 @@
 import css from "./index.module.scss";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
-import SignupForm from "@/components/signup/leader-signup-form";
+import LeaderSignupForm from "@/components/signup/leader-signup-form";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { TLeaderSignUpDto } from "@/libraries/auth/auth.dto";
@@ -24,7 +24,7 @@ export default function Page() {
         <div className={css.inner}>
           <h1 className={css.title}>반장 회원가입</h1>
 
-          <SignupForm
+          <LeaderSignupForm
             initState={{
               loginTp,
               externalId,

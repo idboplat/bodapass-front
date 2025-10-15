@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export type TTCM200801SSQ01Data = Promised<typeof getTCM200801SSQ01>;
 export const getTCM200801SSQ01 = async ({ session }: { session: Session; userId: string }) => {
-  const response = await callTms<StringRspnData<19>>({
+  const response = await callTms<StringRspnData<20>>({
     svcId: "TCM200801SSQ01",
     session,
     locale: "ko",
@@ -38,6 +38,7 @@ export const getTCM200801SSQ01 = async ({ session }: { session: Session; userId:
     bankCd: data.F17,
     bankNm: data.F18,
     bankAcctNo: data.F19,
+    privacyYn: data.F20,
   };
 };
 

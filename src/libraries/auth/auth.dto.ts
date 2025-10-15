@@ -15,13 +15,7 @@ export const crewSignUpDto = z.object({
   brkrId: z.string(), // 팀원에만, 반장 아이디
   password: z.string().min(1),
   passwordConfirm: z.string().min(1),
-  address: z.string().min(1),
-  addressDetail: z.string().min(1),
-  tel1: z.string().min(1),
-  tel2: z.string().min(1),
-  tel3: z.string().min(1),
   contryCode: z.string().min(1),
-  zipCode: z.string().min(1),
 });
 
 export type TLeaderSignUpDto = z.infer<typeof leaderSignUpDto>;
@@ -32,11 +26,5 @@ export const leaderSignUpDto = z.object({
   loginTp: z.enum(["1", "2", "3"]),
   password: z.string().min(1),
   passwordConfirm: z.string().min(1),
-  address: z.string().min(1),
-  addressDetail: z.string().min(1),
-  tel1: z.string().min(1),
-  tel2: z.string().min(1),
-  tel3: z.string().min(1),
   contryCode: z.string().min(1),
-  zipCode: z.string().min(1),
 });

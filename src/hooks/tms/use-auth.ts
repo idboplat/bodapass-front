@@ -75,10 +75,6 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
       workerTp: "1" | "2" | "3";
       password: string;
       contryCode: string;
-      address: string;
-      addressDetail: string;
-      tel: string;
-      zipCode: string;
       brkrId: string;
     }) =>
       callTms<StringRspnData<1>>({
@@ -87,13 +83,13 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
         locale,
         data: [
           dto.externalId,
-          dto.tel,
+          "", // 전화번호 공백처리
           dto.userName,
           dto.loginTp,
           dto.password,
-          dto.address,
-          dto.addressDetail,
-          dto.zipCode,
+          "", // 주소 공백처리
+          "", // 주소 상세 공백처리
+          "", // 우편번호 공백처리
           dto.contryCode,
           dto.workerTp,
           dto.brkrId,
