@@ -24,7 +24,7 @@ export default function CrewIdcardHome({}: Props) {
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
   /** 반장의 유저아이디 */
-  const brkrId = session.brokerId;
+  const brkrId = session.userId;
 
   const WCW000002SSQ01 = useWCW000002SSQ01();
   const WCW000002SSP02 = useWCW000002SSP02();
