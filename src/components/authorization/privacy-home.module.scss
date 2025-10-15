@@ -1,0 +1,254 @@
+.container {
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: calc(100vh - 4rem);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    color: #64748b;
+    font-size: 0.9rem;
+  }
+}
+
+.infoSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+
+  &::before {
+    content: "";
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 2px;
+  }
+}
+
+.infoCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+  }
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f1f5f9;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.infoLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
+  min-width: 80px;
+}
+
+.infoValue {
+  font-size: 0.9rem;
+  color: #1e293b;
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  &.verified {
+    background: #dcfce7;
+    color: #166534;
+
+    &::before {
+      content: "✓";
+      font-size: 0.7rem;
+    }
+  }
+
+  &.unverified {
+    background: #fef3c7;
+    color: #92400e;
+
+    &::before {
+      content: "!";
+      font-size: 0.7rem;
+    }
+  }
+}
+
+.editButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-top: 0.75rem;
+
+  &:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  &::after {
+    content: "→";
+    font-size: 0.8rem;
+  }
+}
+
+.agreementSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.agreementTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "📋";
+    font-size: 1.2rem;
+  }
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  transition: all 0.2s ease;
+
+  &.checked {
+    border-color: #3b82f6;
+    background: #eff6ff;
+  }
+
+  :global(.mantine-Checkbox-root) {
+    margin: 0;
+  }
+
+  :global(.mantine-Checkbox-label) {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+  }
+}
+
+.submitSection {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  min-width: 200px;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.loadingState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+// 반응형 디자인
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .infoCard {
+    padding: 1rem;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .infoValue {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .submitButton {
+    width: 100%;
+    min-width: auto;
+  }
+}
