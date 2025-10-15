@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { useState } from "react";
+import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
 
 export default function LeaderPrivacyHome() {
   const router = useRouter();
@@ -18,9 +19,11 @@ export default function LeaderPrivacyHome() {
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
+
   /** 반장의 유저 ID */
   const userId = session.userId;
 
+  const TCW000001SSP04 = useTCW000001SSP04();
   const TCM200801SSQ01 = useTCM200801SSQ01({
     session,
     userId,
@@ -43,7 +46,7 @@ export default function LeaderPrivacyHome() {
       return;
     }
 
-    end();
+    TCW000001SSP04.mutate({ session, userId }, { onSuccess: end });
   };
 
   if (TCM200801SSQ01.isPending) {

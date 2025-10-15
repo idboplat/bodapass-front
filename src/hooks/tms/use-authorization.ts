@@ -1,4 +1,4 @@
-import { callWas, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 
 /**
@@ -218,5 +218,23 @@ export const useWCW000002SSP03 = () =>
       if (!data) throw new Error("FW999");
 
       return { bankImageSrc: data.F01 };
+    },
+  });
+
+export const useTCW000001SSP04 = () =>
+  useMutation({
+    mutationFn: async (args: { session: Session; userId: string }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCW000001SSP04",
+        data: [args.userId],
+        locale: "ko",
+        session: args.session,
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
     },
   });

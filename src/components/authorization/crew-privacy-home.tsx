@@ -8,6 +8,7 @@ import { Button, Checkbox, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { addComma, checkAmount, deleteIntegerZero } from "@/utils/regexp";
+import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
 
 export default function CrewPrivacyHome() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function CrewPrivacyHome() {
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
 
+  const TCW000001SSP04 = useTCW000001SSP04();
   const TCM200801SSQ01 = useTCM200801SSQ01({
     session,
     userId,
@@ -52,7 +54,7 @@ export default function CrewPrivacyHome() {
       return;
     }
 
-    end();
+    TCW000001SSP04.mutate({ session, userId }, { onSuccess: end });
   };
 
   const onTogglePrice = () => {

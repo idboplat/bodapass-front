@@ -60,7 +60,6 @@ export interface CallTmsArg {
   /** instanceOf를 통해 분기처리 가능 */
   ignore?: boolean;
   signal?: AbortSignal;
-  pathName?: string;
   csvDown?: boolean;
 }
 
@@ -163,7 +162,7 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
   }
 
   const tmsResult = await tmsApi
-    .post<TmsResponse<T>>(`api/${args.pathName || "call_tms_svc"}`, {
+    .post<TmsResponse<T>>(`api/call_tms_svc`, {
       headers,
       body: jsonBody,
       signal: args.signal,
