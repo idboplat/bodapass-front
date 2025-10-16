@@ -46,6 +46,7 @@ const getTCM200201SMQ01 = async (args: {
 export type TTCM200201SMQ01Data = Promised<typeof getTCM200201SMQ01>;
 export type TTCM200201SMQ01RowData = TTCM200201SMQ01Data["rows"][number];
 
+/** 계약 목록 조회 */
 export const useTCM200201SMQ01 = (args: {
   session: Session;
   cntrStatTp: string;
@@ -65,6 +66,7 @@ export const useTCM200201SMQ01 = (args: {
     queryFn: () => getTCM200201SMQ01(args),
   });
 
+/** 가/부 처리 */
 export const useTCM200201SSP01 = () =>
   useMutation({
     mutationFn: async (args: {
@@ -77,6 +79,40 @@ export const useTCM200201SSP01 = () =>
       const request = await callTms<StringRspnData<1>>({
         svcId: "TCM200201SSP01",
         data: [args.mastCorpCd, args.corpCd, args.userId, args.type],
+        session: args.session,
+        locale: "ko",
+      });
+
+      const data = request.svcRspnData?.[0];
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });
+
+export const useTCM200200SSP02 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      mastCorpCd: string;
+      corpCd: string;
+      userId: string;
+      session: Session;
+      instCd: string;
+      ordrPrc: string;
+      wrkStrDd: string;
+      wrkEndDd: string;
+    }) => {
+      const request = await callTms<StringRspnData<1>>({
+        svcId: "TCM200200SSP02",
+        data: [
+          args.corpCd,
+          args.mastCorpCd,
+          args.userId,
+          args.instCd,
+          args.ordrPrc,
+          args.wrkStrDd.replaceAll("-", ""),
+          args.wrkEndDd.replaceAll("-", ""),
+        ],
         session: args.session,
         locale: "ko",
       });
