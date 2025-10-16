@@ -2,6 +2,7 @@ import CryptoJS from "crypto-js";
 import { TmsError } from "@/libraries/error/tms-error";
 import dayjs from "@/libraries/dayjs";
 import ky from "ky";
+import { nativeLogger } from "@/hooks/use-device-api";
 
 /** svcErrYn이 true로 응답되도 에러처리 하지않는 에러코드 목록 */
 const EXCLUDE_RSPN_CDS: string[] = [];
@@ -133,7 +134,12 @@ export const tmsApi = ky.create({
 export const wasApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_WAS_HTTP_URL,
   hooks: {
-    beforeRequest: [],
+    beforeRequest: [
+      (request) => {
+        nativeLogger(`[CONTENT-TYPE] ${request.headers.get("Content-Type")}`);
+        return request;
+      },
+    ],
     beforeRetry: [],
     afterResponse: [],
     beforeError: [],
@@ -141,6 +147,8 @@ export const wasApi = ky.create({
 });
 
 export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
+  nativeLogger(`[WEBVIEW] TMS >> ${args.svcId}`);
+
   const jsonBody = JSON.stringify(
     genarateBody({
       svcId: args.svcId,
@@ -205,6 +213,8 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
 };
 
 export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
+  nativeLogger(`[WEBVIEW] WAS >> ${args.apiPathName}`);
+
   const wasBody = JSON.stringify(
     genarateBody({
       svcId: args.svcId,
