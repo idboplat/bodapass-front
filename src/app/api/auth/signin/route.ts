@@ -25,8 +25,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ session });
   } catch (error) {
+    console.error("/api/auth/signin", error);
     const { status, message } = serverErrorHandler(error);
-    console.error("server error", status, message);
     return NextResponse.json({ message }, { status: status });
   }
 }

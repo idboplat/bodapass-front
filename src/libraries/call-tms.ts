@@ -134,12 +134,7 @@ export const tmsApi = ky.create({
 export const wasApi = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_WAS_HTTP_URL,
   hooks: {
-    beforeRequest: [
-      (request) => {
-        nativeLogger(`[CONTENT-TYPE] ${request.headers.get("Content-Type")}`);
-        return request;
-      },
-    ],
+    beforeRequest: [],
     beforeRetry: [],
     afterResponse: [],
     beforeError: [],

@@ -58,6 +58,10 @@ export const sendMessageToDevice = <T>({
 };
 
 export const nativeAlert = (message: string) => {
+  if (typeof window === "undefined") {
+    throw new Error("window is not defined");
+  }
+
   if (!!window.ReactNativeWebView) {
     sendMessageToDevice({
       type: DEVICE_API.nativeAlert,
@@ -69,7 +73,7 @@ export const nativeAlert = (message: string) => {
 };
 
 export const nativeLogger = (log: string) => {
-  if (!!window.ReactNativeWebView) {
+  if (typeof window !== "undefined" && !!window.ReactNativeWebView) {
     sendMessageToDevice({
       type: DEVICE_API.nativeLogger,
       payload: log,

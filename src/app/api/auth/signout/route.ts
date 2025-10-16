@@ -8,9 +8,9 @@ export async function POST(req: NextRequest) {
     (await cookies()).delete(REFRESH_COOKIE_NAME);
 
     return NextResponse.json({ message: "Signout success" });
-  } catch (e) {
-    console.error(e);
-    const { status, message } = serverErrorHandler(e);
+  } catch (error) {
+    console.error("/api/auth/signout", error);
+    const { status, message } = serverErrorHandler(error);
     return NextResponse.json({ message: message }, { status: status });
   }
 }

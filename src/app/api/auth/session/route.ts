@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ session, message: "세션조회 성공" }, { headers });
   } catch (error) {
-    console.error(error);
+    console.error("/api/auth/session", error);
     const { status, message } = serverErrorHandler(error);
     return NextResponse.json({ session: null, message: message }, { status: status });
   }

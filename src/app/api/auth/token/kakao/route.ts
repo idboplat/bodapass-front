@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ session });
   } catch (error) {
-    console.error(error);
+    console.error("/api/auth/token/kakao", error);
     const { status, message } = serverErrorHandler(error);
     return NextResponse.json({ message }, { status });
   }
