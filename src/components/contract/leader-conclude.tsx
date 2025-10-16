@@ -5,6 +5,7 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
 import { TTCM200201SMQ01RowData, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
+import { DEVICE_API } from "@/types/common";
 
 interface Props {
   contractData: TTCM200201SMQ01RowData;
@@ -38,7 +39,7 @@ export function LeaderConclude({ contractData, session }: Props) {
         onSuccess: (data) => {
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
-              type: "leaderContractEnd",
+              type: DEVICE_API.leaderContractEnd,
               payload: null,
             });
           }

@@ -7,6 +7,7 @@ import { nativeLogger } from "@/hooks/use-device-api";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
+import { DEVICE_API } from "@/types/common";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
@@ -39,7 +40,7 @@ export default function Page() {
 
             if (!!window.ReactNativeWebView) {
               sendMessageToDevice({
-                type: "updateDeviceSession",
+                type: DEVICE_API.updateDeviceSession,
                 payload: data,
               });
             } else {

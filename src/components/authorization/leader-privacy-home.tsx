@@ -8,6 +8,7 @@ import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { useState } from "react";
 import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
+import { DEVICE_API } from "@/types/common";
 
 export default function LeaderPrivacyHome() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function LeaderPrivacyHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

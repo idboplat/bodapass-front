@@ -9,6 +9,7 @@ import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useWCW000001SSP02, useWCW000002SSQ01 } from "@/hooks/tms/use-authorization";
 import BackHeader from "../common/back-header";
 import { useQueryClient } from "@tanstack/react-query";
+import { DEVICE_API } from "@/types/common";
 
 export default function LeaderIdcardHome() {
   const router = useRouter();
@@ -76,7 +77,7 @@ export default function LeaderIdcardHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

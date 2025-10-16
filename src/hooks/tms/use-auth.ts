@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
+import { DEVICE_API } from "@/types/common";
 
 export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
   const mutation = useMutation({
@@ -36,7 +37,7 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
     onSuccess: async (data, _variables) => {
       if (!!window.ReactNativeWebView) {
         await sendMessageToDevice({
-          type: "updateDeviceSession",
+          type: DEVICE_API.updateDeviceSession,
           payload: data,
         });
       } else {

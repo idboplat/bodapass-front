@@ -9,6 +9,7 @@ import { useWCW000001SSP03 } from "@/hooks/tms/use-authorization";
 import { TBankForm } from "./dto";
 import BackHeader from "../common/back-header";
 import { useQueryClient } from "@tanstack/react-query";
+import { DEVICE_API } from "@/types/common";
 
 interface Props {}
 
@@ -39,7 +40,7 @@ export default function LeaderBankHome({}: Props) {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

@@ -27,3 +27,26 @@ export type ModalBaseProps = {
 };
 
 export type ModalProps<T = {}> = T & ModalBaseProps;
+
+export const DEVICE_API = {
+  getDeviceSession: "getDeviceSession",
+  /** payload: {session: Session} */
+  updateDeviceSession: "updateDeviceSession",
+  deleteDeviceSession: "deleteDeviceSession",
+
+  /** payload: string */
+  nativeAlert: "nativeAlert",
+  /** payload: string */
+  nativeLogger: "nativeLogger",
+
+  /** payload: { mastCorpCd: string, corpCd: string } */
+  attendanceComplete: "attendanceComplete",
+
+  authorizationEnd: "authorizationEnd",
+
+  leaderContractEnd: "leaderContractEnd",
+  crewContractEnd: "crewContractEnd",
+
+  /** payload: { lat: number; lng: number } */
+  navigateMapScreen: "navigateMapScreen",
+};

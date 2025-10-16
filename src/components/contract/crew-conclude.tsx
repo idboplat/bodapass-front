@@ -4,6 +4,7 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
 import { useTCM200201SSP01 } from "@/hooks/tms/use-contract";
+import { DEVICE_API } from "@/types/common";
 
 interface Props {
   session: Session;
@@ -33,7 +34,7 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
         onSuccess: (data) => {
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
-              type: "crewContractEnd",
+              type: DEVICE_API.crewContractEnd,
               payload: null,
             });
           }

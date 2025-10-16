@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useWCW000002SSP02, useWCW000002SSQ01 } from "@/hooks/tms/use-authorization";
 import BackHeader from "../common/back-header";
+import { DEVICE_API } from "@/types/common";
 
 interface Props {}
 
@@ -78,7 +79,7 @@ export default function CrewIdcardHome({}: Props) {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

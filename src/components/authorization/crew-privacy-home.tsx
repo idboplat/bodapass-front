@@ -9,6 +9,7 @@ import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { addComma, checkAmount, deleteIntegerZero } from "@/utils/regexp";
 import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
+import { DEVICE_API } from "@/types/common";
 
 export default function CrewPrivacyHome() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function CrewPrivacyHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

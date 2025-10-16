@@ -9,6 +9,7 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { TBankForm } from "./dto";
 import BackHeader from "../common/back-header";
 import { useQueryClient } from "@tanstack/react-query";
+import { DEVICE_API } from "@/types/common";
 
 export default function CrewBankHome() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function CrewBankHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

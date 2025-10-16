@@ -1,4 +1,5 @@
 import { sendMessageToDevice } from "@/hooks/use-device-api";
+import { DEVICE_API } from "@/types/common";
 import { StaticMap } from "react-kakao-maps-sdk";
 
 export default function RenderStaticMap() {
@@ -31,11 +32,8 @@ export default function RenderStaticMap() {
           console.log("e === ", e);
           e.preventDefault();
           await sendMessageToDevice({
-            type: "navigateMapScreen",
-            payload: {
-              lat: LAT,
-              lng: LNG,
-            },
+            type: DEVICE_API.navigateMapScreen,
+            payload: { lat: LAT, lng: LNG },
           });
         }}
       />

@@ -1,3 +1,5 @@
+import { DEVICE_API } from "@/types/common";
+
 export interface IWatingItem {
   resolve: (data: any) => void;
   reject: (error: Error) => void;
@@ -58,7 +60,7 @@ export const sendMessageToDevice = <T>({
 export const nativeAlert = (message: string) => {
   if (!!window.ReactNativeWebView) {
     sendMessageToDevice({
-      type: "nativeAlert",
+      type: DEVICE_API.nativeAlert,
       payload: message,
     });
   } else {
@@ -69,7 +71,7 @@ export const nativeAlert = (message: string) => {
 export const nativeLogger = (log: string) => {
   if (!!window.ReactNativeWebView) {
     sendMessageToDevice({
-      type: "nativeLogger",
+      type: DEVICE_API.nativeLogger,
       payload: log,
     });
   } else {

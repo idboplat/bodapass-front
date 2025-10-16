@@ -2,6 +2,7 @@ import { nativeLogger } from "@/hooks/use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { QueryFunction, useQuery, queryOptions } from "@tanstack/react-query";
+import { DEVICE_API } from "@/types/common";
 
 export const sessionQueryKey = ["session"] as const;
 
@@ -13,7 +14,7 @@ const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never>
           message: string;
           session: Session | null;
         }>({
-          type: "getDeviceSession",
+          type: DEVICE_API.getDeviceSession,
           payload: null,
         });
 

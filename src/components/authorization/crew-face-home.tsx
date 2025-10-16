@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import BackHeader from "../common/back-header";
 import { useWCW000002SSP01 } from "@/hooks/tms/use-authorization";
 import { useQueryClient } from "@tanstack/react-query";
+import { DEVICE_API } from "@/types/common";
 
 export default function CrewFaceHome() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function CrewFaceHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "authorizationEnd",
+        type: DEVICE_API.authorizationEnd,
         payload: null,
       });
     } else {

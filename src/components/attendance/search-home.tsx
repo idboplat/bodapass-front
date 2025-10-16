@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Capture from "../capture";
 import { useTCM200101SSP02 } from "@/hooks/tms/use-attendance";
 import { Button } from "@mantine/core";
+import { DEVICE_API } from "@/types/common";
 
 interface Props {
   attCd: "I" | "O";
@@ -36,8 +37,8 @@ export default function SearchHome({ attCd }: Props) {
   const onClickComplete = () => {
     if (window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: "attendanceComplete",
-        payload: null,
+        type: DEVICE_API.attendanceComplete,
+        payload: { mastCorpCd, corpCd },
       });
     }
   };
