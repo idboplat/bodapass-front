@@ -39,6 +39,9 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
         await sendMessageToDevice({
           type: DEVICE_API.updateDeviceSession,
           payload: data,
+        } satisfies {
+          type: string;
+          payload: Session;
         });
       } else {
         // 테스트 로그인

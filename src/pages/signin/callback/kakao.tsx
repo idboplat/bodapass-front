@@ -41,7 +41,10 @@ export default function Page() {
             if (!!window.ReactNativeWebView) {
               sendMessageToDevice({
                 type: DEVICE_API.updateDeviceSession,
-                payload: data,
+                payload: data.session, // !!주의 Session만 전달
+              } satisfies {
+                type: string;
+                payload: Session;
               });
             } else {
               // 테스트 로그인
