@@ -139,7 +139,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
           이전
         </Button>
 
-        <Button variant="filled" type={isLastStep ? "submit" : "button"} onClick={onClickNext}>
+        <Button variant="filled" type="button" onClick={onClickNext}>
           {isLastStep ? "제출" : "다음"}
         </Button>
       </div>
