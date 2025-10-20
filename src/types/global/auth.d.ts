@@ -1,7 +1,6 @@
 declare global {
   /** JWT payload */
   interface JWT {
-    corpCd: string;
     externalId: string;
     userId: string;
     userNm: string;

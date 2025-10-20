@@ -1,46 +1,27 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import css from "./id-card-form.module.scss";
-import { Controller, useForm } from "react-hook-form";
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
+import css from "./step-3.module.scss";
+import { Controller, useFormContext } from "react-hook-form";
+import { Button, TextInput } from "@mantine/core";
 import { findEntity, IdCardEntity } from "@/types/tp";
 import { Address } from "react-daum-postcode";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { replaceToTelNumber } from "@/utils/regexp";
-import { TScannedResult } from "@/libraries/auth/auth.dto";
+import { TSignUpDto } from "@/libraries/auth/auth.dto";
 
 interface Props {
-  brkrId?: string;
-  scannedResult: TScannedResult;
-  onSubmit: (arg: {
-    id1: string;
-    id2: string;
-    name: string;
-    addr: string;
-    addrDtil: string;
-    tel: string;
-    idTp: "1" | "2" | "3";
-    zipCd: string;
-    image: Blob;
-  }) => void;
-  isLoading: boolean;
+  onClickNext: () => void;
+  onClickPrev: () => void;
+  image: Blob;
+  isLastStep?: boolean;
 }
 
-export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading }: Props) {
+export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: Props) {
+  const form = useFormContext<TSignUpDto>();
+
   const [showPostCode, setShowPostCode] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const form = useForm({
-    defaultValues: {
-      id1: scannedResult.id1,
-      id2: scannedResult.id2,
-      name: scannedResult.userNm,
-      zipCd: "",
-      addr: "",
-      addrDtil: "",
-      tel: "",
-    },
-  });
 
   const openPostCode = () => setShowPostCode(() => true);
   const closePostCode = () => setShowPostCode(() => false);
@@ -57,31 +38,48 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
   };
 
   useEffect(() => {
-    const url = URL.createObjectURL(scannedResult.image);
+    const url = URL.createObjectURL(image);
     setImageUrl(() => url);
 
     return () => {
       URL.revokeObjectURL(url);
     };
-  }, [scannedResult.image]);
+  }, [image]);
+
+  const brkrId = form.watch("brkrId");
 
   return (
     <>
       <div className={css.infoBox}>
-        <div>반장 ID: {brkrId}</div>
-        <div>신분증 종류: {findEntity(IdCardEntity, scannedResult.idTp)?.[1]}</div>
+        {brkrId !== "" && <div>반장 ID: {brkrId}</div>}
+        <div>신분증 종류: {findEntity(IdCardEntity, form.watch("idTp"))?.[1]}</div>
       </div>
 
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="신분증" fill />}</div>
 
       <div className={css.formBox}>
-        <TextInput {...form.register("name")} label="이름" mt={0} />
+        <Controller
+          control={form.control}
+          name="userNm"
+          render={({ field }) => <TextInput {...field} label="이름" mt={0} />}
+        />
 
         <div className={css.idBox}>
           <label>주민등록번호</label>
           <div className={css.idInputBox}>
-            <TextInput {...form.register("id1")} />
-            <TextInput {...form.register("id2")} />
+            <Controller
+              control={form.control}
+              name="idNo1"
+              render={({ field }) => <TextInput {...field} />}
+            />
+
+            <span>-</span>
+
+            <Controller
+              control={form.control}
+              name="idNo2"
+              render={({ field }) => <TextInput {...field} />}
+            />
           </div>
         </div>
 
@@ -115,30 +113,36 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
           )}
         />
 
-        <TextInput {...form.register("addrDtil")} label="상세주소" />
+        <Controller
+          control={form.control}
+          name="addrDtil"
+          render={({ field }) => <TextInput {...field} label="상세주소" />}
+        />
 
-        <TextInput
-          {...form.register("tel")}
-          label="전화번호"
-          onChange={onTelChange}
-          inputMode="numeric"
+        <Controller
+          control={form.control}
+          name="tel"
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              label="전화번호"
+              onChange={onTelChange}
+              placeholder="-를 제외하고 입력해주세요."
+              inputMode="numeric"
+            />
+          )}
         />
       </div>
 
       <div className={css.submitButtonBox}>
-        <Button
-          variant="filled"
-          type="button"
-          onClick={() =>
-            onSubmit({ ...form.getValues(), idTp: scannedResult.idTp, image: scannedResult.image })
-          }
-          loading={isLoading}
-        >
-          제출
+        <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+          이전
+        </Button>
+
+        <Button variant="filled" type={isLastStep ? "submit" : "button"} onClick={onClickNext}>
+          {isLastStep ? "제출" : "다음"}
         </Button>
       </div>
-
-      <LoadingOverlay visible={isLoading} />
 
       {showPostCode && (
         <Portal>

@@ -1,20 +1,20 @@
 import css from "./index.module.scss";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
-import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { TCrewSignUpDto } from "@/libraries/auth/auth.dto";
+import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { GradientBackground } from "@/components/background";
+import { useTranslation } from "next-i18next";
 
 export default function Page() {
-  const { t } = useTranslation();
   const router = useRouter();
+  const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
-  const loginTp = (router.query.loginTp?.toString() || "1") as TCrewSignUpDto["loginTp"];
-  const externalId = (router.query.externalId?.toString() || "") as TCrewSignUpDto["externalId"];
-  const code = (router.query.code?.toString() || "") as TCrewSignUpDto["password"];
+  const loginTp = (router.query.loginTp?.toString() || "1") as "1" | "2" | "3";
+  const externalId = (router.query.externalId?.toString() || "") as TSignUpDto["externalId"];
+  const code = (router.query.code?.toString() || "") as TSignUpDto["password"];
 
-  const nextPage = (tp: "leader" | "crew") => () => {
+  const nextPage = (tp: "leader" | "remote-crew") => () => {
     const searchParams = new URLSearchParams();
     if (loginTp) searchParams.set("loginTp", loginTp); // 1: 이메일, 2: 소셜, 3: 전화번호
     if (externalId) searchParams.set("externalId", externalId); // 소셜 로그인 시 이메일
@@ -61,7 +61,7 @@ export default function Page() {
               </div>
             </button>
 
-            {/* <button className={css.roleButton} onClick={nextPage("crew")}>
+            {/* <button className={css.roleButton} onClick={nextPage("remote-crew")}>
               <div className={css.buttonIcon}>
                 <svg
                   width="24"

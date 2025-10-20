@@ -63,15 +63,14 @@ export const emailSignInService = async (externalId: string, password: string) =
   }
 
   return {
-    corpCd: loginData[0].F01,
-    externalId: loginData[0].F02,
-    userId: loginData[0].F03,
-    userNm: loginData[0].F04,
-    loginTp: loginData[0].F05 as "1" | "2" | "3",
-    sessionId: loginData[0].F06,
-    sessionKey: loginData[0].F07,
-    workerTp: loginData[0].F08 as "1" | "2" | "3",
-    brokerId: loginData[0].F09,
+    externalId: loginData[0].F01,
+    userId: loginData[0].F02,
+    userNm: loginData[0].F03,
+    loginTp: loginData[0].F04 as "1" | "2" | "3",
+    sessionId: loginData[0].F05,
+    sessionKey: loginData[0].F06,
+    workerTp: loginData[0].F07 as "1" | "2" | "3",
+    brokerId: loginData[0].F08,
   };
 };
 
@@ -90,15 +89,14 @@ export const socialSignInService = async (externalId: string, sub: string) => {
   }
 
   return {
-    corpCd: loginData[0].F01,
-    externalId: loginData[0].F02,
-    userId: loginData[0].F03,
-    userNm: loginData[0].F04,
-    loginTp: loginData[0].F05 as "1" | "2" | "3",
-    sessionId: loginData[0].F06,
-    sessionKey: loginData[0].F07,
-    workerTp: loginData[0].F08 as "1" | "2" | "3",
-    brokerId: loginData[0].F09,
+    externalId: loginData[0].F01,
+    userId: loginData[0].F02,
+    userNm: loginData[0].F03,
+    loginTp: loginData[0].F04 as "1" | "2" | "3",
+    sessionId: loginData[0].F05,
+    sessionKey: loginData[0].F06,
+    workerTp: loginData[0].F07 as "1" | "2" | "3",
+    brokerId: loginData[0].F08,
   };
 };
 

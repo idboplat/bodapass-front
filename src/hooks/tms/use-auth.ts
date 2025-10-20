@@ -1,6 +1,6 @@
 import { frontApi } from "@/apis/fetcher";
-import { TSignInDto, TCrewSignUpDto } from "@/libraries/auth/auth.dto";
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
+import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
@@ -65,40 +65,86 @@ export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
   };
 };
 
-export const useSignupMutation = ({ locale }: { locale: string }) => {
+/**
+ * 공통 신분증 조회
+ *
+ * 반장의 경우 brkrId 공백 처리
+ */
+export const useWCW000002SSQ01 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      image: Blob;
+      brkrId: string;
+      tp: "1" | "2" | "3";
+      session: Session | null;
+    }) => {
+      const result = await callWas<StringRspnData<3>>({
+        svcId: "WCW000002SSQ01", // 매칭되는 svcId 없음
+        apiPathName: "WCW000002SSQ01",
+        locale: "ko",
+        session: args.session,
+        data: [args.brkrId, args.tp],
+        formData: [args.image],
+      });
+
+      const data = result.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return {
+        userNm: data.F01,
+        id1: data.F02,
+        id2: data.F03,
+        image: args.image,
+        idTp: args.tp,
+      };
+    },
+  });
+
+export const useWCW000001SSP02 = () => {
   /** 데이터 패칭 여부가 아니라 성공 여부에 따라 로딩 처리 */
   const [isLoading, setIsLoading] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: (dto: {
-      externalId: string;
-      userName: string;
-      /** 이메일 1, 소셜 2, 전화번호 3 */
-      loginTp: "1" | "2" | "3";
-      /** 반장 1, 팀원 2, 일용직 3 */
-      workerTp: "1" | "2" | "3";
-      password: string;
-      contryCode: string;
-      brkrId: string;
-    }) =>
-      callTms<StringRspnData<1>>({
-        svcId: "TCM200001SSP00",
-        session: null,
-        locale,
+    mutationFn: async (
+      args: TSignUpDto & {
+        /** 이메일 1, 소셜 2, 전화번호 3, 기타 4 */
+        loginTp: "1" | "2" | "3" | "4";
+        /** 반장 1, 팀원 2, 일용직 3 */
+        wrkTp: "1" | "2" | "3";
+        session: Session | null;
+        image: Blob;
+      },
+    ) => {
+      const response = await callWas<StringRspnData<1>>({
+        apiPathName: "WCW000001SSP02",
+        svcId: "TCW000001SSP02",
+        session: args.session,
+        locale: "ko",
         data: [
-          dto.externalId,
-          "", // 전화번호 공백처리
-          dto.userName,
-          dto.loginTp,
-          dto.password,
-          "", // 주소 공백처리
-          "", // 주소 상세 공백처리
-          "", // 우편번호 공백처리
-          dto.contryCode,
-          dto.workerTp,
-          dto.brkrId,
+          args.userNm,
+          args.idNo1 + args.idNo2,
+          args.idTp,
+          args.addr,
+          args.addrDtil,
+          args.tel.replaceAll("-", ""),
+          args.zipCd,
+          args.wrkTp,
+          args.externalId,
+          args.loginTp,
+          args.password,
+          args.cntryCd,
+          args.brkrId,
         ],
-      }),
+        formData: [args.image],
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return { userId: data.F01 };
+    },
     onMutate: () => setIsLoading(() => true),
     onError: (error) => {
       nativeAlert(error.message);
@@ -112,18 +158,13 @@ export const useSignupMutation = ({ locale }: { locale: string }) => {
   };
 };
 
-export const useCheckBrokerMutation = ({ locale }: { locale: string }) => {
-  const mutation = useMutation({
-    mutationFn: ({ brokerId }: { brokerId: string }) =>
+export const useTCM200001SSQ00 = () =>
+  useMutation({
+    mutationFn: (args: { brkrId: string }) =>
       callTms<StringRspnData<1>>({
         svcId: "TCM200001SSQ00",
         session: null,
-        locale,
-        data: [brokerId],
+        locale: "ko",
+        data: [args.brkrId],
       }),
   });
-
-  return {
-    mutation,
-  };
-};

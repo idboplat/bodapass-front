@@ -2,11 +2,11 @@ import { useCamera } from "@/hooks/use-camera";
 import Camera from "../camera";
 import { ActionIcon, LoadingOverlay, Select } from "@mantine/core";
 import { Dispatch, SetStateAction } from "react";
-import { TOCR } from "./dto";
 import clsx from "clsx";
 import css from "./id-card-camera.module.scss";
 import { Camera as IconCamera } from "lucide-react";
-import IdcardFrame from "./camera-frame";
+import IdcardFrame from "../common/camera-frame";
+import { TOCR } from "@/libraries/auth/auth.dto";
 
 interface Props {
   camera: ReturnType<typeof useCamera>;

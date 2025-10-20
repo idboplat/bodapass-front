@@ -91,12 +91,12 @@ export default function LeaderPrivacyHome() {
                 <span className={css.infoLabel}>상세주소</span>
                 <span className={css.infoValue}>{TCM200801SSQ01.data.addrDtil}</span>
               </div>
-              <Link
+              {/* <Link
                 href={`/${locale}/authorization/leader/id-card?next=webview`}
                 className={css.editButton}
               >
                 신분증 수정
-              </Link>
+              </Link> */}
             </div>
           </div>
 

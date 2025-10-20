@@ -1,55 +1,16 @@
-import css from "./index.module.scss";
-import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
-import { useTranslation } from "next-i18next";
-import CrewSignupForm from "@/components/signup/crew-signup-form";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { TCrewSignUpDto } from "@/libraries/auth/auth.dto";
-import { GradientBackground } from "@/components/background";
+import { Authorized } from "@/libraries/auth/authorized";
+import CrewSignUpHome from "@/components/signup/crew-signup-home";
 
-export default function Page() {
-  const { t } = useTranslation();
+// 팀원 대면 회원가입 페이지
+export default function CrewIdCardRegisterPage() {
   const router = useRouter();
-  const locale = router.query.locale?.toString() || "ko";
-  const loginTp = (router.query.loginTp?.toString() || "1") as TCrewSignUpDto["loginTp"];
-  const workerTp = (router.query.workerTp?.toString() || "2") as "2" | "3";
-  const brokerId = (router.query.brkrId?.toString() || "") as TCrewSignUpDto["brkrId"];
-  const externalId = (router.query.externalId?.toString() || "") as TCrewSignUpDto["externalId"];
-  const code = (router.query.code?.toString() || "") as TCrewSignUpDto["password"];
 
-  if (!router.isReady) return null;
+  if (!router.isReady) return <div>Loading...</div>;
 
   return (
-    <div className={"mobileLayout"}>
-      <GradientBackground />
-
-      <div className={css.wrap}>
-        <div className={css.inner}>
-          <h1 className={css.title}>{workerTp === "2" ? "팀원" : "일용직"} 회원가입</h1>
-
-          <CrewSignupForm
-            initState={{
-              loginTp,
-              brokerId,
-              externalId,
-              password: code,
-            }}
-            workerTp={workerTp}
-          />
-
-          <div className={css.linkContainer}>
-            <Link className={css.signinLink} href={`/${locale}/signin`}>
-              이미 아이디가 있으신가요?
-            </Link>
-            <a className={css.privacyLink} target="_blank" href={`/${locale}/privacy`}>
-              개인정보 처리방침
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Authorized>
+      <CrewSignUpHome />
+    </Authorized>
   );
 }
-
-const getStaticProps = makeStaticProps(["common", "auth"]);
-export { getStaticPaths, getStaticProps };
