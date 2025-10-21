@@ -55,21 +55,6 @@ export default function CrewSignUpHome({}: Props) {
     },
   });
 
-  const end = () => {
-    if (!!window.ReactNativeWebView) {
-      sendMessageToDevice({
-        type: DEVICE_API.authorizationEnd,
-        payload: null,
-      });
-    } else {
-      router.back();
-    }
-  };
-
-  const step1Prev = () => {
-    end();
-  };
-
   const step1Next = async () => {
     const isValid = await form.trigger(["cntryCd"]);
     if (!isValid) return;
@@ -115,7 +100,11 @@ export default function CrewSignUpHome({}: Props) {
         loginTp: "4", // 기타
       },
       {
-        onSuccess: () => end(),
+        onSuccess: (data) =>
+          sendMessageToDevice({
+            type: DEVICE_API.addWorker,
+            payload: data satisfies { userId: string },
+          }),
       },
     );
   };
@@ -124,7 +113,7 @@ export default function CrewSignUpHome({}: Props) {
     <WithoutSignInLayout title="팀원 추가">
       <FormProvider {...form}>
         <div className={css.form}>
-          {step === 1 && <CrewStep1 onClickNext={step1Next} onClickPrev={step1Prev} />}
+          {step === 1 && <CrewStep1 onClickNext={step1Next} />}
           {step === 2 && <Step2 onClickNext={step2Next} onClickPrev={step2Prev} />}
           {step === 3 && !!image && (
             <Step3 onClickNext={step3Submit} onClickPrev={step3Prev} image={image} isLastStep />

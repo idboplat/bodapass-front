@@ -5,9 +5,9 @@ import { Controller, useFormContext } from "react-hook-form";
 
 export default function CrewStep1({
   onClickNext,
-  onClickPrev,
-}: {
-  onClickPrev: () => void;
+}: // onClickPrev,
+{
+  // onClickPrev: () => void;
   onClickNext: () => void;
 }) {
   const form = useFormContext<TSignUpDto>();
@@ -29,9 +29,9 @@ export default function CrewStep1({
       />
 
       <Box mt={28} style={{ textAlign: "right" }}>
-        <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+        {/* <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
           이전
-        </Button>
+        </Button> */}
 
         <Button variant="filled" type="button" onClick={onClickNext}>
           다음
