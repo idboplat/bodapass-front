@@ -94,7 +94,7 @@ export default function CrewSignUpHome({}: Props) {
     WCW000001SSP02.mutation.mutate(
       {
         ...form.getValues(),
-        session: null,
+        session,
         image,
         wrkTp: "2",
         loginTp: "4", // 기타
