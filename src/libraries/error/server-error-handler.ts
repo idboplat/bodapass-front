@@ -23,7 +23,7 @@ export const serverErrorHandler = (error: unknown) => {
   if (TmsError.isCheckTmsError(error)) {
     name = "TmsError";
     message = error.message;
-    status = 502;
+    status = 500;
   }
 
   return { name, message, status };
