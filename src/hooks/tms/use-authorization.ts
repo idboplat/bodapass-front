@@ -1,5 +1,6 @@
 import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
-import { useMutation } from "@tanstack/react-query";
+import { Promised } from "@/types/common";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 /** 반장 신분증 등록 */
 // export const useWCW000001SSP02 = () =>
@@ -202,4 +203,36 @@ export const useTCW000001SSP04 = () =>
 
       return data;
     },
+  });
+
+/** 은행 코드 조회 */
+export type TTCW000100SMQ01Data = Promised<typeof getTCW000100SMQ01>;
+export const getTCW000100SMQ01 = async ({ session }: { session: Session }) => {
+  const response = await callTms<StringRspnData<2>>({
+    svcId: "TCW000100SMQ01",
+    session,
+    locale: "ko",
+    data: [""],
+  });
+
+  const data = response.svcRspnData || [];
+
+  if (!data) {
+    throw new Error("FW999");
+  }
+
+  const convertedData = data.map((d) => ({
+    bankCd: d.F01,
+    bankNm: d.F02,
+  }));
+
+  return {
+    rows: convertedData,
+  };
+};
+
+export const useTCW000100SMQ01 = (session: Session) =>
+  useQuery({
+    queryKey: ["TCW000100SMQ01"],
+    queryFn: () => getTCW000100SMQ01({ session }),
   });

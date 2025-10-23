@@ -93,6 +93,7 @@ export default function LeaderBankHome({}: Props) {
             bankImage={bankImage}
             onSubmit={onSubmit}
             isLoading={WCW000001SSP03.isPending}
+            session={session}
           />
         )}
       </div>

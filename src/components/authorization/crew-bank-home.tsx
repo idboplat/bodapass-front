@@ -90,6 +90,7 @@ export default function CrewBankHome() {
             bankImage={bankImage}
             onSubmit={onSubmit}
             isLoading={WCW000002SSP03.isPending}
+            session={session}
           />
         )}
       </div>
