@@ -46,8 +46,16 @@ export default function SearchHome({ attCd }: Props) {
   return (
     <div className={"mobileLayout"}>
       <Capture onCapture={onCapture} isLoading={TCM200101SSP02.isPending} />
-      <div>
-        <Button onClick={onClickComplete}>완료</Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Button onClick={onClickComplete}>출석 완료</Button>
       </div>
     </div>
   );
