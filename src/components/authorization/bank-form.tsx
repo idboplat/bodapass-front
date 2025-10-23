@@ -32,7 +32,7 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
     };
   }, [bankImage]);
 
-  const { data: bankData } = useTCW000100SMQ01(session);
+  const { data: bankData, isPending: isBankDataLoading } = useTCW000100SMQ01(session);
 
   return (
     <>
@@ -44,7 +44,6 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="통장" fill />}</div>
 
       <div className={css.formBox}>
-        {/* <TextInput {...form.register("bankCd")} label="은행 코드" mt={0} /> */}
         <Select
           {...form.register("bankCd")}
           label="은행"
@@ -58,12 +57,16 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
           value={form.getValues("bankCd")}
           styles={{
             dropdown: {
-              maxHeight: 400,
+              maxHeight: 250,
               overflow: "auto",
               scrollbarWidth: "auto",
             },
           }}
           defaultValue={form.watch("bankCd")}
+          disabled={isBankDataLoading}
+          placeholder={
+            isBankDataLoading ? "은행 정보를 불러오는 중입니다..." : "은행을 선택해주세요"
+          }
         />
         <TextInput {...form.register("bankAccountNo")} label="계좌 번호" mt={0} />
       </div>
