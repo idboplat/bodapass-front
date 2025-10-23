@@ -236,3 +236,38 @@ export const useTCW000100SMQ01 = (session: Session) =>
     queryKey: ["TCW000100SMQ01"],
     queryFn: () => getTCW000100SMQ01({ session }),
   });
+
+/** 종목 코드 조회 */
+export type TTCW000100SMQ02Data = Promised<typeof getTCW000100SMQ02>;
+export const getTCW000100SMQ02 = async ({ session }: { session: Session }) => {
+  const response = await callTms<StringRspnData<5>>({
+    svcId: "TCW000100SMQ02",
+    session,
+    locale: "ko",
+    data: [""],
+  });
+
+  const data = response.svcRspnData || [];
+
+  if (!data) {
+    throw new Error("FW999");
+  }
+
+  const convertedData = data.map((d) => ({
+    instCd: d.F01,
+    instNm: d.F02,
+    mrkrCd: d.F03,
+    instTp: d.F04,
+    mastInstCd: d.F05,
+  }));
+
+  return {
+    rows: convertedData,
+  };
+};
+
+export const useTCW000100SMQ02 = (session: Session) =>
+  useQuery({
+    queryKey: ["TCW000100SMQ02"],
+    queryFn: () => getTCW000100SMQ02({ session }),
+  });

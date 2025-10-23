@@ -1,4 +1,4 @@
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
+import { Button, LoadingOverlay, Select, TextInput } from "@mantine/core";
 import { Building, MapPin, User, FileText, DollarSign, Calendar, Send } from "lucide-react";
 import css from "./crew-conclude.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
@@ -11,6 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { DatePickerInput } from "@mantine/dates";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
 
 const crewConcludeDto = z.object({
   siteId: z.string(),
@@ -39,6 +40,8 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
       console.log("서명 데이터 변경:", data ? "서명됨" : "지워짐");
     },
   });
+
+  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
 
   const mutation = useTCM200200SSP02();
   const form = useForm<TCrewConcludeDto>({
@@ -137,21 +140,24 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
             control={form.control}
             name="instCd"
             render={({ field, fieldState }) => (
-              <TextInput
-                {...field}
-                label="종목 코드"
-                placeholder="종목 코드를 입력하세요"
-                error={fieldState.error?.message}
-                required
-                classNames={{
-                  wrapper: css.inputWrapper,
-                  label: css.inputLabel,
-                  input: css.input,
+              <Select
+                {...form.register("instCd")}
+                label="종목"
+                searchable
+                data={instData?.rows.map((d) => ({ value: d.instCd, label: d.instNm }))}
+                allowDeselect={false}
+                onChange={(value) => form.setValue("instCd", value || "")}
+                value={form.getValues("instCd")}
+                styles={{
+                  dropdown: {
+                    maxHeight: 250,
+                    overflow: "auto",
+                    scrollbarWidth: "auto",
+                  },
                 }}
-                leftSection={
-                  <div>
-                    <FileText size={16} />
-                  </div>
+                disabled={isInstDataLoading}
+                placeholder={
+                  isInstDataLoading ? "종목 정보를 불러오는 중입니다..." : "종목을 선택해주세요"
                 }
               />
             )}
