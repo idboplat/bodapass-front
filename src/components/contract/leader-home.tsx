@@ -13,7 +13,6 @@ export function LeaderContractHome() {
 
   const TCM200201SMQ01 = useTCM200201SSQ01({
     session,
-    cntrStatTp: "",
     mastCorpCd,
     corpCd,
   });
