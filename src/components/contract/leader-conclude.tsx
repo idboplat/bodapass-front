@@ -7,6 +7,7 @@ import { useSignature } from "@/hooks/use-signature";
 import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
 import dayjs from "@/libraries/dayjs";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
 
 interface Props {
   contractData: NonNullable<TTCM200201SSQ01Data>;
@@ -24,6 +25,7 @@ export function LeaderConclude({ contractData, session }: Props) {
   });
 
   const mutation = useTCM200201SSP01();
+  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
 
   const onClick = (type: "REJ" | "APL") => () => {
     if (mutation.isPending) return;
@@ -130,8 +132,10 @@ export function LeaderConclude({ contractData, session }: Props) {
             </span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>종목</span>
-            <span className={css.value}>{contractData.instCd}</span>
+            <span className={css.label}>종목코드</span>
+            <span className={css.value}>
+              {instData?.find((inst) => inst.instCd === contractData.instCd)?.instNm}
+            </span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>

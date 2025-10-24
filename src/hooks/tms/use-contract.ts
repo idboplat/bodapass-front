@@ -169,3 +169,54 @@ export const useTCM200201SSQ01 = (args: { session: Session; mastCorpCd: string; 
     queryKey: ["TCM200201SSQ01", args.session, args.mastCorpCd, args.corpCd],
     queryFn: () => getTCM200201SSQ01(args),
   });
+
+const getTCM200202SSQ01 = async (args: {
+  session: Session;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
+}) => {
+  const response = await callTms<StringRspnData<17>>({
+    svcId: "TCM200202SSQ01",
+    session: args.session,
+    locale: "ko",
+    data: [args.mastCorpCd, args.corpCd, args.userId],
+  });
+
+  const data = response.svcRspnData?.[0];
+
+  if (!data) return null;
+
+  return {
+    mastCorpCd: data.F01,
+    corpCd: data.F02,
+    corpNm: data.F03,
+    telNo: data.F04,
+    siteNm: data.F05,
+    siteTelNo: data.F06,
+    siteAddr: data.F07,
+    siteAddrDtil: data.F08,
+    siteCoorX: data.F09,
+    siteCoorY: data.F10,
+    userId: data.F11,
+    userNm: data.F12,
+    instCd: data.F13,
+    ordrPrc: data.F14,
+    wrkStrDd: data.F15,
+    wrkEndDd: data.F16,
+    insYn: data.F17,
+  };
+};
+
+export type TTCM200202SSQ01Data = Promised<typeof getTCM200202SSQ01>;
+
+export const useTCM200202SSQ01 = (args: {
+  session: Session;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
+}) =>
+  useQuery({
+    queryKey: ["TCM200202SSQ01", args.session, args.mastCorpCd, args.corpCd],
+    queryFn: () => getTCM200202SSQ01(args),
+  });

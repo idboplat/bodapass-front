@@ -245,6 +245,7 @@ export const getTCW000100SMQ02 = async ({ session }: { session: Session }) => {
     session,
     locale: "ko",
     data: [""],
+    pgSn: 0, // 전부 다 조회
   });
 
   const data = response.svcRspnData || [];
@@ -261,9 +262,7 @@ export const getTCW000100SMQ02 = async ({ session }: { session: Session }) => {
     mastInstCd: d.F05,
   }));
 
-  return {
-    rows: convertedData,
-  };
+  return convertedData;
 };
 
 export const useTCW000100SMQ02 = (session: Session) =>

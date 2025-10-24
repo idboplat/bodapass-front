@@ -4,7 +4,7 @@ import css from "./crew-conclude.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
-import { useTCM200200SSP02 } from "@/hooks/tms/use-contract";
+import { TTCM200202SSQ01Data, useTCM200200SSP02 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +14,6 @@ import { DatePickerInput } from "@mantine/dates";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
 
 const crewConcludeDto = z.object({
-  siteId: z.string(),
   instCd: z.string().min(1),
   orderPrc: z.string().min(1),
   wrkDd: z.tuple([z.string().nullable(), z.string().nullable()]),
@@ -24,12 +23,10 @@ type TCrewConcludeDto = z.infer<typeof crewConcludeDto>;
 
 interface Props {
   session: Session;
-  mastCorpCd: string;
-  corpCd: string;
-  userId: string;
+  contractData: NonNullable<TTCM200202SSQ01Data>;
 }
 
-export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Props) {
+export default function CrewConclude({ session, contractData }: Props) {
   const router = useRouter();
 
   const { canvasRef, hasSignature, clearSignature, saveSignature, eventHandlers } = useSignature({
@@ -44,10 +41,11 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
   const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
 
   const mutation = useTCM200200SSP02();
+
   const form = useForm<TCrewConcludeDto>({
     defaultValues: {
-      siteId: "",
-      instCd: "",
+      instCd: contractData.instCd,
+      // orderPrc: contractData.ordrPrc, TODO 추후 반영
       orderPrc: "",
       wrkDd: [null, null],
     },
@@ -68,9 +66,9 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
 
     mutation.mutate(
       {
-        mastCorpCd,
-        corpCd,
-        userId,
+        mastCorpCd: contractData.mastCorpCd,
+        corpCd: contractData.corpCd,
+        userId: contractData.userId,
         session,
         instCd: data.instCd,
         ordrPrc: data.orderPrc,
@@ -110,21 +108,70 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
               <Building size={16} />
               회사코드
             </span>
-            <span className={css.value}>{mastCorpCd}</span>
+            <span className={css.value}>{contractData.mastCorpCd}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사 명
+            </span>
+            <span className={css.value}>{contractData.corpNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사 전화번호
+            </span>
+            <span className={css.value}>{contractData.telNo}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
               <MapPin size={16} />
-              현장코드
+              현장 코드
             </span>
-            <span className={css.value}>{corpCd}</span>
+            <span className={css.value}>{contractData.corpCd}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 명
+            </span>
+            <span className={css.value}>{contractData.siteNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소 1
+            </span>
+            <span className={css.value}>{contractData.siteAddr}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소 2
+            </span>
+            <span className={css.value}>{contractData.siteAddrDtil}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 전화번호
+            </span>
+            <span className={css.value}>{contractData.siteTelNo}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
               <User size={16} />
-              수령인
+              계약자
             </span>
-            <span className={css.value}>{userId}</span>
+            <span className={css.value}>{contractData.userNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <User size={16} />
+              계약자 코드
+            </span>
+            <span className={css.value}>{contractData.userId}</span>
           </div>
         </div>
       </div>
@@ -144,7 +191,7 @@ export default function CrewConclude({ session, mastCorpCd, corpCd, userId }: Pr
                 {...form.register("instCd")}
                 label="종목"
                 searchable
-                data={instData?.rows.map((d) => ({ value: d.instCd, label: d.instNm }))}
+                data={instData?.map((d) => ({ value: d.instCd, label: d.instNm }))}
                 allowDeselect={false}
                 onChange={(value) => form.setValue("instCd", value || "")}
                 value={form.getValues("instCd")}
