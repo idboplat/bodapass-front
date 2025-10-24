@@ -4,11 +4,11 @@ import css from "./leader-conclude.module.scss";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
-import { TTCM200201SMQ01RowData, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
+import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
 
 interface Props {
-  contractData: TTCM200201SMQ01RowData;
+  contractData: NonNullable<TTCM200201SSQ01Data>;
   session: Session;
 }
 
@@ -68,18 +68,46 @@ export function LeaderConclude({ contractData, session }: Props) {
             <span className={css.value}>{contractData.corpNm}</span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>회사코드</span>
+            <span className={css.label}>
+              <Building size={16} />
+              회사 코드
+            </span>
             <span className={css.value}>{contractData.mastCorpCd}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
+              <Building size={16} />
+              회사 전화번호
+            </span>
+            <span className={css.value}>{contractData.telNo}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
               <MapPin size={16} />
-              현장명
+              현장 명
             </span>
             <span className={css.value}>{contractData.siteNm}</span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>현장코드</span>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소
+            </span>
+            <span className={css.value}>{contractData.siteAddr}</span>
+            <span className={css.value}>{contractData.siteAddrDtil}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 전화번호
+            </span>
+            <span className={css.value}>{contractData.siteTelNo}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장코드
+            </span>
             <span className={css.value}>{contractData.corpCd}</span>
           </div>
         </div>
@@ -127,10 +155,6 @@ export function LeaderConclude({ contractData, session }: Props) {
             </span>
             <span className={`${css.value} ${css.date}`}>{contractData.wrkEndDd}</span>
           </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>생성자</span>
-            <span className={css.value}>{contractData.creWrkId}</span>
-          </div>
         </div>
       </div>
 
@@ -139,6 +163,7 @@ export function LeaderConclude({ contractData, session }: Props) {
           <User size={16} />
           계약 수령인
         </div>
+        <div className={css.recipientValue}>{contractData.userNm}</div>
         <div className={css.recipientValue}>{contractData.userId}</div>
       </div>
 

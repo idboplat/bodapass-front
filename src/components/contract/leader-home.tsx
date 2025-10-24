@@ -1,7 +1,7 @@
 import { useSession } from "@/libraries/auth/use-session";
 import { LeaderConclude } from "./leader-conclude";
 import { useRouter } from "next/router";
-import { useTCM200201SMQ01 } from "@/hooks/tms/use-contract";
+import { useTCM200201SSQ01 } from "@/hooks/tms/use-contract";
 
 export function LeaderContractHome() {
   const router = useRouter();
@@ -11,15 +11,12 @@ export function LeaderContractHome() {
   const { data: session } = useSession();
   if (!session) throw new Error("FW999");
 
-  const TCM200201SMQ01 = useTCM200201SMQ01({
+  const TCM200201SMQ01 = useTCM200201SSQ01({
     session,
     cntrStatTp: "",
     mastCorpCd,
     corpCd,
-    pageNm: 1,
   });
-
-  const contractData = TCM200201SMQ01.data?.rows[0];
 
   if (TCM200201SMQ01.isPending) {
     return (
@@ -29,7 +26,7 @@ export function LeaderContractHome() {
     );
   }
 
-  if (!contractData) {
+  if (!TCM200201SMQ01.data) {
     return (
       <div className={"mobileLayout"}>
         <div>계약을 찾을 수 없습니다.</div>
@@ -39,7 +36,7 @@ export function LeaderContractHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <LeaderConclude contractData={contractData} session={session} />
+      <LeaderConclude contractData={TCM200201SMQ01.data} session={session} />
     </div>
   );
 }
