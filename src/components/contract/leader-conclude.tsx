@@ -6,6 +6,7 @@ import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
 import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
+import dayjs from "@/libraries/dayjs";
 
 interface Props {
   contractData: NonNullable<TTCM200201SSQ01Data>;
@@ -77,14 +78,14 @@ export function LeaderConclude({ contractData, session }: Props) {
           <div className={css.infoRow}>
             <span className={css.label}>
               <Building size={16} />
-              회사 전화번호
+              전화번호
             </span>
             <span className={css.value}>{contractData.telNo}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
               <MapPin size={16} />
-              현장 명
+              현장명
             </span>
             <span className={css.value}>{contractData.siteNm}</span>
           </div>
@@ -129,7 +130,7 @@ export function LeaderConclude({ contractData, session }: Props) {
             </span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>종목코드</span>
+            <span className={css.label}>종목</span>
             <span className={css.value}>{contractData.instCd}</span>
           </div>
           <div className={css.infoRow}>
@@ -138,7 +139,7 @@ export function LeaderConclude({ contractData, session }: Props) {
               보험여부
             </span>
             <span className={`${css.value} ${css.insurance}`}>
-              {contractData.insYn ? "보험 적용" : "보험 미적용"}
+              {contractData.insYn ? "가입" : "미가입"}
             </span>
           </div>
           <div className={css.infoRow}>
@@ -146,14 +147,18 @@ export function LeaderConclude({ contractData, session }: Props) {
               <Calendar size={16} />
               계약시작일
             </span>
-            <span className={`${css.value} ${css.date}`}>{contractData.wrkStrDd}</span>
+            <span className={`${css.value} ${css.date}`}>
+              {contractData.wrkStrDd ? dayjs(contractData.wrkStrDd).format("YYYY-MM-DD") : "미정"}
+            </span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
               <Calendar size={16} />
               계약종료일
             </span>
-            <span className={`${css.value} ${css.date}`}>{contractData.wrkEndDd}</span>
+            <span className={`${css.value} ${css.date}`}>
+              {contractData.wrkEndDd ? dayjs(contractData.wrkEndDd).format("YYYY-MM-DD") : "미정"}
+            </span>
           </div>
         </div>
       </div>
@@ -163,8 +168,8 @@ export function LeaderConclude({ contractData, session }: Props) {
           <User size={16} />
           계약 수령인
         </div>
-        <div className={css.recipientValue}>{contractData.userNm}</div>
-        <div className={css.recipientValue}>{contractData.userId}</div>
+        <div className={css.recipientValue}>이름 : {contractData.userNm}</div>
+        <div className={css.recipientValue}>ID : {contractData.userId}</div>
       </div>
 
       {/* 서명 섹션 (현재 주석 처리됨) */}
