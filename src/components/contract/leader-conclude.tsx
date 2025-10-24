@@ -8,6 +8,7 @@ import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract
 import { DEVICE_API } from "@/types/common";
 import dayjs from "@/libraries/dayjs";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { useMemo } from "react";
 
 interface Props {
   contractData: NonNullable<TTCM200201SSQ01Data>;
@@ -24,13 +25,18 @@ export function LeaderConclude({ contractData, session }: Props) {
     },
   });
 
-  const mutation = useTCM200201SSP01();
-  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
+  const TCM200201SSP01 = useTCM200201SSP01();
+  const TCW000100SMQ02 = useTCW000100SMQ02(session);
+
+  const instCdMap = useMemo(
+    () => new Map(TCW000100SMQ02.data?.map((item) => [item.instCd, item]) ?? []),
+    [TCW000100SMQ02.data],
+  );
 
   const onClick = (type: "REJ" | "APL") => () => {
-    if (mutation.isPending) return;
+    if (TCM200201SSP01.isPending) return;
 
-    mutation.mutate(
+    TCM200201SSP01.mutate(
       {
         mastCorpCd: contractData.mastCorpCd,
         corpCd: contractData.corpCd,
@@ -133,9 +139,7 @@ export function LeaderConclude({ contractData, session }: Props) {
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>종목코드</span>
-            <span className={css.value}>
-              {instData?.find((inst) => inst.instCd === contractData.instCd)?.instNm}
-            </span>
+            <span className={css.value}>{instCdMap.get(contractData.instCd)?.instNm || "N/A"}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
@@ -198,7 +202,7 @@ export function LeaderConclude({ contractData, session }: Props) {
         <Button
           onClick={onClick("REJ")}
           classNames={{ root: css.button }}
-          loading={mutation.isPending}
+          loading={TCM200201SSP01.isPending}
           leftSection={<X size={20} />}
         >
           반려
@@ -206,16 +210,16 @@ export function LeaderConclude({ contractData, session }: Props) {
         <Button
           onClick={onClick("APL")}
           classNames={{ root: css.button }}
-          loading={mutation.isPending}
+          loading={TCM200201SSP01.isPending}
           leftSection={<Check size={20} />}
         >
           승인
         </Button>
       </div>
 
-      {mutation.isPending && (
+      {TCM200201SSP01.isPending && (
         <div className={css.loadingOverlay}>
-          <LoadingOverlay visible={mutation.isPending} />
+          <LoadingOverlay visible={TCM200201SSP01.isPending} />
         </div>
       )}
     </div>

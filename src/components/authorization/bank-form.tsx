@@ -23,6 +23,8 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
 
   const form = useFormContext<TBankForm>();
 
+  const { data: bankData, isPending: isBankDataLoading } = useTCW000100SMQ01(session);
+
   useEffect(() => {
     const url = URL.createObjectURL(bankImage);
     setImageUrl(() => url);
@@ -31,8 +33,6 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
       URL.revokeObjectURL(url);
     };
   }, [bankImage]);
-
-  const { data: bankData, isPending: isBankDataLoading } = useTCW000100SMQ01(session);
 
   return (
     <>
