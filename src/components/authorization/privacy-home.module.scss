@@ -145,13 +145,14 @@
 }
 
 .priceTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
   font-size: 1.1rem;
   font-weight: 600;
   color: #1e293b;
   margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 
   &::before {
     content: "₩";

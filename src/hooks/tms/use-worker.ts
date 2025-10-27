@@ -50,12 +50,17 @@ export const useTCM200801SSQ01 = (args: { session: Session; userId: string }) =>
 
 export const useTCM200200SSP01 = () =>
   useMutation({
-    mutationFn: async (args: { session: Session; userId: string; price: string }) => {
+    mutationFn: async (args: {
+      session: Session;
+      userId: string;
+      price: string;
+      instCd: string;
+    }) => {
       const response = await callTms<StringRspnData<1>>({
         svcId: "TCM200200SSP01",
         session: args.session,
         locale: "ko",
-        data: [args.session.userId, args.userId, args.price],
+        data: [args.session.userId, args.userId, args.price, args.instCd],
       });
 
       const data = response.svcRspnData?.[0];

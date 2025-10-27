@@ -4,11 +4,11 @@ import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import { useTCM200200SSP01, useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
-import { Button, Checkbox, TextInput } from "@mantine/core";
+import { Button, Checkbox, Select, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { addComma, checkAmount, deleteIntegerZero } from "@/utils/regexp";
-import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
+import { useTCW000001SSP04, useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
 import { DEVICE_API } from "@/types/common";
 
 export default function CrewPrivacyHome() {
@@ -21,6 +21,7 @@ export default function CrewPrivacyHome() {
   const [isAgree, setIsAgree] = useState(false);
   const [price, setPrice] = useState("0");
   const [isSaved, setIsSaved] = useState(false);
+  const [instCd, setInstCd] = useState("");
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
@@ -30,7 +31,7 @@ export default function CrewPrivacyHome() {
     session,
     userId,
   });
-
+  const TCW000100SMQ02 = useTCW000100SMQ02(session);
   const TCM200200SSP01 = useTCM200200SSP01();
 
   const end = () => {
@@ -66,11 +67,17 @@ export default function CrewPrivacyHome() {
       return;
     }
 
+    if (!instCd) {
+      nativeAlert("직종을 선택해주세요.");
+      return;
+    }
+
     TCM200200SSP01.mutate(
       {
         session,
         userId,
         price: price.replaceAll(",", ""),
+        instCd,
       },
       {
         onSuccess: () => {
@@ -208,7 +215,26 @@ export default function CrewPrivacyHome() {
 
           {/* 수당 섹션 */}
           <div className={css.priceSection}>
-            <div className={css.priceTitle}>기본수당 (원)</div>
+            <div className={css.priceTitle}>직종</div>
+            <Select
+              value={instCd}
+              onChange={(value) => setInstCd(value || "")}
+              data={TCW000100SMQ02.data?.map((d) => ({ value: d.instCd, label: d.instNm }))}
+              allowDeselect={false}
+              placeholder="직종을 선택해주세요"
+              disabled={TCW000100SMQ02.isPending}
+              styles={{
+                dropdown: {
+                  maxHeight: 250,
+                  overflow: "auto",
+                  scrollbarWidth: "auto",
+                },
+              }}
+            />
+
+            <div className={css.priceTitle} style={{ marginTop: "1rem" }}>
+              기본수당 (원)
+            </div>
             <TextInput
               value={price}
               classNames={{ root: css.priceInput }}
