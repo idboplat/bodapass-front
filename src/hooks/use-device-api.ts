@@ -16,6 +16,7 @@ export interface TDeviceMessageData<T> {
   payload: T;
 }
 
+/** 에러발생시 undefined로 처리 */
 export const sendMessageToDevice = <T>({
   type,
   payload,
@@ -26,7 +27,7 @@ export const sendMessageToDevice = <T>({
   /** infinity일때 timeout 없음 */
   timeout?: number | "infinity";
 }) => {
-  return new Promise<T>((resolve, reject) => {
+  return new Promise<T | undefined>((resolve, reject) => {
     if (!window.ReactNativeWebView) throw new Error("ReactNativeWebView is not defined");
 
     let timer: NodeJS.Timeout | null = null;
@@ -34,7 +35,7 @@ export const sendMessageToDevice = <T>({
     if (timeout !== "infinity") {
       timer = setTimeout(() => {
         WATING_MESSSAGE_MAP.delete(type);
-        reject(new Error("timeout"));
+        resolve(undefined);
       }, timeout);
     }
 
@@ -43,7 +44,7 @@ export const sendMessageToDevice = <T>({
     if (cache) {
       if (cache.timer) clearTimeout(cache.timer);
       WATING_MESSSAGE_MAP.delete(type);
-      reject(new Error("duplicate message type"));
+      resolve(undefined);
     }
 
     WATING_MESSSAGE_MAP.set(type, {

@@ -18,7 +18,7 @@ const fetchSession: QueryFunction<Session | null, typeof sessionQueryKey, never>
           payload: null,
         });
 
-        resolve(payload.session);
+        resolve(payload?.session || null);
       } else {
         // 테스트 로그인
         const session = localStorage.getItem(SESSION_LOCAL_STORAGE_KEY);
