@@ -30,6 +30,19 @@ const nextConfig: NextConfig = {
       fullUrl: true,
     },
   },
+  headers: async () => {
+    // https://binux.tistory.com/172
+    return [
+      {
+        source: "/.well-known/apple-app-site-association",
+        headers: [{ key: "Content-Type", value: "application/json" }],
+      },
+      {
+        source: "/.well-known/assetlinks.json",
+        headers: [{ key: "Content-Type", value: "application/json" }],
+      },
+    ];
+  },
   rewrites: async () => {
     return [
       {

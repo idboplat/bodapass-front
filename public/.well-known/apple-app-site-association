@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIds": [
+          "com.onehundredwork.ildangbaek",
+          "com.onehundredwork.ildangbaek.development",
+          "com.onehundredwork.ildangbaek.preview"
+        ]
+      }
+    ]
+  }
+}

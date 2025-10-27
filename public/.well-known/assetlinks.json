@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.onehundredwork.ildangbaek",
+      "sha256_cert_fingerprints": [
+        "E5:2F:D3:34:75:7D:9C:F3:2F:B9:CA:0D:65:35:57:95:7B:D5:46:F5:1F:47:45:F8:31:A5:A5:22:FE:04:CE:70"
+      ]
+    }
+  }
+]
