@@ -22,6 +22,7 @@ export default function CrewSignUpHome({}: Props) {
 
   const [step, setStep] = useState(1);
   const [image, setImage] = useState<Blob | null>(null);
+  const [wrkTp, setWrkTp] = useState<"2" | "3">("2");
 
   const { data: session } = useSession();
   if (!session) throw new Error("Session is not found");
@@ -54,6 +55,10 @@ export default function CrewSignUpHome({}: Props) {
       passwordConfirm: "",
     },
   });
+
+  const changeWrkTp = (wrkTp: "2" | "3") => {
+    setWrkTp(() => wrkTp);
+  };
 
   const step1Next = async () => {
     const isValid = await form.trigger(["cntryCd"]);
@@ -96,7 +101,7 @@ export default function CrewSignUpHome({}: Props) {
         ...form.getValues(),
         session,
         image,
-        wrkTp: "2",
+        wrkTp,
         loginTp: "4", // 기타
       },
       {
@@ -113,7 +118,9 @@ export default function CrewSignUpHome({}: Props) {
     <WithoutSignInLayout title="팀원 추가">
       <FormProvider {...form}>
         <div className={css.form}>
-          {step === 1 && <CrewStep1 onClickNext={step1Next} />}
+          {step === 1 && (
+            <CrewStep1 onClickNext={step1Next} wrkTp={wrkTp} changeWrkTp={changeWrkTp} />
+          )}
           {step === 2 && <Step2 onClickNext={step2Next} onClickPrev={step2Prev} />}
           {step === 3 && !!image && (
             <Step3 onClickNext={step3Submit} onClickPrev={step3Prev} image={image} isLastStep />
