@@ -237,7 +237,7 @@ export const useTCW000100SMQ01 = (session: Session) =>
     queryFn: () => getTCW000100SMQ01({ session }),
   });
 
-/** 종목 코드 조회 */
+/** 직종 코드 조회 */
 export type TTCW000100SMQ02Data = Promised<typeof getTCW000100SMQ02>;
 export const getTCW000100SMQ02 = async ({ session }: { session: Session }) => {
   const response = await callTms<StringRspnData<5>>({

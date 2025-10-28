@@ -138,7 +138,7 @@ export function LeaderConclude({ contractData, session }: Props) {
             </span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>종목코드</span>
+            <span className={css.label}>직종</span>
             <span className={css.value}>{instCdMap.get(contractData.instCd)?.instNm || "N/A"}</span>
           </div>
           <div className={css.infoRow}>

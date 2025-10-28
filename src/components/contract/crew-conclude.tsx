@@ -189,7 +189,7 @@ export default function CrewConclude({ session, contractData }: Props) {
             render={({ field, fieldState }) => (
               <Select
                 {...form.register("instCd")}
-                label="종목"
+                label="직종"
                 searchable
                 data={instData?.map((d) => ({ value: d.instCd, label: d.instNm }))}
                 allowDeselect={false}
@@ -204,7 +204,7 @@ export default function CrewConclude({ session, contractData }: Props) {
                 }}
                 disabled={isInstDataLoading}
                 placeholder={
-                  isInstDataLoading ? "종목 정보를 불러오는 중입니다..." : "종목을 선택해주세요"
+                  isInstDataLoading ? "직종 정보를 불러오는 중입니다..." : "직종을 선택해주세요"
                 }
               />
             )}
