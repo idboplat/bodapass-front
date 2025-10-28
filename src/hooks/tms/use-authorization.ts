@@ -270,3 +270,26 @@ export const useTCW000100SMQ02 = (session: Session) =>
     queryKey: ["TCW000100SMQ02"],
     queryFn: () => getTCW000100SMQ02({ session }),
   });
+
+export const useTCW000001SSP05 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      session: Session;
+      /** G3 회사코드 */
+      corpCd: string;
+      cntrStatTp: "REJ" | "APL";
+    }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCW000001SSP05",
+        data: [args.corpCd, args.session.userId, args.cntrStatTp],
+        locale: "ko",
+        session: args.session,
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });

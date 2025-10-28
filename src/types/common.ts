@@ -52,4 +52,7 @@ export const DEVICE_API = {
 
   /** payload: { lat: number; lng: number } */
   navigateMapScreen: "navigateMapScreen",
+
+  /** agreement */
+  thirdPartyPrivacyAgreementEnd: "thirdPartyPrivacyAgreementEnd",
 };
