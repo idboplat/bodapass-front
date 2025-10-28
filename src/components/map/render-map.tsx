@@ -6,12 +6,14 @@ import { Circle, Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 interface RenderMapProps {
   lat: number;
   lng: number;
+  siteNm: string;
+  siteTelNo: string;
 }
 
 // https://findlatlng.org/
 // https://generalcoder.tistory.com/4
 // http://localhost:3000/demo/map/dynamic?lng=127.04329080111161&lat=37.54910909586898
-export default function RenderMap({ lat, lng }: RenderMapProps) {
+export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProps) {
   useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY,
   });
@@ -31,6 +33,9 @@ export default function RenderMap({ lat, lng }: RenderMapProps) {
     <div style={{ position: "relative" }}>
       <div>
         <p>거리: {distance}m</p>
+        <div>lat: {lat}</div>
+        <div>lng: {lng}</div>
+        <div>현장명: {siteNm}</div>
       </div>
       {errorCode ? (
         <div>
@@ -41,12 +46,12 @@ export default function RenderMap({ lat, lng }: RenderMapProps) {
       ) : (
         <Map center={{ lat, lng }} style={{ width: "100%", height: "360px" }}>
           <MapMarker position={{ lat, lng }}>
-            <div style={{ color: "#000" }}>로건현장</div>
-            <a href="tel:010-0000-0000">전화하기</a>
+            <div style={{ color: "#000", textAlign: "center" }}>{siteNm}</div>
+            {siteTelNo && <a href={`tel:${siteTelNo}`}>{siteTelNo}</a>}
           </MapMarker>
           {userLocation && (
             <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
-              <div style={{ color: "#000" }}>내 위치</div>
+              <div style={{}}>내 위치</div>
             </MapMarker>
           )}
           <Circle
