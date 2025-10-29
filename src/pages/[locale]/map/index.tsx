@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className={"mobileLayout"}>
       {/* <RenderMap /> */}
-      <RenderStaticMap />
+      {/* <RenderStaticMap /> */}
     </div>
   );
 }
