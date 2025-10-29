@@ -15,10 +15,9 @@
 }
 
 .distance {
-    font-size: 18px;
-    font-weight: 600;
-    color: #2563eb;
-    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1f2937;
 }
 
 .coordinates {
@@ -30,9 +29,13 @@
 }
 
 .siteName {
-    font-size: 16px;
-    font-weight: 500;
-    color: #1f2937;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 8px;
+    // font-size: 16px;
+    // font-weight: 500;
+    // color: #1f2937;
 }
 
 .mapContainer {
@@ -44,7 +47,7 @@
 .buttonContainer {
     display: flex;
     gap: 12px;
-    margin-top: 16px;
+    margin: 16px 0;
     justify-content: center;
 }
 
@@ -105,4 +108,15 @@
     &:hover {
         background: #b91c1c;
     }
+}
+
+.siteNm {
+    color: #1f2937;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.siteTelNo {
+    color: #6b7280;
+    font-size: 14px;
 }

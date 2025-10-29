@@ -42,12 +42,12 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
   return (
     <div className={css.container}>
       <div className={css.infoSection}>
-        <div className={css.distance}>거리: {distance}m</div>
-        <div className={css.coordinates}>
+        <div className={css.siteName}>현장명: {siteNm}</div>
+        <div className={css.distance}>거리: {distance.toLocaleString()}m</div>
+        {/* <div className={css.coordinates}>
           <div>위도: {lat}</div>
           <div>경도: {lng}</div>
-        </div>
-        <div className={css.siteName}>현장명: {siteNm}</div>
+        </div> */}
       </div>
       {errorCode ? (
         <div className={css.errorContainer}>
@@ -69,15 +69,19 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
             >
               {isValidCoordinate && (
                 <MapMarker position={{ lat, lng }}>
-                  <div style={{ color: "#000", textAlign: "center" }}>{siteNm}</div>
-                  {siteTelNo && <a href={`tel:${siteTelNo}`}>{siteTelNo}</a>}
+                  <div className={css.siteNm}>{siteNm}</div>
+                  {siteTelNo && (
+                    <a className={css.siteTelNo} href={`tel:${siteTelNo}`}>
+                      ☎️ {siteTelNo}
+                    </a>
+                  )}
                 </MapMarker>
               )}
-              {/* {userLocation && (
+              {userLocation && (
                 <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
-                  <div style={{ color: "#000", textAlign: "center" }}>내 위치</div>
+                  <div className={css.siteNm}>내 위치</div>
                 </MapMarker>
-              )} */}
+              )}
               {isValidCoordinate && (
                 <Circle
                   center={{ lat, lng }}
