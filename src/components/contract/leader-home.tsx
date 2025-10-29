@@ -11,15 +11,15 @@ export function LeaderContractHome() {
   const { data: session } = useSession();
   if (!session) throw new Error("FW999");
 
-  const TCM200201SMQ01 = useTCM200201SSQ01({
+  const TCM200201SSQ01 = useTCM200201SSQ01({
     session,
-    cntrStatTp: "APL",
+    cntrStatTp: "REQ",
     mastCorpCd,
     corpCd,
     userId: session.userId, // 반장의 유저 ID
   });
 
-  if (TCM200201SMQ01.isPending) {
+  if (TCM200201SSQ01.isPending) {
     return (
       <div className={"mobileLayout"}>
         <div>계약을 불러오는 중...</div>
@@ -27,7 +27,7 @@ export function LeaderContractHome() {
     );
   }
 
-  if (!TCM200201SMQ01.data) {
+  if (!TCM200201SSQ01.data) {
     return (
       <div className={"mobileLayout"}>
         <div>계약을 찾을 수 없습니다.</div>
@@ -37,7 +37,7 @@ export function LeaderContractHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <LeaderConclude contractData={TCM200201SMQ01.data} session={session} />
+      <LeaderConclude contractData={TCM200201SSQ01.data} session={session} />
     </div>
   );
 }
