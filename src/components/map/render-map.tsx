@@ -67,6 +67,11 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
               onLoad={handleMapLoad}
               style={{ width: "100%", height: "360px" }}
             >
+              {userLocation && (
+                <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
+                  <div className={css.siteNm}>내 위치</div>
+                </MapMarker>
+              )}
               {isValidCoordinate && (
                 <MapMarker position={{ lat, lng }}>
                   <div className={css.siteNm}>{siteNm}</div>
@@ -77,11 +82,7 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
                   )}
                 </MapMarker>
               )}
-              {userLocation && (
-                <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
-                  <div className={css.siteNm}>내 위치</div>
-                </MapMarker>
-              )}
+
               {isValidCoordinate && (
                 <Circle
                   center={{ lat, lng }}
