@@ -49,10 +49,10 @@ export type TTCM200201SMQ01RowData = TTCM200201SMQ01Data["rows"][number];
 /** 계약 목록 조회 */
 export const useTCM200201SMQ01 = (args: {
   session: Session;
-  cntrStatTp: string;
   mastCorpCd: string;
   corpCd: string;
   pageNm: number;
+  cntrStatTp: string;
 }) =>
   useQuery({
     queryKey: [
@@ -128,12 +128,14 @@ const getTCM200201SSQ01 = async (args: {
   session: Session;
   mastCorpCd: string;
   corpCd: string;
+  userId: string;
+  cntrStatTp: string;
 }) => {
   const response = await callTms<StringRspnData<18>>({
     svcId: "TCM200201SSQ01",
     session: args.session,
     locale: "ko",
-    data: [args.mastCorpCd, args.corpCd, args.session.userId],
+    data: [args.mastCorpCd, args.corpCd, args.userId, args.cntrStatTp],
   });
 
   const data = response.svcRspnData?.[0];
@@ -164,9 +166,22 @@ const getTCM200201SSQ01 = async (args: {
 
 export type TTCM200201SSQ01Data = Promised<typeof getTCM200201SSQ01>;
 
-export const useTCM200201SSQ01 = (args: { session: Session; mastCorpCd: string; corpCd: string }) =>
+export const useTCM200201SSQ01 = (args: {
+  session: Session;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
+  cntrStatTp: string;
+}) =>
   useQuery({
-    queryKey: ["TCM200201SSQ01", args.session, args.mastCorpCd, args.corpCd],
+    queryKey: [
+      "TCM200201SSQ01",
+      args.session,
+      args.mastCorpCd,
+      args.corpCd,
+      args.userId,
+      args.cntrStatTp,
+    ],
     queryFn: () => getTCM200201SSQ01(args),
   });
 

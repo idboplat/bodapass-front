@@ -13,8 +13,10 @@ export function LeaderContractHome() {
 
   const TCM200201SMQ01 = useTCM200201SSQ01({
     session,
+    cntrStatTp: "APL",
     mastCorpCd,
     corpCd,
+    userId: session.userId, // 반장의 유저 ID
   });
 
   if (TCM200201SMQ01.isPending) {
