@@ -129,13 +129,12 @@ const getTCM200201SSQ01 = async (args: {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
-  cntrStatTp: string;
 }) => {
   const response = await callTms<StringRspnData<18>>({
     svcId: "TCM200201SSQ01",
     session: args.session,
     locale: "ko",
-    data: [args.mastCorpCd, args.corpCd, args.userId, args.cntrStatTp],
+    data: [args.mastCorpCd, args.corpCd, args.userId],
   });
 
   const data = response.svcRspnData?.[0];
@@ -171,17 +170,9 @@ export const useTCM200201SSQ01 = (args: {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
-  cntrStatTp: string;
 }) =>
   useQuery({
-    queryKey: [
-      "TCM200201SSQ01",
-      args.session,
-      args.mastCorpCd,
-      args.corpCd,
-      args.userId,
-      args.cntrStatTp,
-    ],
+    queryKey: ["TCM200201SSQ01", args.session, args.mastCorpCd, args.corpCd, args.userId],
     queryFn: () => getTCM200201SSQ01(args),
   });
 

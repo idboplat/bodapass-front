@@ -13,7 +13,6 @@ export function LeaderContractHome() {
 
   const TCM200201SSQ01 = useTCM200201SSQ01({
     session,
-    cntrStatTp: "REQ",
     mastCorpCd,
     corpCd,
     userId: session.userId, // 반장의 유저 ID
@@ -27,7 +26,8 @@ export function LeaderContractHome() {
     );
   }
 
-  if (!TCM200201SSQ01.data) {
+  // 접수상태인지 확인
+  if (!TCM200201SSQ01.data || TCM200201SSQ01.data.cntrStatTp !== "REQ") {
     return (
       <div className={"mobileLayout"}>
         <div>계약을 찾을 수 없습니다.</div>
