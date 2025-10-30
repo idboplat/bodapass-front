@@ -32,15 +32,18 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
   }, [userLocation, lat, lng]);
 
   // 유효한 좌표가 없으면 기본값 사용
-  const mapCenter = isValidCoordinate ? { lat, lng } : { lat: 37.5665, lng: 126.978 }; // 서울시청 좌표
+  // const mapCenter = { lat, lng };
+  // const handleMapLoad = (map) => {
+  //   if (isValidCoordinate) {
+  //     const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
 
-  const handleMapLoad = (map: any) => {
-    if (isValidCoordinate) {
-      const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
-      map.setCenter(moveLatLon);
-      console.log("onLoad: 지도 중심점을 현장으로 이동", { lat, lng });
-    }
-  };
+  //     map.setCenter(moveLatLon);
+  //     console.log("map", map);
+  //     console.log("onLoad: 지도 중심점을 현장으로 이동", { lat, lng });
+  //   }
+  // };
+
+  if (isLoading) return <LoadingOverlay visible={isLoading} />;
 
   return (
     <div className={css.container}>
@@ -65,9 +68,9 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
           <div className={css.mapContainer}>
             <Map
               key={`${lat}-${lng}`}
-              center={mapCenter}
+              center={{ lat, lng }}
               level={3}
-              onLoad={handleMapLoad}
+              // onLoad={handleMapLoad}
               style={{ width: "100%", height: "360px" }}
             >
               {userLocation && (
