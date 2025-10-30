@@ -47,10 +47,10 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
       <div className={css.infoSection}>
         <div className={css.siteName}>현장명: {siteNm}</div>
         <div className={css.distance}>거리: {distance.toLocaleString()}m</div>
-        {/* <div className={css.coordinates}>
+        <div className={css.coordinates}>
           <div>위도: {lat}</div>
           <div>경도: {lng}</div>
-        </div> */}
+        </div>
       </div>
       {errorCode ? (
         <div className={css.errorContainer}>
