@@ -18,9 +18,6 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
 
   // 좌표 유효성 검사
   const isValidCoordinate = lat && lng && !isNaN(lat) && !isNaN(lng);
-  console.log("isValidCoordinate === ", isValidCoordinate);
-  console.log("lat === ", lat);
-  console.log("lng === ", lng);
 
   useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY,
@@ -31,29 +28,17 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
     return getDistanceFromLatLonInMeter(userLocation, { lat, lng });
   }, [userLocation, lat, lng]);
 
-  // 유효한 좌표가 없으면 기본값 사용
-  // const mapCenter = { lat, lng };
-  // const handleMapLoad = (map) => {
-  //   if (isValidCoordinate) {
-  //     const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
-
-  //     map.setCenter(moveLatLon);
-  //     console.log("map", map);
-  //     console.log("onLoad: 지도 중심점을 현장으로 이동", { lat, lng });
-  //   }
-  // };
-
   if (isLoading) return <LoadingOverlay visible={isLoading} />;
 
   return (
     <div className={css.container}>
       <div className={css.infoSection}>
         <div className={css.siteName}>현장명: {siteNm}</div>
-        <div className={css.distance}>거리: {distance.toLocaleString()}m</div>
-        <div className={css.coordinates}>
+        <div className={css.distance}>현장과의 거리: {distance.toLocaleString()}m</div>
+        {/* <div className={css.coordinates}>
           <div>위도: {lat}</div>
           <div>경도: {lng}</div>
-        </div>
+        </div> */}
       </div>
       {errorCode ? (
         <div className={css.errorContainer}>
@@ -70,7 +55,6 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
               key={`${lat}-${lng}`}
               center={{ lat, lng }}
               level={3}
-              // onLoad={handleMapLoad}
               style={{ width: "100%", height: "360px" }}
             >
               {userLocation && (
