@@ -11,8 +11,8 @@ export default function Page() {
     return <div>Loading...</div>;
   }
 
-  const lat = Number(searchParams.lat) || 33.450701;
-  const lng = Number(searchParams.lng) || 126.570667;
+  const lat = Number(searchParams.lat) || 0;
+  const lng = Number(searchParams.lng) || 0;
   const siteNm = (searchParams.siteNm as string) || "현장";
   const siteTelNo = (searchParams.siteTelNo as string) || "";
   return (

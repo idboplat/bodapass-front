@@ -18,6 +18,9 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
 
   // 좌표 유효성 검사
   const isValidCoordinate = lat && lng && !isNaN(lat) && !isNaN(lng);
+  console.log("isValidCoordinate === ", isValidCoordinate);
+  console.log("lat === ", lat);
+  console.log("lng === ", lng);
 
   useKakaoLoader({
     appkey: process.env.NEXT_PUBLIC_KAKAO_JS_KEY,
@@ -69,7 +72,7 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
             >
               {userLocation && (
                 <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
-                  <div className={css.siteNm}>내 위치</div>
+                  <div className={css.siteNm}>현재 위치</div>
                 </MapMarker>
               )}
               {isValidCoordinate && (
@@ -97,7 +100,7 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
               )}
               <div className={css.buttonContainer}>
                 <MoveToUserLocationButton userLocation={userLocation} />
-                <MoveToSiteLocationButton lat={lat} lng={lng} siteNm={siteNm} />
+                <MoveToSiteLocationButton lat={lat} lng={lng} />
               </div>
             </Map>
           </div>
@@ -115,7 +118,6 @@ interface MoveToUserLocationButtonProps {
 interface MoveToSiteLocationButtonProps {
   lat: number;
   lng: number;
-  siteNm: string;
 }
 
 function MoveToUserLocationButton({ userLocation }: MoveToUserLocationButtonProps) {
@@ -134,7 +136,7 @@ function MoveToUserLocationButton({ userLocation }: MoveToUserLocationButtonProp
   );
 }
 
-function MoveToSiteLocationButton({ lat, lng, siteNm }: MoveToSiteLocationButtonProps) {
+function MoveToSiteLocationButton({ lat, lng }: MoveToSiteLocationButtonProps) {
   const map = useMap();
 
   const handleMoveToSiteLocation = () => {
