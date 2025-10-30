@@ -24,7 +24,7 @@ export default function CrewFaceHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: DEVICE_API.authorizationEnd,
+        type: DEVICE_API.crewAuthorizationEnd,
         payload: null,
       });
     } else {

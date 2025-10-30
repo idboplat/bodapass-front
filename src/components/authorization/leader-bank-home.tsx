@@ -40,7 +40,7 @@ export default function LeaderBankHome({}: Props) {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: DEVICE_API.authorizationEnd,
+        type: DEVICE_API.leaderAuthorizationEnd,
         payload: null,
       });
     } else {
