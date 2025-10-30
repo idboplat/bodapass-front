@@ -45,7 +45,9 @@ export const DEVICE_API = {
   /** payload: { mastCorpCd: string, corpCd: string } */
   attendanceComplete: "attendanceComplete",
 
-  authorizationEnd: "authorizationEnd",
+  /** 대면 근로자 인증 종료 */
+  crewAuthorizationEnd: "crewAuthorizationEnd",
+  leaderAuthorizationEnd: "leaderAuthorizationEnd",
 
   leaderContractEnd: "leaderContractEnd",
   crewContractEnd: "crewContractEnd",
