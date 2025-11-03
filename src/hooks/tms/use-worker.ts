@@ -2,13 +2,20 @@ import { callTms, StringRspnData } from "@/libraries/call-tms";
 import { Promised } from "@/types/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+/**  [사용자] 사용자 기본 정보 조회 */
 export type TTCM200801SSQ01Data = Promised<typeof getTCM200801SSQ01>;
-export const getTCM200801SSQ01 = async ({ session }: { session: Session; userId: string }) => {
-  const response = await callTms<StringRspnData<20>>({
+export const getTCM200801SSQ01 = async ({
+  session,
+  userId,
+}: {
+  session: Session;
+  userId: string;
+}) => {
+  const response = await callTms<StringRspnData<14>>({
     svcId: "TCM200801SSQ01",
     session,
     locale: "ko",
-    data: [session.userId],
+    data: [userId],
   });
 
   const data = response.svcRspnData?.[0];
@@ -30,15 +37,8 @@ export const getTCM200801SSQ01 = async ({ session }: { session: Session; userId:
     cntryCd: data.F10,
     wrkTp: data.F11,
     brkrId: data.F12,
-    idCetYn: data.F13,
-    /** 1: 주민번호, 2: 운전면허증, 3: 외국인등록증, 4: 여권 */
-    idTp: data.F14,
-    faceRgstYn: data.F15,
-    acctCetYn: data.F16,
-    bankCd: data.F17,
-    bankNm: data.F18,
-    bankAcctNo: data.F19,
-    privacyYn: data.F20,
+    faceRgstYn: data.F13,
+    faceImgFile: data.F14,
   };
 };
 
@@ -69,4 +69,38 @@ export const useTCM200200SSP01 = () =>
 
       return data;
     },
+  });
+
+/**  [사용자] 사용자 인증 정보 조회 */
+export type TTCM200801SSQ02Data = Promised<typeof getTCM200801SSQ02>;
+export const getTCM200801SSQ02 = async (args: { session: Session; userId: string }) => {
+  const response = await callTms<StringRspnData<9>>({
+    svcId: "TCM200801SSQ02",
+    session: args.session,
+    locale: "ko",
+    data: [args.userId],
+  });
+
+  const data = response.svcRspnData?.[0];
+
+  if (!data) throw new Error("FW999");
+
+  return {
+    idCetYn: data.F01,
+    /** 1: 주민번호, 2: 운전면허증, 3: 외국인등록증, 4: 여권 */
+    idTp: data.F02,
+    faceRgstYn: data.F03,
+    acctCetYn: data.F04,
+    bankCd: data.F05,
+    bankNm: data.F06,
+    bankAcctNo: data.F07,
+    privacyYn: data.F08,
+    faceImgFile: data.F09,
+  };
+};
+
+export const useTCM200801SSQ02 = (args: { session: Session; userId: string }) =>
+  useQuery({
+    queryKey: ["TCM200801SSQ02", args.session, args.userId],
+    queryFn: () => getTCM200801SSQ02(args),
   });

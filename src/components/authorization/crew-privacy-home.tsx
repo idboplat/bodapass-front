@@ -3,7 +3,7 @@ import BackHeader from "../common/back-header";
 import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import { useTCM200200SSP01, useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
+import { useTCM200200SSP01, useTCM200801SSQ01, useTCM200801SSQ02 } from "@/hooks/tms/use-worker";
 import { Button, Checkbox, Select, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -28,6 +28,10 @@ export default function CrewPrivacyHome() {
 
   const TCW000001SSP04 = useTCW000001SSP04();
   const TCM200801SSQ01 = useTCM200801SSQ01({
+    session,
+    userId,
+  });
+  const TCM200801SSQ02 = useTCM200801SSQ02({
     session,
     userId,
   });
@@ -109,7 +113,7 @@ export default function CrewPrivacyHome() {
     setPrice((pre) => addComma(pre.replaceAll(",", "")));
   };
 
-  if (TCM200801SSQ01.isPending) {
+  if (TCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
     return (
       <div className={"mobileLayout"}>
         <BackHeader title="개인정보이용동의" onClickBack={end} />
@@ -122,10 +126,11 @@ export default function CrewPrivacyHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="개인정보이용동의" onClickBack={end} />
 
-      {TCM200801SSQ01.data ? (
+      {TCM200801SSQ01.data && TCM200801SSQ02.data ? (
         <div className={css.container}>
           <div className={css.header}>
             <h2>아래 정보를 확인하고 개인정보 이용에 동의해주세요</h2>
+            <div>{userId}</div> {/* TODO 삭제 */}
           </div>
 
           {/* 신분증 정보 */}
@@ -135,6 +140,10 @@ export default function CrewPrivacyHome() {
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>주민등록번호</span>
                 <span className={css.infoValue}>{TCM200801SSQ01.data.idNo}</span>
+              </div>
+              <div className={css.infoRow}>
+                <span className={css.infoLabel}>이름</span>
+                <span className={css.infoValue}>{TCM200801SSQ01.data.userNm}</span>
               </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>연락처</span>
@@ -161,10 +170,10 @@ export default function CrewPrivacyHome() {
                 <span className={css.infoLabel}>인증 상태</span>
                 <span
                   className={`${css.statusBadge} ${
-                    TCM200801SSQ01.data.faceRgstYn === "Y" ? css.verified : css.unverified
+                    TCM200801SSQ02.data.faceRgstYn === "Y" ? css.verified : css.unverified
                   }`}
                 >
-                  {TCM200801SSQ01.data.faceRgstYn === "Y" ? "인증 완료" : "미인증"}
+                  {TCM200801SSQ02.data.faceRgstYn === "Y" ? "인증 완료" : "미인증"}
                 </span>
               </div>
               <Link
@@ -184,23 +193,23 @@ export default function CrewPrivacyHome() {
                 <span className={css.infoLabel}>인증 상태</span>
                 <span
                   className={`${css.statusBadge} ${
-                    TCM200801SSQ01.data.acctCetYn === "Y" ? css.verified : css.unverified
+                    TCM200801SSQ02.data.acctCetYn === "Y" ? css.verified : css.unverified
                   }`}
                 >
-                  {TCM200801SSQ01.data.acctCetYn === "Y" ? "인증 완료" : "미인증"}
+                  {TCM200801SSQ02.data.acctCetYn === "Y" ? "인증 완료" : "미인증"}
                 </span>
               </div>
-              {TCM200801SSQ01.data.acctCetYn === "Y" && (
+              {TCM200801SSQ02.data.acctCetYn === "Y" && (
                 <>
                   <div className={css.infoRow}>
                     <span className={css.infoLabel}>은행명</span>
                     <span className={css.infoValue}>
-                      {TCM200801SSQ01.data.bankNm} ({TCM200801SSQ01.data.bankCd})
+                      {TCM200801SSQ02.data.bankNm} ({TCM200801SSQ02.data.bankCd})
                     </span>
                   </div>
                   <div className={css.infoRow}>
                     <span className={css.infoLabel}>계좌번호</span>
-                    <span className={css.infoValue}>{TCM200801SSQ01.data.bankAcctNo}</span>
+                    <span className={css.infoValue}>{TCM200801SSQ02.data.bankAcctNo}</span>
                   </div>
                 </>
               )}

@@ -2,7 +2,7 @@ import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import BackHeader from "../common/back-header";
 import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
-import { useTCM200801SSQ01 } from "@/hooks/tms/use-worker";
+import { useTCM200801SSQ01, useTCM200801SSQ02 } from "@/hooks/tms/use-worker";
 import { useRouter } from "next/router";
 import { Checkbox } from "@mantine/core";
 import Link from "next/link";
@@ -29,6 +29,10 @@ export default function LeaderPrivacyHome() {
     session,
     userId,
   });
+  const TCM200801SSQ02 = useTCM200801SSQ02({
+    session,
+    userId,
+  });
 
   const end = () => {
     if (!!window.ReactNativeWebView) {
@@ -50,7 +54,7 @@ export default function LeaderPrivacyHome() {
     TCW000001SSP04.mutate({ session, userId }, { onSuccess: end });
   };
 
-  if (TCM200801SSQ01.isPending) {
+  if (TCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
     return (
       <div className={"mobileLayout"}>
         <BackHeader title="개인정보이용동의" onClickBack={end} />
@@ -63,7 +67,7 @@ export default function LeaderPrivacyHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="개인정보이용동의" onClickBack={end} />
 
-      {TCM200801SSQ01.data ? (
+      {TCM200801SSQ01.data && TCM200801SSQ02.data ? (
         <div className={css.container}>
           <div className={css.header}>
             <h2>아래 정보를 확인하고 개인정보 이용에 동의해주세요</h2>
@@ -108,10 +112,10 @@ export default function LeaderPrivacyHome() {
                 <span className={css.infoLabel}>인증 상태</span>
                 <span
                   className={`${css.statusBadge} ${
-                    TCM200801SSQ01.data.faceRgstYn === "Y" ? css.verified : css.unverified
+                    TCM200801SSQ02.data.faceRgstYn === "Y" ? css.verified : css.unverified
                   }`}
                 >
-                  {TCM200801SSQ01.data.faceRgstYn === "Y" ? "인증 완료" : "미인증"}
+                  {TCM200801SSQ02.data.faceRgstYn === "Y" ? "인증 완료" : "미인증"}
                 </span>
               </div>
               <Link
@@ -131,23 +135,23 @@ export default function LeaderPrivacyHome() {
                 <span className={css.infoLabel}>인증 상태</span>
                 <span
                   className={`${css.statusBadge} ${
-                    TCM200801SSQ01.data.acctCetYn === "Y" ? css.verified : css.unverified
+                    TCM200801SSQ02.data.acctCetYn === "Y" ? css.verified : css.unverified
                   }`}
                 >
-                  {TCM200801SSQ01.data.acctCetYn === "Y" ? "인증 완료" : "미인증"}
+                  {TCM200801SSQ02.data.acctCetYn === "Y" ? "인증 완료" : "미인증"}
                 </span>
               </div>
-              {TCM200801SSQ01.data.acctCetYn === "Y" && (
+              {TCM200801SSQ02.data.acctCetYn === "Y" && (
                 <>
                   <div className={css.infoRow}>
                     <span className={css.infoLabel}>은행명</span>
                     <span className={css.infoValue}>
-                      {TCM200801SSQ01.data.bankNm} ({TCM200801SSQ01.data.bankCd})
+                      {TCM200801SSQ02.data.bankNm} ({TCM200801SSQ02.data.bankCd})
                     </span>
                   </div>
                   <div className={css.infoRow}>
                     <span className={css.infoLabel}>계좌번호</span>
-                    <span className={css.infoValue}>{TCM200801SSQ01.data.bankAcctNo}</span>
+                    <span className={css.infoValue}>{TCM200801SSQ02.data.bankAcctNo}</span>
                   </div>
                 </>
               )}
