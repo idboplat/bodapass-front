@@ -12,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { DatePickerInput } from "@mantine/dates";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { addComma } from "@/utils/regexp";
+import { roundDecimal } from "@/utils/number-formatter";
 
 const crewConcludeDto = z.object({
   instCd: z.string().min(1),
@@ -42,12 +44,17 @@ export default function CrewConclude({ session, contractData }: Props) {
 
   const mutation = useTCM200200SSP02();
 
+  const ordrPrcWithDecimal = roundDecimal({
+    num: Number(contractData.ordrPrc) || 0,
+    decimalLength: 0,
+    requireComma: true,
+  });
+
   const form = useForm<TCrewConcludeDto>({
     defaultValues: {
       instCd: contractData.instCd,
-      // orderPrc: contractData.ordrPrc, TODO 추후 반영
-      orderPrc: "",
-      wrkDd: [null, null],
+      orderPrc: ordrPrcWithDecimal,
+      wrkDd: [contractData.wrkStrDd, contractData.wrkEndDd],
     },
     resolver: zodResolver(crewConcludeDto),
   });
@@ -71,7 +78,7 @@ export default function CrewConclude({ session, contractData }: Props) {
         userId: contractData.userId,
         session,
         instCd: data.instCd,
-        ordrPrc: data.orderPrc,
+        ordrPrc: data.orderPrc.replaceAll(",", ""),
         wrkStrDd: data.wrkDd[0],
         wrkEndDd: data.wrkDd[1],
       },
@@ -113,7 +120,7 @@ export default function CrewConclude({ session, contractData }: Props) {
           <div className={css.infoRow}>
             <span className={css.label}>
               <Building size={16} />
-              회사 명
+              회사명
             </span>
             <span className={css.value}>{contractData.corpNm}</span>
           </div>
@@ -134,7 +141,7 @@ export default function CrewConclude({ session, contractData }: Props) {
           <div className={css.infoRow}>
             <span className={css.label}>
               <MapPin size={16} />
-              현장 명
+              현장명
             </span>
             <span className={css.value}>{contractData.siteNm}</span>
           </div>
@@ -224,6 +231,13 @@ export default function CrewConclude({ session, contractData }: Props) {
                     wrapper: css.inputWrapper,
                     label: css.inputLabel,
                     input: css.input,
+                  }}
+                  onFocus={() => {
+                    field.onChange(field.value.replaceAll(",", ""));
+                  }}
+                  onBlur={(e) => {
+                    const formattedValue = addComma(e.target.value);
+                    field.onChange(formattedValue);
                   }}
                   placeholder="수당을 입력하세요"
                   error={fieldState.error?.message}

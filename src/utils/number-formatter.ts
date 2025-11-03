@@ -44,3 +44,34 @@ export const sortDecimal = ({
   }
   return requireComma ? addComma(result) : result;
 };
+
+export const roundDecimal = ({
+  num,
+  decimalLength,
+  requireComma = false,
+  priceSign = false,
+}: {
+  num: number;
+  decimalLength: number;
+  requireComma?: boolean;
+  priceSign?: boolean;
+}) => {
+  if (isNaN(num)) return "-"; //숫자가 아닐경우 - 반환
+
+  const factor = Math.pow(10, decimalLength);
+  // 반올림 처리
+  const rounded = Math.round(num * factor) / factor; // 반올림 처리;
+
+  // 고정 소숫점 형태의 문자열로 변환 (필요한 0 채우기)
+  let result = rounded.toFixed(decimalLength);
+
+  if (requireComma) {
+    result = addComma(result);
+  }
+
+  if (priceSign && num > 0) {
+    result = `+${result}`;
+  }
+
+  return result;
+};
