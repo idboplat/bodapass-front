@@ -130,7 +130,6 @@ export default function CrewPrivacyHome() {
         <div className={css.container}>
           <div className={css.header}>
             <h2>아래 정보를 확인하고 개인정보 이용에 동의해주세요</h2>
-            <div>{userId}</div> {/* TODO 삭제 */}
           </div>
 
           {/* 신분증 정보 */}
