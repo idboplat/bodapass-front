@@ -1,4 +1,4 @@
-import { Button, LoadingOverlay, Select, TextInput } from "@mantine/core";
+import { Button, Checkbox, LoadingOverlay, Select, TextInput } from "@mantine/core";
 import { Building, MapPin, User, FileText, DollarSign, Calendar, Send } from "lucide-react";
 import css from "./crew-conclude.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
@@ -19,6 +19,7 @@ const crewConcludeDto = z.object({
   instCd: z.string().min(1),
   orderPrc: z.string().min(1),
   wrkDd: z.tuple([z.string().nullable(), z.string().nullable()]),
+  subMngrYn: z.enum(["Y", "N"]),
 });
 
 type TCrewConcludeDto = z.infer<typeof crewConcludeDto>;
@@ -55,6 +56,7 @@ export default function CrewConclude({ session, contractData }: Props) {
       instCd: contractData.instCd,
       orderPrc: ordrPrcWithDecimal,
       wrkDd: [contractData.wrkStrDd, contractData.wrkEndDd],
+      subMngrYn: "N",
     },
     resolver: zodResolver(crewConcludeDto),
   });
@@ -81,6 +83,7 @@ export default function CrewConclude({ session, contractData }: Props) {
         ordrPrc: data.orderPrc.replaceAll(",", ""),
         wrkStrDd: data.wrkDd[0],
         wrkEndDd: data.wrkDd[1],
+        subMngrYn: form.getValues("subMngrYn"),
       },
       {
         onSuccess: (data) => {
@@ -285,6 +288,27 @@ export default function CrewConclude({ session, contractData }: Props) {
                   },
                 }}
               />
+            )}
+          />
+        </div>
+
+        <div className={css.formField}>
+          <Controller
+            control={form.control}
+            name="subMngrYn"
+            render={({ field, fieldState }) => (
+              <div className={css.inputWrapper}>
+                <Checkbox
+                  {...field}
+                  label="하위 관리 여부"
+                  type="checkbox"
+                  placeholder="하위 관리 여부를 선택하세요"
+                  error={fieldState.error?.message}
+                  required
+                  checked={field.value === "Y"}
+                  onChange={(e) => field.onChange(e.target.checked ? "Y" : "N")}
+                />
+              </div>
             )}
           />
         </div>

@@ -101,6 +101,7 @@ export const useTCM200200SSP02 = () =>
       ordrPrc: string;
       wrkStrDd: string;
       wrkEndDd: string;
+      subMngrYn: string;
     }) => {
       const request = await callTms<StringRspnData<1>>({
         svcId: "TCM200200SSP02",
@@ -112,6 +113,7 @@ export const useTCM200200SSP02 = () =>
           args.ordrPrc,
           args.wrkStrDd.replaceAll("-", ""),
           args.wrkEndDd.replaceAll("-", ""),
+          args.subMngrYn,
         ],
         session: args.session,
         locale: "ko",
