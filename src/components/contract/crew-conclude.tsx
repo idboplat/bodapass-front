@@ -57,8 +57,8 @@ export default function CrewConclude({ session, contractData }: Props) {
       instCd: contractData.instCd,
       orderPrc: ordrPrcWithDecimal,
       wrkDd: [contractData.wrkStrDd, contractData.wrkEndDd],
-      insYn: "Y",
-      subMngrYn: "N",
+      insYn: contractData.insYn as "Y" | "N",
+      subMngrYn: "N", // 기본값은 N으로 함.
     },
     resolver: zodResolver(crewConcludeDto),
   });
@@ -308,7 +308,6 @@ export default function CrewConclude({ session, contractData }: Props) {
                   {...field}
                   label="보험 여부"
                   type="checkbox"
-                  placeholder="보험 여부를 선택하세요"
                   error={fieldState.error?.message}
                   required
                   checked={field.value === "Y"}
@@ -327,9 +326,8 @@ export default function CrewConclude({ session, contractData }: Props) {
               <div className={css.inputWrapper}>
                 <Checkbox
                   {...field}
-                  label="하위 관리 여부"
+                  label="팀장 권한 부여"
                   type="checkbox"
-                  placeholder="하위 관리 여부를 선택하세요"
                   error={fieldState.error?.message}
                   required
                   checked={field.value === "Y"}
