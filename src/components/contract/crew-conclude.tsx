@@ -274,6 +274,9 @@ export default function CrewConclude({ session, contractData }: Props) {
                 valueFormat="YYYY-MM-DD"
                 error={fieldState.error?.message}
                 required
+                allowSingleDateInRange
+                firstDayOfWeek={0}
+                labelSeparator="~"
                 leftSection={<Calendar size={16} />}
                 styles={{
                   input: {

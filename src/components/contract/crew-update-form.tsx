@@ -94,7 +94,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.title}>팀원 계약 작성</div>
+        <div className={css.title}>팀원 계약 수정</div>
         <div className={css.subtitle}>계약 정보를 입력하고 제출해주세요</div>
       </div>
 
@@ -190,6 +190,9 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
                 valueFormat="YYYY-MM-DD"
                 error={fieldState.error?.message}
                 required
+                allowSingleDateInRange
+                firstDayOfWeek={0}
+                labelSeparator="~"
                 leftSection={<Calendar size={16} />}
                 styles={{
                   input: {
@@ -280,7 +283,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
           classNames={{ root: css.submitButton }}
           leftSection={<Send size={20} />}
         >
-          계약 제출
+          수정 완료
         </Button>
       </div>
 
