@@ -1,21 +1,23 @@
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
 import { Promised } from "@/types/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 /**  [사용자] 사용자 기본 정보 조회 */
-export type TTCM200801SSQ01Data = Promised<typeof getTCM200801SSQ01>;
-export const getTCM200801SSQ01 = async ({
+export type TWCM200801SSQ01Data = Promised<typeof getWCM200801SSQ01>;
+export const getWCM200801SSQ01 = async ({
   session,
   userId,
 }: {
   session: Session;
   userId: string;
 }) => {
-  const response = await callTms<StringRspnData<14>>({
+  const response = await callWas<StringRspnData<14>>({
+    apiPathName: "WCM200801SSQ01",
     svcId: "TCM200801SSQ01",
     session,
     locale: "ko",
     data: [userId],
+    formData: [],
   });
 
   const data = response.svcRspnData?.[0];
@@ -42,10 +44,10 @@ export const getTCM200801SSQ01 = async ({
   };
 };
 
-export const useTCM200801SSQ01 = (args: { session: Session; userId: string }) =>
+export const useWCM200801SSQ01 = (args: { session: Session; userId: string }) =>
   useQuery({
-    queryKey: ["TCM200801SSQ01", args.session, args.userId],
-    queryFn: () => getTCM200801SSQ01(args),
+    queryKey: ["WCM200801SSQ01", args.session, args.userId],
+    queryFn: () => getWCM200801SSQ01(args),
   });
 
 export const useTCM200200SSP01 = () =>

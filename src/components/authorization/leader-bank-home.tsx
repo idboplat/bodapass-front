@@ -71,7 +71,7 @@ export default function LeaderBankHome({}: Props) {
           if (next === "true") {
             router.replace(`/ko/authorization/leader/privacy?next=true`);
           } else if (next === "webview") {
-            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
           } else {
             end();

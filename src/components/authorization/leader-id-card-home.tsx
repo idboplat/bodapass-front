@@ -111,7 +111,7 @@ export default function LeaderIdcardHome() {
     //       if (next === "true") {
     //         router.replace(`/${locale}/authorization/leader/face?next=true`);
     //       } else if (next === "webview") {
-    //         await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+    //         await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
     //         router.back();
     //       } else {
     //         end();

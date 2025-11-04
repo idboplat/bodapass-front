@@ -3,7 +3,7 @@ import BackHeader from "../common/back-header";
 import css from "./privacy-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import { useTCM200200SSP01, useTCM200801SSQ01, useTCM200801SSQ02 } from "@/hooks/tms/use-worker";
+import { useTCM200200SSP01, useWCM200801SSQ01, useTCM200801SSQ02 } from "@/hooks/tms/use-worker";
 import { Button, Checkbox, Select, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -27,7 +27,7 @@ export default function CrewPrivacyHome() {
   if (!session) throw new Error("Session is not found");
 
   const TCW000001SSP04 = useTCW000001SSP04();
-  const TCM200801SSQ01 = useTCM200801SSQ01({
+  const WCM200801SSQ01 = useWCM200801SSQ01({
     session,
     userId,
   });
@@ -113,7 +113,7 @@ export default function CrewPrivacyHome() {
     setPrice((pre) => addComma(pre.replaceAll(",", "")));
   };
 
-  if (TCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
+  if (WCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
     return (
       <div className={"mobileLayout"}>
         <BackHeader title="개인정보이용동의" onClickBack={end} />
@@ -126,7 +126,7 @@ export default function CrewPrivacyHome() {
     <div className={"mobileLayout"}>
       <BackHeader title="개인정보이용동의" onClickBack={end} />
 
-      {TCM200801SSQ01.data && TCM200801SSQ02.data ? (
+      {WCM200801SSQ01.data && TCM200801SSQ02.data ? (
         <div className={css.container}>
           <div className={css.header}>
             <h2>아래 정보를 확인하고 개인정보 이용에 동의해주세요</h2>
@@ -138,25 +138,25 @@ export default function CrewPrivacyHome() {
             <div className={css.infoCard}>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>주민등록번호</span>
-                <span className={css.infoValue}>{TCM200801SSQ01.data.idNo}</span>
+                <span className={css.infoValue}>{WCM200801SSQ01.data.idNo}</span>
               </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>이름</span>
-                <span className={css.infoValue}>{TCM200801SSQ01.data.userNm}</span>
+                <span className={css.infoValue}>{WCM200801SSQ01.data.userNm}</span>
               </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>연락처</span>
-                <span className={css.infoValue}>{TCM200801SSQ01.data.telNo}</span>
+                <span className={css.infoValue}>{WCM200801SSQ01.data.telNo}</span>
               </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>주소</span>
                 <span className={css.infoValue}>
-                  {TCM200801SSQ01.data.addr} ({TCM200801SSQ01.data.zipCd})
+                  {WCM200801SSQ01.data.addr} ({WCM200801SSQ01.data.zipCd})
                 </span>
               </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>상세주소</span>
-                <span className={css.infoValue}>{TCM200801SSQ01.data.addrDtil}</span>
+                <span className={css.infoValue}>{WCM200801SSQ01.data.addrDtil}</span>
               </div>
             </div>
           </div>

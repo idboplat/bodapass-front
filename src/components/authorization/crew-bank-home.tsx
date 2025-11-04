@@ -68,7 +68,7 @@ export default function CrewBankHome() {
           if (next === "true") {
             router.replace(`/ko/authorization/crew/${userId}/privacy?next=true`);
           } else if (next === "webview") {
-            await queryClient.invalidateQueries({ queryKey: ["TCM200801SSQ01"] });
+            await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
           } else {
             end();
