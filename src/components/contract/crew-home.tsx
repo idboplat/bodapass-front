@@ -10,7 +10,7 @@ export function CrewContractHome() {
   const userId = router.query.userId?.toString() || "";
 
   const { data: session } = useSession();
-  if (!session) throw new Error("FW999");
+  if (!session) throw new Error("FW401");
 
   const TCM200202SSQ01 = useTCM200202SSQ01({
     session,

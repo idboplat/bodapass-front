@@ -25,7 +25,7 @@ export default function CrewSignUpHome({}: Props) {
   const [wrkTp, setWrkTp] = useState<"2" | "3">("2");
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const WCW000001SSP02 = useWCW000001SSP02();
 

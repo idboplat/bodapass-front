@@ -17,7 +17,7 @@ export default function CrewFaceHome() {
   const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const WCW000002SSP01 = useWCW000002SSP01();
 

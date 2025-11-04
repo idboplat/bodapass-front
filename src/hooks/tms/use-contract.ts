@@ -101,6 +101,7 @@ export const useTCM200200SSP02 = () =>
       ordrPrc: string;
       wrkStrDd: string;
       wrkEndDd: string;
+      insYn: string;
       subMngrYn: string;
     }) => {
       const request = await callTms<StringRspnData<1>>({
@@ -113,6 +114,7 @@ export const useTCM200200SSP02 = () =>
           args.ordrPrc,
           args.wrkStrDd.replaceAll("-", ""),
           args.wrkEndDd.replaceAll("-", ""),
+          args.insYn,
           args.subMngrYn,
         ],
         session: args.session,
@@ -132,7 +134,7 @@ const getTCM200201SSQ01 = async (args: {
   corpCd: string;
   userId: string;
 }) => {
-  const response = await callTms<StringRspnData<18>>({
+  const response = await callTms<StringRspnData<20>>({
     svcId: "TCM200201SSQ01",
     session: args.session,
     locale: "ko",
@@ -162,6 +164,8 @@ const getTCM200201SSQ01 = async (args: {
     wrkEndDd: data.F16,
     cntrStatTp: data.F17,
     insYn: data.F18,
+    userTelNo: data.F19, // 팀원 전화번호
+    subMngrYn: data.F20,
   };
 };
 
@@ -227,4 +231,44 @@ export const useTCM200202SSQ01 = (args: {
   useQuery({
     queryKey: ["TCM200202SSQ01", args.session, args.mastCorpCd, args.corpCd],
     queryFn: () => getTCM200202SSQ01(args),
+  });
+
+export const useTCM200201SSP02 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      session: Session;
+      mastCorpCd: string;
+      corpCd: string;
+      userId: string;
+      instCd: string;
+      ordrPrc: string;
+      wrkStrDd: string;
+      wrkEndDd: string;
+      cntrStatTp: string;
+      insYn: string;
+      subMngrYn: string;
+    }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCM200201SSP02",
+        session: args.session,
+        locale: "ko",
+        data: [
+          args.mastCorpCd,
+          args.corpCd,
+          args.userId,
+          args.instCd,
+          args.ordrPrc,
+          args.wrkStrDd.replaceAll("-", ""),
+          args.wrkEndDd.replaceAll("-", ""),
+          args.cntrStatTp,
+          args.insYn,
+          args.subMngrYn,
+        ],
+      });
+
+      const data = response.svcRspnData?.[0];
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
   });

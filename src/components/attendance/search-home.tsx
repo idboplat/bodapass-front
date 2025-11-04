@@ -17,7 +17,7 @@ export default function SearchHome({ attCd }: Props) {
   const corpCd = router.query.corpCd?.toString() || "";
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const TCM200101SSP02 = useTCM200101SSP02();
 

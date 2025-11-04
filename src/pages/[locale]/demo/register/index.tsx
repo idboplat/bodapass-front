@@ -57,7 +57,7 @@ RegisterProps) {
   const [modelsLoaded, setModelsLoaded] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (args: { userId: string; bigTxt: Blob }) => {

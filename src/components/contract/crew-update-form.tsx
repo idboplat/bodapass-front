@@ -1,21 +1,19 @@
+import { TTCM200201SSQ01Data, useTCM200201SSP02 } from "@/hooks/tms/use-contract";
+import { roundDecimal } from "@/utils/number-formatter";
 import { Button, Checkbox, LoadingOverlay, Select, TextInput } from "@mantine/core";
-import { Building, MapPin, User, FileText, DollarSign, Calendar, Send } from "lucide-react";
-import css from "./crew-conclude.module.scss";
-import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
-import { SignatureCanvas } from "./signature-canvas";
-import { useSignature } from "@/hooks/use-signature";
-import { TTCM200202SSQ01Data, useTCM200200SSP02 } from "@/hooks/tms/use-contract";
-import { DEVICE_API } from "@/types/common";
-import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { DatePickerInput } from "@mantine/dates";
+import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { DEVICE_API } from "@/types/common";
+import css from "./crew-conclude.module.scss";
+import { Building, Calendar, DollarSign, FileText, MapPin, Send, User } from "lucide-react";
+import { DatePickerInput } from "@mantine/dates";
 import { addComma } from "@/utils/regexp";
-import { roundDecimal } from "@/utils/number-formatter";
 
-const crewConcludeDto = z.object({
+const crewUpdateDto = z.object({
   instCd: z.string().min(1),
   orderPrc: z.string().min(1),
   wrkDd: z.tuple([z.string().nullable(), z.string().nullable()]),
@@ -23,28 +21,17 @@ const crewConcludeDto = z.object({
   subMngrYn: z.enum(["Y", "N"]),
 });
 
-type TCrewConcludeDto = z.infer<typeof crewConcludeDto>;
+type TCrewUpdateDto = z.infer<typeof crewUpdateDto>;
 
 interface Props {
+  contractData: NonNullable<TTCM200201SSQ01Data>;
   session: Session;
-  contractData: NonNullable<TTCM200202SSQ01Data>;
 }
 
-export default function CrewConclude({ session, contractData }: Props) {
+export default function CrewUpdateForm({ contractData, session }: Props) {
   const router = useRouter();
-
-  const { canvasRef, hasSignature, clearSignature, saveSignature, eventHandlers } = useSignature({
-    width: 200,
-    height: 100,
-    onSignatureChange: (data) => {
-      // 서명 데이터가 변경될 때 필요한 로직
-      console.log("서명 데이터 변경:", data ? "서명됨" : "지워짐");
-    },
-  });
-
+  const mutation = useTCM200201SSP02();
   const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
-
-  const mutation = useTCM200200SSP02();
 
   const ordrPrcWithDecimal = roundDecimal({
     num: Number(contractData.ordrPrc) || 0,
@@ -52,7 +39,7 @@ export default function CrewConclude({ session, contractData }: Props) {
     requireComma: true,
   });
 
-  const form = useForm<TCrewConcludeDto>({
+  const form = useForm<TCrewUpdateDto>({
     defaultValues: {
       instCd: contractData.instCd,
       orderPrc: ordrPrcWithDecimal,
@@ -60,7 +47,7 @@ export default function CrewConclude({ session, contractData }: Props) {
       insYn: "Y",
       subMngrYn: "N",
     },
-    resolver: zodResolver(crewConcludeDto),
+    resolver: zodResolver(crewUpdateDto),
   });
 
   const onSubmit = async () => {
@@ -81,6 +68,7 @@ export default function CrewConclude({ session, contractData }: Props) {
         corpCd: contractData.corpCd,
         userId: contractData.userId,
         session,
+        cntrStatTp: contractData.cntrStatTp, // 유지
         instCd: data.instCd,
         ordrPrc: data.orderPrc.replaceAll(",", ""),
         wrkStrDd: data.wrkDd[0],
@@ -92,7 +80,7 @@ export default function CrewConclude({ session, contractData }: Props) {
         onSuccess: (data) => {
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
-              type: DEVICE_API.crewContractEnd,
+              type: DEVICE_API.crewContractUpdateEnd,
               payload: null,
             });
           } else {
@@ -115,84 +103,12 @@ export default function CrewConclude({ session, contractData }: Props) {
           <Building size={20} />
           계약 기본 정보
         </div>
-        <div className={css.infoCard}>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사코드
-            </span>
-            <span className={css.value}>{contractData.mastCorpCd}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사명
-            </span>
-            <span className={css.value}>{contractData.corpNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사 전화번호
-            </span>
-            <span className={css.value}>{contractData.telNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 코드
-            </span>
-            <span className={css.value}>{contractData.corpCd}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장명
-            </span>
-            <span className={css.value}>{contractData.siteNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 주소 1
-            </span>
-            <span className={css.value}>{contractData.siteAddr}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 주소 2
-            </span>
-            <span className={css.value}>{contractData.siteAddrDtil}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 전화번호
-            </span>
-            <span className={css.value}>{contractData.siteTelNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <User size={16} />
-              계약자
-            </span>
-            <span className={css.value}>{contractData.userNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <User size={16} />
-              계약자 코드
-            </span>
-            <span className={css.value}>{contractData.userId}</span>
-          </div>
-        </div>
       </div>
 
       <div className={css.formSection}>
         <div className={css.formTitle}>
           <FileText size={20} />
-          계약 상세 정보 입력
+          계약 상세 정보 수정
         </div>
 
         <div className={css.formField}>
@@ -340,21 +256,21 @@ export default function CrewConclude({ session, contractData }: Props) {
 
       {/* 서명 섹션 (현재 주석 처리됨) */}
       {/* <div className={css.signatureSection}>
-        <div className={css.signatureTitle}>서명</div>
-        <div className={css.signatureCanvas}>
-          <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} />
+      <div className={css.signatureTitle}>서명</div>
+      <div className={css.signatureCanvas}>
+        <SignatureCanvas {...eventHandlers} canvasRef={canvasRef} width={200} height={150} />
+      </div>
+      {hasSignature && (
+        <div className={css.signatureButtons}>
+          <Button onClick={clearSignature} variant="outline" color="red">
+            지우기
+          </Button>
+          <Button onClick={saveSignature} color="green">
+            저장
+          </Button>
         </div>
-        {hasSignature && (
-          <div className={css.signatureButtons}>
-            <Button onClick={clearSignature} variant="outline" color="red">
-              지우기
-            </Button>
-            <Button onClick={saveSignature} color="green">
-              저장
-            </Button>
-          </div>
-        )}
-      </div> */}
+      )}
+    </div> */}
 
       <div className={css.buttonBox}>
         <Button

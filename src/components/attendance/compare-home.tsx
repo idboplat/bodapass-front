@@ -17,7 +17,7 @@ export default function CompareHome({ attCd }: Props) {
   const faceImgFile = router.query.faceImgFile?.toString() || "";
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const TCM200101SSP01 = useTCM200101SSP01();
 
@@ -53,7 +53,7 @@ export default function CompareHome({ attCd }: Props) {
 //   const [modelsLoaded, setModelsLoaded] = useState(false);
 //   const [message, setMessage] = useState("");
 
-//   if (!session) throw new Error("Session is not found");
+//   if (!session) throw new Error("FW401");
 
 //   const { mutate, isPending } = useMutation({
 //     mutationFn: async (args: {

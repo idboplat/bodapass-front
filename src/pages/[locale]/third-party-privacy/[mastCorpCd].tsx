@@ -27,7 +27,7 @@ function ThirdPartyPrivacyHome() {
   const [isAgree, setIsAgree] = useState(false);
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const TCW000001SSP05 = useTCW000001SSP05();
 

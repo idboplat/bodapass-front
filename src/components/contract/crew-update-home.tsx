@@ -1,12 +1,14 @@
+import { useWCM200801SSQ01 } from "@/hooks/tms/use-worker";
 import { useSession } from "@/libraries/auth/use-session";
-import { LeaderConclude } from "./leader-conclude";
 import { useRouter } from "next/router";
+import CrewUpdateForm from "./crew-update-form";
 import { useTCM200201SSQ01 } from "@/hooks/tms/use-contract";
 
-export function LeaderContractHome() {
+export default function CrewUpdateHome() {
   const router = useRouter();
   const mastCorpCd = router.query.mastCorpCd?.toString() || "";
   const corpCd = router.query.corpCd?.toString() || "";
+  const userId = router.query.userId?.toString() || "";
 
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
@@ -15,29 +17,28 @@ export function LeaderContractHome() {
     session,
     mastCorpCd,
     corpCd,
-    userId: session.userId, // 반장의 유저 ID
+    userId,
   });
 
   if (TCM200201SSQ01.isPending) {
     return (
       <div className={"mobileLayout"}>
-        <div>계약을 불러오는 중...</div>
+        <div>사용자 계약 정보를 불러오는 중...</div>
       </div>
     );
   }
 
-  // 접수상태인지 확인
-  if (!TCM200201SSQ01.data || TCM200201SSQ01.data.cntrStatTp !== "REQ") {
+  if (!TCM200201SSQ01.data) {
     return (
       <div className={"mobileLayout"}>
-        <div>계약을 찾을 수 없습니다.</div>
+        <div>사용자 계약 정보를 찾을 수 없습니다.</div>
       </div>
     );
   }
 
   return (
     <div className={"mobileLayout"}>
-      <LeaderConclude contractData={TCM200201SSQ01.data} session={session} />
+      <CrewUpdateForm contractData={TCM200201SSQ01.data} session={session} />
     </div>
   );
 }

@@ -22,7 +22,7 @@ export default function CrewIdcardHome({}: Props) {
 
   const camera = useCamera();
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
   /** 반장의 유저아이디 */
   const brkrId = session.userId;
 

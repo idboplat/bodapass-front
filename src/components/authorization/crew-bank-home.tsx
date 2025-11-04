@@ -22,7 +22,7 @@ export default function CrewBankHome() {
   const [bankImage, setBankImage] = useState<Blob | null>(null);
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const form = useForm<TBankForm>({
     defaultValues: {

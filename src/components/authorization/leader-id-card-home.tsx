@@ -22,7 +22,7 @@ export default function LeaderIdcardHome() {
 
   const camera = useCamera();
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   // const WCW000002SSQ01 = useWCW000002SSQ01();
   // const WCW000001SSP02 = useWCW000001SSP02();

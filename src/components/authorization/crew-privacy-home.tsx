@@ -24,7 +24,7 @@ export default function CrewPrivacyHome() {
   const [instCd, setInstCd] = useState("");
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
 
   const TCW000001SSP04 = useTCW000001SSP04();
   const WCM200801SSQ01 = useWCM200801SSQ01({

@@ -33,7 +33,7 @@ function Home() {
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
 
-  if (!session) throw new Error("FCM999");
+  if (!session) throw new Error("FCM401");
 
   const mutation = useMutation({
     mutationFn: async ({ userId, blob }: { userId: string; blob: Blob }) => {

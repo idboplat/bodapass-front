@@ -15,7 +15,7 @@ export default function LeaderFaceHome() {
   const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const { data: session } = useSession();
-  if (!session) throw new Error("Session is not found");
+  if (!session) throw new Error("FW401");
   /** 반장의 유저 ID */
   const userId = session.userId;
 
