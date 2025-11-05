@@ -34,7 +34,7 @@ export default function CrewSignUpHome({}: Props) {
     resolver: zodResolver(signUpDto),
     defaultValues: {
       // step1
-      cntryCd: "82",
+      cntryCd: "KR",
 
       // step2
       idTp: "1" as const,
@@ -119,7 +119,12 @@ export default function CrewSignUpHome({}: Props) {
       <FormProvider {...form}>
         <div className={css.form}>
           {step === 1 && (
-            <CrewStep1 onClickNext={step1Next} wrkTp={wrkTp} changeWrkTp={changeWrkTp} />
+            <CrewStep1
+              onClickNext={step1Next}
+              wrkTp={wrkTp}
+              changeWrkTp={changeWrkTp}
+              session={session}
+            />
           )}
           {step === 2 && <Step2 onClickNext={step2Next} onClickPrev={step2Prev} />}
           {step === 3 && !!image && (

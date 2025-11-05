@@ -41,7 +41,7 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
     resolver: zodResolver(signUpDto),
     defaultValues: {
       // step1
-      cntryCd: "82",
+      cntryCd: "KR",
       brkrId: initState.brokerId,
 
       // step2

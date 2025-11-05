@@ -37,7 +37,7 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
     resolver: zodResolver(signUpDto),
     defaultValues: {
       // step1
-      cntryCd: "82",
+      cntryCd: "KR",
       brkrId: "",
 
       // step2

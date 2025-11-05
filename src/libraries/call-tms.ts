@@ -87,6 +87,7 @@ const getHashSha256 = (data: string) => {
 export const genarateBody = (args: {
   svcId: string;
   locale: string;
+  /** 전부 조회하려면 pgSize를 0으로 설정 */
   pgSize?: number;
   session: Session | null;
   pgSn?: number;
