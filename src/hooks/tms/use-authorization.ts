@@ -237,40 +237,6 @@ export const useTCW000100SMQ01 = (session: Session) =>
     queryFn: () => getTCW000100SMQ01({ session }),
   });
 
-/** 직종 코드 조회 */
-export type TTCW000100SMQ02Data = Promised<typeof getTCW000100SMQ02>;
-export const getTCW000100SMQ02 = async ({ session }: { session: Session }) => {
-  const response = await callTms<StringRspnData<5>>({
-    svcId: "TCW000100SMQ02",
-    session,
-    locale: "ko",
-    data: [""],
-    pgSize: 0, // 전부 다 조회
-  });
-
-  const data = response.svcRspnData || [];
-
-  if (!data) {
-    throw new Error("FW999");
-  }
-
-  const convertedData = data.map((d) => ({
-    instCd: d.F01,
-    instNm: d.F02,
-    mrkrCd: d.F03,
-    instTp: d.F04,
-    mastInstCd: d.F05,
-  }));
-
-  return convertedData;
-};
-
-export const useTCW000100SMQ02 = (session: Session) =>
-  useQuery({
-    queryKey: ["TCW000100SMQ02"],
-    queryFn: () => getTCW000100SMQ02({ session }),
-  });
-
 export const useTCW000001SSP05 = () =>
   useMutation({
     mutationFn: async (args: {
@@ -292,36 +258,4 @@ export const useTCW000001SSP05 = () =>
 
       return data;
     },
-  });
-
-/** 국가 코드 조회 */
-export type TTCW000100SMQ03Data = Promised<typeof getTCW000100SMQ03>;
-export const getTCW000100SMQ03 = async ({ session }: { session: Session | null }) => {
-  const response = await callTms<StringRspnData<5>>({
-    svcId: "TCW000100SMQ03",
-    session,
-    locale: "ko",
-    data: [""],
-    pgSize: 0, // 전부 다 조회
-  });
-
-  const data = response.svcRspnData || [];
-
-  if (!data) {
-    throw new Error("FW999");
-  }
-
-  const convertedData = data.map((d) => ({
-    cntryCd: d.F01,
-    cntryEnNm: d.F02,
-    cntryKoNm: d.F03,
-  }));
-
-  return convertedData;
-};
-
-export const useTCW000100SMQ03 = (session: Session | null) =>
-  useQuery({
-    queryKey: ["TCW000100SMQ03"],
-    queryFn: () => getTCW000100SMQ03({ session }),
   });

@@ -8,7 +8,8 @@ import { Button, Checkbox, Select, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import { addComma, checkAmount, deleteIntegerZero } from "@/utils/regexp";
-import { useTCW000001SSP04, useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { DEVICE_API } from "@/types/common";
 
 export default function CrewPrivacyHome() {
@@ -35,7 +36,7 @@ export default function CrewPrivacyHome() {
     session,
     userId,
   });
-  const TCW000100SMQ02 = useTCW000100SMQ02(session);
+  const TCW000100SMQ02 = useTCW000100SMQ02({ session });
   const TCM200200SSP01 = useTCM200200SSP01();
 
   const end = () => {

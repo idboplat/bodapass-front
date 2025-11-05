@@ -1,4 +1,4 @@
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { Box, Button, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
@@ -10,7 +10,7 @@ export default function LeaderStep1({
   onClickPrev: () => void;
   onClickNext: () => void;
 }) {
-  const TCW000100SMQ03 = useTCW000100SMQ03(null);
+  const TCW000100SMQ03 = useTCW000100SMQ03({ session: null });
   const form = useFormContext<TSignUpDto>();
 
   return (

@@ -3,7 +3,7 @@ import { onNoSpaceChange } from "@/utils/input-handler";
 import { Box, Button, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
 import css from "./remote-crew-signup-home.module.scss";
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 
 export default function RemoteCrewStep1({
   workerTp,
@@ -22,7 +22,7 @@ export default function RemoteCrewStep1({
   onClickPrev: () => void;
   toggleWorkerTp: () => void;
 }) {
-  const TCW000100SMQ03 = useTCW000100SMQ03(null);
+  const TCW000100SMQ03 = useTCW000100SMQ03({ session: null });
   const form = useFormContext<TSignUpDto>();
 
   return (

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
-import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { DEVICE_API } from "@/types/common";
 import css from "./crew-conclude.module.scss";
 import { Building, Calendar, DollarSign, FileText, MapPin, Send, User } from "lucide-react";
@@ -31,7 +31,7 @@ interface Props {
 export default function CrewUpdateForm({ contractData, session }: Props) {
   const router = useRouter();
   const mutation = useTCM200201SSP02();
-  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
+  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02({ session });
 
   const ordrPrcWithDecimal = roundDecimal({
     num: Number(contractData.ordrPrc) || 0,

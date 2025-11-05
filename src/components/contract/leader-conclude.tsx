@@ -7,7 +7,7 @@ import { useSignature } from "@/hooks/use-signature";
 import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
 import dayjs from "@/libraries/dayjs";
-import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { useMemo } from "react";
 
 interface Props {
@@ -26,7 +26,7 @@ export function LeaderConclude({ contractData, session }: Props) {
   });
 
   const TCM200201SSP01 = useTCM200201SSP01();
-  const TCW000100SMQ02 = useTCW000100SMQ02(session);
+  const TCW000100SMQ02 = useTCW000100SMQ02({ session });
 
   const instCdMap = useMemo(
     () => new Map(TCW000100SMQ02.data?.map((item) => [item.instCd, item]) ?? []),

@@ -2,7 +2,7 @@ import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { onNoSpaceChange } from "@/utils/input-handler";
 import { Box, Button, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 
 export default function CrewStep1({
   session,
@@ -17,7 +17,7 @@ export default function CrewStep1({
   // onClickPrev: () => void;
   onClickNext: () => void;
 }) {
-  const TCW000100SMQ03 = useTCW000100SMQ03(session);
+  const TCW000100SMQ03 = useTCW000100SMQ03({ session });
   const form = useFormContext<TSignUpDto>();
 
   return (

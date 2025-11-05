@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 import { DatePickerInput } from "@mantine/dates";
-import { useTCW000100SMQ02 } from "@/hooks/tms/use-authorization";
+import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { addComma } from "@/utils/regexp";
 import { roundDecimal } from "@/utils/number-formatter";
 
@@ -42,7 +42,7 @@ export default function CrewConclude({ session, contractData }: Props) {
     },
   });
 
-  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02(session);
+  const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02({ session });
 
   const mutation = useTCM200200SSP02();
 
