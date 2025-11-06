@@ -178,7 +178,6 @@ export const useWCW000002SSP03 = () =>
         formData: [args.bankImage],
       });
 
-      console.log("result", result);
       const data = result.svcRspnData?.[0];
 
       if (!data) throw new Error("FW999");

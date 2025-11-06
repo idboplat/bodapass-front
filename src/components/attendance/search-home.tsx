@@ -138,7 +138,7 @@ function NightModeModal({ onClose }: { onClose: () => void }) {
         <ModalHeader>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Moon size={20} color="#ffd700" />
-            <ModalTitle className={styles.nightModeTitle}>야간모드 촬영</ModalTitle>
+            <ModalTitle className={styles.nightModeTitle}>야근모드 촬영</ModalTitle>
             <Camera size={18} color="#ffd700" style={{ opacity: 0.8 }} />
           </div>
         </ModalHeader>
