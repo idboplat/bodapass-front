@@ -75,6 +75,8 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
         wrkEndDd: data.wrkDd[1],
         insYn: form.getValues("insYn"),
         subMngrYn: form.getValues("subMngrYn"),
+        cntrDd: contractData.cntrDd,
+        cntrSn: contractData.cntrSn,
       },
       {
         onSuccess: (data) => {

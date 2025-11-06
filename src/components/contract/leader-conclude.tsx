@@ -43,6 +43,8 @@ export function LeaderConclude({ contractData, session }: Props) {
         userId: contractData.userId,
         type,
         session,
+        cntrDd: contractData.cntrDd,
+        cntrSn: contractData.cntrSn,
       },
       {
         onSuccess: (data) => {

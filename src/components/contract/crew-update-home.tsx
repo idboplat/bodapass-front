@@ -9,6 +9,8 @@ export default function CrewUpdateHome() {
   const mastCorpCd = router.query.mastCorpCd?.toString() || "";
   const corpCd = router.query.corpCd?.toString() || "";
   const userId = router.query.userId?.toString() || "";
+  const cntrDd = router.query.cntrDd?.toString() || "";
+  const cntrSn = router.query.cntrSn?.toString() || "";
 
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
@@ -18,6 +20,8 @@ export default function CrewUpdateHome() {
     mastCorpCd,
     corpCd,
     userId,
+    cntrDd,
+    cntrSn,
   });
 
   if (TCM200201SSQ01.isPending) {

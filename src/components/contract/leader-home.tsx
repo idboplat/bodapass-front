@@ -7,6 +7,8 @@ export function LeaderContractHome() {
   const router = useRouter();
   const mastCorpCd = router.query.mastCorpCd?.toString() || "";
   const corpCd = router.query.corpCd?.toString() || "";
+  const cntrDd = router.query.cntrDd?.toString() || "";
+  const cntrSn = router.query.cntrSn?.toString() || "";
 
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
@@ -16,6 +18,8 @@ export function LeaderContractHome() {
     mastCorpCd,
     corpCd,
     userId: session.userId, // 반장의 유저 ID
+    cntrDd,
+    cntrSn,
   });
 
   if (TCM200201SSQ01.isPending) {

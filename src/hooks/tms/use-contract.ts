@@ -75,10 +75,12 @@ export const useTCM200201SSP01 = () =>
       userId: string;
       type: "REJ" | "APL";
       session: Session;
+      cntrDd: string;
+      cntrSn: string;
     }) => {
       const request = await callTms<StringRspnData<1>>({
         svcId: "TCM200201SSP01",
-        data: [args.mastCorpCd, args.corpCd, args.userId, args.type],
+        data: [args.mastCorpCd, args.corpCd, args.userId, args.type, args.cntrDd, args.cntrSn],
         session: args.session,
         locale: "ko",
       });
@@ -133,12 +135,14 @@ const getTCM200201SSQ01 = async (args: {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
+  cntrDd: string;
+  cntrSn: string;
 }) => {
-  const response = await callTms<StringRspnData<20>>({
+  const response = await callTms<StringRspnData<22>>({
     svcId: "TCM200201SSQ01",
     session: args.session,
     locale: "ko",
-    data: [args.mastCorpCd, args.corpCd, args.userId],
+    data: [args.mastCorpCd, args.corpCd, args.userId, args.cntrDd, args.cntrSn],
   });
 
   const data = response.svcRspnData?.[0];
@@ -166,6 +170,8 @@ const getTCM200201SSQ01 = async (args: {
     insYn: data.F18,
     userTelNo: data.F19, // 팀원 전화번호
     subMngrYn: data.F20,
+    cntrDd: data.F21,
+    cntrSn: data.F22,
   };
 };
 
@@ -176,9 +182,19 @@ export const useTCM200201SSQ01 = (args: {
   mastCorpCd: string;
   corpCd: string;
   userId: string;
+  cntrDd: string;
+  cntrSn: string;
 }) =>
   useQuery({
-    queryKey: ["TCM200201SSQ01", args.session, args.mastCorpCd, args.corpCd, args.userId],
+    queryKey: [
+      "TCM200201SSQ01",
+      args.session,
+      args.mastCorpCd,
+      args.corpCd,
+      args.userId,
+      args.cntrDd,
+      args.cntrSn,
+    ],
     queryFn: () => getTCM200201SSQ01(args),
   });
 
@@ -247,6 +263,8 @@ export const useTCM200201SSP02 = () =>
       cntrStatTp: string;
       insYn: string;
       subMngrYn: string;
+      cntrDd: string;
+      cntrSn: string;
     }) => {
       const response = await callTms<StringRspnData<1>>({
         svcId: "TCM200201SSP02",
@@ -263,6 +281,8 @@ export const useTCM200201SSP02 = () =>
           args.cntrStatTp,
           args.insYn,
           args.subMngrYn,
+          args.cntrDd,
+          args.cntrSn,
         ],
       });
 
