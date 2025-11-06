@@ -133,7 +133,7 @@ export function LeaderConclude({ contractData, session }: Props) {
           <div className={css.infoRow}>
             <span className={css.label}>
               <DollarSign size={16} />
-              계약금액
+              수당
             </span>
             <span className={`${css.value} ${css.price}`}>
               {contractData.ordrPrc ? `${Number(contractData.ordrPrc).toLocaleString()}원` : "미정"}
