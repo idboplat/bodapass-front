@@ -115,7 +115,7 @@ export default function CrewPrivacyHome() {
                 </span>
               </div>
               <Link
-                href={`/${locale}/authorization/leader/${userId}/face?next=webview`}
+                href={`/${locale}/authorization/crew/${userId}/face?next=webview`}
                 className={css.editButton}
               >
                 얼굴 수정
@@ -152,7 +152,7 @@ export default function CrewPrivacyHome() {
                 </>
               )}
               <Link
-                href={`/${locale}/authorization/leader/${userId}/bank?next=webview`}
+                href={`/${locale}/authorization/crew/${userId}/bank?next=webview`}
                 className={css.editButton}
               >
                 통장 수정
