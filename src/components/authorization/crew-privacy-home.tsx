@@ -222,8 +222,8 @@ export default function CrewPrivacyHome() {
             </div>
           </div>
 
-          {/* 수당 섹션 */}
-          <div className={css.priceSection}>
+          {/* 수당 섹션 - 앱으로 이동 */}
+          {/* <div className={css.priceSection}>
             <div className={css.priceTitle}>직종</div>
             <Select
               value={instCd}
@@ -260,7 +260,7 @@ export default function CrewPrivacyHome() {
                 </div>
               }
             />
-          </div>
+          </div> */}
 
           {/* 동의 섹션 */}
           <div className={css.agreementSection}>
