@@ -20,7 +20,8 @@ export default function CrewSignUpHome({}: Props) {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
 
-  const [step, setStep] = useState(1);
+  // 국가코드 일시적 생략
+  const [step, setStep] = useState(2);
   const [image, setImage] = useState<Blob | null>(null);
   const [wrkTp, setWrkTp] = useState<"2" | "3">("2");
 

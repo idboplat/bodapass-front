@@ -30,7 +30,8 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
   const locale = router.query.locale?.toString() || "ko";
 
   const [isValidateBrokerId, setIsValidateBrokerId] = useState(false);
-  const [step, setStep] = useState(1);
+  // 국가코드 일시적 생략
+  const [step, setStep] = useState(2);
   const [image, setImage] = useState<Blob | null>(null);
 
   const TCM200001SSQ00 = useTCM200001SSQ00();

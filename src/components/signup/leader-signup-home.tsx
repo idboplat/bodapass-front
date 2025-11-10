@@ -27,7 +27,8 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
   const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
 
-  const [step, setStep] = useState(1);
+  // 국가코드 일시적 생략
+  const [step, setStep] = useState(2);
   const [image, setImage] = useState<Blob | null>(null);
 
   const WCW000001SSP02 = useWCW000001SSP02();

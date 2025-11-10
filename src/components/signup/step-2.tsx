@@ -102,11 +102,11 @@ export default function Step2({
         </ActionIcon>
       </div>
 
-      <Box mt={28} style={{ textAlign: "right" }}>
+      {/* <Box mt={28} style={{ textAlign: "right" }}>
         <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
           이전
         </Button>
-      </Box>
+      </Box> */}
     </div>
   );
 }
