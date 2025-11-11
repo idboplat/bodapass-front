@@ -1,5 +1,15 @@
 import { Button, LoadingOverlay } from "@mantine/core";
-import { Building, MapPin, Calendar, DollarSign, Shield, User, X, Check } from "lucide-react";
+import {
+  Building,
+  MapPin,
+  Calendar,
+  DollarSign,
+  Shield,
+  User,
+  X,
+  Check,
+  Briefcase,
+} from "lucide-react";
 import css from "./leader-conclude.module.scss";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
@@ -67,65 +77,6 @@ export function LeaderConclude({ contractData, session }: Props) {
 
       <div className={css.infoSection}>
         <div className={css.sectionTitle}>
-          <Building size={20} />
-          회사 및 현장 정보
-        </div>
-        <div className={css.infoCard}>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사명
-            </span>
-            <span className={css.value}>{contractData.corpNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사 코드
-            </span>
-            <span className={css.value}>{contractData.mastCorpCd}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              전화번호
-            </span>
-            <span className={css.value}>{contractData.telNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장명
-            </span>
-            <span className={css.value}>{contractData.siteNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 주소
-            </span>
-            <span className={css.value}>{contractData.siteAddr}</span>
-            <span className={css.value}>{contractData.siteAddrDtil}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 전화번호
-            </span>
-            <span className={css.value}>{contractData.siteTelNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장코드
-            </span>
-            <span className={css.value}>{contractData.corpCd}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className={css.infoSection}>
-        <div className={css.sectionTitle}>
           <Calendar size={20} />
           계약 상세 정보
         </div>
@@ -140,7 +91,10 @@ export function LeaderConclude({ contractData, session }: Props) {
             </span>
           </div>
           <div className={css.infoRow}>
-            <span className={css.label}>직종</span>
+            <span className={css.label}>
+              <Briefcase size={16} />
+              직종
+            </span>
             <span className={css.value}>{instCdMap.get(contractData.instCd)?.instNm || "N/A"}</span>
           </div>
           <div className={css.infoRow}>
@@ -170,6 +124,65 @@ export function LeaderConclude({ contractData, session }: Props) {
               {contractData.wrkEndDd ? dayjs(contractData.wrkEndDd).format("YYYY-MM-DD") : "미정"}
             </span>
           </div>
+        </div>
+      </div>
+
+      <div className={css.infoSection}>
+        <div className={css.sectionTitle}>
+          <Building size={20} />
+          회사 및 현장 정보
+        </div>
+        <div className={css.infoCard}>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사명
+            </span>
+            <span className={css.value}>{contractData.corpNm}</span>
+          </div>
+          {/* <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사 코드
+            </span>
+            <span className={css.value}>{contractData.mastCorpCd}</span>
+          </div> */}
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              전화번호
+            </span>
+            <span className={css.value}>{contractData.telNo}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장명
+            </span>
+            <span className={css.value}>{contractData.siteNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소
+            </span>
+            <span className={css.value}>{contractData.siteAddr}</span>
+            <span className={css.value}>{contractData.siteAddrDtil}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 전화번호
+            </span>
+            <span className={css.value}>{contractData.siteTelNo}</span>
+          </div>
+          {/* <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장코드
+            </span>
+            <span className={css.value}>{contractData.corpCd}</span>
+          </div> */}
         </div>
       </div>
 

@@ -110,85 +110,6 @@ export default function CrewConclude({ session, contractData }: Props) {
         <div className={css.subtitle}>계약 정보를 입력하고 제출해주세요</div>
       </div>
 
-      <div className={css.infoSection}>
-        <div className={css.sectionTitle}>
-          <Building size={20} />
-          계약 기본 정보
-        </div>
-        <div className={css.infoCard}>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사코드
-            </span>
-            <span className={css.value}>{contractData.mastCorpCd}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사명
-            </span>
-            <span className={css.value}>{contractData.corpNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <Building size={16} />
-              회사 전화번호
-            </span>
-            <span className={css.value}>{contractData.telNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 코드
-            </span>
-            <span className={css.value}>{contractData.corpCd}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장명
-            </span>
-            <span className={css.value}>{contractData.siteNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 주소 1
-            </span>
-            <span className={css.value}>{contractData.siteAddr}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 주소 2
-            </span>
-            <span className={css.value}>{contractData.siteAddrDtil}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장 전화번호
-            </span>
-            <span className={css.value}>{contractData.siteTelNo}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <User size={16} />
-              계약자
-            </span>
-            <span className={css.value}>{contractData.userNm}</span>
-          </div>
-          <div className={css.infoRow}>
-            <span className={css.label}>
-              <User size={16} />
-              계약자 코드
-            </span>
-            <span className={css.value}>{contractData.userId}</span>
-          </div>
-        </div>
-      </div>
-
       <div className={css.formSection}>
         <div className={css.formTitle}>
           <FileText size={20} />
@@ -336,6 +257,84 @@ export default function CrewConclude({ session, contractData }: Props) {
               </div>
             )}
           />
+        </div>
+      </div>
+      <div className={css.infoSection}>
+        <div className={css.sectionTitle}>
+          <Building size={20} />
+          계약 기본 정보
+        </div>
+        <div className={css.infoCard}>
+          {/* <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사코드
+            </span>
+            <span className={css.value}>{contractData.mastCorpCd}</span>
+          </div> */}
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사명
+            </span>
+            <span className={css.value}>{contractData.corpNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <Building size={16} />
+              회사 전화번호
+            </span>
+            <span className={css.value}>{contractData.telNo}</span>
+          </div>
+          {/* <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 코드
+            </span>
+            <span className={css.value}>{contractData.corpCd}</span>
+          </div> */}
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장명
+            </span>
+            <span className={css.value}>{contractData.siteNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소 1
+            </span>
+            <span className={css.value}>{contractData.siteAddr}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 주소 2
+            </span>
+            <span className={css.value}>{contractData.siteAddrDtil}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <MapPin size={16} />
+              현장 전화번호
+            </span>
+            <span className={css.value}>{contractData.siteTelNo}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <User size={16} />
+              계약자
+            </span>
+            <span className={css.value}>{contractData.userNm}</span>
+          </div>
+          <div className={css.infoRow}>
+            <span className={css.label}>
+              <User size={16} />
+              계약자 코드
+            </span>
+            <span className={css.value}>{contractData.userId}</span>
+          </div>
         </div>
       </div>
 
