@@ -4,14 +4,14 @@ import css from "./leader-conclude.module.scss";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
 import { useSignature } from "@/hooks/use-signature";
-import { TTCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
+import { TWCM200201SSQ01Data, useTCM200201SSP01 } from "@/hooks/tms/use-contract";
 import { DEVICE_API } from "@/types/common";
 import dayjs from "@/libraries/dayjs";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { useMemo } from "react";
 
 interface Props {
-  contractData: NonNullable<TTCM200201SSQ01Data>;
+  contractData: NonNullable<TWCM200201SSQ01Data>;
   session: Session;
 }
 

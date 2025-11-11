@@ -1,7 +1,7 @@
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import CrewUpdateForm from "./crew-update-form";
-import { useTCM200201SSQ01 } from "@/hooks/tms/use-contract";
+import { useWCM200201SSQ01 } from "@/hooks/tms/use-contract";
 
 export default function CrewUpdateHome() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function CrewUpdateHome() {
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
-  const TCM200201SSQ01 = useTCM200201SSQ01({
+  const WCM200201SSQ01 = useWCM200201SSQ01({
     session,
     mastCorpCd,
     corpCd,
@@ -23,7 +23,7 @@ export default function CrewUpdateHome() {
     cntrSn,
   });
 
-  if (TCM200201SSQ01.isPending) {
+  if (WCM200201SSQ01.isPending) {
     return (
       <div className={"mobileLayout"}>
         <div>사용자 계약 정보를 불러오는 중...</div>
@@ -31,7 +31,7 @@ export default function CrewUpdateHome() {
     );
   }
 
-  if (!TCM200201SSQ01.data) {
+  if (!WCM200201SSQ01.data) {
     return (
       <div className={"mobileLayout"}>
         <div>사용자 계약 정보를 찾을 수 없습니다.</div>
@@ -41,7 +41,7 @@ export default function CrewUpdateHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <CrewUpdateForm contractData={TCM200201SSQ01.data} session={session} />
+      <CrewUpdateForm contractData={WCM200201SSQ01.data} session={session} />
     </div>
   );
 }

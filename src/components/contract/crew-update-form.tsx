@@ -1,4 +1,8 @@
-import { TTCM200201SSQ01Data, useTCM200201SSP02 } from "@/hooks/tms/use-contract";
+import {
+  TWCM200201SSQ01Data,
+  useTCM200201SSP02,
+  useTCM200201SSP03,
+} from "@/hooks/tms/use-contract";
 import { roundDecimal } from "@/utils/number-formatter";
 import { Button, Checkbox, LoadingOverlay, Select, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
@@ -8,10 +12,17 @@ import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { DEVICE_API } from "@/types/common";
-import css from "./crew-conclude.module.scss";
+import css from "./crew-update-form.module.scss";
 import { Building, Calendar, DollarSign, FileText, MapPin, Send, User } from "lucide-react";
 import { DatePickerInput } from "@mantine/dates";
 import { addComma } from "@/utils/regexp";
+import Image from "next/image";
+import clsx from "clsx";
+import { useState } from "react";
+import { AnimatePresence } from "motion/react";
+import Portal from "@/components/common/modal/portal";
+import ConfirmModal from "@/components/common/modal/confirm-modal";
+import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
 
 const crewUpdateDto = z.object({
   instCd: z.string().min(1),
@@ -24,25 +35,21 @@ const crewUpdateDto = z.object({
 type TCrewUpdateDto = z.infer<typeof crewUpdateDto>;
 
 interface Props {
-  contractData: NonNullable<TTCM200201SSQ01Data>;
+  contractData: NonNullable<TWCM200201SSQ01Data>;
   session: Session;
 }
 
 export default function CrewUpdateForm({ contractData, session }: Props) {
   const router = useRouter();
-  const mutation = useTCM200201SSP02();
+  const editContractMutation = useTCM200201SSP02();
+  const cancelContractMutation = useTCM200201SSP03();
   const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02({ session });
-
-  const ordrPrcWithDecimal = roundDecimal({
-    num: Number(contractData.ordrPrc) || 0,
-    decimalLength: 0,
-    requireComma: true,
-  });
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const form = useForm<TCrewUpdateDto>({
     defaultValues: {
       instCd: contractData.instCd,
-      orderPrc: ordrPrcWithDecimal,
+      orderPrc: addComma(contractData.ordrPrc),
       wrkDd: [contractData.wrkStrDd, contractData.wrkEndDd],
       insYn: contractData.insYn as "Y" | "N",
       subMngrYn: contractData.subMngrYn as "Y" | "N",
@@ -50,8 +57,8 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
     resolver: zodResolver(crewUpdateDto),
   });
 
-  const onSubmit = async () => {
-    if (mutation.isPending) return;
+  const handleEditContract = async () => {
+    if (editContractMutation.isPending) return;
     const isValid = await form.trigger();
     if (!isValid) return;
 
@@ -62,7 +69,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       return;
     }
 
-    mutation.mutate(
+    editContractMutation.mutate(
       {
         mastCorpCd: contractData.mastCorpCd,
         corpCd: contractData.corpCd,
@@ -93,24 +100,70 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
     );
   };
 
+  const handleCancelContract = async () => {
+    setShowCancelConfirm(true);
+  };
+
+  const confirmCancelContract = async () => {
+    if (cancelContractMutation.isPending) return;
+    setShowCancelConfirm(false);
+
+    cancelContractMutation.mutate(
+      {
+        session,
+        mastCorpCd: contractData.mastCorpCd,
+        corpCd: contractData.corpCd,
+        userId: contractData.userId,
+        cntrDd: contractData.cntrDd,
+        cntrSn: contractData.cntrSn,
+      },
+      {
+        onSuccess: (data) => {
+          if (!!window.ReactNativeWebView) {
+            sendMessageToDevice({
+              type: DEVICE_API.crewContractCancelEnd,
+              payload: null,
+            });
+          } else {
+            router.back();
+          }
+        },
+      },
+    );
+  };
+
   return (
     <div className={css.container}>
-      <div className={css.header}>
+      {/* <div className={css.header}>
         <div className={css.title}>팀원 계약 수정</div>
         <div className={css.subtitle}>계약 정보를 입력하고 제출해주세요</div>
-      </div>
+      </div> */}
 
       <div className={css.infoSection}>
-        <div className={css.sectionTitle}>
-          <Building size={20} />
-          계약 기본 정보
+        <div className={css.companyInfo}>
+          <span className={css.corpNm}>{contractData.corpNm}</span>
+          <span className={css.siteNm}>{contractData.siteNm}</span>
         </div>
       </div>
 
       <div className={css.formSection}>
-        <div className={css.formTitle}>
-          <FileText size={20} />
+        {/* <div className={css.formTitle}>
           계약 상세 정보 수정
+        </div> */}
+        {/* 
+        <div className={css.formField}>
+          <TextInput label="계약자" value={contractData.userNm} disabled />
+        </div> */}
+        <div className={css.profileImageWrapper}>
+          <div className={css.profileName}>{contractData.userNm}</div>
+          <Image
+            src={`data:image/jpeg;base64,${contractData.faceImgFile}`}
+            alt="계약자 얼굴"
+            width={58}
+            height={58}
+            className={css.profileImage}
+            unoptimized
+          />
         </div>
 
         <div className={css.formField}>
@@ -122,6 +175,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
                 {...form.register("instCd")}
                 label="직종"
                 searchable
+                required
                 data={instData?.map((d) => ({ value: d.instCd, label: d.instNm }))}
                 allowDeselect={false}
                 onChange={(value) => form.setValue("instCd", value || "")}
@@ -184,7 +238,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
             render={({ field, fieldState }) => (
               <DatePickerInput
                 type="range"
-                label="작업 일자"
+                label="계약 기간"
                 placeholder="YYYY-MM-DD ~ YYYY-MM-DD"
                 value={[field.value[0], field.value[1]]}
                 onChange={field.onChange}
@@ -198,7 +252,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
                 leftSection={<Calendar size={16} />}
                 styles={{
                   input: {
-                    borderRadius: "8px",
+                    // borderRadius: "8px",
                     border: "1px solid #d1d5db",
                     "&:focus": {
                       borderColor: "#3b82f6",
@@ -278,20 +332,44 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       <div className={css.buttonBox}>
         <Button
           type="button"
-          onClick={onSubmit}
-          loading={mutation.isPending}
-          classNames={{ root: css.submitButton }}
-          leftSection={<Send size={20} />}
+          onClick={handleEditContract}
+          loading={editContractMutation.isPending}
+          classNames={{ root: clsx(css.actionButton, css.editButton) }}
+          // leftSection={<Send size={20} />}
         >
-          수정 완료
+          계약 수정
+        </Button>
+        <Button
+          type="button"
+          onClick={handleCancelContract}
+          loading={cancelContractMutation.isPending}
+          classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
+          // leftSection={<Send size={20} />}
+        >
+          계약 해지
         </Button>
       </div>
 
-      {mutation.isPending && (
+      {(editContractMutation.isPending || cancelContractMutation.isPending) && (
         <div className={css.loadingOverlay}>
-          <LoadingOverlay visible={mutation.isPending} />
+          <LoadingOverlay
+            visible={editContractMutation.isPending || cancelContractMutation.isPending}
+          />
         </div>
       )}
+
+      <AnimatePresence>
+        {showCancelConfirm && (
+          <Portal id={PORTAL_MODAL_CONTAINER_ID}>
+            <ConfirmModal
+              title="계약 해지 확인"
+              content="정말 계약을 해지하시겠습니까?"
+              onClose={() => setShowCancelConfirm(false)}
+              onSuccess={confirmCancelContract}
+            />
+          </Portal>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

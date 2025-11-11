@@ -27,10 +27,15 @@ export default function ConfirmModal({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button variant="subtle" type="button" onClick={onClose} c="var(--mantine-default-color)">
+          <Button
+            variant="default"
+            type="button"
+            onClick={onClose}
+            c="var(--mantine-default-color)"
+          >
             취소
           </Button>
-          <Button variant="default" type="button" onClick={() => onSuccess(true)}>
+          <Button variant="filled" type="button" onClick={() => onSuccess(true)}>
             확인
           </Button>
         </ModalFooter>

@@ -61,7 +61,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
         <Controller
           control={form.control}
           name="userNm"
-          render={({ field }) => <TextInput {...field} label="이름" mt={0} />}
+          render={({ field }) => <TextInput {...field} label="이름" mt={0} required />}
         />
 
         <div className={css.idBox}>
@@ -70,7 +70,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
             <Controller
               control={form.control}
               name="idNo1"
-              render={({ field }) => <TextInput {...field} />}
+              render={({ field }) => <TextInput {...field} required />}
             />
 
             <span>-</span>
@@ -94,6 +94,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               onChange={undefined}
               defaultValue={field.value}
               onFocus={openPostCode}
+              required
             />
           )}
         />
@@ -109,6 +110,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               onChange={undefined}
               defaultValue={field.value}
               onFocus={openPostCode}
+              required
             />
           )}
         />
@@ -116,7 +118,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
         <Controller
           control={form.control}
           name="addrDtil"
-          render={({ field }) => <TextInput {...field} label="상세주소" />}
+          render={({ field }) => <TextInput {...field} label="상세주소" required />}
         />
 
         <Controller
@@ -129,6 +131,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               onChange={onTelChange}
               placeholder="-를 제외하고 입력해주세요."
               inputMode="numeric"
+              required
             />
           )}
         />

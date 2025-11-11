@@ -52,6 +52,7 @@ export const DEVICE_API = {
   leaderContractEnd: "leaderContractEnd",
   crewContractEnd: "crewContractEnd",
   crewContractUpdateEnd: "crewContractUpdateEnd",
+  crewContractCancelEnd: "crewContractCancelEnd",
 
   /** payload: { lat: number; lng: number } */
   navigateMapScreen: "navigateMapScreen",

@@ -1,6 +1,7 @@
-import { callTms, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callWas, FillerRspnData, StringRspnData } from "@/libraries/call-tms";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Promised } from "@/types/common";
+import { useRouter } from "next/router";
 
 const TCM200201SMQ01_PAGE_SIZE = 10;
 const getTCM200201SMQ01 = async (args: {
@@ -130,7 +131,8 @@ export const useTCM200200SSP02 = () =>
     },
   });
 
-const getTCM200201SSQ01 = async (args: {
+/** 계약 내용 상세 조회 */
+const getWCM200201SSQ01 = async (args: {
   session: Session;
   mastCorpCd: string;
   corpCd: string;
@@ -138,11 +140,13 @@ const getTCM200201SSQ01 = async (args: {
   cntrDd: string;
   cntrSn: string;
 }) => {
-  const response = await callTms<StringRspnData<22>>({
+  const response = await callWas<StringRspnData<24>>({
+    apiPathName: "WCM200201SSQ01",
     svcId: "TCM200201SSQ01",
     session: args.session,
     locale: "ko",
     data: [args.mastCorpCd, args.corpCd, args.userId, args.cntrDd, args.cntrSn],
+    formData: [],
   });
 
   const data = response.svcRspnData?.[0];
@@ -153,7 +157,7 @@ const getTCM200201SSQ01 = async (args: {
     mastCorpCd: data.F01,
     corpCd: data.F02,
     corpNm: data.F03,
-    telNo: data.F04,
+    telNo: data.F04, // 회사 전화번호
     siteNm: data.F05,
     siteTelNo: data.F06,
     siteAddr: data.F07,
@@ -172,12 +176,14 @@ const getTCM200201SSQ01 = async (args: {
     subMngrYn: data.F20,
     cntrDd: data.F21,
     cntrSn: data.F22,
+    faceRgstYn: data.F23,
+    faceImgFile: data.F24,
   };
 };
 
-export type TTCM200201SSQ01Data = Promised<typeof getTCM200201SSQ01>;
+export type TWCM200201SSQ01Data = Promised<typeof getWCM200201SSQ01>;
 
-export const useTCM200201SSQ01 = (args: {
+export const useWCM200201SSQ01 = (args: {
   session: Session;
   mastCorpCd: string;
   corpCd: string;
@@ -187,7 +193,7 @@ export const useTCM200201SSQ01 = (args: {
 }) =>
   useQuery({
     queryKey: [
-      "TCM200201SSQ01",
+      "WCM200201SSQ01",
       args.session,
       args.mastCorpCd,
       args.corpCd,
@@ -195,9 +201,10 @@ export const useTCM200201SSQ01 = (args: {
       args.cntrDd,
       args.cntrSn,
     ],
-    queryFn: () => getTCM200201SSQ01(args),
+    queryFn: () => getWCM200201SSQ01(args),
   });
 
+/**  팀원 계약 기초 자료 조회 */
 const getTCM200202SSQ01 = async (args: {
   session: Session;
   mastCorpCd: string;
@@ -292,3 +299,37 @@ export const useTCM200201SSP02 = () =>
       return data;
     },
   });
+
+/** 팀원 계약 해지(반장) */
+export const useTCM200201SSP03 = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: async (args: {
+      session: Session;
+      mastCorpCd: string;
+      corpCd: string;
+      userId: string;
+      cntrDd: string;
+      cntrSn: string;
+    }) => {
+      const request = await callTms<FillerRspnData>({
+        svcId: "TCM200201SSP03",
+        data: [
+          args.mastCorpCd, // 회사코드
+          args.corpCd, // 현장코드
+          args.userId, // 팀원 사용자 ID
+          args.cntrDd, // 계약일자
+          args.cntrSn, // 계약번호
+        ],
+        session: args.session,
+        locale: "ko",
+      });
+
+      const data = request.svcRspnData?.[0];
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });
+};
