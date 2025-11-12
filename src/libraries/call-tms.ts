@@ -112,7 +112,7 @@ export const genarateBody = (args: {
     apiTranKey: 1,
     apiCallDtm: currentTime,
     apiLangCd: args.locale.toUpperCase(),
-    apiCorpCd: "000000",
+    apiCorpCd: "00000000",
     apiUserId: args.session?.userId || "guest",
     svcRqstList: [svcRqst],
   };
