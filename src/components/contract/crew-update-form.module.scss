@@ -225,11 +225,27 @@
     border-radius: 12px;
 }
 
-.profileImageWrapper {
+.profileWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+}
+
+.profileImageWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.corpInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    align-items: flex-end;
+    font-size: 0.8rem;
 }
 
 .profileName {

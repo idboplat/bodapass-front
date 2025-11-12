@@ -272,6 +272,7 @@ export const useTCM200201SSP02 = () =>
       subMngrYn: string;
       cntrDd: string;
       cntrSn: string;
+      userDcsr: string;
     }) => {
       const response = await callTms<StringRspnData<1>>({
         svcId: "TCM200201SSP02",
@@ -290,6 +291,7 @@ export const useTCM200201SSP02 = () =>
           args.subMngrYn,
           args.cntrDd,
           args.cntrSn,
+          args.userDcsr || "",
         ],
       });
 

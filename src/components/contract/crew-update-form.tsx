@@ -4,7 +4,7 @@ import {
   useTCM200201SSP03,
 } from "@/hooks/tms/use-contract";
 import { roundDecimal } from "@/utils/number-formatter";
-import { Button, Checkbox, LoadingOverlay, Select, TextInput } from "@mantine/core";
+import { Button, Checkbox, LoadingOverlay, Select, Textarea, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ const crewUpdateDto = z.object({
   wrkDd: z.tuple([z.string().nullable(), z.string().nullable()]),
   insYn: z.enum(["Y", "N"]),
   subMngrYn: z.enum(["Y", "N"]),
+  userDcsr: z.string().nullable(),
 });
 
 type TCrewUpdateDto = z.infer<typeof crewUpdateDto>;
@@ -53,6 +54,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       wrkDd: [contractData.wrkStrDd, contractData.wrkEndDd],
       insYn: contractData.insYn as "Y" | "N",
       subMngrYn: contractData.subMngrYn as "Y" | "N",
+      userDcsr: "",
     },
     resolver: zodResolver(crewUpdateDto),
   });
@@ -84,9 +86,12 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
         subMngrYn: form.getValues("subMngrYn"),
         cntrDd: contractData.cntrDd,
         cntrSn: contractData.cntrSn,
+        userDcsr: form.getValues("userDcsr") || "",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
+          nativeAlert("계약 수정이 완료되었습니다.");
+
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
               type: DEVICE_API.crewContractUpdateEnd,
@@ -134,36 +139,24 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
 
   return (
     <div className={css.container}>
-      {/* <div className={css.header}>
-        <div className={css.title}>팀원 계약 수정</div>
-        <div className={css.subtitle}>계약 정보를 입력하고 제출해주세요</div>
-      </div> */}
-
-      <div className={css.infoSection}>
-        <div className={css.companyInfo}>
-          <span className={css.corpNm}>{contractData.corpNm}</span>
-          <span className={css.siteNm}>{contractData.siteNm}</span>
-        </div>
-      </div>
-
       <div className={css.formSection}>
-        {/* <div className={css.formTitle}>
-          계약 상세 정보 수정
-        </div> */}
-        {/* 
-        <div className={css.formField}>
-          <TextInput label="계약자" value={contractData.userNm} disabled />
-        </div> */}
-        <div className={css.profileImageWrapper}>
-          <div className={css.profileName}>{contractData.userNm}</div>
-          <Image
-            src={`data:image/jpeg;base64,${contractData.faceImgFile}`}
-            alt="계약자 얼굴"
-            width={58}
-            height={58}
-            className={css.profileImage}
-            unoptimized
-          />
+        <div className={css.profileWrapper}>
+          <div className={css.profileImageWrapper}>
+            <Image
+              src={`data:image/jpeg;base64,${contractData.faceImgFile}`}
+              alt="계약자 얼굴"
+              width={58}
+              height={58}
+              className={css.profileImage}
+              unoptimized
+            />
+            <div className={css.profileName}>{contractData.userNm}</div>
+          </div>
+
+          <div className={css.corpInfoWrapper}>
+            <div>{contractData.corpNm}</div>
+            <div>{contractData.siteNm}</div>
+          </div>
         </div>
 
         <div className={css.formField}>
@@ -300,10 +293,28 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
                   {...field}
                   label="팀장 권한 부여"
                   type="checkbox"
-                  error={fieldState.error?.message}
+                  // error={fieldState.error?.message}
                   required
                   checked={field.value === "Y"}
                   onChange={(e) => field.onChange(e.target.checked ? "Y" : "N")}
+                />
+              </div>
+            )}
+          />
+        </div>
+
+        <div className={css.formField}>
+          <Controller
+            control={form.control}
+            name="userDcsr"
+            render={({ field, fieldState }) => (
+              <div className={css.inputWrapper}>
+                <Textarea
+                  {...field}
+                  label="계약 관련 메모"
+                  // error={fieldState.error?.message}
+                  value={field.value || ""}
+                  onChange={field.onChange}
                 />
               </div>
             )}
@@ -335,7 +346,6 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
           onClick={handleEditContract}
           loading={editContractMutation.isPending}
           classNames={{ root: clsx(css.actionButton, css.editButton) }}
-          // leftSection={<Send size={20} />}
         >
           계약 수정
         </Button>
@@ -344,7 +354,6 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
           onClick={handleCancelContract}
           loading={cancelContractMutation.isPending}
           classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
-          // leftSection={<Send size={20} />}
         >
           계약 해지
         </Button>
