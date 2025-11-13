@@ -9,7 +9,7 @@ export default function Step4({
   onClickNext,
   onClickPrev,
 }: {
-  loginTp: "1" | "2" | "3";
+  loginTp: "1" | "2" | "3" | "4" | "5";
   onClickNext: () => void;
   onClickPrev: () => void;
 }) {
@@ -29,12 +29,12 @@ export default function Step4({
             onChange={(e) => onNoSpaceChange(e, field.onChange)}
             error={fieldState.error?.message}
             required
-            disabled={loginTp !== "1"}
+            disabled={loginTp === "2"}
           />
         )}
       />
 
-      {loginTp === "1" && (
+      {loginTp !== "2" && (
         <Controller
           control={form.control}
           name="password"
@@ -52,7 +52,7 @@ export default function Step4({
         />
       )}
 
-      {loginTp === "1" && (
+      {loginTp !== "2" && (
         <Controller
           control={form.control}
           name="passwordConfirm"

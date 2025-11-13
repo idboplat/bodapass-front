@@ -15,7 +15,7 @@ import { WithSignInLayout } from "./layout";
 
 interface Props {
   workerTp: "2" | "3";
-  loginTp: "1" | "2" | "3";
+  loginTp: "1" | "2" | "3" | "4" | "5";
   initState: {
     brokerId: TSignUpDto["brkrId"];
     externalId: TSignUpDto["externalId"];
@@ -61,6 +61,9 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
       externalId: initState.externalId,
       password: initState.password,
       passwordConfirm: initState.password,
+
+      //
+      corpCd: "",
     },
   });
 
@@ -169,6 +172,7 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
         image,
         wrkTp: workerTp,
         loginTp,
+        corpCd: "",
       },
       {
         onSuccess: () => {

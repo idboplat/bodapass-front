@@ -104,6 +104,7 @@ export default function CrewSignUpHome({}: Props) {
         image,
         wrkTp,
         loginTp: "4", // 기타
+        corpCd: "",
       },
       {
         onSuccess: (data) =>

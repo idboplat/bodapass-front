@@ -15,7 +15,7 @@ import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
 
 interface Props {
-  loginTp: "1" | "2" | "3";
+  loginTp: "1" | "2" | "3" | "4" | "5";
   initState: {
     externalId: TSignUpDto["externalId"];
     password: TSignUpDto["password"];
@@ -57,6 +57,9 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
       externalId: initState.externalId,
       password: initState.password,
       passwordConfirm: initState.password,
+
+      //
+      corpCd: "",
     },
   });
 
@@ -128,6 +131,7 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
         brkrId: "",
         wrkTp: "1",
         loginTp,
+        corpCd: "",
       },
       {
         onSuccess: () => {

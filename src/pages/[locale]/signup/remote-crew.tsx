@@ -7,7 +7,7 @@ import { TSignUpDto } from "@/libraries/auth/auth.dto";
 export default function Page() {
   const router = useRouter();
 
-  const loginTp = (router.query.loginTp?.toString() || "1") as "1" | "2" | "3";
+  const loginTp = (router.query.loginTp?.toString() || "4") as "1" | "2" | "3" | "4" | "5";
   const workerTp = (router.query.workerTp?.toString() || "2") as "2" | "3";
   const brokerId = (router.query.brkrId?.toString() || "") as TSignUpDto["brkrId"];
   const externalId = (router.query.externalId?.toString() || "") as TSignUpDto["externalId"];

@@ -31,6 +31,9 @@ export const signUpDto = z.object({
   externalId: z.string().min(1),
   password: z.string().min(1),
   passwordConfirm: z.string().min(1),
+
+  //
+  corpCd: z.string(),
 });
 
 export type TScannedResult = {

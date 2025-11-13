@@ -108,8 +108,8 @@ export const useWCW000001SSP02 = () => {
   const mutation = useMutation({
     mutationFn: async (
       args: TSignUpDto & {
-        /** 이메일 1, 소셜 2, 전화번호 3, 기타 4 */
-        loginTp: "1" | "2" | "3" | "4";
+        /** 이메일 1, 소셜 2, 전화번호 3, 기타 4. 아이디, 5. etc  */
+        loginTp: "1" | "2" | "3" | "4" | "5";
         /** 반장 1, 팀원 2, 일용직 3 */
         wrkTp: "1" | "2" | "3";
         session: Session | null;
@@ -135,6 +135,7 @@ export const useWCW000001SSP02 = () => {
           args.password,
           args.cntryCd,
           args.brkrId,
+          args.corpCd,
         ],
         formData: [args.image],
       });

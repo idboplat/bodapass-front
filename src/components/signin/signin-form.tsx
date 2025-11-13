@@ -30,7 +30,7 @@ export default function SigninForm() {
     const trimmedPassword = data.password.trim();
 
     if (!trimmedExternalId) {
-      throw new Error("이메일을 입력해주세요.");
+      throw new Error("아이디를 입력해주세요.");
     }
 
     if (!trimmedPassword) {

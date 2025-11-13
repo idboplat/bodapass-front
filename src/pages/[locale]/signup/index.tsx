@@ -10,13 +10,13 @@ export default function Page() {
   const router = useRouter();
   const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
-  const loginTp = (router.query.loginTp?.toString() || "1") as "1" | "2" | "3";
+  const loginTp = (router.query.loginTp?.toString() || "4") as "1" | "2" | "3" | "4" | "5";
   const externalId = (router.query.externalId?.toString() || "") as TSignUpDto["externalId"];
   const code = (router.query.code?.toString() || "") as TSignUpDto["password"];
 
   const nextPage = (tp: "leader" | "remote-crew") => () => {
     const searchParams = new URLSearchParams();
-    if (loginTp) searchParams.set("loginTp", loginTp); // 1: 이메일, 2: 소셜, 3: 전화번호
+    if (loginTp) searchParams.set("loginTp", loginTp); // 1: 이메일, 2: 소셜, 3: 전화번호, 4: 아이디, 5: etc
     if (externalId) searchParams.set("externalId", externalId); // 소셜 로그인 시 이메일
     if (code) searchParams.set("code", code); // 소셜 로그인 시 소셜 아이디
     router.push(`/${locale}/signup/${tp}?${searchParams.toString()}`);
@@ -29,7 +29,7 @@ export default function Page() {
       <GradientBackground />
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h1 className={css.title}>{loginTp === "1" ? t("auth:1001") : t("auth:1002")}</h1>
+          <h1 className={css.title}>{loginTp !== "2" ? t("auth:1001") : t("auth:1002")}</h1>
 
           <div className={css.buttonContainer}>
             <button className={css.roleButton} onClick={nextPage("leader")}>

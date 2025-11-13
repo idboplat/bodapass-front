@@ -4,7 +4,7 @@ declare global {
     extnUserId: string;
     userId: string;
     userNm: string;
-    loginTp: "1" | "2" | "3";
+    loginTp: "1" | "2" | "3" | "4" | "5";
     sessionId: string;
     sessionKey: string;
     wrkTp: "1" | "2" | "3";
