@@ -314,6 +314,7 @@ export const useTCM200201SSP03 = () => {
       userId: string;
       cntrDd: string;
       cntrSn: string;
+      userDscr: string;
     }) => {
       const request = await callTms<FillerRspnData>({
         svcId: "TCM200201SSP03",
@@ -323,6 +324,7 @@ export const useTCM200201SSP03 = () => {
           args.userId, // 팀원 사용자 ID
           args.cntrDd, // 계약일자
           args.cntrSn, // 계약번호
+          args.userDscr || "", // 사용자 메모
         ],
         session: args.session,
         locale: "ko",

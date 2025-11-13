@@ -23,6 +23,7 @@ import { AnimatePresence } from "motion/react";
 import Portal from "@/components/common/modal/portal";
 import ConfirmModal from "@/components/common/modal/confirm-modal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
+import CancelConfirmModal from "./cancel-confirm-modal";
 
 const crewUpdateDto = z.object({
   instCd: z.string().min(1),
@@ -46,6 +47,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
   const cancelContractMutation = useTCM200201SSP03();
   const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02({ session });
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [userDscr, setUserDscr] = useState("");
 
   const form = useForm<TCrewUpdateDto>({
     defaultValues: {
@@ -121,9 +123,10 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
         userId: contractData.userId,
         cntrDd: contractData.cntrDd,
         cntrSn: contractData.cntrSn,
+        userDscr: userDscr,
       },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           if (!!window.ReactNativeWebView) {
             sendMessageToDevice({
               type: DEVICE_API.crewContractCancelEnd,
@@ -370,11 +373,11 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       <AnimatePresence>
         {showCancelConfirm && (
           <Portal id={PORTAL_MODAL_CONTAINER_ID}>
-            <ConfirmModal
-              title="계약 해지 확인"
-              content="정말 계약을 해지하시겠습니까?"
+            <CancelConfirmModal
               onClose={() => setShowCancelConfirm(false)}
               onSuccess={confirmCancelContract}
+              userDscr={userDscr}
+              setUserDscr={setUserDscr}
             />
           </Portal>
         )}
