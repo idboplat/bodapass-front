@@ -46,7 +46,6 @@ export default function Step4({
               onChange={(e) => onNoSpaceChange(e, field.onChange)}
               error={fieldState.error?.message}
               required
-              disabled={loginTp !== "1"}
             />
           )}
         />
