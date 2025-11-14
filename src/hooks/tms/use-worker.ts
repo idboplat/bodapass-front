@@ -106,3 +106,45 @@ export const useTCM200801SSQ02 = (args: { session: Session; userId: string }) =>
     queryKey: ["TCM200801SSQ02", args.session, args.userId],
     queryFn: () => getTCM200801SSQ02(args),
   });
+
+/** 사용자 기본 정보 갱신 */
+export const useTCM200801SSP01 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      session: Session;
+      telNo: string;
+      userNm: string;
+      IdNo: string;
+      loginTp: string;
+      addr: string;
+      addrDtil: string;
+      zipCd: string;
+      cntryCd: string;
+      wrkTp: string;
+    }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCM200801SSP01",
+        session: args.session,
+        locale: "ko",
+        data: [
+          args.session.userId,
+          args.session.extnUserId,
+          args.telNo,
+          args.userNm,
+          args.IdNo,
+          args.loginTp,
+          args.addr,
+          args.addrDtil,
+          args.zipCd,
+          args.cntryCd,
+          args.wrkTp,
+        ],
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });

@@ -59,4 +59,7 @@ export const DEVICE_API = {
 
   /** agreement */
   thirdPartyPrivacyAgreementEnd: "thirdPartyPrivacyAgreementEnd",
+
+  /** 사용자 정보 수정 종료 */
+  userInfoEditEnd: "userInfoEditEnd",
 };
