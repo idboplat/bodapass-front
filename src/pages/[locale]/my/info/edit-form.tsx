@@ -81,15 +81,7 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="zipCd"
           render={({ field }) => (
-            <TextInput
-              {...field}
-              label="우편번호"
-              value={undefined}
-              onChange={undefined}
-              defaultValue={field.value}
-              onFocus={openPostCode}
-              required
-            />
+            <TextInput {...field} label="우편번호" onFocus={openPostCode} required />
           )}
         />
 
@@ -97,15 +89,7 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="addr"
           render={({ field }) => (
-            <TextInput
-              {...field}
-              label="주소"
-              value={undefined}
-              onChange={undefined}
-              defaultValue={field.value}
-              onFocus={openPostCode}
-              required
-            />
+            <TextInput {...field} label="주소" onFocus={openPostCode} required />
           )}
         />
 
