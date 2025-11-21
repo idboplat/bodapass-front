@@ -31,7 +31,7 @@ export default function CrewSignUpHome({}: Props) {
   const WCW000001SSP02 = useWCW000001SSP02();
 
   const form = useForm({
-    mode: "onTouched", // 초기 로딩 시 불필요한 검증 방지
+    // mode: "onTouched", // 직접 검증 처리하기 위해 막음
     resolver: zodResolver(signUpDto),
     defaultValues: {
       // step1
@@ -71,7 +71,6 @@ export default function CrewSignUpHome({}: Props) {
   const step2Prev = () => setStep(() => 1);
 
   const step2Next = (args: TScannedResult) => {
-    console.log("args", args);
     form.setValue("idTp", args.idTp);
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
@@ -87,6 +86,16 @@ export default function CrewSignUpHome({}: Props) {
 
     if (!image) {
       setStep(() => 2);
+      return;
+    }
+
+    if (form.getValues("idNo1").length !== 6) {
+      form.setError("idNo1", { message: "신분증 앞 6자리를 입력해주세요." });
+      return;
+    }
+
+    if (form.getValues("idNo2").length !== 7) {
+      form.setError("idNo2", { message: "신분증 뒤 7자리를 입력해주세요." });
       return;
     }
 
