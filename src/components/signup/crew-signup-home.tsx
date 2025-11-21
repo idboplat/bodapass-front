@@ -85,11 +85,6 @@ export default function CrewSignUpHome({}: Props) {
   const step3Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
 
-    if (form.getValues("password") !== form.getValues("passwordConfirm")) {
-      form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
-      return;
-    }
-
     if (!image) {
       setStep(() => 2);
       return;

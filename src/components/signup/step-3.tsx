@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import css from "./step-3.module.scss";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { Button, TextInput } from "@mantine/core";
 import { findEntity, IdCardEntity } from "@/types/tp";
 import { Address } from "react-daum-postcode";
@@ -19,6 +19,7 @@ interface Props {
 
 export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: Props) {
   const form = useFormContext<TSignUpDto>();
+  const { errors } = useFormState({ control: form.control });
 
   const [showPostCode, setShowPostCode] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -61,7 +62,9 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
         <Controller
           control={form.control}
           name="userNm"
-          render={({ field }) => <TextInput {...field} label="이름" mt={0} required />}
+          render={({ field, fieldState }) => (
+            <TextInput {...field} label="이름" mt={0} required error={fieldState.error?.message} />
+          )}
         />
 
         <div className={css.idBox}>
@@ -70,7 +73,9 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
             <Controller
               control={form.control}
               name="idNo1"
-              render={({ field }) => <TextInput {...field} required />}
+              render={({ field }) => (
+                <TextInput {...field} required error={!!errors.idNo1?.message} />
+              )}
             />
 
             <span>-</span>
@@ -78,15 +83,19 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
             <Controller
               control={form.control}
               name="idNo2"
-              render={({ field }) => <TextInput {...field} />}
+              render={({ field }) => (
+                <TextInput {...field} required error={!!errors.idNo2?.message} />
+              )}
             />
           </div>
+          {errors.idNo1?.message && <div className={css.errorMessage}>{errors.idNo1?.message}</div>}
+          {errors.idNo2?.message && <div className={css.errorMessage}>{errors.idNo2?.message}</div>}
         </div>
 
         <Controller
           control={form.control}
           name="zipCd"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <TextInput
               {...field}
               label="우편번호"
@@ -95,6 +104,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               defaultValue={field.value}
               onFocus={openPostCode}
               required
+              error={fieldState.error?.message}
             />
           )}
         />
@@ -102,7 +112,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
         <Controller
           control={form.control}
           name="addr"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <TextInput
               {...field}
               label="주소"
@@ -110,6 +120,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               onChange={undefined}
               defaultValue={field.value}
               onFocus={openPostCode}
+              error={fieldState.error?.message}
               required
             />
           )}
@@ -118,13 +129,15 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
         <Controller
           control={form.control}
           name="addrDtil"
-          render={({ field }) => <TextInput {...field} label="상세주소" required />}
+          render={({ field, fieldState }) => (
+            <TextInput {...field} label="상세주소" required error={fieldState.error?.message} />
+          )}
         />
 
         <Controller
           control={form.control}
           name="tel"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <TextInput
               {...field}
               label="전화번호"
@@ -132,6 +145,7 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
               placeholder="-를 제외하고 입력해주세요."
               inputMode="numeric"
               required
+              error={fieldState.error?.message}
             />
           )}
         />

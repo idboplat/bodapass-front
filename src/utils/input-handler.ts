@@ -1,3 +1,5 @@
+import { removeBlank } from "./regexp";
+
 export const onTelChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   callback: (value: string) => void,
@@ -11,6 +13,5 @@ export const onNoSpaceChange = (
   e: React.ChangeEvent<HTMLInputElement>,
   callback: (value: string) => void,
 ) => {
-  const value = e.target.value.replace(/\s/g, ""); // 모든 공백 제거
-  callback(value);
+  callback(removeBlank(e.target.value));
 };

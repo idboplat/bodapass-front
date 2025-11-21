@@ -13,6 +13,7 @@ import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
+import { checkPassword } from "@/utils/regexp";
 
 interface Props {
   loginTp: "1" | "2" | "3" | "4" | "5";
@@ -34,7 +35,7 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
   const WCW000001SSP02 = useWCW000001SSP02();
 
   const form = useForm({
-    mode: "onTouched", // 초기 로딩 시 불필요한 검증 방지
+    // mode: "onTouched", // 직접 검증 처리하기 위해 막음
     resolver: zodResolver(signUpDto),
     defaultValues: {
       // step1
@@ -100,6 +101,16 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
 
     if (!isValid) return;
 
+    if (form.getValues("idNo1").length !== 6) {
+      form.setError("idNo1", { message: "주민등록번호 앞 6자리를 입력해주세요." });
+      return;
+    }
+
+    if (form.getValues("idNo2").length !== 7) {
+      form.setError("idNo2", { message: "주민등록번호 뒤 7자리를 입력해주세요." });
+      return;
+    }
+
     setStep(() => 4);
   };
 
@@ -110,6 +121,14 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
 
     const isValid = await form.trigger();
     if (!isValid) return;
+
+    // TODO : 리팩토링 필요
+    if (!checkPassword(form.getValues("password"))) {
+      form.setError("password", {
+        message: "비밀번호는 8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.",
+      });
+      return;
+    }
 
     if (form.getValues("password") !== form.getValues("passwordConfirm")) {
       form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
