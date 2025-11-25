@@ -24,7 +24,7 @@ export const useTCM200101SSP01 = () =>
       }),
   });
 
-/** 1 대 다 출퇴근 */
+/** 1 대 다 출근 */
 export const useTCM200101SSP02 = () =>
   useMutation({
     mutationFn: async (args: {
@@ -33,6 +33,8 @@ export const useTCM200101SSP02 = () =>
       attCd: "I" | "O";
       session: Session;
       img: Blob;
+      siteCoorX: string;
+      siteCoorY: string;
     }) =>
       callWas<StringRspnData<1>>({
         apiPathName: "WCM200101SSP02",
@@ -45,6 +47,9 @@ export const useTCM200101SSP02 = () =>
           "", // 검색된 팀원 아이디
           args.attCd,
           "", // 검색된 팀원 얼굴 이미지 파일
+          "", // 사용자 메모
+          args.siteCoorX,
+          args.siteCoorY,
         ],
         formData: [args.img],
       }),

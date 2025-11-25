@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import Portal from "../common/modal/portal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
+import { useUserLocation } from "@/hooks/use-user-location";
 
 interface Props {
   attCd: "I" | "O";
@@ -36,12 +37,24 @@ export default function SearchHome({ attCd }: Props) {
   if (!session) throw new Error("FW401");
 
   const TCM200101SSP02 = useTCM200101SSP02();
+  const { userLocation } = useUserLocation();
 
   const onCapture = (args: { image: Blob }) => {
     if (TCM200101SSP02.isPending) return;
 
+    const siteCoorX = userLocation?.lng?.toString() || "";
+    const siteCoorY = userLocation?.lat?.toString() || "";
+
     TCM200101SSP02.mutate(
-      { img: args.image, mastCorpCd, corpCd, attCd, session },
+      {
+        img: args.image,
+        mastCorpCd,
+        corpCd,
+        attCd,
+        session,
+        siteCoorX,
+        siteCoorY,
+      },
       {
         onSuccess: async () => {
           nativeAlert("처리되었습니다.");
