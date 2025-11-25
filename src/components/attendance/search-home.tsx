@@ -116,9 +116,6 @@ export default function SearchHome({ attCd }: Props) {
           onChange={onClickNightMode}
         />
       </div>
-      <div>
-        위도: {siteCoorY}, 경도: {siteCoorX}
-      </div>
       <Capture onCapture={onCapture} isLoading={TCM200101SSP02.isPending} />
       <div
         style={{
