@@ -39,11 +39,16 @@ export default function SearchHome({ attCd }: Props) {
   const TCM200101SSP02 = useTCM200101SSP02();
   const { userLocation } = useUserLocation();
 
+  const siteCoorX = userLocation?.lng?.toString() || "";
+  const siteCoorY = userLocation?.lat?.toString() || "";
+
   const onCapture = (args: { image: Blob }) => {
     if (TCM200101SSP02.isPending) return;
 
-    const siteCoorX = userLocation?.lng?.toString() || "";
-    const siteCoorY = userLocation?.lat?.toString() || "";
+    // 위도 lat y
+    // 경도 lng x
+    // const siteCoorX = userLocation?.lng?.toString() || "";
+    // const siteCoorY = userLocation?.lat?.toString() || "";
 
     TCM200101SSP02.mutate(
       {
@@ -110,6 +115,9 @@ export default function SearchHome({ attCd }: Props) {
           offLabel={<Sun size={16} color="blue" />}
           onChange={onClickNightMode}
         />
+      </div>
+      <div>
+        위도: {siteCoorY}, 경도: {siteCoorX}
       </div>
       <Capture onCapture={onCapture} isLoading={TCM200101SSP02.isPending} />
       <div

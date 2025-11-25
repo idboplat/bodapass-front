@@ -35,6 +35,12 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
       <div className={css.infoSection}>
         <div className={css.siteName}>현장명: {siteNm}</div>
         <div className={css.distance}>현장과의 거리: {distance.toLocaleString()}m</div>
+        <div>
+          현장위도: {lat}, 현장경도: {lng}
+        </div>
+        <div>
+          내 위치 위도: {userLocation?.lat}, 경도: {userLocation?.lng}
+        </div>
       </div>
       {errorCode ? (
         <div className={css.errorContainer}>
