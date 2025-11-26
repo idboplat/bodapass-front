@@ -8,12 +8,16 @@ interface RenderMapProps {
   lng: number;
   siteNm: string;
   siteTelNo: string;
+  /**
+   * 현장과의 거리 반경 (미터 단위)
+   */
+  rad: string;
 }
 
 // https://findlatlng.org/
 // https://generalcoder.tistory.com/4
 // http://localhost:3000/demo/map/dynamic?lng=127.04329080111161&lat=37.54910909586898
-export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProps) {
+export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMapProps) {
   const { isLoading, userLocation, errorCode, refresh } = useUserLocation();
 
   // 좌표 유효성 검사
@@ -69,10 +73,10 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo }: RenderMapProp
                 </MapMarker>
               )}
 
-              {isValidCoordinate && (
+              {isValidCoordinate && rad && Number(rad) > 0 && (
                 <Circle
                   center={{ lat, lng }}
-                  radius={100}
+                  radius={Number(rad)}
                   strokeWeight={5} // 선의 두께입니다
                   strokeColor={"#75B8FA"} // 선의 색깔입니다
                   strokeOpacity={2} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
