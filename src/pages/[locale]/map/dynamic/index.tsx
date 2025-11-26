@@ -15,9 +15,10 @@ export default function Page() {
   const lng = Number(searchParams.lng) || 0;
   const siteNm = (searchParams.siteNm as string) || "현장";
   const siteTelNo = (searchParams.siteTelNo as string) || "";
+  const rad = (searchParams.rad as string) || "";
   return (
     <div className={"mobileLayout"}>
-      <RenderMap lat={lat} lng={lng} siteNm={siteNm} siteTelNo={siteTelNo} />
+      <RenderMap lat={lat} lng={lng} siteNm={siteNm} siteTelNo={siteTelNo} rad={rad} />
     </div>
   );
 }
