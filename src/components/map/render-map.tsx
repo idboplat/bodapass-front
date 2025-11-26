@@ -39,7 +39,6 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMa
       <div className={css.infoSection}>
         <div className={css.siteName}>현장명: {siteNm}</div>
         <div className={css.distance}>현장과의 거리: {distance.toLocaleString()}m</div>
-        <div className={css.radius}>거리 반경: {rad}m</div>
       </div>
       {errorCode ? (
         <div className={css.errorContainer}>
