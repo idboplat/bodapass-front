@@ -46,9 +46,9 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       <Configs>
         <NoSSR>
           <Component {...pageProps} />
+          <PortalModalContainer />
+          <ToastBox />
         </NoSSR>
-        <PortalModalContainer />
-        <ToastBox />
 
         {/* kakao map */}
         <Script
