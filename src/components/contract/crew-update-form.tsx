@@ -48,6 +48,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
   const { data: instData, isPending: isInstDataLoading } = useTCW000100SMQ02({ session });
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const [userDscr, setUserDscr] = useState("");
+  const [userDscrOther, setUserDscrOther] = useState("");
 
   const form = useForm<TCrewUpdateDto>({
     defaultValues: {
@@ -123,7 +124,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
         userId: contractData.userId,
         cntrDd: contractData.cntrDd,
         cntrSn: contractData.cntrSn,
-        userDscr: userDscr,
+        userDscr: userDscr === "기타" ? userDscrOther : userDscr,
       },
       {
         onSuccess: () => {
@@ -378,6 +379,8 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
               onSuccess={confirmCancelContract}
               userDscr={userDscr}
               setUserDscr={setUserDscr}
+              userDscrOther={userDscrOther}
+              setUserDscrOther={setUserDscrOther}
             />
           </Portal>
         )}

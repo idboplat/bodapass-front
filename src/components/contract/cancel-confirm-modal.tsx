@@ -6,11 +6,13 @@ import {
   ModalInner,
   ModalTitle,
 } from "@/components/common/modal/components";
-import { Button, RemoveScroll, Textarea } from "@mantine/core";
+import { Button, RemoveScroll, Select, Textarea, TextInput } from "@mantine/core";
 
 interface ConfirmModalProps {
   userDscr: string;
   setUserDscr: (userDscr: string) => void;
+  userDscrOther: string;
+  setUserDscrOther: (userDscrOther: string) => void;
 }
 
 export default function CancelConfirmModal({
@@ -18,6 +20,8 @@ export default function CancelConfirmModal({
   setUserDscr,
   onClose,
   onSuccess,
+  userDscrOther,
+  setUserDscrOther,
 }: ModalProps<ConfirmModalProps>) {
   return (
     <RemoveScroll removeScrollBar={false}>
@@ -31,14 +35,33 @@ export default function CancelConfirmModal({
           <div>
             <p>정말 계약을 해지하시겠습니까?</p>
           </div>
+
           <div>
-            <Textarea
+            <Select
               label="해지 사유"
-              placeholder="해지 사유를 입력해주세요."
               value={userDscr}
-              onChange={(e) => setUserDscr(e.target.value)}
-              mt="md"
+              onChange={(value) => {
+                setUserDscr(value || "");
+                if (value !== "기타") {
+                  setUserDscrOther("");
+                }
+              }}
+              placeholder="해지 사유를 선택해주세요"
+              data={["근무 일정 변경", "계약 기간 만료", "기타"]}
+              allowDeselect={false}
+              comboboxProps={{ withinPortal: false }}
+              mt={10}
             />
+            {userDscr === "기타" && (
+              <TextInput
+                label="기타 사유 입력"
+                value={userDscrOther}
+                onChange={(e) => setUserDscrOther(e.target.value)}
+                placeholder="기타 사유를 입력해주세요"
+                mt={10}
+                required
+              />
+            )}
           </div>
         </ModalBody>
         <ModalFooter>
