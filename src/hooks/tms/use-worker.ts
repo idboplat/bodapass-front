@@ -151,3 +151,22 @@ export const useTCM200801SSP01 = () =>
       return data;
     },
   });
+
+/** 회원탈퇴 */
+export const useTCM200801SSP02 = () =>
+  useMutation({
+    mutationFn: async (args: { session: Session; password: string }) => {
+      const response = await callTms<StringRspnData<1>>({
+        svcId: "TCM200801SSP02",
+        session: args.session,
+        locale: "ko",
+        data: [args.session.userId, args.password],
+      });
+
+      const data = response.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });

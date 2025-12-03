@@ -62,4 +62,7 @@ export const DEVICE_API = {
 
   /** 사용자 정보 수정 종료 */
   userInfoEditEnd: "userInfoEditEnd",
+
+  /** 회원탈퇴 종료 */
+  deleteAccountEnd: "deleteAccountEnd",
 };
