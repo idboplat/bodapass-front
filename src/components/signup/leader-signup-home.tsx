@@ -151,6 +151,7 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
         wrkTp: "1",
         loginTp,
         corpCd: "",
+        emailAddr: "",
       },
       {
         onSuccess: () => {

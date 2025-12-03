@@ -55,6 +55,7 @@ export default function InfoEditForm({ session, userData }: Props) {
         zipCd: form.watch("zipCd"),
         cntryCd: userData.cntryCd,
         wrkTp: userData.wrkTp,
+        emailAddr: "",
       },
       {
         onSuccess: () => {

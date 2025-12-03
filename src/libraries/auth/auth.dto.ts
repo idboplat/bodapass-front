@@ -34,6 +34,9 @@ export const signUpDto = z.object({
 
   //
   corpCd: z.string(),
+
+  //
+  emailAddr: z.string(),
 });
 
 export type TScannedResult = {

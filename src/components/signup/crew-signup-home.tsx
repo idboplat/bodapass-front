@@ -54,6 +54,9 @@ export default function CrewSignUpHome({}: Props) {
       externalId: "",
       password: "",
       passwordConfirm: "",
+
+      //
+      emailAddr: "",
     },
   });
 

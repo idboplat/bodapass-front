@@ -136,6 +136,7 @@ export const useWCW000001SSP02 = () => {
           args.cntryCd,
           args.brkrId,
           args.corpCd,
+          args.emailAddr,
         ],
         formData: [args.image],
       });

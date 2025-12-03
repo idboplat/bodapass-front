@@ -65,6 +65,9 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
 
       //
       corpCd: "",
+
+      //
+      emailAddr: "",
     },
   });
 
@@ -192,6 +195,7 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
         wrkTp: workerTp,
         loginTp,
         corpCd: "",
+        emailAddr: "",
       },
       {
         onSuccess: () => {

@@ -11,7 +11,7 @@ export const getWCM200801SSQ01 = async ({
   session: Session;
   userId: string;
 }) => {
-  const response = await callWas<StringRspnData<14>>({
+  const response = await callWas<StringRspnData<15>>({
     apiPathName: "WCM200801SSQ01",
     svcId: "TCM200801SSQ01",
     session,
@@ -41,6 +41,7 @@ export const getWCM200801SSQ01 = async ({
     brkrId: data.F12,
     faceRgstYn: data.F13,
     faceImgFile: data.F14,
+    emailAddr: data.F15,
   };
 };
 
@@ -121,6 +122,7 @@ export const useTCM200801SSP01 = () =>
       zipCd: string;
       cntryCd: string;
       wrkTp: string;
+      emailAddr: string;
     }) => {
       const response = await callTms<StringRspnData<1>>({
         svcId: "TCM200801SSP01",
@@ -138,6 +140,7 @@ export const useTCM200801SSP01 = () =>
           args.zipCd,
           args.cntryCd,
           args.wrkTp,
+          args.emailAddr,
         ],
       });
 
