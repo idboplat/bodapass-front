@@ -61,6 +61,7 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
 
       //
       corpCd: "",
+      emailAddr: "",
     },
   });
 
@@ -119,8 +120,25 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
   const step4Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
 
+    // emailAddr 우선 빈값으로
+    form.setValue("emailAddr", "");
+
     const isValid = await form.trigger();
-    if (!isValid) return;
+
+    // if (!isValid) return;
+    if (!isValid) {
+      // 디버깅: 어떤 필드에서 에러가 발생했는지 확인
+      const errors = form.formState.errors;
+      const values = form.getValues();
+
+      nativeLogger("=== Validation Errors ===");
+      nativeLogger(JSON.stringify(errors, null, 2));
+      nativeLogger("=== Form Values ===");
+      nativeLogger(JSON.stringify(values, null, 2));
+
+      alert(`Validation 실패\n에러 필드: ${Object.keys(errors).join(", ")}`);
+      return;
+    }
 
     // TODO : 리팩토링 필요
     if (!checkPassword(form.getValues("password"))) {

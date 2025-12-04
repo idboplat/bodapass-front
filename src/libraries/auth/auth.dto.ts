@@ -35,8 +35,8 @@ export const signUpDto = z.object({
   //
   corpCd: z.string(),
 
-  //
-  emailAddr: z.string(),
+  // 우선 빈값처리
+  emailAddr: z.string().optional().default(""),
 });
 
 export type TScannedResult = {
