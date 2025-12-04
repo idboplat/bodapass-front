@@ -112,6 +112,7 @@ export default function CrewSignUpHome({}: Props) {
         wrkTp,
         loginTp: "4", // 기타
         corpCd: "",
+        emailAddr: "",
       },
       {
         onSuccess: (data) =>
