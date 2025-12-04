@@ -1,6 +1,8 @@
 import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
 import { Promised } from "@/types/common";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { nativeAlert } from "../use-device-api";
+import { TmsError } from "@/libraries/error";
 
 /**  [사용자] 사용자 기본 정보 조회 */
 export type TWCM200801SSQ01Data = Promised<typeof getWCM200801SSQ01>;
@@ -168,5 +170,12 @@ export const useTCM200801SSP02 = () =>
       if (!data) throw new Error("FW999");
 
       return data;
+    },
+    onError: (error: unknown) => {
+      if (error instanceof TmsError) {
+        nativeAlert(error.message);
+      } else {
+        nativeAlert("회원탈퇴에 실패했습니다.");
+      }
     },
   });

@@ -8,10 +8,9 @@ import { useRouter } from "next/router";
 
 interface Props {
   session: Session;
-  userData: TWCM200801SSQ01Data;
 }
 
-export default function DeleteAccountForm({ session, userData }: Props) {
+export default function DeleteAccountForm({ session }: Props) {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
 
@@ -25,7 +24,7 @@ export default function DeleteAccountForm({ session, userData }: Props) {
   const onSubmit = async () => {
     if (mutation.isPending) return;
 
-    await mutation.mutateAsync(
+    mutation.mutate(
       {
         session: session,
         password: form.watch("password"),
@@ -83,7 +82,7 @@ export default function DeleteAccountForm({ session, userData }: Props) {
             variant="filled"
             type="button"
             onClick={onSubmit}
-            // disabled={mutation.isPending || !form.watch("password")}
+            disabled={mutation.isPending || !form.watch("password")}
             className={css.deleteButton}
           >
             회원 탈퇴
