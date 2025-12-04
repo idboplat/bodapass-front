@@ -140,7 +140,7 @@ const getWCM200201SSQ01 = async (args: {
   cntrDd: string;
   cntrSn: string;
 }) => {
-  const response = await callWas<StringRspnData<24>>({
+  const response = await callWas<StringRspnData<25>>({
     apiPathName: "WCM200201SSQ01",
     svcId: "TCM200201SSQ01",
     session: args.session,
@@ -178,6 +178,7 @@ const getWCM200201SSQ01 = async (args: {
     cntrSn: data.F22,
     faceRgstYn: data.F23,
     faceImgFile: data.F24,
+    idxGrp: data.F25,
   };
 };
 
