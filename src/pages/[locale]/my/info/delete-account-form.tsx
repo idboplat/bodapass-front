@@ -13,6 +13,7 @@ interface Props {
 
 export default function DeleteAccountForm({ session, userData }: Props) {
   const router = useRouter();
+  const locale = router.query.locale?.toString() || "ko";
 
   const form = useForm({
     defaultValues: {
@@ -39,7 +40,7 @@ export default function DeleteAccountForm({ session, userData }: Props) {
               payload: null,
             });
           } else {
-            router.back();
+            router.replace(`/${locale}/signin`);
           }
         },
       },
