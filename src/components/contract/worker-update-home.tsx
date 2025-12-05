@@ -1,9 +1,9 @@
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import CrewUpdateForm from "./crew-update-form";
+import WorkerUpdateForm from "./worker-update-form";
 import { useWCM200201SSQ01 } from "@/hooks/tms/use-contract";
 
-export default function CrewUpdateHome() {
+export default function WorkerUpdateHome() {
   const router = useRouter();
   const mastCorpCd = router.query.mastCorpCd?.toString() || "";
   const corpCd = router.query.corpCd?.toString() || "";
@@ -41,7 +41,7 @@ export default function CrewUpdateHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <CrewUpdateForm contractData={WCM200201SSQ01.data} session={session} />
+      <WorkerUpdateForm contractData={WCM200201SSQ01.data} session={session} />
     </div>
   );
 }

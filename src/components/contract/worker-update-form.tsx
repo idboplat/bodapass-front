@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { DEVICE_API } from "@/types/common";
-import css from "./crew-update-form.module.scss";
+import css from "./worker-update-form.module.scss";
 import { Building, Calendar, DollarSign, FileText, MapPin, Send, User } from "lucide-react";
 import { DatePickerInput } from "@mantine/dates";
 import { addComma } from "@/utils/regexp";
@@ -25,7 +25,7 @@ import ConfirmModal from "@/components/common/modal/confirm-modal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
 import CancelConfirmModal from "./cancel-confirm-modal";
 
-const crewUpdateDto = z.object({
+const workerUpdateDto = z.object({
   instCd: z.string().min(1),
   orderPrc: z.string().min(1),
   wrkDd: z.tuple([z.string().nullable(), z.string().nullable()]),
@@ -34,14 +34,14 @@ const crewUpdateDto = z.object({
   userDcsr: z.string().nullable(),
 });
 
-type TCrewUpdateDto = z.infer<typeof crewUpdateDto>;
+type TWorkerUpdateDto = z.infer<typeof workerUpdateDto>;
 
 interface Props {
   contractData: NonNullable<TWCM200201SSQ01Data>;
   session: Session;
 }
 
-export default function CrewUpdateForm({ contractData, session }: Props) {
+export default function WorkerUpdateForm({ contractData, session }: Props) {
   const router = useRouter();
   const editContractMutation = useTCM200201SSP02();
   const cancelContractMutation = useTCM200201SSP03();
@@ -50,7 +50,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
   const [userDscr, setUserDscr] = useState("");
   const [userDscrOther, setUserDscrOther] = useState("");
 
-  const form = useForm<TCrewUpdateDto>({
+  const form = useForm<TWorkerUpdateDto>({
     defaultValues: {
       instCd: contractData.instCd,
       orderPrc: addComma(contractData.ordrPrc),
@@ -59,7 +59,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       subMngrYn: contractData.subMngrYn as "Y" | "N",
       userDcsr: "",
     },
-    resolver: zodResolver(crewUpdateDto),
+    resolver: zodResolver(workerUpdateDto),
   });
 
   const handleEditContract = async () => {
@@ -140,6 +140,8 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
       },
     );
   };
+
+  const isLeader = session.userId === contractData.userId && session.wrkTp === "1";
 
   return (
     <div className={css.container}>
@@ -307,7 +309,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
           />
         </div>
 
-        <div className={css.formField}>
+        {/* <div className={css.formField}>
           <Controller
             control={form.control}
             name="userDcsr"
@@ -323,7 +325,7 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
               </div>
             )}
           />
-        </div>
+        </div> */}
       </div>
 
       {/* 서명 섹션 (현재 주석 처리됨) */}
@@ -351,16 +353,18 @@ export default function CrewUpdateForm({ contractData, session }: Props) {
           loading={editContractMutation.isPending}
           classNames={{ root: clsx(css.actionButton, css.editButton) }}
         >
-          계약 수정
+          근로조건 변경
         </Button>
-        <Button
-          type="button"
-          onClick={handleCancelContract}
-          loading={cancelContractMutation.isPending}
-          classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
-        >
-          계약 해지
-        </Button>
+        {!isLeader && (
+          <Button
+            type="button"
+            onClick={handleCancelContract}
+            loading={cancelContractMutation.isPending}
+            classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
+          >
+            팀원등록 해지
+          </Button>
+        )}
       </div>
 
       {(editContractMutation.isPending || cancelContractMutation.isPending) && (

@@ -1,4 +1,4 @@
-import CrewUpdateHome from "@/components/contract/crew-update-home";
+import WorkerUpdateHome from "@/components/contract/worker-update-home";
 import { Authorized } from "@/libraries/auth/authorized";
 import { useRouter } from "next/router";
 
@@ -9,7 +9,7 @@ export default function WorkerUpdate() {
 
   return (
     <Authorized>
-      <CrewUpdateHome />
+      <WorkerUpdateHome />
     </Authorized>
   );
 }

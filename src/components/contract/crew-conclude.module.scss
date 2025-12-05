@@ -19,86 +19,6 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  .subtitle {
-    color: #64748b;
-    font-size: 0.9rem;
-  }
-}
-
-.infoSection {
-  margin-bottom: 1.5rem;
-}
-
-.sectionTitle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1rem;
-
-  &::before {
-    content: "";
-    width: 4px;
-    height: 20px;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    border-radius: 2px;
-  }
-
-  svg {
-    color: #3b82f6;
-  }
-}
-
-.infoCard {
-  background: white;
-  border-radius: 12px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
-
-  &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-    transform: translateY(-1px);
-  }
-}
-
-.infoRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #f1f5f9;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    color: #64748b;
-    font-size: 0.9rem;
-
-    svg {
-      color: #94a3b8;
-      flex-shrink: 0;
-    }
-  }
-
-  .value {
-    font-weight: 600;
-    color: #1e293b;
-    text-align: right;
-    max-width: 60%;
-    word-break: break-word;
-  }
 }
 
 // 폼 스타일 (crew-conclude용)
@@ -109,28 +29,6 @@
   margin-bottom: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
-
-  .formTitle {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    &::before {
-      content: "";
-      width: 4px;
-      height: 20px;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      border-radius: 2px;
-    }
-
-    svg {
-      color: #3b82f6;
-    }
-  }
 
   .formField {
     margin-bottom: 1.5rem;
@@ -145,6 +43,19 @@
     color: #374151;
     margin-bottom: 0.5rem;
     display: block;
+  }
+
+  .infoRow {
+    margin-bottom: 1rem;
+
+    .label {
+      span {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .value {
+    }
   }
 
   .inputWrapper {
