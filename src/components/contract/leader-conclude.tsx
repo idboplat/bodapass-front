@@ -192,7 +192,6 @@ export function LeaderConclude({ contractData, session }: Props) {
           계약 수령인
         </div>
         <div className={css.recipientValue}>이름 : {contractData.userNm}</div>
-        <div className={css.recipientValue}>ID : {contractData.userId}</div>
       </div>
 
       {/* 서명 섹션 (현재 주석 처리됨) */}
