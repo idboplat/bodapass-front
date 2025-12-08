@@ -9,7 +9,7 @@ $footer-height: 56px;
 $safe-header-height: calc($header-height + $env-top);
 $safe-footer-height: calc($footer-height + $env-bottom);
 
-$font-pretendard: "Pretendard Variable", "Pretendard";
+$global-font: "Spoqa Han Sans Neo", "sans-serif";
 
 $mantine-breakpoint-xs: var(--mantine-breakpoint-xs);
 $mantine-breakpoint-sm: var(--mantine-breakpoint-sm);
@@ -27,7 +27,7 @@ $breakpoints: (
   sm: 48rem,
   md: 64rem,
   lg: 74rem,
-  xl: 90rem,
+  xl: 90rem
 );
 
 $mobile-boundary: sm; // breakpoint for mobile devices
@@ -37,7 +37,7 @@ $z-indexes: (
   float: 200,
   sidebar: 500,
   modal: 9000,
-  toast: 9999,
+  toast: 9999
 );
 
 $bezier-curve: cubic-bezier(0.23, 1, 0.32, 1);

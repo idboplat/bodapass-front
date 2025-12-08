@@ -20,5 +20,5 @@
   zIndexOverlay: #{map.get(var.$z-indexes, overlay)};
   zIndexMax: #{map.get(var.$z-indexes, max)};
 
-  fontPretendard: var.$font-pretendard;
+  fontPretendard: var.$global-font;
 }

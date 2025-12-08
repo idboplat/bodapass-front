@@ -12,11 +12,11 @@ export default class MyDocument extends Document {
     return (
       <Html lang={currentLocale} {...mantineHtmlProps}>
         <Head>
+          {/* eslint-disable-next-line @next/next/no-css-tags */}
           <link
+            href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
             rel="stylesheet"
-            as="style"
-            crossOrigin="anonymous"
-            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+            type="text/css"
           />
           {process.env.NODE_ENV === "development" && (
             <Script src="https://unpkg.com/react-scan/dist/auto.global.js" async />
