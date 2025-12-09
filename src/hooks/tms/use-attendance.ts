@@ -35,6 +35,7 @@ export const useTCM200101SSP02 = () =>
       img: Blob;
       siteCoorX: string;
       siteCoorY: string;
+      idxGrp: string;
     }) =>
       callWas<StringRspnData<1>>({
         apiPathName: "WCM200101SSP02",
@@ -50,6 +51,7 @@ export const useTCM200101SSP02 = () =>
           "", // 사용자 메모
           args.siteCoorX,
           args.siteCoorY,
+          args.idxGrp,
         ],
         formData: [args.img],
       }),

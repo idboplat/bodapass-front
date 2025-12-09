@@ -29,6 +29,7 @@ export default function SearchHome({ attCd }: Props) {
 
   const mastCorpCd = router.query.mastCorpCd?.toString() || "";
   const corpCd = router.query.corpCd?.toString() || "";
+  const idxGrp = router.query.idxGrp?.toString() || "";
 
   const [isNightMode, setIsNightMode] = useState(false);
   const [showNightModeModal, setShowNightModeModal] = useState(false);
@@ -59,6 +60,7 @@ export default function SearchHome({ attCd }: Props) {
         session,
         siteCoorX,
         siteCoorY,
+        idxGrp,
       },
       {
         onSuccess: async () => {

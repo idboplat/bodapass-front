@@ -13,7 +13,7 @@ export const getWCM200801SSQ01 = async ({
   session: Session;
   userId: string;
 }) => {
-  const response = await callWas<StringRspnData<16>>({
+  const response = await callWas<StringRspnData<15>>({
     apiPathName: "WCM200801SSQ01",
     svcId: "TCM200801SSQ01",
     session,
@@ -44,7 +44,6 @@ export const getWCM200801SSQ01 = async ({
     faceRgstYn: data.F13,
     faceImgFile: data.F14,
     emailAddr: data.F15,
-    idxGrp: data.F16,
   };
 };
 
