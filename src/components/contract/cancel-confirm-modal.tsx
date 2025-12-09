@@ -28,12 +28,12 @@ export default function CancelConfirmModal({
       <ModalInner style={{ maxWidth: "500px" }} outSideClick={onClose}>
         <ModalHeader>
           <div>
-            <ModalTitle>팀원 등록 해지</ModalTitle>
+            <ModalTitle>현장근무 제외</ModalTitle>
           </div>
         </ModalHeader>
         <ModalBody>
           <div>
-            <p>정말 팀원에서 제외하십니까?</p>
+            <p>정말 현장투입에서 제외하십니까?</p>
           </div>
 
           {/* <div>

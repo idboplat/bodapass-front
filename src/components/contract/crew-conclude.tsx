@@ -106,7 +106,7 @@ export default function CrewConclude({ session, contractData }: Props) {
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <div className={css.title}>팀원 계약 작성</div>
+        <div className={css.title}>현장 근무 조건</div>
       </div>
 
       <div className={css.formSection}>
@@ -288,7 +288,7 @@ export default function CrewConclude({ session, contractData }: Props) {
           classNames={{ root: css.submitButton }}
           leftSection={<Send size={20} />}
         >
-          계약 제출
+          확인
         </Button>
       </div>
 

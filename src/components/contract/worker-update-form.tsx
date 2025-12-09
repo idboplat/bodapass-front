@@ -362,7 +362,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             loading={cancelContractMutation.isPending}
             classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
           >
-            팀원등록 해지
+            현장근무 제외
           </Button>
         )}
       </div>

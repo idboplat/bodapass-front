@@ -180,7 +180,7 @@ export default function LeaderPrivacyHome() {
           {/* 제출 버튼 */}
           <div className={css.submitSection}>
             <button className={css.submitButton} onClick={onSubmit} disabled={!isAgree}>
-              {isAgree ? "동의하고 제출하기" : "동의 후 제출 가능"}
+              {isAgree ? "등록 완료" : "동의 후 제출 가능"}
             </button>
           </div>
         </div>
