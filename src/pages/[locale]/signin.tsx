@@ -10,6 +10,7 @@ import { GradientBackground } from "@/components/background";
 import { GetServerSideProps } from "next";
 import { KAKAO_REDIRECT_URI } from "@/constants";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import i18nConfig from "/next-i18next.config";
 
 type Props = {
   kakaoSignInUrl: string;
@@ -62,7 +63,10 @@ export default function Page({ kakaoSignInUrl }: Props) {
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   // const config = await getI18nProps(context, ["common", "auth"]);
   const locale = context.params?.locale?.toString() || "ko";
-  const config = await serverSideTranslations(locale, ["common", "auth"]);
+  console.log("params", context.params);
+  console.log("query", context.query);
+  console.log("locale", locale);
+  const config = await serverSideTranslations("ko", ["common", "auth"], i18nConfig);
 
   // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
   const kakaoSignInUrl = new URL("https://kauth.kakao.com/oauth/authorize");
