@@ -36,11 +36,6 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
 
   return (
     <>
-      {/* <div className={css.infoBox}>
-        <div>반장 ID: {brkrId}</div>
-        <div>신분증 종류: {findEntity(IdCardEntity, scannedResult.type)?.[1]}</div>
-      </div> */}
-
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="통장" fill />}</div>
 
       <div className={css.formBox}>

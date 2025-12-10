@@ -52,7 +52,6 @@ export default function Step3({ onClickNext, onClickPrev, image, isLastStep }: P
   return (
     <>
       <div className={css.infoBox}>
-        {brkrId !== "" && <div>반장 ID: {brkrId}</div>}
         <div>신분증 종류: {findEntity(IdCardEntity, form.watch("idTp"))?.[1]}</div>
       </div>
 

@@ -68,7 +68,6 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
   return (
     <>
       <div className={css.infoBox}>
-        <div>반장 ID: {brkrId}</div>
         <div>신분증 종류: {findEntity(IdCardEntity, scannedResult.idTp)?.[1]}</div>
       </div>
 
