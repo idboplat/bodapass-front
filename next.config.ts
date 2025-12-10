@@ -2,6 +2,9 @@ import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/": ["./public/locales/**/*"],
+  },
   typescript: {
     // !! WARN !!
     // ts빌드 에러를 무시하고 싶다면 아래 옵션을 true로 변경하세요.
