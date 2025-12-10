@@ -35,8 +35,6 @@ export default function BankCamera({ setBankImage, userId }: Props) {
 
   return (
     <>
-      <div>유저 ID: {userId}</div>
-
       <div className={clsx(css.cameraBox)}>
         <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
         <IdcardFrame />

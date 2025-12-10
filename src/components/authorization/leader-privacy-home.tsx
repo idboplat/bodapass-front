@@ -57,7 +57,6 @@ export default function LeaderPrivacyHome() {
   if (WCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
     return (
       <div className={"mobileLayout"}>
-        <BackHeader title="개인정보이용동의" onClickBack={end} />
         <div className={css.loadingState}>개인정보를 불러오는 중...</div>
       </div>
     );
@@ -65,8 +64,6 @@ export default function LeaderPrivacyHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="개인정보이용동의" onClickBack={end} />
-
       {WCM200801SSQ01.data && TCM200801SSQ02.data ? (
         <div className={css.container}>
           <div className={css.header}>

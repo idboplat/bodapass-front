@@ -7,7 +7,6 @@ import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import BackHeader from "../common/back-header";
 import css from "./privacy-home.module.scss";
 
 export default function CrewPrivacyHome() {
@@ -55,7 +54,6 @@ export default function CrewPrivacyHome() {
   if (WCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
     return (
       <div className={"mobileLayout"}>
-        <BackHeader title="개인정보이용동의" onClickBack={end} />
         <div className={css.loadingState}>개인정보를 불러오는 중...</div>
       </div>
     );
@@ -63,8 +61,6 @@ export default function CrewPrivacyHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="개인정보이용동의" onClickBack={end} />
-
       {WCM200801SSQ01.data && TCM200801SSQ02.data ? (
         <div className={css.container}>
           <div className={css.header}>

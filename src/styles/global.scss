@@ -81,6 +81,7 @@ body {
 .mobileLayout {
   margin: 0 auto;
   max-width: 48rem; // 768px
+  height: 100%; // 화면 높이 100%를 차지하도록 설정
 }
 
 @media screen and (max-device-width: 31.25em) {

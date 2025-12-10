@@ -17,7 +17,7 @@ export default function LeaderBankHome({}: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const locale = router.query.locale;
+  const locale = router.query.locale?.toString() || "ko";
   const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
   const [bankImage, setBankImage] = useState<Blob | null>(null);
@@ -69,7 +69,7 @@ export default function LeaderBankHome({}: Props) {
       {
         onSuccess: async () => {
           if (next === "true") {
-            router.replace(`/ko/authorization/leader/privacy?next=true`);
+            router.push(`/${locale}/authorization/leader/privacy?next=true`);
           } else if (next === "webview") {
             await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
@@ -84,7 +84,7 @@ export default function LeaderBankHome({}: Props) {
   return (
     <FormProvider {...form}>
       <div className={"mobileLayout"}>
-        <BackHeader title="통장등록" onClickBack={onClickBack} />
+        {/* <BackHeader title="통장등록" onClickBack={onClickBack} /> */}
 
         {!bankImage ? (
           <BankCamera setBankImage={setBankImage} userId={userId} />

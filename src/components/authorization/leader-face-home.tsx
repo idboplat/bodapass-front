@@ -11,6 +11,7 @@ import { DEVICE_API } from "@/types/common";
 export default function LeaderFaceHome() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const locale = router.query.locale?.toString() || "ko";
 
   const next = (router.query.next?.toString() || "") as "" | "true" | "webview";
 
@@ -40,7 +41,7 @@ export default function LeaderFaceHome() {
       {
         onSuccess: async (data) => {
           if (next === "true") {
-            router.replace(`/ko/authorization/leader/bank?next=true`);
+            router.push(`/${locale}/authorization/leader/bank?next=true`);
           } else if (next === "webview") {
             await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
@@ -54,8 +55,6 @@ export default function LeaderFaceHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="얼굴등록" onClickBack={end} />
-      <div>유저 ID: {userId}</div>
       <Capture onCapture={onCapture} isLoading={WCW000001SSP01.isPending} />
       <LoadingOverlay visible={WCW000001SSP01.isPending} />
     </div>

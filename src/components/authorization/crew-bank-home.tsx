@@ -66,7 +66,7 @@ export default function CrewBankHome() {
       {
         onSuccess: async () => {
           if (next === "true") {
-            router.replace(`/ko/authorization/crew/${userId}/privacy?next=true`);
+            router.push(`/ko/authorization/crew/${userId}/privacy?next=true`);
           } else if (next === "webview") {
             await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
@@ -81,7 +81,7 @@ export default function CrewBankHome() {
   return (
     <FormProvider {...form}>
       <div className={"mobileLayout"}>
-        <BackHeader title="통장등록" onClickBack={onClickBack} />
+        {/* <BackHeader title="통장등록" onClickBack={onClickBack} /> */}
 
         {!bankImage ? (
           <BankCamera setBankImage={setBankImage} userId={userId} />

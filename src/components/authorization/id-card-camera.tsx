@@ -27,7 +27,6 @@ export default function IdcardCamera({
 }: Props) {
   return (
     <>
-      {brkrId && <div className={css.brkrId}>반장 ID: {brkrId}</div>}
       <div className={css.nav}>
         <Select
           data={[

@@ -3,7 +3,6 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { LoadingOverlay } from "@mantine/core";
 import { useRouter } from "next/router";
-import BackHeader from "../common/back-header";
 import { useWCW000002SSP01 } from "@/hooks/tms/use-authorization";
 import { useQueryClient } from "@tanstack/react-query";
 import { DEVICE_API } from "@/types/common";
@@ -40,7 +39,7 @@ export default function CrewFaceHome() {
       {
         onSuccess: async (data) => {
           if (next === "true") {
-            router.replace(`/ko/authorization/crew/${data.userId}/bank?next=true`);
+            router.push(`/ko/authorization/crew/${data.userId}/bank?next=true`);
           } else if (next === "webview") {
             await queryClient.invalidateQueries({ queryKey: ["WCM200801SSQ01"] });
             router.back();
@@ -54,8 +53,6 @@ export default function CrewFaceHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="얼굴등록" onClickBack={end} />
-      <div>유저 ID: {userId}</div>
       <Capture onCapture={onCapture} isLoading={WCW000002SSP01.isPending} />
       <LoadingOverlay visible={WCW000002SSP01.isPending} />
     </div>

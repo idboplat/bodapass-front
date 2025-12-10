@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkIconBox {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.description {
+  text-align: center;
+  margin-top: 2rem;
+
+  h2 {
+    margin-bottom: 0.625rem;
+  }
+
+  p {
+    color: #999999;
+  }
+}
+
+.buttonBox {
+  display: flex;
+  padding: 1rem;
+  padding-bottom: 2rem;
+  gap: 1rem;
+
+  & > button {
+    flex: 1;
+  }
+}

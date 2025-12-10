@@ -1,16 +1,47 @@
 import LeaderFaceHome from "@/components/authorization/leader-face-home";
 import { Authorized } from "@/libraries/auth/authorized";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
+type Props = {
+  title: string;
+};
+
 // http://localhost:3000/ko/authorization/leader/face
-export default function LeaderFaceRegisterPage() {
+export default function LeaderFaceRegisterPage({ title }: Props) {
   const router = useRouter();
 
-  if (!router.isReady) return <div>Loading...</div>;
-
   return (
-    <Authorized>
-      <LeaderFaceHome />
-    </Authorized>
+    <>
+      {/* SSR */}
+      <Head>
+        <title>{title}</title>
+      </Head>
+
+      {!router.isReady ? (
+        <div>Loading...</div>
+      ) : (
+        <Authorized>
+          <LeaderFaceHome />
+        </Authorized>
+      )}
+    </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<
+  Props,
+  { locale: string; next: string }
+> = async (context) => {
+  const locale = context.params?.locale?.toString() || "ko";
+  const isNext = context.params?.next?.toString() === "true";
+
+  const title = isNext ? "얼굴등록" : "얼굴수정";
+
+  return {
+    props: {
+      title,
+    },
+  };
+};

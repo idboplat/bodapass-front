@@ -5,7 +5,6 @@ import { useSession } from "@/libraries/auth/use-session";
 import { useCamera } from "@/hooks/use-camera";
 import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
-import BackHeader from "../common/back-header";
 import { DEVICE_API } from "@/types/common";
 import { TOCR, TScannedResult } from "@/libraries/auth/auth.dto";
 
@@ -125,8 +124,6 @@ export default function CrewIdcardHome({}: Props) {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="신분증" onClickBack={onClickBack} />
-
       {!!scannedResult ? (
         <IdCardForm
           scannedResult={scannedResult}

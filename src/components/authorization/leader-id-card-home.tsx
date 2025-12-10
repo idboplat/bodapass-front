@@ -126,8 +126,6 @@ export default function LeaderIdcardHome() {
 
   return (
     <div className={"mobileLayout"}>
-      <BackHeader title="신분증" onClickBack={onClickBack} />
-
       {!!scannedResult ? (
         <IdCardForm
           scannedResult={scannedResult}
