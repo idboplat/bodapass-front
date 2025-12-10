@@ -1,5 +1,6 @@
 import { UserConfig } from "next-i18next";
 import path from "path";
+import { fileURLToPath } from "url";
 
 // https://github.com/vercel/next.js/discussions/47187
 export const i18nConfig: UserConfig = {
@@ -13,7 +14,7 @@ export const i18nConfig: UserConfig = {
   reloadOnPrerender: process.env.NODE_ENV === "development",
   localePath:
     typeof window === "undefined"
-      ? path.resolve(process.cwd(), "public", "locales")
+      ? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "public", "locales")
       : "./public/locales",
 };
 
