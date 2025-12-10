@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   console.log("params", context.params);
   console.log("query", context.query);
   console.log("locale", locale);
-  const config = await serverSideTranslations("ko", ["common", "auth"], i18nConfig);
+  const config = await serverSideTranslations(locale, ["common", "auth"], i18nConfig);
 
   // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
   const kakaoSignInUrl = new URL("https://kauth.kakao.com/oauth/authorize");
@@ -76,6 +76,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   kakaoSignInUrl.searchParams.set("prompt", "select_account");
 
   console.log("config", config._nextI18Next?.initialI18nStore);
+  console.log("localePath", config._nextI18Next?.userConfig?.localePath);
 
   return {
     props: {
