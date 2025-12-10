@@ -21,8 +21,8 @@
     "paths": {
       "@font": ["./src/styles/font"],
       "@variable": ["./src/styles/variables.module.scss"],
-      "@web/*": ["./src/_app/(web)/*"],
-      "@api/*": ["./src/_app/api/*"],
+      "@web/*": ["src/app/(web)/*"],
+      "@api/*": ["src/app/api/*"],
       "@/*": ["./src/*"],
       "/*": ["./*"]
     },
