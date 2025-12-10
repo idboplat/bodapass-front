@@ -1,6 +1,5 @@
 import SigninForm from "@/components/signin/signin-form";
 import css from "./signin.module.scss";
-import { getI18nProps } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -61,11 +60,7 @@ export default function Page({ kakaoSignInUrl }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  // const config = await getI18nProps(context, ["common", "auth"]);
   const locale = context.params?.locale?.toString() || "ko";
-  console.log("params", context.params);
-  console.log("query", context.query);
-  console.log("locale", locale);
   const config = await serverSideTranslations(locale, ["common", "auth"], i18nConfig);
 
   // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
@@ -74,9 +69,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   kakaoSignInUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
   kakaoSignInUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
   kakaoSignInUrl.searchParams.set("prompt", "select_account");
-
-  console.log("config", config._nextI18Next?.initialI18nStore);
-  console.log("localePath", config._nextI18Next?.userConfig?.localePath);
 
   return {
     props: {

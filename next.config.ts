@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
+    // https://nextjs.org/docs/app/api-reference/config/next-config-js/output
+    // 번역파일을 output에 포함시키기 위해 설정
     "/": ["./public/locales/**/*"],
   },
   typescript: {

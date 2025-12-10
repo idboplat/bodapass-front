@@ -7,7 +7,6 @@ export const i18nConfig: UserConfig = {
     defaultLocale: "ko",
     locales: ["ko", "en"],
   },
-  defaultNS: "common",
   fallbackLng: "ko",
   reloadOnPrerender: process.env.NODE_ENV === "development",
 };
