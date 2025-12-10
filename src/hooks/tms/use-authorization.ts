@@ -159,32 +159,32 @@ export const useWCW000001SSP03 = () =>
   });
 
 /** 근로자 계좌 등록 */
-export const useWCW000002SSP03 = () =>
-  useMutation({
-    mutationFn: async (args: {
-      userId: string;
-      bankCd: string;
-      bankNm: string;
-      bankAccountNo: string;
-      bankImage: Blob;
-      session: Session;
-    }) => {
-      const result = await callWas<StringRspnData<1>>({
-        apiPathName: "WCW000002SSP03",
-        svcId: "TCW000002SSP03",
-        locale: "ko",
-        session: args.session,
-        data: [args.userId, "jpeg", args.bankCd, args.bankNm, args.bankAccountNo, ""],
-        formData: [args.bankImage],
-      });
+// export const useWCW000002SSP03 = () =>
+//   useMutation({
+//     mutationFn: async (args: {
+//       userId: string;
+//       bankCd: string;
+//       bankNm: string;
+//       bankAccountNo: string;
+//       bankImage: Blob;
+//       session: Session;
+//     }) => {
+//       const result = await callWas<StringRspnData<1>>({
+//         apiPathName: "WCW000002SSP03",
+//         svcId: "TCW000002SSP03",
+//         locale: "ko",
+//         session: args.session,
+//         data: [args.userId, "jpeg", args.bankCd, args.bankNm, args.bankAccountNo, ""],
+//         formData: [args.bankImage],
+//       });
 
-      const data = result.svcRspnData?.[0];
+//       const data = result.svcRspnData?.[0];
 
-      if (!data) throw new Error("FW999");
+//       if (!data) throw new Error("FW999");
 
-      return { bankImageSrc: data.F01 };
-    },
-  });
+//       return { bankImageSrc: data.F01 };
+//     },
+//   });
 
 export const useTCW000001SSP04 = () =>
   useMutation({

@@ -2,12 +2,11 @@ import { useState } from "react";
 import BankCamera from "./bank-camera";
 import BankForm from "./bank-form";
 import { useRouter } from "next/router";
-import { useWCW000002SSP03 } from "@/hooks/tms/use-authorization";
+import { useWCW000001SSP03 } from "@/hooks/tms/use-authorization";
 import { useSession } from "@/libraries/auth/use-session";
 import { FormProvider, useForm } from "react-hook-form";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { TBankForm } from "./dto";
-import BackHeader from "../common/back-header";
 import { useQueryClient } from "@tanstack/react-query";
 import { DEVICE_API } from "@/types/common";
 
@@ -32,7 +31,7 @@ export default function CrewBankHome() {
     },
   });
 
-  const WCW000002SSP03 = useWCW000002SSP03();
+  const WCW000002SSP03 = useWCW000001SSP03();
 
   const end = () => {
     if (!!window.ReactNativeWebView) {
