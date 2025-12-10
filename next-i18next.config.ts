@@ -8,9 +8,13 @@ export const i18nConfig: UserConfig = {
     defaultLocale: "ko",
     locales: ["ko", "en"],
   },
+  defaultNS: "common",
   fallbackLng: "ko",
   reloadOnPrerender: process.env.NODE_ENV === "development",
-  localePath: typeof window === "undefined" ? path.resolve("./public/locales") : "./public/locales",
+  localePath:
+    typeof window === "undefined"
+      ? path.resolve(process.cwd(), "public", "locales")
+      : "./public/locales",
 };
 
 export default i18nConfig;
