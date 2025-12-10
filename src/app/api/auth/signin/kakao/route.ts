@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const code = request.headers.get("X-CODE");
 
     if (!code) {
-      console.log("No code provided");
+      console.error("/api/auth/signin/kakao", "X-CODE가 입력되지 않았습니다.");
       throw new BadRequestError("No code provided");
     }
 
@@ -61,10 +61,7 @@ export async function POST(request: NextRequest) {
     const result = await validateExternalId(tokenInfoJson.email);
 
     if (!result) {
-      const redirectUrl = new URL("/ko/signup", request.url);
-      redirectUrl.searchParams.set("loginTp", "2");
-      redirectUrl.searchParams.set("externalId", tokenInfoJson.email);
-      redirectUrl.searchParams.set("code", tokenInfoJson.sub);
+      console.info("/api/auth/signin/kakao", "가입되지 않은 소셜 계정입니다.");
 
       return NextResponse.json({
         token: {

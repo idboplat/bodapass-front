@@ -12,7 +12,7 @@ export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
     mutationFn: ({ code }: { code: string }) =>
       frontApi
         .post<{ session: Session } | { token: { externalId: string; code: string } }>(
-          "api/auth/token/kakao",
+          "api/auth/signin/kakao",
           { headers: { "X-CODE": code } },
         )
         .json(),

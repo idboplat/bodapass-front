@@ -1,27 +1,23 @@
 import SigninForm from "@/components/signin/signin-form";
 import css from "./signin.module.scss";
-import { KAKAO_REDIRECT_URI } from "@/constants";
-import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
+import { getI18nProps } from "@/libraries/i18n/get-static";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import KakaoLoginIcon from "/public/assets/svg/kakao.svg?react";
-import { Button, UnstyledButton } from "@mantine/core";
+import { UnstyledButton } from "@mantine/core";
 import { GradientBackground } from "@/components/background";
+import { GetServerSideProps } from "next";
+import { KAKAO_REDIRECT_URI } from "@/constants";
 
-export default function Page() {
+type Props = {
+  kakaoSignInUrl: string;
+};
+
+export default function Page({ kakaoSignInUrl }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
-
-  const onClickKakaoLogin = () => {
-    const kakaoLoginUrl = new URL("https://kauth.kakao.com/oauth/authorize");
-    kakaoLoginUrl.searchParams.set("response_type", "code");
-    kakaoLoginUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
-    kakaoLoginUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
-    kakaoLoginUrl.searchParams.set("prompt", "select_account");
-    window.location.href = kakaoLoginUrl.toString();
-  };
 
   return (
     <div className={"mobileLayout"}>
@@ -43,7 +39,8 @@ export default function Page() {
 
           <div className={css.socialSection}>
             <div className={css.socialTitle}>소셜 계정으로 로그인</div>
-            <UnstyledButton className={css.kakaoSigninButton} onClick={onClickKakaoLogin}>
+
+            <UnstyledButton component={"a"} href={kakaoSignInUrl} className={css.kakaoSigninButton}>
               <KakaoLoginIcon />
               <span>{t("auth:0002")}</span>
             </UnstyledButton>
@@ -59,5 +56,20 @@ export default function Page() {
   );
 }
 
-const getStaticProps = makeStaticProps(["common", "auth"]);
-export { getStaticPaths, getStaticProps };
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+  const config = await getI18nProps(context, ["common", "auth"]);
+
+  // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
+  const kakaoSignInUrl = new URL("https://kauth.kakao.com/oauth/authorize");
+  kakaoSignInUrl.searchParams.set("response_type", "code");
+  kakaoSignInUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
+  kakaoSignInUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
+  kakaoSignInUrl.searchParams.set("prompt", "select_account");
+
+  return {
+    props: {
+      ...config,
+      kakaoSignInUrl: kakaoSignInUrl.toString(),
+    },
+  };
+};

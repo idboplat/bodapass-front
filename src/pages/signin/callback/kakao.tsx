@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
-import { nativeLogger } from "@/hooks/use-device-api";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
@@ -32,12 +31,15 @@ export default function Page() {
       {
         onSuccess: (data) => {
           if ("token" in data) {
-            router.push(
-              `/${locale}/signup?loginTp=2&externalId=${data.token.externalId}&code=${data.token.code}`,
-            );
-          } else {
-            // 로그인성공
+            // 1. 가입안된 소셜계정
+            const searchParams = new URLSearchParams();
+            searchParams.set("loginTp", "2");
+            searchParams.set("externalId", data.token.externalId);
+            sessionStorage.setItem("code", data.token.code); //  === 소셜 아이디
 
+            router.push(`/${locale}/signup?${searchParams.toString()}`);
+          } else {
+            // 2. 가입된 소셜계정
             if (!!window.ReactNativeWebView) {
               sendMessageToDevice({
                 type: DEVICE_API.updateDeviceSession,
@@ -47,7 +49,7 @@ export default function Page() {
                 payload: Session;
               });
             } else {
-              // 테스트 로그인
+              // 2-1. 테스트 로그인
               localStorage.setItem(SESSION_LOCAL_STORAGE_KEY, JSON.stringify(data));
               const result = confirm("테스트 로그인 성공");
 
@@ -59,8 +61,7 @@ export default function Page() {
         },
         onError: (error) => {
           setIsLoading(() => false);
-          nativeLogger(error.message);
-          nativeAlert(error.message);
+          nativeAlert("세션이 만료되었습니다. 다시 로그인해주세요.");
           router.replace(`/${locale}/signin`);
         },
       },
