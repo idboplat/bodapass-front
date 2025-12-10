@@ -3,7 +3,7 @@ import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { LoadingOverlay } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useWCW000002SSP01 } from "@/hooks/tms/use-authorization";
+import { useWCW000001SSP01 } from "@/hooks/tms/use-authorization";
 import { useQueryClient } from "@tanstack/react-query";
 import { DEVICE_API } from "@/types/common";
 
@@ -18,7 +18,7 @@ export default function CrewFaceHome() {
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
-  const WCW000002SSP01 = useWCW000002SSP01();
+  const WCW000002SSP01 = useWCW000001SSP01();
 
   const end = () => {
     if (!!window.ReactNativeWebView) {

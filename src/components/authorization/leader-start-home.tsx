@@ -29,14 +29,7 @@ export default function LeaderStartHome() {
   return (
     <div className={clsx("mobileLayout", css.container)}>
       <div className={css.checkIconBox}>
-        <Image
-          src={userDetectImage}
-          alt="user-avatar"
-          width={150}
-          height={150}
-          placeholder="blur"
-          quality={100}
-        />
+        <Image src={userDetectImage} alt="user-avatar" width={150} height={150} quality={100} />
 
         <div className={css.description}>
           <h2>추가 인증이 필요합니다.</h2>

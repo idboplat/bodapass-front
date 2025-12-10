@@ -88,7 +88,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 //     },
 //   });
 
-/** 반장 얼굴 등록 */
+/** 얼굴 등록 */
 export const useWCW000001SSP01 = () =>
   useMutation({
     mutationFn: async (args: { image: Blob; userId: string; session: Session }) => {
@@ -103,34 +103,34 @@ export const useWCW000001SSP01 = () =>
 
       const data = result.svcRspnData?.[0];
 
-      if (!data) throw new Error("FCM999");
+      if (!data) throw new Error("FW999");
 
       return { faceId: data.F01, userId: args.userId };
     },
   });
 
-/** 근로자 얼굴 등록 */
-export const useWCW000002SSP01 = () =>
-  useMutation({
-    mutationFn: async (args: { image: Blob; userId: string; session: Session }) => {
-      const result = await callWas<StringRspnData<1>>({
-        apiPathName: "WCW000002SSP01",
-        svcId: "TCW000002SSP01",
-        data: [args.userId, "jpeg", ""],
-        locale: "ko",
-        session: args.session,
-        formData: [args.image],
-      });
+// /** 근로자 얼굴 등록 */
+// export const useWCW000002SSP01 = () =>
+//   useMutation({
+//     mutationFn: async (args: { image: Blob; userId: string; session: Session }) => {
+//       const result = await callWas<StringRspnData<1>>({
+//         apiPathName: "WCW000002SSP01",
+//         svcId: "TCW000002SSP01",
+//         data: [args.userId, "jpeg", ""],
+//         locale: "ko",
+//         session: args.session,
+//         formData: [args.image],
+//       });
 
-      const data = result.svcRspnData?.[0];
+//       const data = result.svcRspnData?.[0];
 
-      if (!data) throw new Error("FCM999");
+//       if (!data) throw new Error("FW999");
 
-      return { faceId: data.F01, userId: args.userId };
-    },
-  });
+//       return { faceId: data.F01, userId: args.userId };
+//     },
+//   });
 
-/** 반장 통장 등록 */
+/** 반장 계좌 등록 */
 export const useWCW000001SSP03 = () =>
   useMutation({
     mutationFn: async (args: {
@@ -158,7 +158,7 @@ export const useWCW000001SSP03 = () =>
     },
   });
 
-/** 근로자 통장 등록 */
+/** 근로자 계좌 등록 */
 export const useWCW000002SSP03 = () =>
   useMutation({
     mutationFn: async (args: {

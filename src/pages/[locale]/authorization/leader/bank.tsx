@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps<
   const locale = context.params?.locale?.toString() || "ko";
   const isNext = context.params?.next?.toString() === "true";
 
-  const title = isNext ? "통장등록" : "통장수정";
+  const title = isNext ? "계좌등록" : "계좌수정";
 
   return {
     props: {
