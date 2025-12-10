@@ -9,6 +9,7 @@ import { UnstyledButton } from "@mantine/core";
 import { GradientBackground } from "@/components/background";
 import { GetServerSideProps } from "next";
 import { KAKAO_REDIRECT_URI } from "@/constants";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 type Props = {
   kakaoSignInUrl: string;
@@ -59,7 +60,9 @@ export default function Page({ kakaoSignInUrl }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const config = await getI18nProps(context, ["common", "auth"]);
+  // const config = await getI18nProps(context, ["common", "auth"]);
+  const locale = context.params?.locale?.toString() || "ko";
+  const config = await serverSideTranslations(locale, ["common", "auth"]);
 
   // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api
   const kakaoSignInUrl = new URL("https://kauth.kakao.com/oauth/authorize");
@@ -67,6 +70,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   kakaoSignInUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
   kakaoSignInUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
   kakaoSignInUrl.searchParams.set("prompt", "select_account");
+
+  console.log("config", config._nextI18Next?.initialI18nStore);
 
   return {
     props: {
