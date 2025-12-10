@@ -20,6 +20,7 @@ import NoSSR from "@/components/no-ssr";
 import Script from "next/script";
 import favicon from "/public/favicon.ico";
 import faviconDev from "/public/favicon-dev.ico";
+import i18nConfig from "/next-i18next.config";
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -60,4 +61,4 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default appWithTranslation(App);
+export default appWithTranslation(App, i18nConfig);
