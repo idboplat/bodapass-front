@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 import { i18nConfig } from "./next-i18next.config";
 
 const nextConfig: NextConfig = {
-  i18n: i18nConfig.i18n,
   typescript: {
     // !! WARN !!
     // ts빌드 에러를 무시하고 싶다면 아래 옵션을 true로 변경하세요.
