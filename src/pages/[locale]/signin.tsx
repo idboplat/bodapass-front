@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   kakaoSignInUrl.searchParams.set("client_id", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
   kakaoSignInUrl.searchParams.set("redirect_uri", KAKAO_REDIRECT_URI);
   kakaoSignInUrl.searchParams.set("prompt", "select_account");
+  kakaoSignInUrl.searchParams.set("state", locale); // 소셜로그인후 arg를 전달가능함.
 
   return {
     props: {

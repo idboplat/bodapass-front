@@ -70,6 +70,8 @@ export async function POST(request: NextRequest) {
 
     if (!result) {
       console.info("/api/auth/signin/kakao", "가입되지 않은 소셜 계정입니다.");
+      console.log("kakao_id", tokenInfoJson.sub);
+      console.log("kakao_email", tokenInfoJson.email);
 
       return NextResponse.json({
         token: {

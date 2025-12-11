@@ -19,7 +19,7 @@ export default function SigninForm() {
     resolver: zodResolver(signInDto),
   });
 
-  const { isLoading, mutation } = useEmailLoginMutation({ locale });
+  const { isLoading, mutation } = useEmailLoginMutation();
 
   const submit = (data: TSignInDto) => {
     nativeLogger(JSON.stringify(form.formState, null, 2));

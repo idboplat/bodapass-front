@@ -7,7 +7,7 @@ import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { DEVICE_API } from "@/types/common";
 
-export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
+export const useKakaoLoginMutation = () => {
   const mutation = useMutation({
     mutationFn: ({ code }: { code: string }) =>
       frontApi
@@ -22,7 +22,7 @@ export const useKakaoLoginMutation = ({ locale }: { locale: string }) => {
   return { mutation };
 };
 
-export const useEmailLoginMutation = ({ locale }: { locale: string }) => {
+export const useEmailLoginMutation = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const mutation = useMutation({

@@ -1,7 +1,6 @@
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useRouter } from "next/router";
 import { useEffect, useEffectEvent } from "react";
-import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
@@ -12,13 +11,16 @@ import { DEVICE_API } from "@/types/common";
 // 번역안함.
 export default function Page() {
   const router = useRouter();
-  const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
+
+  const state = router.query.state?.toString(); // 소셜로그인 전에 전달한 arg를 받음.
   const code = router.query.code?.toString();
 
-  const { mutation } = useKakaoLoginMutation({ locale });
+  const { mutation } = useKakaoLoginMutation();
 
   const handleKakaoLogin = useEffectEvent(({ code }: { code: string }) => {
     if (mutation.isPending) return;
+    const locale = state || i18nConfig.i18n.defaultLocale;
+
     mutation.mutate(
       { code },
       {
@@ -35,7 +37,7 @@ export default function Page() {
               }),
             );
 
-            router.push(`/${locale}/signup?${searchParams.toString()}`);
+            router.replace(`/${locale}/signup?${searchParams.toString()}`);
           } else {
             // 2. 가입된 소셜계정
             if (!!window.ReactNativeWebView) {
