@@ -5,7 +5,7 @@ import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
-import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
+import { SESSION_LOCAL_STORAGE_KEY, SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { DEVICE_API } from "@/types/common";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
@@ -33,9 +33,14 @@ export default function Page() {
           if ("token" in data) {
             // 1. 가입안된 소셜계정
             const searchParams = new URLSearchParams();
-            searchParams.set("loginTp", "2");
-            searchParams.set("externalId", data.token.externalId);
-            sessionStorage.setItem("code", data.token.code); //  === 소셜 아이디
+            searchParams.set("loginTp", "2"); // 소셜
+            sessionStorage.setItem(
+              SOCIAL_LOGIN_SESSION_STORAGE_KEY,
+              JSON.stringify({
+                externalId: data.token.externalId,
+                code: data.token.code, // 소셜 아이디
+              }),
+            );
 
             router.push(`/${locale}/signup?${searchParams.toString()}`);
           } else {

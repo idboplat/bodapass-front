@@ -13,6 +13,7 @@ import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
 import { checkPassword } from "@/utils/regexp";
+import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 
 interface Props {
   workerTp: "2" | "3";
@@ -200,6 +201,7 @@ export default function RemoteCrewSignupHome({ initState, workerTp, loginTp }: P
       {
         onSuccess: () => {
           nativeAlert("회원가입이 완료되었습니다.");
+          sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
           router.replace(`/${locale}/signin`);
         },
       },

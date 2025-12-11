@@ -17,8 +17,7 @@ type Props = {
 
 export default function Page({ kakaoSignInUrl }: Props) {
   const router = useRouter();
-  const { t, i18n } = useTranslation();
-  console.log("i18n", i18n);
+  const { t } = useTranslation();
 
   const locale = router.query.locale?.toString() || "ko";
 
