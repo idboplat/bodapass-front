@@ -2,7 +2,7 @@ import { nativeAlert } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import Capture from "../capture";
-import { useTCM200101SSP01 } from "@/hooks/tms/use-attendance";
+import { useWCM200101SSP01 } from "@/hooks/tms/use-attendance";
 
 interface Props {
   attCd: "I" | "O";
@@ -19,7 +19,7 @@ export default function CompareHome({ attCd }: Props) {
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
-  const TCM200101SSP01 = useTCM200101SSP01();
+  const TCM200101SSP01 = useWCM200101SSP01();
 
   const onCapture = (args: { image: Blob }) => {
     if (TCM200101SSP01.isPending) return;

@@ -2,7 +2,7 @@ import { callWas, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 
 /** 1 대 1 비교 출퇴근 */
-export const useTCM200101SSP01 = () =>
+export const useWCM200101SSP01 = () =>
   useMutation({
     mutationFn: async (args: {
       mastCorpCd: string;
@@ -25,7 +25,7 @@ export const useTCM200101SSP01 = () =>
   });
 
 /** 1 대 다 출근 */
-export const useTCM200101SSP02 = () =>
+export const useWCM200101SSP02 = () =>
   useMutation({
     mutationFn: async (args: {
       mastCorpCd: string;
