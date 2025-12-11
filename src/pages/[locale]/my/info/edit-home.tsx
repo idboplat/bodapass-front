@@ -10,6 +10,8 @@ export default function InfoEditHome() {
   const WCM200801SSQ01 = useWCM200801SSQ01({
     session,
     userId: session.userId,
+    extnUserId: session.extnUserId,
+    loginTp: session.loginTp,
   });
 
   if (WCM200801SSQ01.isPending) {
