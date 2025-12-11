@@ -1,6 +1,6 @@
 import { KAKAO_REDIRECT_URI } from "@/constants";
 import { socialSignInService, validateExternalId } from "@/libraries/auth/auth.service";
-import { BadRequestError, serverErrorHandler } from "@/libraries/error";
+import { BadRequestError, NotFoundError, serverErrorHandler } from "@/libraries/error";
 import ky from "ky";
 import { NextRequest, NextResponse } from "next/server";
 import dayjs from "@/libraries/dayjs";
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
     if (!code) {
       console.error("/api/auth/signin/kakao", "X-CODE가 입력되지 않았습니다.");
-      throw new BadRequestError("No code provided");
+      throw new NotFoundError();
     }
 
     const queryString = new URLSearchParams({
@@ -49,14 +49,22 @@ export async function POST(request: NextRequest) {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: queryString.toString(),
       })
-      .json();
+      .json()
+      .catch((error) => {
+        console.error("/api/auth/signin/kakao - token", error);
+        throw new BadRequestError("유효하지 않은 세션입니다.");
+      });
 
     const tokenInfoJson = await ky
       .post<TTokenPayload>("https://kauth.kakao.com/oauth/tokeninfo", {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ id_token: tokenJson.id_token }).toString(),
       })
-      .json();
+      .json()
+      .catch((error) => {
+        console.error("/api/auth/signin/kakao - tokeninfo", error);
+        throw new BadRequestError("유효하지 않은 세션입니다.");
+      });
 
     const result = await validateExternalId(tokenInfoJson.email);
 

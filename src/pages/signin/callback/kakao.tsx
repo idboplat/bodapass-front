@@ -1,6 +1,6 @@
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent } from "react";
 import languageDetector from "@/libraries/i18n/language-detector";
 import { i18nConfig } from "/next-i18next.config";
 import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
@@ -15,17 +15,10 @@ export default function Page() {
   const locale = languageDetector.detect() || i18nConfig.i18n.defaultLocale;
   const code = router.query.code?.toString();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const { mutation } = useKakaoLoginMutation({ locale });
 
-  useEffect(() => {
-    if (!code) return;
-    if (isLoading) return; // !!중요!! 한번만 성공하도록함, 두번 호출되는 것을 방지!!
+  const handleKakaoLogin = useEffectEvent(({ code }: { code: string }) => {
     if (mutation.isPending) return;
-
-    setIsLoading(() => true);
-
     mutation.mutate(
       { code },
       {
@@ -65,13 +58,17 @@ export default function Page() {
           }
         },
         onError: (error) => {
-          setIsLoading(() => false);
           nativeAlert("세션이 만료되었습니다. 다시 로그인해주세요.");
           router.replace(`/${locale}/signin`);
         },
       },
     );
-  }, [mutation, code, locale, router, isLoading]);
+  });
+
+  useEffect(() => {
+    if (!code) return;
+    handleKakaoLogin({ code });
+  }, [code]);
 
   return (
     <div
@@ -81,7 +78,7 @@ export default function Page() {
         position: "relative",
       }}
     >
-      <LoadingOverlay visible={isLoading} />
+      <LoadingOverlay visible />
     </div>
   );
 }
