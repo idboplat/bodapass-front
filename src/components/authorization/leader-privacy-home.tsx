@@ -28,6 +28,8 @@ export default function LeaderPrivacyHome() {
   const WCM200801SSQ01 = useWCM200801SSQ01({
     session,
     userId,
+    extnUserId: session.extnUserId,
+    loginTp: session.loginTp,
   });
   const TCM200801SSQ02 = useTCM200801SSQ02({
     session,

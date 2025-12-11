@@ -104,7 +104,6 @@ export default function SearchHome({ attCd }: Props) {
           flexDirection: "column",
           alignItems: "flex-end",
           width: "100%",
-          height: "100%",
           gap: "1rem",
           padding: "0 0.5rem",
         }}
@@ -125,7 +124,6 @@ export default function SearchHome({ attCd }: Props) {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
-          height: "100%",
         }}
       >
         <Button onClick={onClickComplete}>출석 완료</Button>

@@ -9,16 +9,20 @@ export type TWCM200801SSQ01Data = Promised<typeof getWCM200801SSQ01>;
 export const getWCM200801SSQ01 = async ({
   session,
   userId,
+  extnUserId,
+  loginTp,
 }: {
   session: Session;
   userId: string;
+  extnUserId: string;
+  loginTp: string;
 }) => {
   const response = await callWas<StringRspnData<15>>({
     apiPathName: "WCM200801SSQ01",
     svcId: "TCM200801SSQ01",
     session,
     locale: "ko",
-    data: [userId],
+    data: [userId, extnUserId, loginTp],
     formData: [],
   });
 
@@ -47,9 +51,14 @@ export const getWCM200801SSQ01 = async ({
   };
 };
 
-export const useWCM200801SSQ01 = (args: { session: Session; userId: string }) =>
+export const useWCM200801SSQ01 = (args: {
+  session: Session;
+  userId: string;
+  extnUserId: string;
+  loginTp: string;
+}) =>
   useQuery({
-    queryKey: ["WCM200801SSQ01", args.session, args.userId],
+    queryKey: ["WCM200801SSQ01", args],
     queryFn: () => getWCM200801SSQ01(args),
   });
 
