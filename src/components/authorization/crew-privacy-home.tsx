@@ -25,8 +25,9 @@ export default function CrewPrivacyHome() {
   const WCM200801SSQ01 = useWCM200801SSQ01({
     session,
     userId,
-    extnUserId: "",
-    loginTp: "",
+    extnUserId: "guest",
+    // 임시값 - 비대면 등록 시 달라질 듯
+    loginTp: "5",
   });
   const TCM200801SSQ02 = useTCM200801SSQ02({
     session,
