@@ -2,7 +2,7 @@ import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import Capture from "../capture";
-import { useTCM200101SSP02 } from "@/hooks/tms/use-attendance";
+import { useWCM200101SSP02 } from "@/hooks/tms/use-attendance";
 import { Button, RemoveScroll, Switch, Textarea } from "@mantine/core";
 import { DEVICE_API } from "@/types/common";
 import { Moon, Sun, Camera } from "lucide-react";
@@ -37,7 +37,7 @@ export default function SearchHome({ attCd }: Props) {
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
-  const TCM200101SSP02 = useTCM200101SSP02();
+  const TCM200101SSP02 = useWCM200101SSP02();
   const { userLocation } = useUserLocation();
 
   const siteCoorX = userLocation?.lng?.toString() || "";
@@ -46,10 +46,10 @@ export default function SearchHome({ attCd }: Props) {
   const onCapture = (args: { image: Blob }) => {
     if (TCM200101SSP02.isPending) return;
 
-    // 위도 lat y
-    // 경도 lng x
-    // const siteCoorX = userLocation?.lng?.toString() || "";
-    // const siteCoorY = userLocation?.lat?.toString() || "";
+    if (!siteCoorX || !siteCoorY) {
+      nativeAlert("위치 정보를 가져오는데 실패했습니다.");
+      return;
+    }
 
     TCM200101SSP02.mutate(
       {
