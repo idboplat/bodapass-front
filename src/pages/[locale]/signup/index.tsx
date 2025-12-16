@@ -57,7 +57,10 @@ export default function Page() {
               </div>
             </button>
 
-            <button className={css.roleButton} onClick={nextPage("leader")}>
+            <button
+              className={css.roleButton}
+              onClick={() => router.push(`/${locale}/signup?step=${Number(step) + 1}`)}
+            >
               <div className={css.buttonIcon}>
                 <svg
                   width="24"
@@ -82,14 +85,7 @@ export default function Page() {
               </div>
               <div className={css.buttonContent}>
                 <div className={css.buttonTitle}>테스트 ({step})</div>
-                <div
-                  className={css.buttonSubtitle}
-                  onClick={() => {
-                    router.push(`/${locale}/signup?step=${step + 1}`);
-                  }}
-                >
-                  테스트 중입니다.
-                </div>
+                <div className={css.buttonSubtitle}>테스트 중입니다.</div>
               </div>
             </button>
 
