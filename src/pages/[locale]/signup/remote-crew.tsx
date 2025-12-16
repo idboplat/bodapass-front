@@ -46,7 +46,7 @@ export default function Page() {
     }
   }, [locale, router, loginTp]);
 
-  if (!router.isReady || !socialLoginSession || isLoading) return null;
+  if (!router.isReady || isLoading) return null;
 
   return (
     <RemoteCrewSignupHome
@@ -54,8 +54,8 @@ export default function Page() {
       workerTp={workerTp}
       initState={{
         brokerId,
-        externalId: socialLoginSession.externalId,
-        password: socialLoginSession.code,
+        externalId: socialLoginSession?.externalId || "",
+        password: socialLoginSession?.code || "",
       }}
     />
   );

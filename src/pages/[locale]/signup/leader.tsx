@@ -43,12 +43,15 @@ export default function Page() {
     }
   }, [locale, router, loginTp]);
 
-  if (!router.isReady || !socialLoginSession || isLoading) return null;
+  if (!router.isReady || isLoading) return null;
 
   return (
     <LeaderSignupHome
       loginTp={loginTp}
-      initState={{ externalId: socialLoginSession.externalId, password: socialLoginSession.code }}
+      initState={{
+        externalId: socialLoginSession?.externalId || "",
+        password: socialLoginSession?.code || "",
+      }}
     />
   );
 }
