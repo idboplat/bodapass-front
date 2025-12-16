@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { GradientBackground } from "@/components/background";
 import { useTranslation } from "next-i18next";
+import { Input } from "@mantine/core";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const router = useRouter();
@@ -12,11 +14,25 @@ export default function Page() {
   const loginTp = (router.query.loginTp?.toString() || "4") as "1" | "2" | "3" | "4" | "5";
   const step = (router.query.step?.toString() || "1") as string;
 
+  const [test, setTest] = useState("");
+  const [sideEffect, setSideEffect] = useState("");
+  const [sideEffect2, setSideEffect2] = useState("");
+
   const nextPage = (tp: "leader" | "remote-crew") => () => {
     const searchParams = new URLSearchParams();
     if (loginTp) searchParams.set("loginTp", loginTp); // 1: 이메일, 2: 소셜, 3: 전화번호, 4: 아이디, 5: etc
     router.push(`/${locale}/signup/${tp}?${searchParams.toString()}`);
   };
+
+  useEffect(() => {
+    console.log("useEffect [step]");
+    setSideEffect(step);
+  }, [step]);
+
+  useEffect(() => {
+    console.log("useEffect []");
+    setSideEffect2(step);
+  }, []);
 
   if (!router.isReady) return null;
 
@@ -88,6 +104,11 @@ export default function Page() {
                 <div className={css.buttonSubtitle}>테스트 중입니다.</div>
               </div>
             </button>
+
+            <Input value={test} onChange={(e) => setTest(e.target.value)} />
+
+            <div>sideEffect: {sideEffect}</div>
+            <div>no-sideEffect: {sideEffect2}</div>
 
             {/* <button className={css.roleButton} onClick={nextPage("remote-crew")}>
               <div className={css.buttonIcon}>
