@@ -10,6 +10,7 @@ export default function Page() {
   const { t } = useTranslation();
   const locale = router.query.locale?.toString() || "ko";
   const loginTp = (router.query.loginTp?.toString() || "4") as "1" | "2" | "3" | "4" | "5";
+  const step = (router.query.step?.toString() || "1") as string;
 
   const nextPage = (tp: "leader" | "remote-crew") => () => {
     const searchParams = new URLSearchParams();
@@ -53,6 +54,42 @@ export default function Page() {
               <div className={css.buttonContent}>
                 <div className={css.buttonTitle}>반장</div>
                 <div className={css.buttonSubtitle}>현장을 관리하고 인원을 배정합니다</div>
+              </div>
+            </button>
+
+            <button className={css.roleButton} onClick={nextPage("leader")}>
+              <div className={css.buttonIcon}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M19 15L20.09 19.26L24 20L20.09 20.74L19 25L17.91 20.74L14 20L17.91 19.26L19 15Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M5 15L6.09 19.26L10 20L6.09 20.74L5 25L3.91 20.74L0 20L3.91 19.26L5 15Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div className={css.buttonContent}>
+                <div className={css.buttonTitle}>테스트 ({step})</div>
+                <div
+                  className={css.buttonSubtitle}
+                  onClick={() => {
+                    router.push(`/${locale}/signup?step=${step + 1}`);
+                  }}
+                >
+                  테스트 중입니다.
+                </div>
               </div>
             </button>
 
