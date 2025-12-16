@@ -14,25 +14,11 @@ export default function Page() {
   const loginTp = (router.query.loginTp?.toString() || "4") as "1" | "2" | "3" | "4" | "5";
   const step = (router.query.step?.toString() || "1") as string;
 
-  const [test, setTest] = useState("");
-  const [sideEffect, setSideEffect] = useState("");
-  const [sideEffect2, setSideEffect2] = useState("");
-
   const nextPage = (tp: "leader" | "remote-crew") => () => {
     const searchParams = new URLSearchParams();
     if (loginTp) searchParams.set("loginTp", loginTp); // 1: 이메일, 2: 소셜, 3: 전화번호, 4: 아이디, 5: etc
     router.push(`/${locale}/signup/${tp}?${searchParams.toString()}`);
   };
-
-  useEffect(() => {
-    console.log("useEffect [step]");
-    setSideEffect(step);
-  }, [step]);
-
-  useEffect(() => {
-    console.log("useEffect []");
-    setSideEffect2(step);
-  }, []);
 
   if (!router.isReady) return null;
 
@@ -105,11 +91,6 @@ export default function Page() {
               </div>
             </button>
 
-            <Input value={test} onChange={(e) => setTest(e.target.value)} />
-
-            <div>sideEffect: {sideEffect}</div>
-            <div>no-sideEffect: {sideEffect2}</div>
-
             {/* <button className={css.roleButton} onClick={nextPage("remote-crew")}>
               <div className={css.buttonIcon}>
                 <svg
@@ -136,6 +117,8 @@ export default function Page() {
             </button> */}
           </div>
 
+          <TestComponent step={step} />
+
           <div className={css.linkContainer}>
             <Link href={`/${locale}/signin`} className={css.signinLink}>
               이미 아이디가 있으신가요?
@@ -147,6 +130,30 @@ export default function Page() {
         </div>
       </div>
     </div>
+  );
+}
+
+function TestComponent({ step }: { step: string }) {
+  const [sideEffect, setSideEffect] = useState("");
+  const [sideEffect2, setSideEffect2] = useState("");
+  const [test, setTest] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect [step]");
+    setSideEffect(step);
+  }, [step]);
+
+  useEffect(() => {
+    console.log("useEffect []");
+    setSideEffect2(step);
+  }, []);
+
+  return (
+    <>
+      <Input value={test} onChange={(e) => setTest(e.target.value)} />
+      <div>sideEffect: {sideEffect}</div>
+      <div>no-sideEffect: {sideEffect2}</div>
+    </>
   );
 }
 
