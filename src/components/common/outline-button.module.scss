@@ -1,0 +1,93 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        transform 160ms ease,
+        opacity 160ms ease,
+        background-color 160ms ease;
+}
+
+.button:not(:disabled):hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.button:not(:disabled):active {
+    transform: translateY(0);
+    opacity: 0.8;
+}
+
+// 그라데이션 테두리 (파란색 → 초록색)
+.gradient {
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%) border-box;
+}
+
+.gradient .label {
+    background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient .icon {
+    background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+// 회색 테두리
+.gray {
+    background: #d9d9d9;
+    color: #fff;
+}
+
+// 주황색 테두리
+.deny {
+    border-color: #febc2f;
+    color: #febc2f;
+}
+
+.small {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 25px;
+}
+
+.isDisabled,
+.disabled {
+    border-color: #d9d9d9;
+    background: #d9d9d9;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    font-size: 1em;
+}
+
+.label {
+    display: inline-block;
+    color: inherit;
+}
