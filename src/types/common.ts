@@ -28,6 +28,13 @@ export type ModalBaseProps = {
 
 export type ModalProps<T = {}> = T & ModalBaseProps;
 
+/** 0: 공무담당자, 1: 반장, 2: 팀원, 3: 일용직 */
+export type TWrkTp = "0" | "1" | "2" | "3";
+/** 2: 소셜, 3: 전화번호, 4: 아이디, 5: etc */
+export type TLoginTp = "2" | "3" | "4" | "5";
+/** 1: 주민번호, 2: 운전면허증, 3: 외국인등록증 */
+export type TIdTp = "1" | "2" | "3";
+
 export const DEVICE_API = {
   /** payload: string */
   nativeAlert: "nativeAlert",

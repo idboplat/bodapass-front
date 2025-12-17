@@ -1,131 +1,39 @@
 import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
-import { TScannedResult, TSignUpDto, signUpDto } from "@/libraries/auth/auth.dto";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { LoadingOverlay } from "@mantine/core";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import css from "./leader-signup-home.module.scss";
-import LeaderStep1 from "./leader-step-1";
-import Step2 from "./step-2";
+import LeaderStep2 from "./leader-step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
 import { checkPassword } from "@/utils/regexp";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
+import { TIdTp, TLoginTp, TWrkTp } from "@/types/common";
+import { useSignupCtx } from "./context";
 
-interface Props {
-  loginTp: "1" | "2" | "3" | "4" | "5";
-  initState: {
-    externalId: TSignUpDto["externalId"];
-    password: TSignUpDto["password"];
-  };
-}
+interface Props {}
 
-export default function LeaderSignupHome({ loginTp, initState }: Props) {
+export default function LeaderSignupHome({}: Props) {
   const router = useRouter();
   const { t } = useTranslation();
-  const locale = router.query.locale?.toString() || "ko";
+
+  const form = useFormContext<TSignUpDto>();
+  const ctx = useSignupCtx();
 
   // 국가코드 일시적 생략
-  const [step, setStep] = useState(2);
-  const [image, setImage] = useState<Blob | null>(null);
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const form = useForm({
-    // mode: "onTouched", // 직접 검증 처리하기 위해 막음
-    resolver: zodResolver(signUpDto),
-    defaultValues: {
-      // step1
-      cntryCd: "KR",
-      brkrId: "",
-
-      // step2
-      idTp: "1" as const,
-
-      // step3
-      userNm: "",
-      idNo1: "",
-      idNo2: "",
-      zipCd: "",
-      addr: "",
-      addrDtil: "",
-      tel: "",
-
-      // step4
-      externalId: initState.externalId,
-      password: initState.password,
-      passwordConfirm: initState.password,
-
-      //
-      corpCd: "",
-      emailAddr: "",
-    },
-  });
-
-  const step1Prev = () => {
+  const step2Prev = () => {
     router.back();
   };
 
-  const step1Next = async () => {
-    const isValid = await form.trigger(["cntryCd"]);
-    if (!isValid) return;
-
-    setStep(() => 2);
-  };
-
-  const step2Prev = () => setStep(() => 1);
-
-  const step2Next = (args: TScannedResult) => {
-    form.setValue("idTp", args.idTp);
-    form.setValue("idNo1", args.id1);
-    form.setValue("idNo2", args.id2);
-    setImage(() => args.image);
-
-    setStep(() => 3);
-  };
-
-  const step3Prev = () => setStep(() => 2);
-
-  const step3Next = async () => {
-    const isValid = await form.trigger([
-      "idNo1",
-      "idNo2",
-      "userNm",
-      "zipCd",
-      "addr",
-      "addrDtil",
-      "tel",
-    ]);
-
-    if (!isValid) return;
-
-    if (form.getValues("idNo1").length !== 6) {
-      form.setError("idNo1", { message: "주민등록번호 앞 6자리를 입력해주세요." });
-      return;
-    }
-
-    if (form.getValues("idNo2").length !== 7) {
-      form.setError("idNo2", { message: "주민등록번호 뒤 7자리를 입력해주세요." });
-      return;
-    }
-
-    setStep(() => 4);
-  };
-
-  const step4Prev = () => setStep(() => 3);
-
-  const step4Submit = async () => {
-    if (WCW000001SSP02.isLoading) return;
-
-    // emailAddr 우선 빈값으로
-    form.setValue("emailAddr", "");
-
-    const isValid = await form.trigger();
-
+  const step2Next = async () => {
+    const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
     if (!isValid) return;
 
     // TODO : 리팩토링 필요
@@ -141,50 +49,116 @@ export default function LeaderSignupHome({ loginTp, initState }: Props) {
       return;
     }
 
-    if (!image) {
-      setStep(() => 2);
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("step", "3");
+    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+  };
+
+  const step3Prev = () => {
+    router.back();
+  };
+
+  const step3Next = (args: TScannedResult) => {
+    form.setValue("idNo1", args.id1);
+    form.setValue("idNo2", args.id2);
+    ctx.saveImages([args.image]);
+
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("idTp", args.idTp);
+    searchParams.set("step", "4");
+    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+  };
+
+  const step4Prev = () => {
+    router.back();
+  };
+
+  const step4Submit = async () => {
+    if (WCW000001SSP02.isLoading) return;
+
+    const isValid = await form.trigger(["userNm", "idNo1", "idNo2"]);
+
+    if (!isValid) return;
+
+    if (form.getValues("idNo1").length !== 6) {
+      form.setError("idNo1", { message: "주민등록번호 앞 6자리를 입력해주세요." });
+      return;
+    }
+
+    if (form.getValues("idNo2").length !== 7) {
+      form.setError("idNo2", { message: "주민등록번호 뒤 7자리를 입력해주세요." });
+      return;
+    }
+
+    if (ctx.images.length === 0) {
+      const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+      searchParams.set("step", "3");
+      router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
       return;
     }
 
     nativeLogger(JSON.stringify(form.formState, null, 2));
 
-    WCW000001SSP02.mutation.mutate(
-      {
-        ...form.getValues(),
-        session: null,
-        image,
-        brkrId: "",
-        wrkTp: "1",
-        loginTp,
-        corpCd: "",
-        emailAddr: "",
+    const payload = {
+      ...form.getValues(),
+      externalId:
+        ctx.loginTp === "2"
+          ? form.getValues("externalId")
+          : ctx.socialLoginSession?.externalId || "",
+      password:
+        ctx.loginTp === "2" ? form.getValues("password") : ctx.socialLoginSession?.code || "",
+      session: null,
+      image: ctx.images[0],
+      wrkTp: "1" as TWrkTp,
+      loginTp: ctx.loginTp,
+      corpCd: "",
+      emailAddr: "",
+      idTp: ctx.idTp,
+      brkrId: "",
+    };
+
+    // socialLoginSession 체크
+    if (!payload.externalId || !payload.password) {
+      sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
+      nativeAlert("[F999] 비정상적인 접근입니다.");
+      router.replace(`/${ctx.locale}/signin`);
+      return;
+    }
+
+    WCW000001SSP02.mutation.mutate(payload, {
+      onSuccess: () => {
+        nativeAlert("회원가입이 완료되었습니다.");
+        sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
+        router.replace(`/${ctx.locale}/signin`);
       },
-      {
-        onSuccess: () => {
-          nativeAlert("회원가입이 완료되었습니다.");
-          sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
-          router.replace(`/${locale}/signin`);
-        },
-      },
-    );
+    });
   };
 
   return (
     <WithSignInLayout title="반장 회원가입">
-      <FormProvider {...form}>
-        <div className={css.form}>
-          {step === 1 && <LeaderStep1 onClickNext={step1Next} onClickPrev={step1Prev} />}
-          {step === 2 && <Step2 onClickNext={step2Next} onClickPrev={step2Prev} />}
-          {step === 3 && !!image && (
-            <Step3 onClickNext={step3Next} onClickPrev={step3Prev} image={image} />
-          )}
-          {step === 4 && (
-            <Step4 onClickNext={step4Submit} onClickPrev={step4Prev} loginTp={loginTp} />
-          )}
+      <div className={css.form}>
+        {ctx.step === "2" && (
+          <LeaderStep2 loginTp={ctx.loginTp} onClickNext={step2Next} onClickPrev={step2Prev} />
+        )}
+        {ctx.step === "3" && (
+          <Step3
+            idTp={ctx.idTp}
+            locale={ctx.locale}
+            onClickNext={step3Next}
+            onClickPrev={step3Prev}
+          />
+        )}
+        {ctx.step === "4" && (
+          <Step4
+            idTp={ctx.idTp}
+            onClickNext={step4Submit}
+            onClickPrev={step4Prev}
+            images={ctx.images}
+          />
+        )}
 
-          <LoadingOverlay visible={WCW000001SSP02.isLoading} />
-        </div>
-      </FormProvider>
+        <LoadingOverlay visible={WCW000001SSP02.isLoading} />
+      </div>
     </WithSignInLayout>
   );
 }

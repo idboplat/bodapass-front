@@ -9,8 +9,8 @@ import { signUpDto, TScannedResult } from "@/libraries/auth/auth.dto";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CrewStep1 from "./crew-step-1";
-import Step2 from "./step-2";
 import Step3 from "./step-3";
+import Step4 from "./step-4";
 import { LoadingOverlay } from "@mantine/core";
 import { WithoutSignInLayout } from "./layout";
 
@@ -136,9 +136,9 @@ export default function CrewSignUpHome({}: Props) {
               session={session}
             />
           )}
-          {step === 2 && <Step2 onClickNext={step2Next} onClickPrev={step2Prev} />}
+          {step === 2 && <Step3 onClickNext={step2Next} onClickPrev={step2Prev} />}
           {step === 3 && !!image && (
-            <Step3 onClickNext={step3Submit} onClickPrev={step3Prev} image={image} isLastStep />
+            <Step4 onClickNext={step3Submit} onClickPrev={step3Prev} image={image} isLastStep />
           )}
 
           <LoadingOverlay visible={WCW000001SSP02.isLoading} />

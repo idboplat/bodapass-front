@@ -62,6 +62,7 @@ export const getTCW000100SMQ03 = async (args: { session: Session | null }) => {
   return convertedData;
 };
 
+/** 국가코드 조회 */
 export const useTCW000100SMQ03 = (args: { session: Session | null }) =>
   useQuery({
     queryKey: ["TCW000100SMQ03", args?.session],

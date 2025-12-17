@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
-import { DEVICE_API } from "@/types/common";
+import { DEVICE_API, TIdTp, TLoginTp, TWrkTp } from "@/types/common";
 
 export const useKakaoLoginMutation = () => {
   const mutation = useMutation({
@@ -75,7 +75,7 @@ export const useWCW000002SSQ01 = () =>
     mutationFn: async (args: {
       image: Blob;
       brkrId: string;
-      tp: "1" | "2" | "3";
+      idTp: TIdTp;
       session: Session | null;
     }) => {
       const result = await callWas<StringRspnData<3>>({
@@ -83,7 +83,7 @@ export const useWCW000002SSQ01 = () =>
         apiPathName: "WCW000002SSQ01",
         locale: "ko",
         session: args.session,
-        data: [args.brkrId, args.tp],
+        data: [args.brkrId, args.idTp],
         formData: [args.image],
       });
 
@@ -96,7 +96,7 @@ export const useWCW000002SSQ01 = () =>
         id1: data.F02,
         id2: data.F03,
         image: args.image,
-        idTp: args.tp,
+        idTp: args.idTp,
       };
     },
   });
@@ -108,11 +108,11 @@ export const useWCW000001SSP02 = () => {
   const mutation = useMutation({
     mutationFn: async (
       args: TSignUpDto & {
-        /** 이메일 1, 소셜 2, 전화번호 3, 기타 4. 아이디, 5. etc  */
-        loginTp: "1" | "2" | "3" | "4" | "5";
-        /** 반장 1, 팀원 2, 일용직 3 */
-        wrkTp: "1" | "2" | "3";
         session: Session | null;
+        loginTp: TLoginTp;
+        wrkTp: TWrkTp;
+        idTp: TIdTp;
+        brkrId: string;
         image: Blob;
       },
     ) => {

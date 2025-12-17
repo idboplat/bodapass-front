@@ -1,113 +1,23 @@
-.infoBox {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin: 0.75rem;
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    color: #64748b;
-    font-weight: 500;
-
-    &:first-child {
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.25rem;
-    }
-
-    &::before {
-      content: "";
-      width: 4px;
-      height: 4px;
-      background: #3b82f6;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-  }
-}
-
-.imageBox {
-  padding: 0.75rem;
-  position: relative;
-  height: 15rem;
-  background-color: #333333;
-
-  img {
-    object-fit: contain;
-  }
-}
-
-.formBox {
+.brkrId {
+  font-size: 0.8rem;
   padding: 1rem;
-
-  :global(.app-TextInput-root) {
-    margin-top: 1rem;
-  }
+  // display: flex;
+  // padding: 1rem;
 }
 
-.submitButtonBox {
+.nav {
   padding: 1rem;
-  text-align: end;
 }
 
-.idBox {
-  margin-top: 1rem;
+.cameraBox {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-
-  label {
-    font-size: 14px;
-    font-weight: 500;
-
-    &::after {
-      content: " *";
-      color: var(--mantine-color-error, #fa5252);
-    }
-  }
-}
-
-.idInputBox {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex: 1;
   position: relative;
-
-  &::after {
-    content: "-";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #6b7280;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  :global(.app-TextInput-root) {
-    flex: 1;
-    margin-top: 0;
-
-    input {
-      text-align: center;
-    }
-  }
 }
 
-.errorMessage {
-  font-size: 12px;
-  color: var(--mantine-color-error, #fa5252);
-  margin-top: 0.25rem;
-
-  &::before {
-    content: "•";
-    margin-right: 0.25rem;
-    color: inherit;
-  }
+.shutterBox {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
 }
