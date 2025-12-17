@@ -1,0 +1,22 @@
+.wrapper {
+    width: 100%;
+}
+
+.select {
+    // width: 100%;
+}
+
+.input:focus-within {
+    // border: 1px solid linear-gradient(90deg, #0088ff 0%, #27c840 100%);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(90deg, #0088ff 0%, #27c840 100%) border-box;
+}
+
+.label {
+    text-align: left;
+    justify-content: flex-start;
+    display: flex;
+}

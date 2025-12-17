@@ -1,0 +1,78 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 55px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+    color: #f7fbff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        transform 160ms ease,
+        filter 160ms ease,
+        opacity 160ms ease;
+}
+
+.button:not(:disabled):hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.button:not(:disabled):active {
+    transform: translateY(0);
+    filter: brightness(0.97);
+}
+
+.default {
+    background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+    color: #f7fbff;
+}
+
+.deny {
+    background: #febc2f;
+    color: #ffffff;
+}
+
+.reverse {
+    background: linear-gradient(90deg, #00ae6a 0%, #3d99d5 100%);
+    color: #f7fbff;
+}
+
+.small {
+    height: 25px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 18px;
+}
+
+.isDisabled,
+.disabled {
+    background: #d8d8d8;
+    color: #ededed;
+    cursor: not-allowed;
+    filter: none;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+.label {
+    display: inline-block;
+    color: inherit;
+}

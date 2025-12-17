@@ -1,0 +1,71 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    padding: 10px 0;
+}
+
+.stepWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.stepCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    border: 1px solid #ededed;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    margin: 0 3px;
+}
+
+.stepNumber {
+    font-size: 12px;
+    line-height: 1;
+    color: #ffffff;
+}
+
+.checkIcon {
+    color: #ffffff;
+    stroke-width: 3;
+}
+
+.completed {
+    background: #d8d8d8;
+    border-color: #ededed;
+}
+
+.active {
+    background: linear-gradient(135deg, #3d99d5 0%, #00ae6a 100%);
+    border-color: transparent;
+}
+
+.inactive {
+    background: #d8d8d8;
+    border-color: #ededed;
+}
+
+.connector {
+    width: 59px;
+    height: 1px;
+    background: #ededed;
+    margin: 0 -1px;
+    position: relative;
+    z-index: 0;
+    transition: background 0.3s ease;
+}
+
+.connectorActive {
+    background: #ededed;
+}
+
+.connectorInactive {
+    background: #ededed;
+}

@@ -1,0 +1,16 @@
+.checkboxInput {
+    border-color: #d9d9d9;
+    background-color: #fff !important;
+}
+
+.checkboxInput:not([data-checked]):not([data-indeterminate]) {
+    border-color: #d9d9d9;
+}
+
+.label {
+    text-align: left;
+    color: #666;
+    font-size: 14px;
+    line-height: inherit;
+    padding-left: 9px;
+}
