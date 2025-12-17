@@ -1,4 +1,68 @@
-.idCardFrame {
+.cameraFrameOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  // 위쪽 오버레이
+  &::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(50% - calc(80vw * 0.32));
+    @media (min-width: 400px) {
+      height: calc(50% - 102.4px);
+    }
+  }
+
+  // 아래쪽 오버레이
+  &::after {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(50% - calc(80vw * 0.32));
+    @media (min-width: 400px) {
+      height: calc(50% - 102.4px);
+    }
+  }
+}
+
+.cameraFrameOverlayLeft,
+.cameraFrameOverlayRight {
+  position: absolute;
+  top: calc(50% - calc(80vw * 0.32));
+  width: calc(50% - 40vw);
+  height: calc(80vw * 0.64);
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 9;
+
+  @media (min-width: 400px) {
+    top: calc(50% - 102.4px);
+    width: calc(50% - 160px);
+    height: 204.8px;
+  }
+}
+
+.cameraFrameOverlayLeft {
+  left: 0;
+}
+
+.cameraFrameOverlayRight {
+  right: 0;
+}
+
+.cameraFrame {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -7,17 +71,16 @@
   max-width: 320px;
   height: calc(80vw * 0.64); // 신분증 비율 (5.4:3.4 ≈ 0.64)
   max-height: calc(320px * 0.64);
-  // border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 12px;
   pointer-events: none;
   z-index: 10;
 }
 
-.idCardFrameCorner {
+.cameraFrameCorner {
   position: absolute;
   width: 20px;
   height: 20px;
-  border: 3px solid #007bff;
+  border: 3px solid white;
 
   &:nth-child(1) {
     top: -3px;
@@ -49,5 +112,43 @@
     border-left: none;
     border-top: none;
     border-bottom-right-radius: 4px;
+  }
+}
+
+.cameraFrameCross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 30px;
+  background-color: white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 2px;
+    background-color: white;
+  }
+}
+
+.cameraFrameGuide {
+  position: absolute;
+  top: calc(50% + calc(80vw * 0.32) + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: white;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+
+  @media (min-width: 400px) {
+    top: calc(50% + 102.4px + 16px);
   }
 }

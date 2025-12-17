@@ -5,7 +5,7 @@ import { TOCR, TScannedResult } from "@/libraries/auth/auth.dto";
 import { ActionIcon, Box, Button, Select } from "@mantine/core";
 import { useState } from "react";
 import css from "./step-2.module.scss";
-import IdcardFrame from "../common/camera-frame";
+import CameraFrame from "../common/camera-frame";
 import clsx from "clsx";
 import { Camera as IconCamera } from "lucide-react";
 import Camera from "../camera";
@@ -85,7 +85,7 @@ export default function Step2({
 
       <div className={clsx(css.cameraBox)}>
         <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
-        <IdcardFrame />
+        <CameraFrame />
       </div>
 
       <div className={css.shutterBox}>
