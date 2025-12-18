@@ -4,10 +4,6 @@ import css from "./step-4.module.scss";
 import { Controller, useFormContext, useFormState } from "react-hook-form";
 import { Button, TextInput } from "@mantine/core";
 import { findEntity, IdCardEntity } from "@/types/tp";
-import { Address } from "react-daum-postcode";
-import Portal from "../common/modal/portal";
-import PostCodeModal from "../common/modal/post-code-modal";
-import { replaceToTelNumber } from "@/utils/regexp";
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TIdTp } from "@/types/common";
 
@@ -23,22 +19,7 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
   const form = useFormContext<TSignUpDto>();
   const { errors } = useFormState({ control: form.control });
 
-  const [showPostCode, setShowPostCode] = useState(false);
   const [imageUrl, setImageUrl] = useState<string[]>([]);
-
-  const openPostCode = () => setShowPostCode(() => true);
-  const closePostCode = () => setShowPostCode(() => false);
-
-  const selectPostCode = (data: Address) => {
-    form.setValue("addr", data.address);
-    form.setValue("zipCd", data.zonecode);
-    form.clearErrors(["addr", "zipCd"]);
-    closePostCode();
-  };
-
-  const onTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    form.setValue("tel", replaceToTelNumber(e.target.value));
-  };
 
   useEffect(() => {
     const urls = images.map((image) => URL.createObjectURL(image));
@@ -94,64 +75,6 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           {errors.idNo1?.message && <div className={css.errorMessage}>{errors.idNo1?.message}</div>}
           {errors.idNo2?.message && <div className={css.errorMessage}>{errors.idNo2?.message}</div>}
         </div>
-
-        <Controller
-          control={form.control}
-          name="zipCd"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              label="우편번호"
-              value={undefined}
-              onChange={undefined}
-              defaultValue={field.value}
-              onFocus={openPostCode}
-              required
-              error={fieldState.error?.message}
-            />
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="addr"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              label="주소"
-              value={undefined}
-              onChange={undefined}
-              defaultValue={field.value}
-              onFocus={openPostCode}
-              error={fieldState.error?.message}
-              required
-            />
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="addrDtil"
-          render={({ field, fieldState }) => (
-            <TextInput {...field} label="상세주소" required error={fieldState.error?.message} />
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="tel"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              label="전화번호"
-              onChange={onTelChange}
-              placeholder="-를 제외하고 입력해주세요."
-              inputMode="numeric"
-              required
-              error={fieldState.error?.message}
-            />
-          )}
-        />
       </div>
 
       <div className={css.submitButtonBox}>
@@ -163,12 +86,6 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           {isLastStep ? "제출" : "다음"}
         </Button>
       </div>
-
-      {showPostCode && (
-        <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
-        </Portal>
-      )}
     </>
   );
 }

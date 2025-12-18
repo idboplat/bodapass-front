@@ -1,94 +1,59 @@
-import { useState } from "react";
 import css from "./crew-signup-home.module.scss";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import { nativeLogger, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
-import { signUpDto, TScannedResult } from "@/libraries/auth/auth.dto";
-import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import CrewStep1 from "./crew-step-1";
+import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
+import { useFormContext } from "react-hook-form";
+import CrewStep2 from "./crew-step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { LoadingOverlay } from "@mantine/core";
 import { WithoutSignInLayout } from "./layout";
+import { useOnSiteSignupCtx } from "./context-provider";
 
 interface Props {}
 
 export default function CrewSignUpHome({}: Props) {
   const router = useRouter();
-  const locale = router.query.locale?.toString() || "ko";
+
+  const form = useFormContext<TSignUpDto>();
+  const ctx = useOnSiteSignupCtx();
 
   // 국가코드 일시적 생략
-  const [step, setStep] = useState(2);
-  const [image, setImage] = useState<Blob | null>(null);
-  const [wrkTp, setWrkTp] = useState<"2" | "3">("2");
 
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const form = useForm({
-    // mode: "onTouched", // 직접 검증 처리하기 위해 막음
-    resolver: zodResolver(signUpDto),
-    defaultValues: {
-      // step1
-      cntryCd: "KR",
-
-      // step2
-      idTp: "1" as const,
-
-      // step3
-      userNm: "",
-      idNo1: "",
-      idNo2: "",
-      zipCd: "",
-      addr: "",
-      addrDtil: "",
-      tel: "",
-
-      // 미사용 필드
-      brkrId: session.userId,
-      externalId: "",
-      password: "",
-      passwordConfirm: "",
-
-      //
-      emailAddr: "",
-    },
-  });
-
-  const changeWrkTp = (wrkTp: "2" | "3") => {
-    setWrkTp(() => wrkTp);
+  const step2Prev = () => {
+    router.back();
   };
-
-  const step1Next = async () => {
-    const isValid = await form.trigger(["cntryCd"]);
-    if (!isValid) return;
-
-    setStep(() => 2);
-  };
-
-  const step2Prev = () => setStep(() => 1);
 
   const step2Next = (args: TScannedResult) => {
-    form.setValue("idTp", args.idTp);
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
-    setImage(() => args.image);
+    ctx.saveImages([args.image]);
 
-    setStep(() => 3);
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("step", "3");
+    searchParams.set("idTp", args.idTp);
+    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
   };
 
-  const step3Prev = () => setStep(() => 2);
+  const step3Prev = () => {
+    router.back();
+  };
 
   const step3Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
 
-    if (!image) {
-      setStep(() => 2);
+    if (ctx.images.length === 0) {
+      const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+      searchParams.set("step", "2");
+      router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
       return;
     }
 
@@ -104,46 +69,51 @@ export default function CrewSignUpHome({}: Props) {
 
     nativeLogger(JSON.stringify(form.formState, null, 2));
 
-    WCW000001SSP02.mutation.mutate(
-      {
-        ...form.getValues(),
-        session,
-        image,
-        wrkTp,
-        loginTp: "4", // 기타
-        corpCd: "",
-        emailAddr: "",
-      },
-      {
-        onSuccess: (data) =>
-          sendMessageToDevice({
-            type: DEVICE_API.addWorker,
-            payload: data satisfies { userId: string },
-          }),
-      },
-    );
+    const payload = {
+      ...form.getValues(),
+      session,
+      image: ctx.images[0],
+      wrkTp: ctx.wrkTp,
+      loginTp: ctx.loginTp, // 4: 기타
+      corpCd: "",
+      emailAddr: "",
+      idTp: ctx.idTp,
+      brkrId: session.userId, // 반장 아이디
+    };
+
+    WCW000001SSP02.mutation.mutate(payload, {
+      onSuccess: (data) =>
+        sendMessageToDevice({
+          type: DEVICE_API.addWorker,
+          payload: data satisfies { userId: string },
+        }),
+    });
   };
 
   return (
     <WithoutSignInLayout title="팀원 추가">
-      <FormProvider {...form}>
-        <div className={css.form}>
-          {step === 1 && (
-            <CrewStep1
-              onClickNext={step1Next}
-              wrkTp={wrkTp}
-              changeWrkTp={changeWrkTp}
-              session={session}
-            />
-          )}
-          {step === 2 && <Step3 onClickNext={step2Next} onClickPrev={step2Prev} />}
-          {step === 3 && !!image && (
-            <Step4 onClickNext={step3Submit} onClickPrev={step3Prev} image={image} isLastStep />
-          )}
+      <div className={css.form}>
+        {ctx.step === "1" && <CrewStep2 wrkTp={ctx.wrkTp} session={session} locale={ctx.locale} />}
+        {ctx.step === "2" && (
+          <Step3
+            onClickNext={step2Next}
+            onClickPrev={step2Prev}
+            idTp={ctx.idTp}
+            locale={ctx.locale}
+          />
+        )}
+        {ctx.step === "3" && (
+          <Step4
+            onClickNext={step3Submit}
+            onClickPrev={step3Prev}
+            images={ctx.images}
+            isLastStep
+            idTp={ctx.idTp}
+          />
+        )}
 
-          <LoadingOverlay visible={WCW000001SSP02.isLoading} />
-        </div>
-      </FormProvider>
+        <LoadingOverlay visible={WCW000001SSP02.isLoading} />
+      </div>
     </WithoutSignInLayout>
   );
 }

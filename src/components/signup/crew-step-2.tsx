@@ -1,25 +1,32 @@
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
-import { TLoginTp } from "@/types/common";
 import { onNoSpaceChange } from "@/utils/input-handler";
-import { checkPassword, removeBlank, replaceToTelNumber } from "@/utils/regexp";
-import { Box, Button, Checkbox, PasswordInput, Select, TextInput } from "@mantine/core";
-import { useMemo, useState } from "react";
-import { Address } from "react-daum-postcode";
+import { Box, Button, Checkbox, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
+import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
+import { TWrkTp } from "@/types/common";
+import { useState } from "react";
+import { Address } from "react-daum-postcode";
+import { replaceToTelNumber } from "@/utils/regexp";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { useRouter } from "next/router";
 import { z } from "zod";
-import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 
-export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; locale: string }) {
+export default function CrewStep2({
+  session,
+  wrkTp,
+  locale,
+}: {
+  session: Session;
+  wrkTp: TWrkTp;
+  locale: string;
+}) {
   const router = useRouter();
 
   const [showPostCode, setShowPostCode] = useState(false);
   const [isEmailCheck, setIsEmailCheck] = useState(false);
 
-  const TCW000100SMQ03 = useTCW000100SMQ03({ session: null });
+  const TCW000100SMQ03 = useTCW000100SMQ03({ session });
   const form = useFormContext<TSignUpDto>();
 
   const openPostCode = () => setShowPostCode(() => true);
@@ -30,6 +37,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
     form.setValue("zipCd", data.zonecode);
     form.clearErrors(["addr", "zipCd"]);
     closePostCode();
+  };
+
+  const changeWrkTp = (wrkTp: TWrkTp) => {
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("wrkTp", wrkTp);
+    router.replace(`/${locale}/signup/?${searchParams.toString()}`);
   };
 
   const onTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,21 +65,14 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
   };
 
   const onClickNext = async () => {
-    console.log("form.formState", form.getValues());
     const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
     if (!isValid) return;
 
-    if (loginTp !== "2") {
-      // 소셜 회원가입시
-      if (!checkPassword(form.getValues("password"))) {
-        form.setError("password", {
-          message: "비밀번호는 8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.",
-        });
-        return;
-      }
+    if (isEmailCheck) {
+      const result = z.string().email().safeParse(form.getValues("emailAddr"));
 
-      if (form.getValues("password") !== form.getValues("passwordConfirm")) {
-        form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
+      if (!result.success) {
+        form.setError("emailAddr", { message: "이메일 형식이 올바르지 않습니다." });
         return;
       }
     }
@@ -81,21 +87,9 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
     }
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "3");
+    searchParams.set("step", "2");
     router.push(`/${locale}/signup/?${searchParams.toString()}`);
   };
-
-  const socialLoginId = useMemo(() => {
-    try {
-      if (loginTp !== "2") return "";
-      return JSON.parse(sessionStorage.getItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY) || "{}")
-        ?.externalId as string;
-    } catch (error) {
-      console.error(error);
-      sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
-      router.replace(`/${locale}/signin`);
-    }
-  }, [loginTp, locale, router]);
 
   return (
     <>
@@ -130,88 +124,18 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
         )}
       /> */}
 
-        <Controller
-          control={form.control}
-          name="externalId"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              mt={28}
-              value={loginTp === "2" ? socialLoginId : field.value}
-              label="아이디"
-              autoComplete="off"
-              type="text"
-              onChange={(e) => onNoSpaceChange(e, field.onChange)}
-              error={fieldState.error?.message}
-              required
-              disabled={loginTp === "2"}
-            />
-          )}
-        />
-
-        {loginTp !== "2" && (
-          <Controller
-            control={form.control}
-            name="password"
-            render={({ field, fieldState }) => (
-              <PasswordInput
-                {...field}
-                mt={28}
-                label="비밀번호"
-                autoComplete="off"
-                onChange={(e) => {
-                  const value = removeBlank(e.target.value);
-                  const valid = checkPassword(value);
-
-                  form.clearErrors(["password", "passwordConfirm"]);
-
-                  if (!valid) {
-                    form.setError("password", {
-                      message:
-                        "비밀번호는 8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.",
-                    });
-                  }
-
-                  if (valid && value !== form.getValues("passwordConfirm")) {
-                    form.setError("password", { message: "비밀번호가 일치하지 않습니다." });
-                  }
-
-                  form.setValue("password", value);
-                }}
-                error={fieldState.error?.message}
-                required
-              />
-            )}
-          />
-        )}
-
-        {loginTp !== "2" && (
-          <Controller
-            control={form.control}
-            name="passwordConfirm"
-            render={({ field, fieldState }) => (
-              <PasswordInput
-                {...field}
-                mt={28}
-                label="비밀번호 확인"
-                autoComplete="off"
-                onChange={(e) => {
-                  const value = removeBlank(e.target.value);
-
-                  form.clearErrors(["password", "passwordConfirm"]);
-
-                  if (value !== form.getValues("password")) {
-                    form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
-                  }
-
-                  form.setValue("passwordConfirm", value);
-                }}
-                error={fieldState.error?.message}
-                required
-              />
-            )}
-          />
-        )}
+        {/* 추후에 다시 필요할 수 도 있음 */}
+        {/* <Select
+        label="근로 구분"
+        mt="1rem"
+        value={wrkTp}
+        data={[
+          { value: "2", label: "팀원" },
+          { value: "3", label: "일용직" },
+        ]}
+        allowDeselect={false}
+        onChange={(value) => changeWrkTp(value as "2" | "3")}
+      /> */}
 
         <Controller
           control={form.control}
@@ -224,10 +148,10 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               onChange={undefined}
               defaultValue={field.value}
               onFocus={openPostCode}
+              error={fieldState.error?.message}
               autoComplete="off"
               required
               readOnly
-              error={fieldState.error?.message}
             />
           )}
         />
@@ -275,8 +199,8 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               onChange={onTelChange}
               placeholder="-를 제외하고 입력해주세요."
               inputMode="numeric"
-              required
               autoComplete="tel"
+              required
               error={fieldState.error?.message}
             />
           )}
@@ -307,9 +231,9 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
         )}
 
         <Box mt={28} style={{ textAlign: "right" }}>
-          <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
-            이전
-          </Button>
+          {/* <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+          이전
+        </Button> */}
 
           <Button variant="filled" type="button" onClick={onClickNext}>
             다음

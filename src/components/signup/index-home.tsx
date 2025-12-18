@@ -1,25 +1,24 @@
-import { TLoginTp, TWrkTp } from "@/types/common";
+import { TWrkTp } from "@/types/common";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import css from "./index.module.scss";
+import css from "./index-home.module.scss";
 import { GradientBackground } from "@/components/background";
 import Link from "next/link";
+import { useSignupCtx } from "./context-provider";
 
-interface PageProps {
-  loginTp: TLoginTp;
-  locale: string;
-}
+interface PageProps {}
 
-export default function IndexHome({ loginTp, locale }: PageProps) {
+export default function IndexHome({}: PageProps) {
   const router = useRouter();
   const { t } = useTranslation();
+  const ctx = useSignupCtx();
 
   const nextPage = (tp: TWrkTp) => () => {
     const searchParams = new URLSearchParams();
-    searchParams.set("loginTp", loginTp);
+    searchParams.set("loginTp", ctx.loginTp);
     searchParams.set("wrkTp", tp);
     searchParams.set("step", "2");
-    router.push(`/${locale}/signup/?${searchParams.toString()}`);
+    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
   };
 
   return (
@@ -27,7 +26,7 @@ export default function IndexHome({ loginTp, locale }: PageProps) {
       <GradientBackground />
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h1 className={css.title}>{loginTp !== "2" ? t("auth:1001") : t("auth:1002")}</h1>
+          <h1 className={css.title}>{ctx.loginTp !== "2" ? t("auth:1001") : t("auth:1002")}</h1>
 
           <div className={css.buttonContainer}>
             <button className={css.roleButton} onClick={nextPage("1")}>
@@ -86,10 +85,10 @@ export default function IndexHome({ loginTp, locale }: PageProps) {
           </div>
 
           <div className={css.linkContainer}>
-            <Link href={`/${locale}/signin`} className={css.signinLink}>
+            <Link href={`/${ctx.locale}/signin`} className={css.signinLink}>
               이미 아이디가 있으신가요?
             </Link>
-            <a target="_blank" href={`/${locale}/privacy`} className={css.privacyLink}>
+            <a target="_blank" href={`/${ctx.locale}/privacy`} className={css.privacyLink}>
               개인정보 처리방침
             </a>
           </div>

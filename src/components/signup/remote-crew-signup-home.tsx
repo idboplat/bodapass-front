@@ -1,19 +1,16 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import css from "./remote-crew-signup-home.module.scss";
 import { useFormContext } from "react-hook-form";
 import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
-import { useTCM200001SSQ00, useWCW000001SSP02 } from "@/hooks/tms/use-auth";
+import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
 import RemoteCrewStep2 from "./remote-crew-step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
-import { checkPassword } from "@/utils/regexp";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
-import { TIdTp, TLoginTp } from "@/types/common";
-import { useSignupCtx } from "./context";
+import { useSignupCtx } from "./context-provider";
 
 interface Props {}
 
@@ -25,72 +22,8 @@ export default function RemoteCrewSignupHome({}: Props) {
   const ctx = useSignupCtx();
 
   // 국가코드 일시적 생략
-  const [isValidateBrokerId, setIsValidateBrokerId] = useState(false);
-  const [brkrIdError, setBrkrIdError] = useState<string | null>(null);
 
-  const TCM200001SSQ00 = useTCM200001SSQ00();
   const WCW000001SSP02 = useWCW000001SSP02();
-
-  const onClickBrokerInputButton = (brokerId: string) => {
-    if (TCM200001SSQ00.isPending) return;
-
-    if (!isValidateBrokerId) {
-      TCM200001SSQ00.mutate(
-        { brkrId: brokerId },
-        {
-          onSuccess: () => {
-            setIsValidateBrokerId(() => true);
-          },
-        },
-      );
-    } else {
-      setIsValidateBrokerId(() => false);
-    }
-  };
-
-  const toggleWorkerTp = () => {
-    setIsValidateBrokerId(() => false);
-    setBrkrIdError(() => null);
-
-    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("wrkTp", ctx.wrkTp === "2" ? "3" : "2");
-    searchParams.set("brkrId", "");
-    router.replace(`/${ctx.locale}/signup/?${searchParams.toString()}`);
-  };
-
-  const step2Prev = () => {
-    router.back();
-  };
-
-  const step2Next = async () => {
-    if (ctx.wrkTp === "2") {
-      // 팀원의 경우만
-      const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
-      if (!isValid) return;
-    }
-
-    // TODO : 리팩토링 필요
-    if (!checkPassword(form.getValues("password"))) {
-      form.setError("password", {
-        message: "비밀번호는 8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.",
-      });
-      return;
-    }
-
-    if (form.getValues("password") !== form.getValues("passwordConfirm")) {
-      form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
-      return;
-    }
-
-    if (ctx.brkrId.length > 0 && !isValidateBrokerId) {
-      setBrkrIdError(() => "반장 아이디가 검증되지 않았습니다.");
-      return;
-    }
-
-    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "3");
-    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
-  };
 
   const step3Prev = () => {
     router.back();
@@ -141,10 +74,10 @@ export default function RemoteCrewSignupHome({}: Props) {
       ...form.getValues(),
       externalId:
         ctx.loginTp === "2"
-          ? form.getValues("externalId")
-          : ctx.socialLoginSession?.externalId || "",
+          ? ctx.socialLoginSession?.externalId || ""
+          : form.getValues("externalId"),
       password:
-        ctx.loginTp === "2" ? form.getValues("password") : ctx.socialLoginSession?.code || "",
+        ctx.loginTp === "2" ? ctx.socialLoginSession?.code || "" : form.getValues("password"),
       session: null,
       image: ctx.images[0],
       wrkTp: ctx.wrkTp,
@@ -178,14 +111,9 @@ export default function RemoteCrewSignupHome({}: Props) {
         {ctx.step === "2" && (
           <RemoteCrewStep2
             wrkTp={ctx.wrkTp}
-            isValidateBrokerId={isValidateBrokerId}
-            isLoadingBrokerCheck={TCM200001SSQ00.isPending}
-            onClickBrokerInputButton={onClickBrokerInputButton}
-            onClickNext={step2Next}
-            onClickPrev={step2Prev}
-            toggleWorkerTp={toggleWorkerTp}
             initialBrkrId={ctx.brkrId}
-            brkrIdError={brkrIdError}
+            locale={ctx.locale}
+            loginTp={ctx.loginTp}
           />
         )}
         {ctx.step === "3" && (
