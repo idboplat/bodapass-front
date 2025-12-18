@@ -2,7 +2,6 @@ import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { onNoSpaceChange } from "@/utils/input-handler";
 import { Box, Button, Checkbox, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import { TWrkTp } from "@/types/common";
 import { useState } from "react";
 import { Address } from "react-daum-postcode";
@@ -26,7 +25,6 @@ export default function CrewStep2({
   const [showPostCode, setShowPostCode] = useState(false);
   const [isEmailCheck, setIsEmailCheck] = useState(false);
 
-  const TCW000100SMQ03 = useTCW000100SMQ03({ session });
   const form = useFormContext<TSignUpDto>();
 
   const openPostCode = () => setShowPostCode(() => true);
@@ -88,42 +86,12 @@ export default function CrewStep2({
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
     searchParams.set("step", "2");
-    router.push(`/${locale}/signup/?${searchParams.toString()}`);
+    router.push(`/${locale}/signup/crew/?${searchParams.toString()}`);
   };
 
   return (
     <>
       <div>
-        {/* <Controller
-        control={form.control}
-        name="cntryCd"
-        render={({ field, fieldState }) => (
-          <Select
-            {...form.register("cntryCd")}
-            label="국가 선택"
-            searchable
-            data={TCW000100SMQ03.data?.map((d) => ({
-              value: d.cntryCd,
-              label: `${d.cntryKoNm}`,
-            }))}
-            allowDeselect={false}
-            onChange={(value) => form.setValue("cntryCd", value || "")}
-            value={form.getValues("cntryCd")}
-            styles={{
-              dropdown: {
-                maxHeight: 250,
-                overflow: "auto",
-                scrollbarWidth: "auto",
-              },
-            }}
-            disabled={TCW000100SMQ03.isPending}
-            placeholder={
-              TCW000100SMQ03.isPending ? "국가 정보를 불러오는 중입니다..." : "국가을 선택해주세요"
-            }
-          />
-        )}
-      /> */}
-
         {/* 추후에 다시 필요할 수 도 있음 */}
         {/* <Select
         label="근로 구분"

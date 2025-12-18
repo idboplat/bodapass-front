@@ -40,7 +40,7 @@ export default function CrewSignUpHome({}: Props) {
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
     searchParams.set("step", "3");
     searchParams.set("idTp", args.idTp);
-    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+    router.push(`/${ctx.locale}/signup/crew/?${searchParams.toString()}`);
   };
 
   const step3Prev = () => {
@@ -53,7 +53,7 @@ export default function CrewSignUpHome({}: Props) {
     if (ctx.images.length === 0) {
       const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
       searchParams.set("step", "2");
-      router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+      router.push(`/${ctx.locale}/signup/crew/?${searchParams.toString()}`);
       return;
     }
 
@@ -82,11 +82,16 @@ export default function CrewSignUpHome({}: Props) {
     };
 
     WCW000001SSP02.mutation.mutate(payload, {
-      onSuccess: (data) =>
-        sendMessageToDevice({
-          type: DEVICE_API.addWorker,
-          payload: data satisfies { userId: string },
-        }),
+      onSuccess: (data) => {
+        if (!!window.ReactNativeWebView) {
+          sendMessageToDevice({
+            type: DEVICE_API.addWorker,
+            payload: data satisfies { userId: string },
+          });
+        } else {
+          alert("팀원 추가가 완료되었습니다.");
+        }
+      },
     });
   };
 
