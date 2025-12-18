@@ -11,25 +11,25 @@ export const signInDto = z.object({
 
 export type TSignUpDto = z.infer<typeof signUpDto>;
 export const signUpDto = z.object({
-  // step 1
-  cntryCd: z.string().min(1),
+  corpCd: z.string(),
 
-  // step 3
-  userNm: z.string().min(1).regex(/^\S+$/, "공백 없이 입력해주세요."),
-  idNo1: z.string().min(1),
-  idNo2: z.string().min(1),
-  zipCd: z.string().min(1),
-  addr: z.string().min(1),
-  addrDtil: z.string().min(1),
-  tel: z.string().min(1),
-
-  externalId: z.string().min(1),
+  exterUserId: z.string().min(1),
   password: z.string().min(1),
   passwordConfirm: z.string().min(1),
 
-  //
-  corpCd: z.string(),
+  tel: z.string().min(1),
+  zipCd: z.string().min(1),
+  addr: z.string().min(1),
+  addrDtil: z.string().min(1),
   emailAddr: z.string().optional().default(""),
+
+  cntryCd: z.string().min(1),
+  userNm: z.string().min(1).regex(/^\S+$/, "공백 없이 입력해주세요."),
+  idNo1: z.string().min(1),
+  idNo2: z.string().min(1),
+  isuDd: z.string(),
+  idSn: z.string(),
+  visaCd: z.string(),
 });
 
 export type TScannedResult = {

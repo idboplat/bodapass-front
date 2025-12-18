@@ -1,11 +1,11 @@
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
-import { Box, Button, Checkbox, Select, TextInput } from "@mantine/core";
+import { Box, Button, Checkbox, PasswordInput, Select, TextInput } from "@mantine/core";
 import { Controller, useFormContext } from "react-hook-form";
 import css from "./remote-crew-signup-home.module.scss";
 import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import { TLoginTp, TWrkTp } from "@/types/common";
-import { useState } from "react";
-import { checkPassword, replaceToTelNumber } from "@/utils/regexp";
+import { useMemo, useState } from "react";
+import { checkPassword, removeBlank, replaceToTelNumber } from "@/utils/regexp";
 import { Address } from "react-daum-postcode";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useTCM200001SSQ00 } from "@/hooks/tms/use-auth";
 import { z } from "zod";
 import { onNoSpaceChange } from "@/utils/input-handler";
+import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 
 export default function RemoteCrewStep2({
   wrkTp,
@@ -133,39 +134,21 @@ export default function RemoteCrewStep2({
     router.push(`/${locale}/signup/?${searchParams.toString()}`);
   };
 
+  const socialLoginId = useMemo(() => {
+    try {
+      if (loginTp !== "2") return "";
+      return JSON.parse(sessionStorage.getItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY) || "{}")
+        ?.exterUserId as string;
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
+      router.replace(`/${locale}/signin`);
+    }
+  }, [loginTp, locale, router]);
+
   return (
     <>
       <div>
-        {/* <Controller
-        control={form.control}
-        name="cntryCd"
-        render={({ field, fieldState }) => (
-          <Select
-            {...form.register("cntryCd")}
-            label="국가 선택"
-            searchable
-            data={TCW000100SMQ03.data?.map((d) => ({
-              value: d.cntryCd,
-              label: `${d.cntryKoNm}`,
-            }))}
-            allowDeselect={false}
-            onChange={(value) => form.setValue("cntryCd", value || "")}
-            value={form.getValues("cntryCd")}
-            styles={{
-              dropdown: {
-                maxHeight: 250,
-                overflow: "auto",
-                scrollbarWidth: "auto",
-              },
-            }}
-            disabled={TCW000100SMQ03.isPending}
-            placeholder={
-              TCW000100SMQ03.isPending ? "국가 정보를 불러오는 중입니다..." : "국가을 선택해주세요"
-            }
-          />
-        )}
-      /> */}
-
         {wrkTp === "2" && (
           <TextInput
             classNames={{ wrapper: css.brokerInput }}
@@ -175,7 +158,7 @@ export default function RemoteCrewStep2({
             disabled={isValidateBrokerId}
             value={brkrIdValue}
             onChange={(e) => setBrkrIdValue(e.target.value)}
-            placeholder="teamleader1@gmail.com"
+            placeholder="반장 아이디를 입력해주세요."
             error={brkrIdError}
             rightSection={
               <Button
@@ -188,6 +171,89 @@ export default function RemoteCrewStep2({
                 {isValidateBrokerId ? "초기화" : "검증"}
               </Button>
             }
+          />
+        )}
+
+        <Controller
+          control={form.control}
+          name="exterUserId"
+          render={({ field, fieldState }) => (
+            <TextInput
+              {...field}
+              mt={28}
+              value={loginTp === "2" ? socialLoginId : field.value}
+              label="아이디"
+              autoComplete="off"
+              type="text"
+              onChange={(e) => onNoSpaceChange(e, field.onChange)}
+              error={fieldState.error?.message}
+              required
+              disabled={loginTp === "2"}
+            />
+          )}
+        />
+
+        {loginTp !== "2" && (
+          <Controller
+            control={form.control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <PasswordInput
+                {...field}
+                mt={28}
+                label="비밀번호"
+                autoComplete="off"
+                onChange={(e) => {
+                  const value = removeBlank(e.target.value);
+                  const valid = checkPassword(value);
+
+                  form.clearErrors(["password", "passwordConfirm"]);
+
+                  if (!valid) {
+                    form.setError("password", {
+                      message:
+                        "비밀번호는 8자 이상, 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.",
+                    });
+                  }
+
+                  if (valid && value !== form.getValues("passwordConfirm")) {
+                    form.setError("password", { message: "비밀번호가 일치하지 않습니다." });
+                  }
+
+                  form.setValue("password", value);
+                }}
+                error={fieldState.error?.message}
+                required
+              />
+            )}
+          />
+        )}
+
+        {loginTp !== "2" && (
+          <Controller
+            control={form.control}
+            name="passwordConfirm"
+            render={({ field, fieldState }) => (
+              <PasswordInput
+                {...field}
+                mt={28}
+                label="비밀번호 확인"
+                autoComplete="off"
+                onChange={(e) => {
+                  const value = removeBlank(e.target.value);
+
+                  form.clearErrors(["password", "passwordConfirm"]);
+
+                  if (value !== form.getValues("password")) {
+                    form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
+                  }
+
+                  form.setValue("passwordConfirm", value);
+                }}
+                error={fieldState.error?.message}
+                required
+              />
+            )}
           />
         )}
 
@@ -287,6 +353,7 @@ export default function RemoteCrewStep2({
           </Button>
         </Box>
       </div>
+
       {showPostCode && (
         <Portal>
           <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />

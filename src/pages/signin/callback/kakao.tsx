@@ -6,6 +6,7 @@ import { useKakaoLoginMutation } from "@/hooks/tms/use-auth";
 import { LoadingOverlay } from "@mantine/core";
 import { SESSION_LOCAL_STORAGE_KEY, SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { DEVICE_API } from "@/types/common";
+import { TSocialLoginSession } from "@/components/signup/context-provider";
 
 // https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
 // 번역안함.
@@ -32,9 +33,9 @@ export default function Page() {
             sessionStorage.setItem(
               SOCIAL_LOGIN_SESSION_STORAGE_KEY,
               JSON.stringify({
-                externalId: data.token.externalId,
+                exterUserId: data.token.externalId,
                 code: data.token.code, // 소셜 아이디
-              }),
+              } satisfies TSocialLoginSession),
             );
 
             router.replace(`/${locale}/signup?${searchParams.toString()}`);

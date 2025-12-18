@@ -7,15 +7,17 @@ import { createContext, use, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
+export type TSocialLoginSession = {
+  exterUserId: string;
+  code: string;
+};
+
 type TSignupContext = {
   wrkTp: TWrkTp;
   loginTp: TLoginTp;
   idTp: TIdTp;
   brkrId: string;
-  socialLoginSession: {
-    code: string;
-    externalId: string;
-  } | null;
+  socialLoginSession: TSocialLoginSession | null;
   saveImages: (images: Blob[]) => void;
   resetImages: () => void;
   images: Blob[];
@@ -45,10 +47,7 @@ export const SignupProvider = ({ children }: { children: React.ReactNode }) => {
   const brkrId = router.query.brkrId?.toString() || "";
 
   const [isLoading, setIsLoading] = useState(true);
-  const [socialLoginSession, setSocialLoginSession] = useState<{
-    code: string;
-    externalId: string;
-  } | null>(null);
+  const [socialLoginSession, setSocialLoginSession] = useState<TSocialLoginSession | null>(null);
   const [images, setImages] = useState<Blob[]>([]);
 
   const value = useMemo(() => {
@@ -79,7 +78,7 @@ export const SignupProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const code = JSON.parse(sessionStorage.getItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY) || "{}");
-      const result = z.object({ code: z.string(), externalId: z.string() }).parse(code);
+      const result = z.object({ code: z.string(), exterUserId: z.string() }).parse(code);
 
       if (!code) {
         // 소셜로그인인데 code가 없으면 로그인 페이지로 이동
@@ -161,29 +160,29 @@ export const SignupFormProvider = ({ children }: { children: React.ReactNode }) 
     // mode: "onTouched", // 직접 검증 처리하기 위해 막음
     resolver: zodResolver(signUpDto),
     defaultValues: {
-      // step1
-      cntryCd: "KR",
-
-      userNm: "",
-      idNo1: "",
-      idNo2: "",
-      zipCd: "",
-      addr: "",
-      addrDtil: "",
-      tel: "",
+      corpCd: "",
 
       // 소셜로그인의 경우는 socialLoginSession로 대치해서 서비스 호출
-      externalId: "",
+      exterUserId: "",
       password: "",
       passwordConfirm: "",
 
-      //
-      corpCd: "",
+      tel: "",
+      zipCd: "",
+      addr: "",
+      addrDtil: "",
       emailAddr: "",
+
+      //
+      cntryCd: "100",
+      userNm: "",
+      idNo1: "",
+      idNo2: "",
+      isuDd: "",
+      idSn: "",
+      visaCd: "",
     },
   });
-
-  console.log("form", form.getValues());
 
   return <FormProvider {...form}>{children}</FormProvider>;
 };

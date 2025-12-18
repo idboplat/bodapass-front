@@ -1,9 +1,8 @@
-import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TLoginTp } from "@/types/common";
 import { onNoSpaceChange } from "@/utils/input-handler";
 import { checkPassword, removeBlank, replaceToTelNumber } from "@/utils/regexp";
-import { Box, Button, Checkbox, PasswordInput, Select, TextInput } from "@mantine/core";
+import { Box, Button, Checkbox, PasswordInput, TextInput } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { Address } from "react-daum-postcode";
 import { Controller, useFormContext } from "react-hook-form";
@@ -19,7 +18,6 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
   const [showPostCode, setShowPostCode] = useState(false);
   const [isEmailCheck, setIsEmailCheck] = useState(false);
 
-  const TCW000100SMQ03 = useTCW000100SMQ03({ session: null });
   const form = useFormContext<TSignUpDto>();
 
   const openPostCode = () => setShowPostCode(() => true);
@@ -52,7 +50,6 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
   };
 
   const onClickNext = async () => {
-    console.log("form.formState", form.getValues());
     const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
     if (!isValid) return;
 
@@ -89,7 +86,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
     try {
       if (loginTp !== "2") return "";
       return JSON.parse(sessionStorage.getItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY) || "{}")
-        ?.externalId as string;
+        ?.exterUserId as string;
     } catch (error) {
       console.error(error);
       sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
@@ -100,39 +97,9 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
   return (
     <>
       <div>
-        {/* <Controller
-        control={form.control}
-        name="cntryCd"
-        render={({ field, fieldState }) => (
-          <Select
-            {...form.register("cntryCd")}
-            label="국가 선택"
-            searchable
-            data={TCW000100SMQ03.data?.map((d) => ({
-              value: d.cntryCd,
-              label: `${d.cntryKoNm}`,
-            }))}
-            allowDeselect={false}
-            onChange={(value) => form.setValue("cntryCd", value || "")}
-            value={form.getValues("cntryCd")}
-            styles={{
-              dropdown: {
-                maxHeight: 250,
-                overflow: "auto",
-                scrollbarWidth: "auto",
-              },
-            }}
-            disabled={TCW000100SMQ03.isPending}
-            placeholder={
-              TCW000100SMQ03.isPending ? "국가 정보를 불러오는 중입니다..." : "국가을 선택해주세요"
-            }
-          />
-        )}
-      /> */}
-
         <Controller
           control={form.control}
-          name="externalId"
+          name="exterUserId"
           render={({ field, fieldState }) => (
             <TextInput
               {...field}

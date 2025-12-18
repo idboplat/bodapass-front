@@ -23,8 +23,6 @@ export default function LeaderSignupHome({}: Props) {
   const form = useFormContext<TSignUpDto>();
   const ctx = useSignupCtx();
 
-  // 국가코드 일시적 생략
-
   const WCW000001SSP02 = useWCW000001SSP02();
 
   const step3Prev = () => {
@@ -35,7 +33,7 @@ export default function LeaderSignupHome({}: Props) {
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
     ctx.saveImages([args.image]);
-    console.log("form.formState", form.getValues());
+
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
     searchParams.set("idTp", args.idTp);
     searchParams.set("step", "4");
@@ -48,7 +46,6 @@ export default function LeaderSignupHome({}: Props) {
 
   const step4Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
-    console.log("form.formState", form.getValues());
 
     const isValid = await form.trigger(["userNm", "idNo1", "idNo2"]);
 
@@ -75,14 +72,14 @@ export default function LeaderSignupHome({}: Props) {
 
     const payload = {
       ...form.getValues(),
-      externalId:
+      exterUserId:
         ctx.loginTp === "2"
-          ? ctx.socialLoginSession?.externalId || ""
-          : form.getValues("externalId"),
+          ? ctx.socialLoginSession?.exterUserId || ""
+          : form.getValues("exterUserId"),
       password:
         ctx.loginTp === "2" ? ctx.socialLoginSession?.code || "" : form.getValues("password"),
       session: null,
-      image: ctx.images[0],
+      image: [ctx.images[0], ctx.images?.[1] || ""] as [Blob | string, Blob | string],
       wrkTp: "1" as TWrkTp,
       loginTp: ctx.loginTp,
       corpCd: "",
@@ -90,10 +87,9 @@ export default function LeaderSignupHome({}: Props) {
       idTp: ctx.idTp,
       brkrId: "",
     };
-    console.log("payload", payload);
 
     // socialLoginSession 체크
-    if (!payload.externalId || !payload.password) {
+    if (!payload.exterUserId || !payload.password) {
       sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
       nativeAlert("[FW990] 비정상적인 접근입니다.");
       router.replace(`/${ctx.locale}/signin`);
