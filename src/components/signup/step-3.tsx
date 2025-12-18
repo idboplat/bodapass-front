@@ -4,7 +4,7 @@ import { nativeAlert } from "@/hooks/use-device-api";
 import { TScannedResult } from "@/libraries/auth/auth.dto";
 import { ActionIcon, Select } from "@mantine/core";
 import css from "./step-3.module.scss";
-import IdcardFrame from "../common/camera-frame";
+import CameraFrame from "../common/camera-frame";
 import clsx from "clsx";
 import { Camera as IconCamera } from "lucide-react";
 import Camera from "../camera";
@@ -70,7 +70,7 @@ export default function Step3({
 
       <div className={clsx(css.cameraBox)}>
         <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
-        <IdcardFrame />
+        <CameraFrame />
       </div>
 
       <div className={css.shutterBox}>
