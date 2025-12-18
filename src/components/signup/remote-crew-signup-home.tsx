@@ -72,14 +72,14 @@ export default function RemoteCrewSignupHome({}: Props) {
 
     const payload = {
       ...form.getValues(),
-      externalId:
+      exterUserId:
         ctx.loginTp === "2"
-          ? ctx.socialLoginSession?.externalId || ""
-          : form.getValues("externalId"),
+          ? ctx.socialLoginSession?.exterUserId || ""
+          : form.getValues("exterUserId"),
       password:
         ctx.loginTp === "2" ? ctx.socialLoginSession?.code || "" : form.getValues("password"),
       session: null,
-      image: ctx.images[0],
+      image: [ctx.images[0], ctx.images?.[1] || ""] as [Blob | string, Blob | string],
       wrkTp: ctx.wrkTp,
       loginTp: ctx.loginTp,
       corpCd: "",
@@ -89,7 +89,7 @@ export default function RemoteCrewSignupHome({}: Props) {
     };
 
     // socialLoginSession 체크
-    if (!payload.externalId || !payload.password) {
+    if (!payload.exterUserId || !payload.password) {
       sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
       nativeAlert("[F999] 비정상적인 접근입니다.");
       router.replace(`/${ctx.locale}/signin`);

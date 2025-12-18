@@ -72,7 +72,7 @@ export default function CrewSignUpHome({}: Props) {
     const payload = {
       ...form.getValues(),
       session,
-      image: ctx.images[0],
+      image: [ctx.images[0], ctx.images?.[1] || ""] as [Blob | string, Blob | string],
       wrkTp: ctx.wrkTp,
       loginTp: ctx.loginTp, // 4: 기타
       corpCd: "",

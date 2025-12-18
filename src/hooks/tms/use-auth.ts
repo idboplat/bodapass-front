@@ -113,7 +113,10 @@ export const useWCW000001SSP02 = () => {
         wrkTp: TWrkTp;
         idTp: TIdTp;
         brkrId: string;
-        image: Blob;
+        image: [
+          Blob | string, // 앞면
+          Blob | string, // 뒷면
+        ];
       },
     ) => {
       const response = await callWas<StringRspnData<1>>({
@@ -123,22 +126,25 @@ export const useWCW000001SSP02 = () => {
         locale: "ko",
         data: [
           args.userNm,
-          args.idNo1 + args.idNo2,
+          [args.idNo1, args.idNo2].join("-"),
           args.idTp,
           args.addr,
           args.addrDtil,
           args.tel.replaceAll("-", ""),
           args.zipCd,
           args.wrkTp,
-          args.externalId,
+          args.exterUserId,
           args.loginTp,
           args.password,
           args.cntryCd,
           args.brkrId,
           args.corpCd,
           args.emailAddr,
+          args.isuDd,
+          args.idSn,
+          args.visaCd, // ex) F-4, E-9
         ],
-        formData: [args.image],
+        formData: args.image,
       });
 
       const data = response.svcRspnData?.[0];

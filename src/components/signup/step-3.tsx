@@ -54,9 +54,6 @@ export default function Step3({
             { value: "1", label: "주민등록증" },
             { value: "2", label: "운전면허증" },
             { value: "3", label: "외국인등록증" },
-            // { value: "passport", label: "국내여권" },
-            // { value: "passport-overseas", label: "해외여권" },
-            // { value: "alien-back", label: "외국인등록증 뒷면" },
           ]}
           value={idTp}
           onChange={(value) => {
