@@ -357,8 +357,27 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
         />
         <canvas className={css.canvas} ref={canvasRef} />
         <div className={css.mask}>
-          <div className={css.ring} />
+          <div className={css.ring}>
+            {Array.from({ length: 60 }).map((_, index) => {
+              const angle = index * 6;
+              return (
+                <div
+                  key={index}
+                  className={css.ringTick}
+                  style={{
+                    transform: `rotate(${angle}deg) translateY(-10.5rem)`,
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                />
+              );
+            })}
+          </div>
         </div>
+      </div>
+
+      <div className={css.instructions}>
+        <p className={css.instructionText}>정면 얼굴을 촬영합니다.</p>
+        <p className={css.instructionText}>원형 프레임 안에 얼굴을 맞춰주세요.</p>
       </div>
 
       <div className={css.controls}>
