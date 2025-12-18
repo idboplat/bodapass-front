@@ -39,7 +39,6 @@ export default function CustomButton({
       {...rest}
     >
       {leftIcon && <span className={css.icon}>{leftIcon}</span>}
-
       <span className={css.label}>{children}</span>
     </button>
   );

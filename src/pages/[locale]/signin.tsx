@@ -3,13 +3,12 @@ import css from "./signin.module.scss";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import KakaoLoginIcon from "/public/assets/svg/kakao.svg?react";
 import { UnstyledButton } from "@mantine/core";
-import { GradientBackground } from "@/components/background";
 import { GetServerSideProps } from "next";
 import { KAKAO_REDIRECT_URI } from "@/constants";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18nConfig from "/next-i18next.config";
+import KakaoIcon from "/public/assets/svg/kakao-icon.svg";
 
 type Props = {
   kakaoSignInUrl: string;
@@ -23,34 +22,26 @@ export default function Page({ kakaoSignInUrl }: Props) {
 
   return (
     <div className={"mobileLayout"}>
-      <GradientBackground />
-
       <div className={css.wrap}>
         <div className={css.inner}>
           <div className={css.header}>
-            <div className={css.logo}>👤</div>
-            <h1 className={css.title}>{t("auth:0001")}</h1>
-            <p className={css.subtitle}>계정에 로그인하여 서비스를 이용하세요</p>
+            <p className={css.title}>
+              안녕하세요 :&#41;
+              <br />
+              일당백 입니다.
+            </p>
           </div>
 
           <SigninForm />
 
           <div className={css.divider}>
-            <span>또는</span>
+            <span>간편 로그인</span>
           </div>
 
           <div className={css.socialSection}>
-            <div className={css.socialTitle}>소셜 계정으로 로그인</div>
-
             <UnstyledButton component={"a"} href={kakaoSignInUrl} className={css.kakaoSigninButton}>
-              <KakaoLoginIcon />
-              <span>{t("auth:0002")}</span>
+              <KakaoIcon />
             </UnstyledButton>
-          </div>
-
-          <div className={css.signupLink}>
-            <span>계정이 없으신가요? </span>
-            <Link href={`/${locale}/signup`}>회원가입</Link>
           </div>
         </div>
       </div>

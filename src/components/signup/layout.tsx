@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { GradientBackground } from "../background";
 import css from "./layout.module.scss";
 
 export const WithSignInLayout = ({
@@ -15,8 +14,6 @@ export const WithSignInLayout = ({
 
   return (
     <div className={"mobileLayout"}>
-      <GradientBackground />
-
       <div className={css.wrap}>
         <div className={css.inner}>
           <h1 className={css.title}>{title}</h1>
@@ -46,8 +43,6 @@ export const WithoutSignInLayout = ({
 }) => {
   return (
     <div className={"mobileLayout"}>
-      <GradientBackground />
-
       <div className={css.wrap}>
         <div className={css.inner}>
           <h1 className={css.title}>{title}</h1>

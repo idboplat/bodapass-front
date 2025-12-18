@@ -6,7 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
 import { nativeLogger } from "@/hooks/use-device-api";
 import { useEmailLoginMutation } from "@/hooks/tms/use-auth";
-
+import CustomButton from "../common/custom-button";
+import LockIcon from "/public/assets/svg/lock.svg";
+import UserIcon from "/public/assets/svg/login-person.svg";
+import Link from "next/link";
 export default function SigninForm() {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
@@ -51,10 +54,11 @@ export default function SigninForm() {
         render={({ field }) => (
           <TextInput
             {...field}
-            label="아이디"
             type="text"
+            placeholder="아이디 입력"
+            leftSection={<UserIcon size={20} className={css.icon} />}
+            leftSectionWidth={48}
             classNames={{
-              label: css["mantine-TextInput-label"],
               input: css["mantine-TextInput-input"],
             }}
           />
@@ -67,10 +71,10 @@ export default function SigninForm() {
         render={({ field }) => (
           <PasswordInput
             {...field}
-            mt={28}
-            label="비밀번호"
+            placeholder="비밀번호 8자 이상+영문대소문자+숫자+특수문자"
+            leftSection={<LockIcon size={20} className={css.icon} />}
+            leftSectionWidth={48}
             classNames={{
-              label: css["mantine-PasswordInput-label"],
               input: css["mantine-PasswordInput-input"],
             }}
           />
@@ -78,9 +82,15 @@ export default function SigninForm() {
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>
-        <Button className={css.loginButton} variant="filled" type="submit" loading={isLoading}>
+        <CustomButton fullWidth type="submit">
           로그인
-        </Button>
+        </CustomButton>
+      </Box>
+
+      <Box className={css.findLink}>
+        {/* <Link href={`/${locale}/find-id`}>아이디 찾기</Link> |
+        <Link href={`/${locale}/find-password`}>비밀번호 찾기</Link> | */}
+        <Link href={`/${locale}/signup`}>회원가입</Link>
       </Box>
 
       <LoadingOverlay visible={isLoading} />

@@ -2,7 +2,6 @@ import { TWrkTp } from "@/types/common";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import css from "./index-home.module.scss";
-import { GradientBackground } from "@/components/background";
 import Link from "next/link";
 import { useSignupCtx } from "./context-provider";
 
@@ -23,7 +22,6 @@ export default function IndexHome({}: PageProps) {
 
   return (
     <div className={"mobileLayout"}>
-      <GradientBackground />
       <div className={css.wrap}>
         <div className={css.inner}>
           <h1 className={css.title}>{ctx.loginTp !== "2" ? t("auth:1001") : t("auth:1002")}</h1>
