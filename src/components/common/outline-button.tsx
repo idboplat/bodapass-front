@@ -1,19 +1,19 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
-import css from "./custom-button.module.scss";
+import css from "./outline-button.module.scss";
 
-type ButtonVariant = "default" | "deny" | "gray" | "reverse" | "disabled";
+type ButtonVariant = "gradient" | "gray" | "deny" | "disabled";
 type ButtonSize = "default" | "small";
 
-interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface OutlineButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   leftIcon?: ReactNode;
   size?: ButtonSize;
   fullWidth?: boolean;
 }
 
-export default function CustomButton({
-  variant = "default",
+export default function OutlineButton({
+  variant = "gradient",
   leftIcon,
   size = "default",
   fullWidth = false,
@@ -21,7 +21,7 @@ export default function CustomButton({
   className,
   disabled,
   ...rest
-}: CustomButtonProps) {
+}: OutlineButtonProps) {
   const isDisabled = disabled || variant === "disabled";
 
   return (

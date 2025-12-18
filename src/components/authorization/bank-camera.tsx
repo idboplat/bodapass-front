@@ -2,7 +2,7 @@ import { ActionIcon } from "@mantine/core";
 import BackHeader from "../common/back-header";
 import Camera from "../camera";
 import clsx from "clsx";
-import IdcardFrame from "../common/camera-frame";
+import CameraFrame from "../common/camera-frame";
 import { Camera as IconCamera } from "lucide-react";
 import css from "./bank-home.module.scss";
 import { useCamera } from "@/hooks/use-camera";
@@ -37,7 +37,7 @@ export default function BankCamera({ setBankImage, userId }: Props) {
     <>
       <div className={clsx(css.cameraBox)}>
         <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
-        <IdcardFrame />
+        <CameraFrame />
       </div>
 
       <div className={css.shutterBox}>

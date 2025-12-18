@@ -40,6 +40,11 @@
     color: #ffffff;
 }
 
+.gray {
+    background: #d9d9d9;
+    color: #fff;
+}
+
 .reverse {
     background: linear-gradient(90deg, #00ae6a 0%, #3d99d5 100%);
     color: #f7fbff;
@@ -55,10 +60,9 @@
 
 .isDisabled,
 .disabled {
-    background: #d8d8d8;
-    color: #ededed;
+    background: #d9d9d9;
+    color: #fff;
     cursor: not-allowed;
-    filter: none;
 }
 
 .fullWidth {

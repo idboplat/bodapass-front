@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import clsx from "clsx";
 import css from "./id-card-camera.module.scss";
 import { Camera as IconCamera } from "lucide-react";
-import IdcardFrame from "../common/camera-frame";
+import CameraFrame from "../common/camera-frame";
 import { TOCR } from "@/libraries/auth/auth.dto";
 
 interface Props {
@@ -44,7 +44,7 @@ export default function IdcardCamera({
 
       <div className={clsx(css.cameraBox)}>
         <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
-        <IdcardFrame />
+        <CameraFrame />
       </div>
 
       <div className={css.shutterBox}>
