@@ -44,6 +44,7 @@ export function LeaderConclude({ contractData, session }: Props) {
   );
 
   const onClick = (type: "REJ" | "APL") => () => {
+    if (contractData.cntrStatTp !== "REQ") return; // 접수상태가 아니면 버튼 비활성화
     if (TCM200201SSP01.isPending) return;
 
     TCM200201SSP01.mutate(
@@ -212,24 +213,29 @@ export function LeaderConclude({ contractData, session }: Props) {
         )}
       </div> */}
 
-      <div className={css.buttonBox}>
-        <Button
-          onClick={onClick("REJ")}
-          classNames={{ root: css.button }}
-          loading={TCM200201SSP01.isPending}
-          leftSection={<X size={20} />}
-        >
-          반려
-        </Button>
-        <Button
-          onClick={onClick("APL")}
-          classNames={{ root: css.button }}
-          loading={TCM200201SSP01.isPending}
-          leftSection={<Check size={20} />}
-        >
-          승인
-        </Button>
-      </div>
+      {contractData.cntrStatTp === "REQ" && (
+        // 접수 상태일때만 버튼을 화면에 노출
+        <div className={css.buttonBox}>
+          <Button
+            onClick={onClick("REJ")}
+            classNames={{ root: css.button }}
+            loading={TCM200201SSP01.isPending}
+            leftSection={<X size={20} />}
+            disabled={contractData.cntrStatTp !== "REQ"}
+          >
+            반려
+          </Button>
+          <Button
+            onClick={onClick("APL")}
+            classNames={{ root: css.button }}
+            loading={TCM200201SSP01.isPending}
+            leftSection={<Check size={20} />}
+            disabled={contractData.cntrStatTp !== "REQ"}
+          >
+            승인
+          </Button>
+        </div>
+      )}
 
       {TCM200201SSP01.isPending && (
         <div className={css.loadingOverlay}>

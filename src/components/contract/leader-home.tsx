@@ -31,7 +31,7 @@ export function LeaderContractHome() {
   }
 
   // 접수상태인지 확인
-  if (!WCM200201SSQ01.data || WCM200201SSQ01.data.cntrStatTp !== "REQ") {
+  if (!WCM200201SSQ01.data) {
     return (
       <div className={"mobileLayout"}>
         <div>계약을 찾을 수 없습니다.</div>
