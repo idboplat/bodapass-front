@@ -24,12 +24,9 @@ export default function IndexHome({}: PageProps) {
 
   return (
     <div className={"mobileLayout"}>
+      <CustomStep totalSteps={4} currentStep={1} />
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h1 className={css.title}>{ctx.loginTp !== "2" ? t("auth:1001") : t("auth:1002")}</h1>
-
-          <CustomStep totalSteps={4} currentStep={1} />
-
           <div className={css.buttonContainer}>
             <button className={css.roleButton} onClick={nextPage("1")}>
               <div className={css.buttonIcon}>

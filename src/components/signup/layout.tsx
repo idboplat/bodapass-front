@@ -16,10 +16,7 @@ export const WithSignInLayout = ({
     <div className={"mobileLayout"}>
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h1 className={css.title}>{title}</h1>
-
           {children}
-
           <div className={css.linkContainer}>
             <Link className={css.signinLink} href={`/${locale}/signin`}>
               이미 아이디가 있으신가요?

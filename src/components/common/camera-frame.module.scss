@@ -138,7 +138,7 @@
 
 .cameraFrameGuide {
   position: absolute;
-  top: calc(50% + calc(80vw * 0.32) + 16px);
+  top: calc(50% + calc(80vw * 0.32) + 10px);
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.8rem;
