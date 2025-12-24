@@ -14,9 +14,7 @@
   min-height: 640px;
   padding: 20px 10px;
   gap: 24px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: #fff;
 }
 
 .title {
@@ -36,21 +34,55 @@
 .roleButton {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 20px;
   gap: 12px;
-  border: 2px solid #e1e5e9;
-  border-radius: 10px;
-  background: white;
+  border: 1px solid #ededed;
+  border-radius: 12px;
+  background: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
   width: 100%;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 13px;
+    background: linear-gradient(90deg, #0088ff 0%, #27c840 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: #fff;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   &:hover {
-    border-color: #667eea;
-    background: #f8f9ff;
+    border-color: transparent;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+
+    &::before {
+      opacity: 1;
+    }
+
+    &::after {
+      background: #fff;
+    }
   }
 
   &:active {
@@ -62,17 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: #f0f2f5;
-  color: #667eea;
   flex-shrink: 0;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 .buttonContent {
@@ -81,15 +103,16 @@
 }
 
 .buttonTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
   margin-bottom: 4px;
 }
 
 .buttonSubtitle {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 14px;
+  color: #9c9c9c;
+  font-weight: 300;
   line-height: 1.4;
 }
 
@@ -102,14 +125,14 @@
 }
 
 .signinLink {
-  color: #667eea;
+  color: #3d99d5;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #5a67d8;
+    color: #3d99d5;
     text-decoration: underline;
   }
 }
@@ -121,7 +144,7 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: #6b7280;
+    color: #7b7b7b;
     text-decoration: underline;
   }
 }

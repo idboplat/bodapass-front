@@ -11,6 +11,11 @@ import PostCodeModal from "../common/modal/post-code-modal";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
+import css from "./leader-step-2.module.scss";
+import CustomCheckbox from "../common/custom-checkbox";
+import CustomButton from "../common/custom-button";
+import OutlineButton from "../common/outline-button";
+import CustomStep from "../common/custom-step";
 
 export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; locale: string }) {
   const router = useRouter();
@@ -96,6 +101,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
 
   return (
     <>
+      <CustomStep totalSteps={4} currentStep={2} />
       <div>
         <Controller
           control={form.control}
@@ -103,7 +109,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
-              mt={28}
+              mt="1rem"
               value={loginTp === "2" ? socialLoginId : field.value}
               label="아이디"
               autoComplete="off"
@@ -112,6 +118,8 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               error={fieldState.error?.message}
               required
               disabled={loginTp === "2"}
+              classNames={{ label: css.label, input: css.input, required: css.required }}
+              placeholder="아이디를 입력해주세요."
             />
           )}
         />
@@ -123,7 +131,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             render={({ field, fieldState }) => (
               <PasswordInput
                 {...field}
-                mt={28}
+                mt="1rem"
                 label="비밀번호"
                 autoComplete="off"
                 onChange={(e) => {
@@ -147,6 +155,8 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
                 }}
                 error={fieldState.error?.message}
                 required
+                classNames={{ label: css.label, input: css.input }}
+                placeholder="비밀번호 8자 이상+영문대소문자+숫자+특수문자"
               />
             )}
           />
@@ -159,7 +169,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             render={({ field, fieldState }) => (
               <PasswordInput
                 {...field}
-                mt={28}
+                mt="1rem"
                 label="비밀번호 확인"
                 autoComplete="off"
                 onChange={(e) => {
@@ -175,6 +185,8 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
                 }}
                 error={fieldState.error?.message}
                 required
+                classNames={{ label: css.label, input: css.input }}
+                placeholder="비밀번호 8자 이상+영문대소문자+숫자+특수문자"
               />
             )}
           />
@@ -186,6 +198,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
+              mt="1rem"
               label="우편번호"
               value={undefined}
               onChange={undefined}
@@ -195,6 +208,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               required
               readOnly
               error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
             />
           )}
         />
@@ -205,6 +219,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
+              mt="1rem"
               label="주소"
               value={undefined}
               onChange={undefined}
@@ -214,6 +229,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               autoComplete="off"
               readOnly
               required
+              classNames={{ label: css.label, input: css.input }}
             />
           )}
         />
@@ -224,10 +240,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
+              mt="1rem"
               label="상세주소"
               required
               error={fieldState.error?.message}
               autoComplete="address-line2"
+              classNames={{ label: css.label, input: css.input }}
             />
           )}
         />
@@ -238,6 +256,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           render={({ field, fieldState }) => (
             <TextInput
               {...field}
+              mt="1rem"
               label="전화번호"
               onChange={onTelChange}
               placeholder="-를 제외하고 입력해주세요."
@@ -245,13 +264,16 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               required
               autoComplete="tel"
               error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
             />
           )}
         />
 
-        <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 10 }}>
-          <label htmlFor="emailAgree">이메일 등록 여부</label>
-          <Checkbox id="emailAgree" checked={isEmailCheck} onChange={handleEmailCheck} />
+        <div className={css.emailCheck}>
+          <label className={css.emailCheckLabel} htmlFor="emailAgree">
+            이메일 등록 여부
+          </label>
+          <CustomCheckbox id="emailAgree" checked={isEmailCheck} onChange={handleEmailCheck} />
         </div>
 
         {isEmailCheck && (
@@ -262,25 +284,25 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               <TextInput
                 {...field}
                 label="이메일"
-                mt={28}
+                mt="1rem"
                 onChange={(e) => onNoSpaceChange(e, field.onChange)}
                 inputMode="email"
                 autoComplete="email"
                 required
                 error={fieldState.error?.message}
+                classNames={{ label: css.label, input: css.input }}
               />
             )}
           />
         )}
 
-        <Box mt={28} style={{ textAlign: "right" }}>
-          <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+        <Box mt={10} style={{ textAlign: "right" }}>
+          <OutlineButton type="button" onClick={onClickPrev} className={css.prevButton}>
             이전
-          </Button>
-
-          <Button variant="filled" type="button" onClick={onClickNext}>
+          </OutlineButton>
+          <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
             다음
-          </Button>
+          </CustomButton>
         </Box>
       </div>
 

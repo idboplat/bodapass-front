@@ -7,6 +7,9 @@ import { findEntity, IdCardEntity } from "@/types/tp";
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TIdTp } from "@/types/common";
 import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
+import CustomStep from "../common/custom-step";
+import OutlineButton from "../common/outline-button";
+import CustomButton from "../common/custom-button";
 
 interface Props {
   idTp: TIdTp;
@@ -35,6 +38,8 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
 
   return (
     <>
+      <CustomStep totalSteps={4} currentStep={4} />
+
       <div className={css.infoBox}>
         <div>신분증 종류: {findEntity(IdCardEntity, idTp)?.[1]}</div>
       </div>
@@ -84,7 +89,14 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           control={form.control}
           name="userNm"
           render={({ field, fieldState }) => (
-            <TextInput {...field} label="이름" mt={0} required error={fieldState.error?.message} />
+            <TextInput
+              {...field}
+              label="이름"
+              mt={0}
+              required
+              error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+            />
           )}
         />
 
@@ -95,17 +107,27 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
               control={form.control}
               name="idNo1"
               render={({ field }) => (
-                <TextInput {...field} required error={!!errors.idNo1?.message} />
+                <TextInput
+                  {...field}
+                  required
+                  error={!!errors.idNo1?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
               )}
             />
 
-            <span>-</span>
+            {/* <span>-</span> */}
 
             <Controller
               control={form.control}
               name="idNo2"
               render={({ field }) => (
-                <TextInput {...field} required error={!!errors.idNo2?.message} />
+                <TextInput
+                  {...field}
+                  required
+                  error={!!errors.idNo2?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
               )}
             />
           </div>
@@ -120,22 +142,29 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
             <TextInput
               {...field}
               label="발급일자 (YYYYMMDD)"
-              mt={0}
               required
               error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
       </div>
 
       <div className={css.submitButtonBox}>
-        <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+        <OutlineButton type="button" onClick={onClickPrev} className={css.prevButton}>
           이전
-        </Button>
-
-        <Button variant="filled" type="button" onClick={onClickNext}>
+        </OutlineButton>
+        {/* <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
+          이전
+        </Button> */}
+        <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
           {isLastStep ? "제출" : "다음"}
-        </Button>
+        </CustomButton>
+
+        {/* <Button variant="filled" type="button" onClick={onClickNext}>
+          {isLastStep ? "제출" : "다음"}
+        </Button> */}
       </div>
     </>
   );
