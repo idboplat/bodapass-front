@@ -1,5 +1,5 @@
-import { callWas, StringRspnData } from "@/libraries/call-tms";
-import { useMutation } from "@tanstack/react-query";
+import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 /** 1 대 1 비교 출퇴근 */
 export const useWCM200101SSP01 = () =>
@@ -36,8 +36,8 @@ export const useWCM200101SSP02 = () =>
       siteCoorX: string;
       siteCoorY: string;
       idxGrp: string;
-    }) =>
-      callWas<StringRspnData<1>>({
+    }) => {
+      const response = await callWas<StringRspnData<5>>({
         apiPathName: "WCM200101SSP02",
         svcId: "TCM200101SSP02",
         session: args.session,
@@ -54,5 +54,57 @@ export const useWCM200101SSP02 = () =>
           args.idxGrp,
         ],
         formData: [args.img],
-      }),
+      });
+
+      const data = response.svcRspnData?.[0];
+      if (!data) throw new Error("FW999");
+
+      return {
+        mastCorpCd: data.F01,
+        cordCd: data.F02,
+        userId: data.F03,
+        wrkStrDd: data.F04,
+        wrkEndDd: data.F05,
+      };
+    },
+  });
+
+const getTCM200101SSQ01 = async (args: {
+  session: Session;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
+}) => {
+  const result = await callTms<StringRspnData<3>>({
+    svcId: "TCM200101SSQ01",
+    session: args.session,
+    locale: "ko",
+    data: [args.mastCorpCd, args.corpCd, args.userId],
+  });
+
+  const data = result.svcRspnData?.[0];
+
+  if (!data) {
+    throw new Error("FW999");
+  }
+
+  return {
+    corpNm: data.F01,
+    /** 등록 인원 수 */
+    ordrCnt: Number(data.F02) || 0,
+    /** 출근인원 수 */
+    mtchCnt: Number(data.F03) || 0,
+  };
+};
+
+/** 출퇴근 현황 조회 */
+export const useTCM200101SSQ01 = (args: {
+  session: Session;
+  mastCorpCd: string;
+  corpCd: string;
+  userId: string;
+}) =>
+  useQuery({
+    queryKey: ["TCM200101SSQ01", args.session, args.mastCorpCd, args.corpCd, args.userId],
+    queryFn: () => getTCM200101SSQ01(args),
   });

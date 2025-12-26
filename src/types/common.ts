@@ -49,9 +49,6 @@ export const DEVICE_API = {
   /** payload: { userId: string } */
   addWorker: "addWorker",
 
-  /** payload: { mastCorpCd: string, corpCd: string } */
-  attendanceComplete: "attendanceComplete",
-
   /** 대면 근로자 인증 종료 */
   crewAuthorizationEnd: "crewAuthorizationEnd",
   leaderAuthorizationEnd: "leaderAuthorizationEnd",

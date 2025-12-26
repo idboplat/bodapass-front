@@ -1,10 +1,8 @@
-import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import Capture from "../capture";
-import { useWCM200101SSP02 } from "@/hooks/tms/use-attendance";
+import { useTCM200101SSQ01 } from "@/hooks/tms/use-attendance";
 import { Button, RemoveScroll, Switch, Textarea } from "@mantine/core";
-import { DEVICE_API } from "@/types/common";
 import { Moon, Sun, Camera } from "lucide-react";
 import styles from "./search-home.module.scss";
 import {
@@ -18,18 +16,27 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import Portal from "../common/modal/portal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
-import { useUserLocation } from "@/hooks/use-user-location";
 
 interface Props {
   attCd: "I" | "O";
+  attendanceCount: number;
+  mastCorpCd: string;
+  corpCd: string;
+  idxGrp: string;
+  onCapture: (args: { image: Blob; attCd: "I" | "O"; session: Session }) => void;
+  isLoading: boolean;
 }
 
-export default function SearchHome({ attCd }: Props) {
+export default function SearchHome({
+  attCd,
+  attendanceCount,
+  mastCorpCd,
+  corpCd,
+  idxGrp,
+  onCapture,
+  isLoading,
+}: Props) {
   const router = useRouter();
-
-  const mastCorpCd = router.query.mastCorpCd?.toString() || "";
-  const corpCd = router.query.corpCd?.toString() || "";
-  const idxGrp = router.query.idxGrp?.toString() || "";
 
   const [isNightMode, setIsNightMode] = useState(false);
   const [showNightModeModal, setShowNightModeModal] = useState(false);
@@ -37,55 +44,18 @@ export default function SearchHome({ attCd }: Props) {
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
-  const TCM200101SSP02 = useWCM200101SSP02();
-  const { userLocation } = useUserLocation();
-
-  const siteCoorX = userLocation?.lng?.toString() || "";
-  const siteCoorY = userLocation?.lat?.toString() || "";
-
-  const onCapture = (args: { image: Blob }) => {
-    if (TCM200101SSP02.isPending) return;
-
-    if (!siteCoorX || !siteCoorY) {
-      nativeAlert("위치 정보를 가져오는데 실패했습니다.");
-      return;
-    }
-
-    TCM200101SSP02.mutate(
-      {
-        img: args.image,
-        mastCorpCd,
-        corpCd,
-        attCd,
-        session,
-        siteCoorX,
-        siteCoorY,
-        idxGrp,
-      },
-      {
-        onSuccess: async () => {
-          nativeAlert("처리되었습니다.");
-        },
-      },
-    );
-  };
+  const TCM200101SSQ01 = useTCM200101SSQ01({ session, mastCorpCd, corpCd, userId: session.userId });
 
   const onClickNightMode = () => {
     setIsNightMode((prev) => !prev);
   };
 
   const onClickComplete = () => {
-    if (window.ReactNativeWebView) {
-      sendMessageToDevice({
-        type: DEVICE_API.attendanceComplete,
-        payload: { mastCorpCd, corpCd },
-      });
-    }
+    router.replace(`/ko/attendance/${mastCorpCd}/${corpCd}/${idxGrp}/in?complete=true`);
   };
 
   const onCloseNightModeModal = () => {
     setShowNightModeModal(() => false);
-    // setIsNightMode(() => false);
   };
 
   useEffect(() => {
@@ -117,7 +87,13 @@ export default function SearchHome({ attCd }: Props) {
           onChange={onClickNightMode}
         />
       </div>
-      <Capture onCapture={onCapture} isLoading={TCM200101SSP02.isPending} />
+      <Capture onCapture={(args) => onCapture({ ...args, attCd, session })} isLoading={isLoading} />
+
+      <div>
+        <div>팀원 {TCM200101SSQ01.data?.ordrCnt}명</div>
+        <div>출근 {attendanceCount}명</div>
+      </div>
+
       <div
         style={{
           display: "flex",
@@ -128,6 +104,12 @@ export default function SearchHome({ attCd }: Props) {
       >
         <Button onClick={onClickComplete}>출석 완료</Button>
       </div>
+
+      <div>
+        {mastCorpCd} / {corpCd} / {session.userId}
+      </div>
+      <div>{JSON.stringify(TCM200101SSQ01.data, null, 2)}</div>
+
       {showNightModeModal && (
         <AnimatePresence>
           <Portal id={PORTAL_MODAL_CONTAINER_ID}>
