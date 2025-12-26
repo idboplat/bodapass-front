@@ -2,9 +2,11 @@ import { Button, LoadingOverlay, Select, TextInput } from "@mantine/core";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import css from "./id-card-form.module.scss";
+import css from "./bank-form.module.scss";
 import { TBankForm } from "./dto";
 import { useTCW000100SMQ01 } from "@/hooks/tms/use-authorization";
+import CustomStep from "../common/custom-step";
+import CustomButton from "../common/custom-button";
 
 interface Props {
   bankImage: Blob;
@@ -35,13 +37,14 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
   }, [bankImage]);
 
   return (
-    <>
+    <div className={css.wrap}>
+      <CustomStep currentStep={3} totalSteps={4} />
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="통장" fill />}</div>
 
       <div className={css.formBox}>
         <Select
           {...form.register("bankCd")}
-          label="은행"
+          label="은행선택"
           searchable
           data={bankData?.rows.map((d) => ({ value: d.bankCd, label: d.bankNm }))}
           allowDeselect={false}
@@ -50,11 +53,13 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
             form.setValue("bankNm", bankData?.rows.find((d) => d.bankCd === value)?.bankNm || "");
           }}
           value={form.getValues("bankCd")}
+          withScrollArea={false}
           styles={{
             dropdown: {
               maxHeight: 250,
               overflow: "auto",
               scrollbarWidth: "auto",
+              overflowY: "auto",
             },
           }}
           defaultValue={form.watch("bankCd")}
@@ -62,22 +67,31 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
           placeholder={
             isBankDataLoading ? "은행 정보를 불러오는 중입니다..." : "은행을 선택해주세요"
           }
+          mt="1rem"
+          required
+          classNames={{ label: css.label, input: css.input, required: css.required }}
         />
-        <TextInput {...form.register("bankAccountNo")} label="계좌 번호" mt={0} />
+        <TextInput
+          {...form.register("bankAccountNo")}
+          label="계좌번호"
+          mt="1rem"
+          required
+          classNames={{ label: css.label, input: css.input, required: css.required }}
+        />
       </div>
 
-      <div className={css.submitButtonBox}>
-        <Button
-          variant="filled"
+      <div className={css.buttonWrapper}>
+        <CustomButton
           type="button"
+          fullWidth
           onClick={() => onSubmit({ ...form.getValues(), bankImage })}
-          loading={isLoading}
+          disabled={isLoading}
         >
-          제출
-        </Button>
+          등록하기
+        </CustomButton>
       </div>
 
       <LoadingOverlay visible={isLoading} />
-    </>
+    </div>
   );
 }

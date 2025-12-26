@@ -109,21 +109,10 @@ export default function Step3({
       </div>
 
       <div>
-        <CustomButton
-          type="button"
-          fullWidth
-          onClick={onClickCapture}
-          className={css.captureButton}
-        >
+        <CustomButton type="button" fullWidth onClick={onClickCapture}>
           사진찍기
         </CustomButton>
       </div>
-
-      {/* <Box mt={28} style={{ textAlign: "right" }}>
-        <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
-          이전
-        </Button>
-      </Box> */}
     </div>
   );
 }

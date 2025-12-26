@@ -84,8 +84,6 @@ export default function LeaderBankHome({}: Props) {
   return (
     <FormProvider {...form}>
       <div className={"mobileLayout"}>
-        {/* <BackHeader title="통장등록" onClickBack={onClickBack} /> */}
-
         {!bankImage ? (
           <BankCamera setBankImage={setBankImage} userId={userId} />
         ) : (
