@@ -1,14 +1,20 @@
-import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
-import BackHeader from "../common/back-header";
-import css from "./privacy-home.module.scss";
-import { useSession } from "@/libraries/auth/use-session";
-import { useWCM200801SSQ01, useTCM200801SSQ02 } from "@/hooks/tms/use-worker";
-import { useRouter } from "next/router";
-import { Checkbox } from "@mantine/core";
-import Link from "next/link";
-import { useState } from "react";
 import { useTCW000001SSP04 } from "@/hooks/tms/use-authorization";
+import { useTCM200801SSQ02, useWCM200801SSQ01 } from "@/hooks/tms/use-worker";
+import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
+import { useSession } from "@/libraries/auth/use-session";
 import { DEVICE_API } from "@/types/common";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Badge from "../common/badge";
+import CustomButton from "../common/custom-button";
+import CustomCheckbox from "../common/custom-checkbox";
+import css from "./privacy-home.module.scss";
+import BankAccount from "/public/assets/svg/bank-account.svg";
+import CertifyPerson from "/public/assets/svg/certify-person.svg";
+import CompletedIcon from "/public/assets/svg/completed.svg";
+import Idcard from "/public/assets/svg/idcard.svg";
+import Paper from "/public/assets/svg/paper.svg";
+import UncompletedIcon from "/public/assets/svg/uncompleted.svg";
 
 export default function LeaderPrivacyHome() {
   const router = useRouter();
@@ -74,8 +80,10 @@ export default function LeaderPrivacyHome() {
 
           {/* 신분증 정보 */}
           <div className={css.infoSection}>
-            <div className={css.sectionTitle}>🆔 신분증 정보</div>
             <div className={css.infoCard}>
+              <div className={css.sectionTitle}>
+                <Idcard /> 신분증 정보
+              </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>주민등록번호</span>
                 <span className={css.infoValue}>{WCM200801SSQ01.data.idNo}</span>
@@ -105,40 +113,47 @@ export default function LeaderPrivacyHome() {
 
           {/* 얼굴 인증 정보 */}
           <div className={css.infoSection}>
-            <div className={css.sectionTitle}>👤 얼굴 인증</div>
             <div className={css.infoCard}>
+              <div className={css.sectionTitle}>
+                <CertifyPerson /> 얼굴 인증
+              </div>
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>인증 상태</span>
-                <span
-                  className={`${css.statusBadge} ${
-                    TCM200801SSQ02.data.faceRgstYn === "Y" ? css.verified : css.unverified
-                  }`}
-                >
-                  {TCM200801SSQ02.data.faceRgstYn === "Y" ? "인증 완료" : "미인증"}
-                </span>
+                {TCM200801SSQ02.data.faceRgstYn === "Y" ? (
+                  <Badge leftIcon={<CompletedIcon />}>인증완료</Badge>
+                ) : (
+                  <Badge variant="deny" leftIcon={<UncompletedIcon />}>
+                    미인증
+                  </Badge>
+                )}
               </div>
-              <Link
-                href={`/${locale}/authorization/leader/face?next=webview`}
+              <CustomButton
+                size="small"
+                onClick={() => router.push(`/${locale}/authorization/leader/face?next=webview`)}
                 className={css.editButton}
               >
                 얼굴 수정
-              </Link>
+              </CustomButton>
             </div>
           </div>
 
           {/* 통장 정보 */}
           <div className={css.infoSection}>
-            <div className={css.sectionTitle}>🏦 통장 정보</div>
             <div className={css.infoCard}>
+              <div className={css.sectionTitle}>
+                <BankAccount /> 통장 정보
+              </div>
+
               <div className={css.infoRow}>
                 <span className={css.infoLabel}>인증 상태</span>
-                <span
-                  className={`${css.statusBadge} ${
-                    TCM200801SSQ02.data.acctCetYn === "Y" ? css.verified : css.unverified
-                  }`}
-                >
-                  {TCM200801SSQ02.data.acctCetYn === "Y" ? "인증 완료" : "미인증"}
-                </span>
+
+                {TCM200801SSQ02.data.acctCetYn === "Y" ? (
+                  <Badge leftIcon={<CompletedIcon />}>인증완료</Badge>
+                ) : (
+                  <Badge variant="deny" leftIcon={<UncompletedIcon />}>
+                    미인증
+                  </Badge>
+                )}
               </div>
               {TCM200801SSQ02.data.acctCetYn === "Y" && (
                 <>
@@ -154,33 +169,38 @@ export default function LeaderPrivacyHome() {
                   </div>
                 </>
               )}
-              <Link
-                href={`/${locale}/authorization/leader/bank?next=webview`}
+
+              <CustomButton
+                size="small"
+                onClick={() => router.push(`/${locale}/authorization/leader/bank?next=webview`)}
                 className={css.editButton}
               >
                 통장 수정
-              </Link>
+              </CustomButton>
             </div>
           </div>
 
           {/* 동의 섹션 */}
-          <div className={css.agreementSection}>
-            <div className={css.agreementTitle}>개인정보 이용동의</div>
-            <div className={`${css.checkboxContainer} ${isAgree ? css.checked : ""}`}>
-              <Checkbox
-                label="위 개인정보 수집 및 이용에 동의합니다."
-                checked={isAgree}
-                onChange={() => setIsAgree((prev) => !prev)}
-                size="lg"
-              />
+          <div className={css.infoSection}>
+            <div className={css.infoCard}>
+              <div className={css.sectionTitle}>
+                <Paper /> 개인정보 이용동의
+              </div>
+              <div className={`${css.checkboxContainer} ${isAgree ? css.checked : ""}`}>
+                <CustomCheckbox
+                  label="위 개인정보 수집 및 이용에 동의합니다."
+                  checked={isAgree}
+                  onChange={() => setIsAgree((prev) => !prev)}
+                />
+              </div>
             </div>
           </div>
 
           {/* 제출 버튼 */}
           <div className={css.submitSection}>
-            <button className={css.submitButton} onClick={onSubmit} disabled={!isAgree}>
-              {isAgree ? "등록 완료" : "동의 후 제출 가능"}
-            </button>
+            <CustomButton onClick={onSubmit} disabled={!isAgree} fullWidth>
+              {isAgree ? "동의하고 제출하기" : "동의 후 제출 가능"}
+            </CustomButton>
           </div>
         </div>
       ) : (
