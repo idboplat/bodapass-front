@@ -1,7 +1,9 @@
-import { Camera, SwitchCamera } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import css from "./capture.module.scss";
+import CustomButton from "./common/custom-button";
+import SwitchCameraIcon from "/public/assets/svg/camera-switch.svg";
+import CameraIcon from "/public/assets/svg/camera.svg";
 
 interface CaptureProps {
   onCapture: (args: { image: Blob }) => void;
@@ -15,7 +17,6 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // const [modelsLoaded, setModelsLoaded] = useState(false);
-  const [message, setMessage] = useState("");
 
   const capture = () => {
     if (!videoRef.current) return;
@@ -61,7 +62,6 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
         captureCanvas.height = 0;
         captureCanvas.remove();
 
-        setMessage("");
         videoRef.current?.play();
       },
       "image/jpeg",
@@ -365,7 +365,7 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
                   key={index}
                   className={css.ringTick}
                   style={{
-                    transform: `rotate(${angle}deg) translateY(-10.5rem)`,
+                    transform: `rotate(${angle}deg) translateY(-8rem)`,
                     animationDelay: `${index * 0.1}s`,
                   }}
                 />
@@ -383,17 +383,21 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
       <div className={css.controls}>
         {!isLoading ? (
           <>
-            <button
-              className={css.cameraToggleButton}
+            <CustomButton
+              variant="reverse"
               onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
-              aria-label="카메라 전환"
+              className={css.captureButton}
+              leftIcon={<SwitchCameraIcon width="28" height="25" />}
             >
-              <SwitchCamera width="24" height="24" />
-            </button>
-            <button className={css.captureButton} onClick={capture} aria-label="사진 촬영">
-              <Camera width="24" height="24" />
-              <span>촬영</span>
-            </button>
+              카메라 반전
+            </CustomButton>
+            <CustomButton
+              onClick={capture}
+              className={css.captureButton}
+              leftIcon={<CameraIcon width="28" height="25" />}
+            >
+              촬영
+            </CustomButton>
           </>
         ) : (
           <div className={css.loading}>
