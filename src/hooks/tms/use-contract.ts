@@ -337,3 +337,37 @@ export const useTCM200201SSP03 = () => {
     },
   });
 };
+
+export const getTCW000001SSQ05 = async (args: { session: Session; mastCorpCd: string }) => {
+  const response = await callTms<StringRspnData<10>>({
+    svcId: "TCW000001SSQ05",
+    session: args.session,
+    locale: "ko",
+    data: [args.mastCorpCd, args.session.userId],
+  });
+
+  const data = response.svcRspnData?.[0];
+
+  if (!data) throw new Error("FW999");
+
+  return {
+    corpCd: data.F01,
+    corpNm: data.F02,
+    saupNo: data.F03,
+    chiefNm: data.F04,
+    telNo: data.F05,
+    faxNo: data.F06,
+    addr: data.F07,
+    addrDtil: data.F08,
+    zipCd: data.F09,
+    cntrStatTp: data.F10,
+  };
+};
+
+export type TTCW000001SSQ05Data = Promised<typeof getTCW000001SSQ05>;
+
+export const useTCW000001SSQ05 = (args: { session: Session; mastCorpCd: string }) =>
+  useQuery({
+    queryKey: ["TCW000001SSQ05", args.session, args.mastCorpCd],
+    queryFn: () => getTCW000001SSQ05(args),
+  });

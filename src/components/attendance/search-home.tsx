@@ -105,11 +105,6 @@ export default function SearchHome({
         <Button onClick={onClickComplete}>출석 완료</Button>
       </div>
 
-      <div>
-        {mastCorpCd} / {corpCd} / {session.userId}
-      </div>
-      <div>{JSON.stringify(TCM200101SSQ01.data, null, 2)}</div>
-
       {showNightModeModal && (
         <AnimatePresence>
           <Portal id={PORTAL_MODAL_CONTAINER_ID}>
