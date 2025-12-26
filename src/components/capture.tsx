@@ -356,22 +356,21 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
           playsInline
         />
         <canvas className={css.canvas} ref={canvasRef} />
-        <div className={css.mask}>
-          <div className={css.ring}>
-            {Array.from({ length: 60 }).map((_, index) => {
-              const angle = index * 6;
-              return (
-                <div
-                  key={index}
-                  className={css.ringTick}
-                  style={{
-                    transform: `rotate(${angle}deg) translateY(-8rem)`,
-                    animationDelay: `${index * 0.1}s`,
-                  }}
-                />
-              );
-            })}
-          </div>
+        <div className={css.mask} />
+        <div className={css.ring}>
+          {Array.from({ length: 60 }).map((_, index) => {
+            const angle = index * 6;
+            return (
+              <div
+                key={index}
+                className={css.ringTick}
+                style={{
+                  transform: `rotate(${angle}deg) translateY(-9.5rem)`,
+                  animationDelay: `${index * 0.1}s`,
+                }}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -397,7 +396,7 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
               className={css.captureButton}
               leftIcon={<CameraIcon width="28" height="25" />}
             >
-              촬영
+              촬영하기
             </CustomButton>
           </>
         ) : (
