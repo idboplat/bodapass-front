@@ -2,11 +2,11 @@ import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
-import { Button } from "@mantine/core";
 import css from "./leader-start-home.module.scss";
 import userDetectImage from "/public/assets/images/user-detect.png";
 import clsx from "clsx";
 import Image from "next/image";
+import CustomButton from "../common/custom-button";
 
 export default function LeaderStartHome() {
   const router = useRouter();
@@ -39,17 +39,17 @@ export default function LeaderStartHome() {
       </div>
 
       <div className={css.buttonBox}>
-        <Button variant="outline" onClick={end}>
+        <CustomButton variant="gray" onClick={end} className={css.button}>
           나중에
-        </Button>
-        <Button
-          variant="filled"
+        </CustomButton>
+        <CustomButton
           onClick={() => {
             router.push(`/${locale}/authorization/leader/face?next=true`);
           }}
+          className={css.button}
         >
           인증하기
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );
