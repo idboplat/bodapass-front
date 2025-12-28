@@ -99,17 +99,21 @@ export const useDeviceLocation = () => {
   const [deviceLocation, setDeviceLocation] = useState<TUserLocation | null>(null);
 
   const refresh = () => {
-    sendMessageToDevice({
-      type: DEVICE_API.requestDeviceLocation,
-      payload: {},
-    });
+    if (!!window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: DEVICE_API.requestDeviceLocation,
+        payload: {},
+      });
+    }
   };
 
   useEffect(() => {
-    sendMessageToDevice({
-      type: DEVICE_API.loadDeviceLocation,
-      payload: {},
-    });
+    if (!!window.ReactNativeWebView) {
+      sendMessageToDevice({
+        type: DEVICE_API.loadDeviceLocation,
+        payload: {},
+      });
+    }
 
     const handler = (event: MessageEvent) => {
       const data: TDeviceMessageData<{ location: TUserLocation }> = JSON.parse(event.data);

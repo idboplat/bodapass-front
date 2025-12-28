@@ -19,13 +19,15 @@ export default function Page() {
 
   const onClick = async () => {
     try {
-      const result = await sendMessageToDevice({
-        type: "test",
-        payload: { message: "hello" },
-      });
+      if (!!window.ReactNativeWebView) {
+        const result = await sendMessageToDevice({
+          type: "test",
+          payload: { message: "hello" },
+        });
 
-      nativeLogger("result === ");
-      nativeLogger(JSON.stringify(result, null, 2));
+        nativeLogger("result === ");
+        nativeLogger(JSON.stringify(result, null, 2));
+      }
     } catch (error) {
       nativeLogger("error response === ");
       nativeLogger(error instanceof Error ? error.message : String(error));

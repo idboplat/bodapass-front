@@ -31,10 +31,12 @@ export default function RenderStaticMap() {
         onClick={async (e) => {
           console.log("e === ", e);
           e.preventDefault();
-          await sendMessageToDevice({
-            type: DEVICE_API.navigateMapScreen,
-            payload: { lat: LAT, lng: LNG },
-          });
+          if (!!window.ReactNativeWebView) {
+            await sendMessageToDevice({
+              type: DEVICE_API.navigateMapScreen,
+              payload: { lat: LAT, lng: LNG },
+            });
+          }
         }}
       />
     </div>
