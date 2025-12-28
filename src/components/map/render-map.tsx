@@ -1,4 +1,8 @@
-import { getDistanceFromLatLonInMeter, useUserLocation } from "@/hooks/use-user-location";
+import {
+  getDistanceFromLatLonInMeter,
+  TUserLocation,
+  useUserLocation,
+} from "@/hooks/use-user-location";
 import { Button, LoadingOverlay } from "@mantine/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Circle, Map, MapMarker, useKakaoLoader, useMap } from "react-kakao-maps-sdk";
@@ -12,14 +16,20 @@ interface RenderMapProps {
    * 현장과의 거리 반경 (미터 단위)
    */
   rad: string;
+  deviceLocation: TUserLocation;
 }
 
 // https://findlatlng.org/
 // https://generalcoder.tistory.com/4
 // http://localhost:3000/demo/map/dynamic?lng=127.04329080111161&lat=37.54910909586898
-export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMapProps) {
-  const { isLoading, userLocation, errorCode, refresh } = useUserLocation();
-
+export default function RenderMap({
+  lat,
+  lng,
+  siteNm,
+  siteTelNo,
+  rad,
+  deviceLocation,
+}: RenderMapProps) {
   // 좌표 유효성 검사
   const isValidCoordinate = lat && lng && !isNaN(lat) && !isNaN(lng);
 
@@ -28,11 +38,9 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMa
   });
 
   const distance = useMemo(() => {
-    if (!userLocation) return 0;
-    return getDistanceFromLatLonInMeter(userLocation, { lat, lng });
-  }, [userLocation, lat, lng]);
-
-  if (isLoading) return <LoadingOverlay visible={isLoading} />;
+    if (!deviceLocation) return 0;
+    return getDistanceFromLatLonInMeter(deviceLocation, { lat, lng });
+  }, [deviceLocation, lat, lng]);
 
   return (
     <div className={css.container}>
@@ -40,7 +48,7 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMa
         <div className={css.siteName}>현장명: {siteNm}</div>
         <div className={css.distance}>현장과의 거리: {distance.toLocaleString()}m</div>
       </div>
-      {errorCode ? (
+      {/* {errorCode ? (
         <div className={css.errorContainer}>
           <div className={css.errorText}>{errorCode}</div>
           <div className={css.errorText}>위치 정보를 가져오는데 실패했습니다.</div>
@@ -48,51 +56,48 @@ export default function RenderMap({ lat, lng, siteNm, siteTelNo, rad }: RenderMa
             다시 시도
           </button>
         </div>
-      ) : (
-        <>
-          <div className={css.mapContainer}>
-            <Map
-              key={`${lat}-${lng}`}
-              center={{ lat, lng }}
-              level={3}
-              style={{ width: "100%", height: "360px" }}
-            >
-              {userLocation && (
-                <MapMarker position={{ lat: userLocation.lat, lng: userLocation.lng }}>
-                  <div className={css.siteNm}>현재 위치</div>
-                </MapMarker>
-              )}
-              {isValidCoordinate && (
-                <MapMarker position={{ lat, lng }}>
-                  <div className={css.siteNm}>{siteNm}</div>
-                  {siteTelNo && (
-                    <a className={css.siteTelNo} href={`tel:${siteTelNo}`}>
-                      ☎️ {siteTelNo}
-                    </a>
-                  )}
-                </MapMarker>
-              )}
+      ) : ( */}
 
-              {isValidCoordinate && rad && Number(rad) > 0 && (
-                <Circle
-                  center={{ lat, lng }}
-                  radius={Number(rad)}
-                  strokeWeight={5} // 선의 두께입니다
-                  strokeColor={"#75B8FA"} // 선의 색깔입니다
-                  strokeOpacity={2} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                  strokeStyle={"dash"} // 선의 스타일 입니다
-                  fillColor={"#CFE7FF"} // 채우기 색깔입니다
-                  fillOpacity={0.7} // 채우기 불투명도 입니다
-                />
+      <div className={css.mapContainer}>
+        <Map
+          key={`${lat}-${lng}`}
+          center={{ lat, lng }}
+          level={3}
+          style={{ width: "100%", height: "360px" }}
+        >
+          <MapMarker position={{ lat: deviceLocation.lat, lng: deviceLocation.lng }}>
+            <div className={css.siteNm}>현재 위치</div>
+          </MapMarker>
+
+          {isValidCoordinate && (
+            <MapMarker position={{ lat, lng }}>
+              <div className={css.siteNm}>{siteNm}</div>
+              {siteTelNo && (
+                <a className={css.siteTelNo} href={`tel:${siteTelNo}`}>
+                  ☎️ {siteTelNo}
+                </a>
               )}
-              <div className={css.buttonContainer}>
-                <MoveToUserLocationButton userLocation={userLocation} />
-                <MoveToSiteLocationButton lat={lat} lng={lng} />
-              </div>
-            </Map>
+            </MapMarker>
+          )}
+
+          {isValidCoordinate && rad && Number(rad) > 0 && (
+            <Circle
+              center={{ lat, lng }}
+              radius={Number(rad)}
+              strokeWeight={5} // 선의 두께입니다
+              strokeColor={"#75B8FA"} // 선의 색깔입니다
+              strokeOpacity={2} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+              strokeStyle={"dash"} // 선의 스타일 입니다
+              fillColor={"#CFE7FF"} // 채우기 색깔입니다
+              fillOpacity={0.7} // 채우기 불투명도 입니다
+            />
+          )}
+          <div className={css.buttonContainer}>
+            <MoveToUserLocationButton userLocation={deviceLocation} />
+            <MoveToSiteLocationButton lat={lat} lng={lng} />
           </div>
-        </>
-      )}
+        </Map>
+      </div>
     </div>
   );
 }

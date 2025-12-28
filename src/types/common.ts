@@ -69,4 +69,10 @@ export const DEVICE_API = {
 
   /** 회원탈퇴 종료 */
   deleteAccountEnd: "deleteAccountEnd",
+
+  // map
+  /** payload: {} */
+  loadDeviceLocation: "loadDeviceLocation",
+  requestDeviceLocation: "requestDeviceLocation",
+  responseDeviceLocation: "responseDeviceLocation",
 };

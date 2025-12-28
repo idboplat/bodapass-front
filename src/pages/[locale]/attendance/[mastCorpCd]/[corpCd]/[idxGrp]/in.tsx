@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import SearchHome from "@/components/attendance/search-home";
 import { useState } from "react";
 import CompleteHome from "@/components/attendance/complete-home";
-import { useUserLocation } from "@/hooks/use-user-location";
+import { useDeviceLocation } from "@/hooks/use-user-location";
 import { useWCM200101SSP02 } from "@/hooks/tms/use-attendance";
 import { nativeAlert } from "@/hooks/use-device-api";
 import { Loader } from "@mantine/core";
@@ -17,10 +17,10 @@ export default function Capture() {
 
   const [attendanceCount, setAttendanceCount] = useState(0);
 
-  const { userLocation } = useUserLocation();
+  const { deviceLocation } = useDeviceLocation();
 
-  const siteCoorX = userLocation?.lng?.toString() || "";
-  const siteCoorY = userLocation?.lat?.toString() || "";
+  const siteCoorX = deviceLocation?.lng?.toString() || "";
+  const siteCoorY = deviceLocation?.lat?.toString() || "";
 
   const TCM200101SSP02 = useWCM200101SSP02();
 
@@ -60,23 +60,22 @@ export default function Capture() {
     return <div>Loading...</div>;
   }
 
-  // TODO: 위치정보 가져오는중... UI 처리
-  // if (siteCoorX === "" || siteCoorY === "") {
-  //   return (
-  //     <div className={"mobileLayout"}>
-  //       <div>위치정보 가져오는중...</div>
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //         }}
-  //       >
-  //         <Loader size="lg" />
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (siteCoorX === "" || siteCoorY === "") {
+    return (
+      <div className={"mobileLayout"}>
+        <div>위치정보 가져오는중...</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Loader size="lg" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Authorized>
