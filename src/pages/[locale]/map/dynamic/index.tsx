@@ -1,7 +1,7 @@
 import RenderMap from "@/components/map/render-map";
 import { useDeviceLocation } from "@/hooks/use-user-location";
 import { makeStaticProps, getStaticPaths } from "@/libraries/i18n/get-static";
-import { LoadingOverlay } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useRouter } from "next/router";
 
 export default function Page() {
@@ -21,7 +21,24 @@ export default function Page() {
   }
 
   if (!deviceLocation) {
-    return <LoadingOverlay visible />;
+    return (
+      <div className={"mobileLayout"}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          <Loader size="md" color="#3d99d5" />
+          <p style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#333" }}>
+            위치 정보를 가져오는 중입니다...
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
