@@ -38,37 +38,37 @@ export default function SearchHome({
 }: Props) {
   const router = useRouter();
 
-  const [isNightMode, setIsNightMode] = useState(false);
-  const [showNightModeModal, setShowNightModeModal] = useState(false);
+  // const [isNightMode, setIsNightMode] = useState(false);
+  // const [showNightModeModal, setShowNightModeModal] = useState(false);
 
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
   const TCM200101SSQ01 = useTCM200101SSQ01({ session, mastCorpCd, corpCd, userId: session.userId });
 
-  const onClickNightMode = () => {
-    setIsNightMode((prev) => !prev);
-  };
+  // const onClickNightMode = () => {
+  //   setIsNightMode((prev) => !prev);
+  // };
 
   const onClickComplete = () => {
     router.replace(`/ko/attendance/${mastCorpCd}/${corpCd}/${idxGrp}/in?complete=true`);
   };
 
-  const onCloseNightModeModal = () => {
-    setShowNightModeModal(() => false);
-  };
+  // const onCloseNightModeModal = () => {
+  //   setShowNightModeModal(() => false);
+  // };
 
-  useEffect(() => {
-    if (isNightMode) {
-      setShowNightModeModal(() => true);
-    } else {
-      setShowNightModeModal(() => false);
-    }
-  }, [isNightMode]);
+  // useEffect(() => {
+  //   if (isNightMode) {
+  //     setShowNightModeModal(() => true);
+  //   } else {
+  //     setShowNightModeModal(() => false);
+  //   }
+  // }, [isNightMode]);
 
   return (
     <div className={"mobileLayout"}>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -86,7 +86,7 @@ export default function SearchHome({
           offLabel={<Sun size={16} color="blue" />}
           onChange={onClickNightMode}
         />
-      </div>
+      </div> */}
       <Capture onCapture={(args) => onCapture({ ...args, attCd, session })} isLoading={isLoading} />
 
       <div>
@@ -105,79 +105,79 @@ export default function SearchHome({
         <Button onClick={onClickComplete}>출석 완료</Button>
       </div>
 
-      {showNightModeModal && (
+      {/* {showNightModeModal && (
         <AnimatePresence>
           <Portal id={PORTAL_MODAL_CONTAINER_ID}>
             <NightModeModal onClose={onCloseNightModeModal} />
           </Portal>
         </AnimatePresence>
-      )}
+      )} */}
     </div>
   );
 }
 
-function NightModeModal({ onClose }: { onClose: () => void }) {
-  const [memo, setMemo] = useState("");
+// function NightModeModal({ onClose }: { onClose: () => void }) {
+//   const [memo, setMemo] = useState("");
 
-  const onClick = () => {
-    onClose();
-  };
+//   const onClick = () => {
+//     onClose();
+//   };
 
-  return (
-    <RemoveScroll removeScrollBar={false}>
-      <ModalInner
-        className={styles.nightModeModalInner}
-        style={{ maxWidth: "500px" }}
-        outSideClick={onClose}
-      >
-        <ModalHeader>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Moon size={20} color="#ffd700" />
-            <ModalTitle className={styles.nightModeTitle}>야근모드 촬영</ModalTitle>
-            <Camera size={18} color="#ffd700" style={{ opacity: 0.8 }} />
-          </div>
-        </ModalHeader>
-        <ModalBody className={styles.nightModeBody}>
-          <div>
-            <p>메모를 남기세요.</p>
-            <Textarea
-              value={memo}
-              onChange={(event) => setMemo(event.currentTarget.value)}
-              placeholder="야간 근무 시 메모를 입력하세요..."
-              classNames={{
-                input: styles.nightModeTextarea,
-              }}
-              rows={4}
-            />
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            onClick={onClick}
-            variant="filled"
-            type="button"
-            className={styles.nightModeConfirmButton}
-            style={{
-              background: "linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)",
-              color: "#000",
-            }}
-          >
-            확인
-          </Button>
-          <Button
-            variant="default"
-            onClick={onClose}
-            className={styles.nightModeCloseButton}
-            style={{
-              background: "rgba(255, 255, 255, 0.1)",
-              color: "#fff",
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-            }}
-          >
-            닫기
-          </Button>
-        </ModalFooter>
-      </ModalInner>
-    </RemoveScroll>
-  );
-}
+//   return (
+//     <RemoveScroll removeScrollBar={false}>
+//       <ModalInner
+//         className={styles.nightModeModalInner}
+//         style={{ maxWidth: "500px" }}
+//         outSideClick={onClose}
+//       >
+//         <ModalHeader>
+//           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+//             <Moon size={20} color="#ffd700" />
+//             <ModalTitle className={styles.nightModeTitle}>야근모드 촬영</ModalTitle>
+//             <Camera size={18} color="#ffd700" style={{ opacity: 0.8 }} />
+//           </div>
+//         </ModalHeader>
+//         <ModalBody className={styles.nightModeBody}>
+//           <div>
+//             <p>메모를 남기세요.</p>
+//             <Textarea
+//               value={memo}
+//               onChange={(event) => setMemo(event.currentTarget.value)}
+//               placeholder="야간 근무 시 메모를 입력하세요..."
+//               classNames={{
+//                 input: styles.nightModeTextarea,
+//               }}
+//               rows={4}
+//             />
+//           </div>
+//         </ModalBody>
+//         <ModalFooter>
+//           <Button
+//             onClick={onClick}
+//             variant="filled"
+//             type="button"
+//             className={styles.nightModeConfirmButton}
+//             style={{
+//               background: "linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)",
+//               color: "#000",
+//             }}
+//           >
+//             확인
+//           </Button>
+//           <Button
+//             variant="default"
+//             onClick={onClose}
+//             className={styles.nightModeCloseButton}
+//             style={{
+//               background: "rgba(255, 255, 255, 0.1)",
+//               color: "#fff",
+//               border: "1px solid rgba(255, 255, 255, 0.2)",
+//             }}
+//           >
+//             닫기
+//           </Button>
+//         </ModalFooter>
+//       </ModalInner>
+//     </RemoveScroll>
+//   );
+// }
