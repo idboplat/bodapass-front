@@ -12,10 +12,17 @@ import {
   ModalInner,
   ModalTitle,
 } from "@/components/common/modal/components";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "motion/react";
 import Portal from "../common/modal/portal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
+import CameraView from "../camera-view";
+import { useCameraCapture } from "@/hooks/use-camera-capture";
+import CameraControls from "../camera-controls";
+import OutlineButton from "../common/outline-button";
+import Badge from "../common/badge";
+import CrewIcon from "/public/assets/svg/crew-icon.svg";
+import OutIcon from "/public/assets/svg/out-icon.svg";
 
 interface Props {
   attCd: "I" | "O";
@@ -46,6 +53,22 @@ export default function SearchHome({
 
   const TCM200101SSQ01 = useTCM200101SSQ01({ session, mastCorpCd, corpCd, userId: session.userId });
 
+  // 카메라 촬영을 위한 ref
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [cameraMode, setCameraMode] = useState<"front" | "back">("front");
+
+  const { capture } = useCameraCapture({
+    videoRef,
+    cameraMode,
+    onCapture: (blob) => {
+      onCapture({ image: blob, attCd, session });
+    },
+  });
+
+  const onClickCapture = () => {
+    capture();
+  };
+
   // const onClickNightMode = () => {
   //   setIsNightMode((prev) => !prev);
   // };
@@ -67,7 +90,7 @@ export default function SearchHome({
   // }, [isNightMode]);
 
   return (
-    <div className={"mobileLayout"}>
+    <div className={`${styles.container} mobileLayout`}>
       {/* <div
         style={{
           display: "flex",
@@ -87,22 +110,48 @@ export default function SearchHome({
           onChange={onClickNightMode}
         />
       </div> */}
-      <Capture onCapture={(args) => onCapture({ ...args, attCd, session })} isLoading={isLoading} />
-
-      <div>
-        <div>팀원 {TCM200101SSQ01.data?.ordrCnt}명</div>
-        <div>출근 {attendanceCount}명</div>
+      <CameraView videoRef={videoRef} cameraMode={cameraMode} />
+      <div className={styles.attendanceInfo}>
+        <Badge
+          leftIcon={<CrewIcon />}
+          style={{
+            fontSize: "16px",
+            letterSpacing: "-0.5px",
+            fontWeight: "500",
+            padding: "0.5rem 1rem",
+          }}
+        >
+          팀원 : {TCM200101SSQ01.data?.ordrCnt}명
+        </Badge>
+        <Badge
+          leftIcon={<OutIcon />}
+          style={{
+            fontSize: "16px",
+            letterSpacing: "-0.5px",
+            fontWeight: "500",
+            padding: "0.5rem 1rem",
+          }}
+        >
+          출근 : {attendanceCount}명
+        </Badge>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <Button onClick={onClickComplete}>출석 완료</Button>
+      <div className={styles.bottomSection}>
+        <CameraControls
+          cameraMode={cameraMode}
+          onCameraModeChange={(mode) => setCameraMode(mode)}
+          onCapture={onClickCapture}
+          isLoading={isLoading}
+        />
+        <div className={styles.buttonContainer}>
+          <OutlineButton
+            onClick={onClickComplete}
+            fullWidth
+            style={{ borderRadius: "12px", fontSize: "18px", fontWeight: "700" }}
+          >
+            출근 완료
+          </OutlineButton>
+        </div>
       </div>
 
       {/* {showNightModeModal && (

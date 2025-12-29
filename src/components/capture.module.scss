@@ -7,6 +7,20 @@
   }
 }
 
+.instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  text-align: center;
+}
+
+.instructionText {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
+}
+
 .capture {
   position: relative;
   width: 100%;
@@ -88,79 +102,5 @@
     background-color: #d9d9d9;
     height: 0.75rem;
     width: 2px;
-  }
-}
-
-.instructions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  text-align: center;
-}
-
-.instructionText {
-  font-size: 14px;
-  color: #999;
-  line-height: 1.5;
-}
-
-.controls {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  z-index: 1000;
-}
-
-.captureButton {
-  flex: 1;
-  // gap: 0.2rem;
-  padding: 0 0.3rem !important;
-
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.5rem 1rem;
-
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 2rem;
-  color: #666;
-  font-weight: 500;
-}
-
-.spinner {
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 2px solid #f3f3f3;
-  border-top: 2px solid #00ae6a;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }

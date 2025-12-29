@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import css from "./capture.module.scss";
-import CustomButton from "./common/custom-button";
-import SwitchCameraIcon from "/public/assets/svg/camera-switch.svg";
-import CameraIcon from "/public/assets/svg/camera.svg";
+import CameraView from "./camera-view";
+import CameraControls from "./camera-controls";
+import { useCameraCapture } from "@/hooks/use-camera-capture";
 
 interface CaptureProps {
   onCapture: (args: { image: Blob }) => void;
@@ -18,65 +18,13 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   // const [modelsLoaded, setModelsLoaded] = useState(false);
 
-  const capture = () => {
-    if (!videoRef.current) return;
-    videoRef.current.pause();
-
-    const captureCanvas = document.createElement("canvas");
-    captureCanvas.width = videoRef.current.videoWidth;
-    captureCanvas.height = videoRef.current.videoHeight;
-
-    // 좌우 반전을 위한 변환 적용
-    if (cameraMode === "front") {
-      captureCanvas.getContext("2d")!.scale(-1, 1);
-      captureCanvas.getContext("2d")!.translate(-captureCanvas.width, 0);
-    }
-
-    captureCanvas
-      .getContext("2d")
-      ?.drawImage(videoRef.current, 0, 0, captureCanvas.width, captureCanvas.height);
-
-    captureCanvas.getContext("2d")!.resetTransform();
-    captureCanvas.getContext("2d")!.font = "20px Arial";
-    captureCanvas.getContext("2d")!.fillStyle = "red";
-    captureCanvas.getContext("2d")!.fillText("0", 0, 32);
-
-    // 해상도 정보 출력
-    console.log("촬영 이미지 해상도:", {
-      width: captureCanvas.width,
-      height: captureCanvas.height,
-      aspectRatio: (captureCanvas.width / captureCanvas.height).toFixed(2),
-    });
-
-    // Blob도 생성 (onFaceDetected 콜백용)
-    captureCanvas.toBlob(
-      (blob) => {
-        if (blob) {
-          // onFaceDetected({ image: blob, score: 0 });
-          onCapture({ image: blob });
-        }
-
-        // 메모리 정리
-        captureCanvas.getContext("2d")?.clearRect(0, 0, captureCanvas.width, captureCanvas.height);
-        captureCanvas.width = 0;
-        captureCanvas.height = 0;
-        captureCanvas.remove();
-
-        videoRef.current?.play();
-      },
-      "image/jpeg",
-      1.0,
-    );
-
-    // Base64 문자열을 faceImgFile로 전달하여 API 호출
-    // mutate({
-    //   mastCorpCd,
-    //   corpCd,
-    //   userId,
-    //   attCd,
-    //   faceImgFile: base64String.split(",")[1],
-    // });
-  };
+  const { capture } = useCameraCapture({
+    videoRef,
+    cameraMode,
+    onCapture: (blob) => {
+      onCapture({ image: blob });
+    },
+  });
 
   // useEffect(() => {
   //   if (modelsLoaded) return;
@@ -98,29 +46,7 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
   //   loadModels();
   // }, [modelsLoaded]);
 
-  useEffect(() => {
-    let stream: MediaStream | undefined = undefined;
-
-    const getStream = async () => {
-      stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: cameraMode === "front" ? "user" : "environment",
-        },
-      });
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    };
-
-    getStream();
-
-    return () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, [cameraMode]);
+  // 카메라 스트림 관리는 CameraView 내부에서 처리됨
 
   //   자동 얼굴 감지 로직 - 수동 촬영만 가능하도록 주석처리
   /*
@@ -346,66 +272,17 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
 
   return (
     <>
-      <div className={css.capture}>
-        <video
-          className={css.video}
-          style={{ transform: cameraMode === "front" ? "scaleX(-1)" : "none" }}
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-        />
-        <canvas className={css.canvas} ref={canvasRef} />
-        <div className={css.mask} />
-        <div className={css.ring}>
-          {Array.from({ length: 60 }).map((_, index) => {
-            const angle = index * 6;
-            return (
-              <div
-                key={index}
-                className={css.ringTick}
-                style={{
-                  transform: `rotate(${angle}deg) translateY(-9.5rem)`,
-                  animationDelay: `${index * 0.1}s`,
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-
+      <CameraView videoRef={videoRef} canvasRef={canvasRef} cameraMode={cameraMode} />
       <div className={css.instructions}>
         <p className={css.instructionText}>정면 얼굴을 촬영합니다.</p>
         <p className={css.instructionText}>원형 프레임 안에 얼굴을 맞춰주세요.</p>
       </div>
-
-      <div className={css.controls}>
-        {!isLoading ? (
-          <>
-            <CustomButton
-              variant="reverse"
-              onClick={() => setCameraMode((prev) => (prev === "front" ? "back" : "front"))}
-              className={css.captureButton}
-              leftIcon={<SwitchCameraIcon width="28" height="25" />}
-            >
-              카메라 반전
-            </CustomButton>
-
-            <CustomButton
-              onClick={capture}
-              className={css.captureButton}
-              leftIcon={<CameraIcon width="28" height="25" />}
-            >
-              촬영하기
-            </CustomButton>
-          </>
-        ) : (
-          <div className={css.loading}>
-            <div className={css.spinner}></div>
-            <span>처리 중...</span>
-          </div>
-        )}
-      </div>
+      <CameraControls
+        cameraMode={cameraMode}
+        onCameraModeChange={setCameraMode}
+        onCapture={capture}
+        isLoading={isLoading}
+      />
     </>
   );
 }

@@ -85,3 +85,29 @@
         border-color: rgba(255, 255, 255, 0.3);
     }
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.bottomSection {
+    margin-top: auto;
+    padding-bottom: 1rem;
+}
+
+.buttonContainer {
+    padding: 0 0.7rem;
+}
+
+.attendanceInfo {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    align-items: center;
+    padding-top: 0.7rem;
+    font-size: 14px;
+    color: #999;
+    line-height: 1.5;
+}
