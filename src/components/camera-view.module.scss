@@ -30,8 +30,8 @@
     pointer-events: none;
 
     /* ring 크기에 맞춤: ring 지름 19rem, 반지름 9.5rem */
-    mask-image: radial-gradient(circle at center, transparent 9.5rem, black 9.55rem);
-    -webkit-mask-image: radial-gradient(circle at center, transparent 9.5rem, black 9.55rem);
+    mask-image: radial-gradient(circle at center, transparent 8.5rem, black 8.55rem);
+    -webkit-mask-image: radial-gradient(circle at center, transparent 8.5rem, black 8.55rem);
 }
 
 .ring {
