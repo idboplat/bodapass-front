@@ -26,7 +26,7 @@ export default function DeviceMessageReceiver({ children }: PropsWithChildren) {
           }
         }
       } catch (error) {
-        nativeLogger("error === ");
+        nativeLogger("device message receiver error");
         nativeLogger(error instanceof Error ? error.message : String(error));
       }
     };

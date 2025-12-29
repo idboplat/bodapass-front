@@ -46,17 +46,20 @@ export default function RenderMap({
     return getDistanceFromLatLonInMeter(deviceLocation, { lat, lng });
   }, [deviceLocation, lat, lng]);
 
+  // return (
+  //   <div className={css.container}>
+  //     <div className={css.errorContainer}>
+  //       <div className={css.errorText}>ERROR</div>
+  //       <div className={css.errorText}>위치 정보를 가져오는데 실패했습니다.</div>
+  //       <button className={css.retryButton} onClick={() => {}}>
+  //         다시 시도
+  //       </button>
+  //     </div>
+  //   </div>
+  // );
+
   return (
     <div className={css.container}>
-      {/* 
-      <div className={css.errorContainer}>
-        <div className={css.errorText}>ERROR</div>
-        <div className={css.errorText}>위치 정보를 가져오는데 실패했습니다.</div>
-        <button className={css.retryButton} onClick={() => {}}>
-          다시 시도
-        </button>
-      </div> */}
-
       <Map
         onCreate={(map) => {
           setMap(() => map);
