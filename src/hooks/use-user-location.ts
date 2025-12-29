@@ -116,10 +116,15 @@ export const useDeviceLocation = () => {
     }
 
     const handler = (event: MessageEvent) => {
-      const data: TDeviceMessageData<{ location: TUserLocation }> = JSON.parse(event.data);
+      try {
+        const data: TDeviceMessageData<{ location: TUserLocation }> = JSON.parse(event.data);
 
-      if (data.type === DEVICE_API.responseDeviceLocation) {
-        setDeviceLocation(() => data.payload.location);
+        if (data.type === DEVICE_API.responseDeviceLocation) {
+          setDeviceLocation(() => data.payload.location);
+        }
+      } catch (error) {
+        nativeLogger("useDeviceLocation error");
+        nativeLogger(error instanceof Error ? error.message : String(error));
       }
     };
 
