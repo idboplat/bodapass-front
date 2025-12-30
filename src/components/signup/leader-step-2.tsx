@@ -131,10 +131,10 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             <TextInput
               {...field}
               label="이름"
-              mt={0}
               required
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
