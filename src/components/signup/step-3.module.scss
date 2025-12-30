@@ -33,6 +33,7 @@
 .infoBox {
   background: #fff;
   padding: 1rem;
+  padding-bottom: 6rem; /* fixed 버튼 높이만큼 여백 추가 */
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -68,4 +69,14 @@
 .infoItem span {
   color: #3c98d4;
   font-size: 14px;
+}
+
+.buttonContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: #fff;
+  z-index: 1000;
 }

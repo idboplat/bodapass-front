@@ -12,6 +12,7 @@ import Step4 from "./step-4";
 import { LoadingOverlay } from "@mantine/core";
 import { WithoutSignInLayout } from "./layout";
 import { useOnSiteSignupCtx } from "./context-provider";
+import CrewStep1 from "./crew-step-1";
 
 interface Props {}
 
@@ -28,26 +29,26 @@ export default function CrewSignUpHome({}: Props) {
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const step2Prev = () => {
+  const step3Prev = () => {
     router.back();
   };
 
-  const step2Next = (args: TScannedResult) => {
+  const step3Next = (args: TScannedResult) => {
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
     ctx.saveImages([args.image]);
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "3");
+    searchParams.set("step", "4");
     searchParams.set("idTp", args.idTp);
     router.push(`/${ctx.locale}/signup/crew/?${searchParams.toString()}`);
   };
 
-  const step3Prev = () => {
+  const step4Prev = () => {
     router.back();
   };
 
-  const step3Submit = async () => {
+  const step4Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
 
     if (ctx.images.length === 0) {
@@ -96,21 +97,22 @@ export default function CrewSignUpHome({}: Props) {
   };
 
   return (
-    <WithoutSignInLayout title="팀원 추가">
+    <WithoutSignInLayout>
       <div className={css.form}>
-        {ctx.step === "1" && <CrewStep2 wrkTp={ctx.wrkTp} session={session} locale={ctx.locale} />}
-        {ctx.step === "2" && (
+        {ctx.step === "1" && <CrewStep1 />}
+        {ctx.step === "2" && <CrewStep2 wrkTp={ctx.wrkTp} session={session} locale={ctx.locale} />}
+        {ctx.step === "3" && (
           <Step3
-            onClickNext={step2Next}
-            onClickPrev={step2Prev}
+            onClickNext={step3Next}
+            onClickPrev={step3Prev}
             idTp={ctx.idTp}
             locale={ctx.locale}
           />
         )}
-        {ctx.step === "3" && (
+        {ctx.step === "4" && (
           <Step4
-            onClickNext={step3Submit}
-            onClickPrev={step3Prev}
+            onClickNext={step4Submit}
+            onClickPrev={step4Prev}
             images={ctx.images}
             isLastStep
             idTp={ctx.idTp}

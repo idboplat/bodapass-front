@@ -10,6 +10,10 @@ import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { useRouter } from "next/router";
 import { z } from "zod";
+import css from "./crew-step-2.module.scss";
+import CustomStep from "../common/custom-step";
+import CustomCheckbox from "../common/custom-checkbox";
+import CustomButton from "../common/custom-button";
 
 export default function CrewStep2({
   session,
@@ -85,12 +89,14 @@ export default function CrewStep2({
     }
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "2");
+    searchParams.set("step", "3");
     router.push(`/${locale}/signup/crew/?${searchParams.toString()}`);
   };
 
   return (
     <>
+      <CustomStep totalSteps={4} currentStep={2} />
+
       <div>
         {/* 추후에 다시 필요할 수 도 있음 */}
         {/* <Select
@@ -107,6 +113,21 @@ export default function CrewStep2({
 
         <Controller
           control={form.control}
+          name="userNm"
+          render={({ field, fieldState }) => (
+            <TextInput
+              {...field}
+              label="이름"
+              mt={0}
+              required
+              error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+            />
+          )}
+        />
+
+        <Controller
+          control={form.control}
           name="zipCd"
           render={({ field, fieldState }) => (
             <TextInput
@@ -120,6 +141,8 @@ export default function CrewStep2({
               autoComplete="off"
               required
               readOnly
+              classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
@@ -139,6 +162,8 @@ export default function CrewStep2({
               autoComplete="off"
               readOnly
               required
+              classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
@@ -153,6 +178,8 @@ export default function CrewStep2({
               required
               error={fieldState.error?.message}
               autoComplete="address-line2"
+              classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
@@ -170,13 +197,17 @@ export default function CrewStep2({
               autoComplete="tel"
               required
               error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+              mt="1rem"
             />
           )}
         />
 
-        <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 10 }}>
-          <label htmlFor="emailAgree">이메일 등록 여부</label>
-          <Checkbox id="emailAgree" checked={isEmailCheck} onChange={handleEmailCheck} />
+        <div className={css.emailCheck}>
+          <label className={css.emailCheckLabel} htmlFor="emailAgree">
+            이메일 등록 여부
+          </label>
+          <CustomCheckbox id="emailAgree" checked={isEmailCheck} onChange={handleEmailCheck} />
         </div>
 
         {isEmailCheck && (
@@ -187,12 +218,13 @@ export default function CrewStep2({
               <TextInput
                 {...field}
                 label="이메일"
-                mt={28}
+                mt="1rem"
                 onChange={(e) => onNoSpaceChange(e, field.onChange)}
                 inputMode="email"
                 autoComplete="email"
                 required
                 error={fieldState.error?.message}
+                classNames={{ label: css.label, input: css.input }}
               />
             )}
           />
@@ -203,9 +235,9 @@ export default function CrewStep2({
           이전
         </Button> */}
 
-          <Button variant="filled" type="button" onClick={onClickNext}>
+          <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
             다음
-          </Button>
+          </CustomButton>
         </Box>
       </div>
 

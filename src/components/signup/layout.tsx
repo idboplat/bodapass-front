@@ -7,7 +7,7 @@ export const WithSignInLayout = ({
   title,
 }: {
   children: React.ReactNode;
-  title: string;
+  title?: string;
 }) => {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
@@ -36,13 +36,13 @@ export const WithoutSignInLayout = ({
   title,
 }: {
   children: React.ReactNode;
-  title: string;
+  title?: string;
 }) => {
   return (
     <div className={"mobileLayout"}>
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h1 className={css.title}>{title}</h1>
+          {title && <h1 className={css.title}>{title}</h1>}
 
           {children}
         </div>

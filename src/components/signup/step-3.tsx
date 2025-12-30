@@ -108,7 +108,7 @@ export default function Step3({
         </div>
       </div>
 
-      <div>
+      <div className={css.buttonContainer}>
         <CustomButton type="button" fullWidth onClick={onClickCapture}>
           사진찍기
         </CustomButton>

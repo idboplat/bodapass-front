@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 100vh;
+}
+
+.container {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1; /* CustomStep을 제외한 남은 공간 차지 */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    gap: 1rem;
+    flex: 1; /* 남은 공간을 모두 차지하여 중앙에 위치 */
+}
+
+.title {
+    color: #333;
+    font-weight: inherit;
+}
+
+.description {
+    line-height: 1.5;
+    color: #666;
+    font-size: 14px;
+    font-weight: inherit;
+}
+
+.buttonBox {
+    margin-top: auto;
+    width: 100%;
+    // padding-bottom: 1rem;
+}

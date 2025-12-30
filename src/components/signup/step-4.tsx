@@ -90,12 +90,13 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           name="userNm"
           render={({ field, fieldState }) => (
             <TextInput
-              {...field}
+              defaultValue={field.value}
+              onChange={undefined}
               label="이름"
               mt={0}
-              required
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
+              readOnly
             />
           )}
         />
