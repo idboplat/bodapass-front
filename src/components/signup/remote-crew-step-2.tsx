@@ -14,6 +14,7 @@ import { useTCM200001SSQ00 } from "@/hooks/tms/use-auth";
 import { z } from "zod";
 import { onNoSpaceChange } from "@/utils/input-handler";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
+import { AnimatePresence } from "motion/react";
 
 export default function RemoteCrewStep2({
   wrkTp,
@@ -354,11 +355,13 @@ export default function RemoteCrewStep2({
         </Box>
       </div>
 
-      {showPostCode && (
-        <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
-        </Portal>
-      )}
+      <AnimatePresence>
+        {showPostCode && (
+          <Portal>
+            <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          </Portal>
+        )}
+      </AnimatePresence>
     </>
   );
 }

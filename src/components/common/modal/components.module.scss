@@ -16,6 +16,7 @@ $defult-modal-max-height: 600px;
   justify-content: center;
   align-items: flex-end; // 모바일 너비에서 아래쪽 위치
   backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.4);
   padding: 20px 0 0 0; // 위쪽 여유공간
 }
 
@@ -39,8 +40,6 @@ $defult-modal-max-height: 600px;
 }
 
 .expand:global(.full) {
-  padding: 0px;
-
   & > .inner {
     height: 100%;
     border-radius: 0px;
@@ -51,13 +50,11 @@ button.closeButton {
   position: absolute;
   right: 10px;
   top: 10px;
-  color: #000;
+  color: #333;
   z-index: 1;
-}
 
-@include util.dark {
-  button.closeButton {
-    color: #fff;
+  &:hover {
+    color: #333;
   }
 }
 

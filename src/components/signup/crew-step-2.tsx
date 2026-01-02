@@ -14,6 +14,7 @@ import css from "./crew-step-2.module.scss";
 import CustomStep from "../common/custom-step";
 import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
+import { AnimatePresence } from "motion/react";
 
 export default function CrewStep2({
   session,
@@ -241,11 +242,13 @@ export default function CrewStep2({
         </Box>
       </div>
 
-      {showPostCode && (
-        <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
-        </Portal>
-      )}
+      <AnimatePresence>
+        {showPostCode && (
+          <Portal>
+            <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          </Portal>
+        )}
+      </AnimatePresence>
     </>
   );
 }

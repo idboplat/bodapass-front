@@ -9,6 +9,7 @@ import css from "./edit-form.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useRouter } from "next/router";
+import { AnimatePresence } from "motion/react";
 
 interface Props {
   session: Session;
@@ -107,11 +108,13 @@ export default function InfoEditForm({ session, userData }: Props) {
         </Button>
       </div>
 
-      {showPostCode && (
-        <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
-        </Portal>
-      )}
+      <AnimatePresence>
+        {showPostCode && (
+          <Portal>
+            <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          </Portal>
+        )}
+      </AnimatePresence>
 
       <LoadingOverlay visible={mutation.isPending} />
     </>

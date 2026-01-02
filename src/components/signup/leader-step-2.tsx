@@ -16,6 +16,7 @@ import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import OutlineButton from "../common/outline-button";
 import CustomStep from "../common/custom-step";
+import { AnimatePresence } from "motion/react";
 
 export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; locale: string }) {
   const router = useRouter();
@@ -321,11 +322,13 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
         </Box>
       </div>
 
-      {showPostCode && (
-        <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
-        </Portal>
-      )}
+      <AnimatePresence>
+        {showPostCode && (
+          <Portal>
+            <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          </Portal>
+        )}
+      </AnimatePresence>
     </>
   );
 }

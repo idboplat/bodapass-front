@@ -9,9 +9,18 @@ interface PostCodeModalProps extends DaumPostcodeEmbedProps {
 export default function PostCodeModal({ onClose, ...props }: PostCodeModalProps) {
   return (
     <RemoveScroll removeScrollBar={false}>
-      <ModalInner outSideClick={onClose} fullSize style={{ padding: "0px" }}>
+      <ModalInner
+        outSideClick={onClose}
+        fullSize
+        style={{
+          padding: "0px",
+          backgroundColor: "#ececec",
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+        }}
+      >
         <ModalCloseButton onClose={onClose} />
-        <ModalHeader />
+        <div style={{ height: 50, borderBottom: "2px solid #e1e1e1" }} />
         <DaumPostcodeEmbed {...props} style={{ height: "100%" }} />
       </ModalInner>
     </RemoveScroll>

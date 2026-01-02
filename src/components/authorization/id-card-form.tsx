@@ -9,6 +9,7 @@ import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { replaceToTelNumber } from "@/utils/regexp";
 import { TScannedResult } from "@/libraries/auth/auth.dto";
+import { AnimatePresence } from "motion/react";
 
 interface Props {
   brkrId?: string;
@@ -141,7 +142,9 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
 
       {showPostCode && (
         <Portal>
-          <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          <AnimatePresence>
+            <PostCodeModal onClose={closePostCode} onComplete={selectPostCode} />
+          </AnimatePresence>
         </Portal>
       )}
     </>
