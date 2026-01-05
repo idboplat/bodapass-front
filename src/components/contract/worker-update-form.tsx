@@ -24,6 +24,10 @@ import Portal from "@/components/common/modal/portal";
 import ConfirmModal from "@/components/common/modal/confirm-modal";
 import { PORTAL_MODAL_CONTAINER_ID } from "@/constants";
 import CancelConfirmModal from "./cancel-confirm-modal";
+import CustomCheckbox from "../common/custom-checkbox";
+import CustomButton from "../common/custom-button";
+import MoneyIcon from "/public/assets/svg/money.svg";
+import CalendarIcon from "/public/assets/svg/calendar.svg";
 
 const workerUpdateDto = z.object({
   instCd: z.string().min(1),
@@ -151,8 +155,8 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             <Image
               src={`data:image/jpeg;base64,${contractData.faceImgFile}`}
               alt="계약자 얼굴"
-              width={58}
-              height={58}
+              width={40}
+              height={40}
               className={css.profileImage}
               unoptimized
             />
@@ -160,8 +164,8 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
           </div>
 
           <div className={css.corpInfoWrapper}>
-            <div>{contractData.corpNm}</div>
-            <div>{contractData.siteNm}</div>
+            <div className={css.corpNm}>{contractData.corpNm}</div>
+            <div className={css.siteNm}>{contractData.siteNm}</div>
           </div>
         </div>
 
@@ -218,11 +222,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
                   }}
                   placeholder="수당을 입력하세요"
                   error={fieldState.error?.message}
-                  leftSection={
-                    <div>
-                      <DollarSign size={16} />
-                    </div>
-                  }
+                  leftSection={<MoneyIcon />}
                   required
                 />
               </div>
@@ -248,7 +248,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
                 allowSingleDateInRange
                 firstDayOfWeek={0}
                 labelSeparator="~"
-                leftSection={<Calendar size={16} />}
+                leftSection={<CalendarIcon />}
                 styles={{
                   input: {
                     // borderRadius: "8px",
@@ -275,7 +275,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             name="insYn"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <Checkbox
+                <CustomCheckbox
                   {...field}
                   label="보험 여부"
                   type="checkbox"
@@ -295,7 +295,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             name="subMngrYn"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <Checkbox
+                <CustomCheckbox
                   {...field}
                   label="팀장 권한 부여"
                   type="checkbox"
@@ -347,23 +347,25 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
     </div> */}
 
       <div className={css.buttonBox}>
-        <Button
+        <CustomButton
           type="button"
           onClick={handleEditContract}
-          loading={editContractMutation.isPending}
-          classNames={{ root: clsx(css.actionButton, css.editButton) }}
+          // loading={editContractMutation.isPending}
+          disabled={editContractMutation.isPending}
+          // classNames={{ root: clsx(css.actionButton, css.editButton) }}
         >
           근로조건 변경
-        </Button>
+        </CustomButton>
         {!isLeader && (
-          <Button
+          <CustomButton
             type="button"
+            variant="deny"
             onClick={handleCancelContract}
-            loading={cancelContractMutation.isPending}
-            classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
+            disabled={cancelContractMutation.isPending}
+            // classNames={{ root: clsx(css.actionButton, css.cancelButton) }}
           >
             현장근무 제외
-          </Button>
+          </CustomButton>
         )}
       </div>
 
