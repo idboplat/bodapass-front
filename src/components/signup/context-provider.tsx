@@ -167,7 +167,9 @@ export const SignupFormProvider = ({ children }: { children: React.ReactNode }) 
       password: "",
       passwordConfirm: "",
 
-      tel: "",
+      tel1: "",
+      tel2: "",
+      tel3: "",
       zipCd: "",
       addr: "",
       addrDtil: "",

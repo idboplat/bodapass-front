@@ -17,7 +17,9 @@ export const signUpDto = z.object({
   password: z.string().min(1),
   passwordConfirm: z.string().min(1),
 
-  tel: z.string().min(1),
+  tel1: z.string().min(1),
+  tel2: z.string().min(1),
+  tel3: z.string().min(1),
   zipCd: z.string().min(1),
   addr: z.string().min(1),
   addrDtil: z.string().min(1),

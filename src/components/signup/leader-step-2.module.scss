@@ -72,3 +72,33 @@ button.nextButton {
     font-size: 14px;
     border-radius: 4px;
 }
+
+.telContainer {
+    gap: 4px;
+    margin-top: 1rem;
+}
+
+.telLabel {
+    font-size: 12px;
+    font-weight: 500;
+    color: #333333;
+
+    &::after {
+        content: " *";
+        color: var(--mantine-color-error, #fa5252);
+    }
+}
+
+.telInputBox {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ededed;
+    font-weight: 500;
+}
+
+.required {
+    color: #fa5252;
+    font-size: 13px;
+    margin-left: 2px;
+}

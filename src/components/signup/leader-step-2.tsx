@@ -36,10 +36,6 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
     closePostCode();
   };
 
-  const onTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    form.setValue("tel", replaceToTelNumber(e.target.value));
-  };
-
   const handleEmailCheck = () => {
     setIsEmailCheck((prev) => {
       if (prev === false) {
@@ -56,7 +52,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
   };
 
   const onClickNext = async () => {
-    const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
+    const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel1"]);
     if (!isValid) return;
 
     if (loginTp !== "2") {
@@ -265,7 +261,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             />
           )}
         />
-
+        {/* 
         <Controller
           control={form.control}
           name="tel"
@@ -283,7 +279,59 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               classNames={{ label: css.label, input: css.input }}
             />
           )}
-        />
+        /> */}
+
+        <div className={css.telContainer}>
+          <label htmlFor="tel" className={css.telLabel}>
+            전화번호
+          </label>
+          <div className={css.telInputBox}>
+            <Controller
+              control={form.control}
+              name="tel1"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel1"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+            -
+            <Controller
+              control={form.control}
+              name="tel2"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel2"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+            -
+            <Controller
+              control={form.control}
+              name="tel3"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel3"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+          </div>
+        </div>
 
         <div className={css.emailCheck}>
           <label className={css.emailCheckLabel} htmlFor="emailAgree">

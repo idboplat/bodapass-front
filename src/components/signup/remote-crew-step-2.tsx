@@ -77,10 +77,6 @@ export default function RemoteCrewStep2({
     router.replace(`/${locale}/signup/?${searchParams.toString()}`);
   };
 
-  const onTelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    form.setValue("tel", replaceToTelNumber(e.target.value));
-  };
-
   const handleEmailCheck = () => {
     setIsEmailCheck((prev) => {
       if (prev === false) {
@@ -97,7 +93,15 @@ export default function RemoteCrewStep2({
   };
 
   const onClickNext = async () => {
-    const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel"]);
+    const isValid = await form.trigger([
+      "cntryCd",
+      "zipCd",
+      "addr",
+      "addrDtil",
+      "tel1",
+      "tel2",
+      "tel3",
+    ]);
     if (!isValid) return;
 
     if (loginTp !== "2") {
@@ -300,21 +304,57 @@ export default function RemoteCrewStep2({
           )}
         />
 
-        <Controller
-          control={form.control}
-          name="tel"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              label="전화번호"
-              onChange={onTelChange}
-              placeholder="-를 제외하고 입력해주세요."
-              inputMode="numeric"
-              required
-              error={fieldState.error?.message}
+        <div className={css.telContainer}>
+          <label htmlFor="tel" className={css.telLabel}>
+            전화번호
+          </label>
+          <div className={css.telInputBox}>
+            <Controller
+              control={form.control}
+              name="tel1"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel1"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
             />
-          )}
-        />
+            -
+            <Controller
+              control={form.control}
+              name="tel2"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel2"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+            -
+            <Controller
+              control={form.control}
+              name="tel3"
+              render={({ field, fieldState }) => (
+                <TextInput
+                  {...field}
+                  inputMode="numeric"
+                  required
+                  autoComplete="tel3"
+                  error={fieldState.error?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+          </div>
+        </div>
 
         <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 10 }}>
           <label htmlFor="emailAgree">이메일 등록 여부</label>
