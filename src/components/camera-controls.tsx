@@ -8,6 +8,7 @@ interface CameraControlsProps {
   onCameraModeChange: (mode: "front" | "back") => void;
   onCapture: () => void;
   isLoading: boolean;
+  style?: React.CSSProperties;
 }
 
 export default function CameraControls({
@@ -15,6 +16,7 @@ export default function CameraControls({
   onCameraModeChange,
   onCapture,
   isLoading,
+  style,
 }: CameraControlsProps) {
   return (
     <>

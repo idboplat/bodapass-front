@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useWCW000001SSP01 } from "@/hooks/tms/use-authorization";
 import { useQueryClient } from "@tanstack/react-query";
 import { DEVICE_API } from "@/types/common";
+import CustomStep from "../common/custom-step";
+import css from "./crew-face-home.module.scss";
 
 export default function CrewFaceHome() {
   const router = useRouter();
@@ -52,7 +54,8 @@ export default function CrewFaceHome() {
   };
 
   return (
-    <div className={"mobileLayout"}>
+    <div className={`${css.container} mobileLayout`}>
+      <CustomStep currentStep={1} totalSteps={4} />
       <Capture onCapture={onCapture} isLoading={WCW000002SSP01.isPending} />
       <LoadingOverlay visible={WCW000002SSP01.isPending} />
     </div>

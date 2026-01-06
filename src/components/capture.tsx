@@ -271,11 +271,13 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
   */
 
   return (
-    <>
-      <CameraView videoRef={videoRef} canvasRef={canvasRef} cameraMode={cameraMode} />
-      <div className={css.instructions}>
-        <p className={css.instructionText}>정면 얼굴을 촬영합니다.</p>
-        <p className={css.instructionText}>원형 프레임 안에 얼굴을 맞춰주세요.</p>
+    <div className={css.wrapper}>
+      <div className={css.content}>
+        <CameraView videoRef={videoRef} canvasRef={canvasRef} cameraMode={cameraMode} />
+        <div className={css.instructions}>
+          <p className={css.instructionText}>정면 얼굴을 촬영합니다.</p>
+          <p className={css.instructionText}>원형 프레임 안에 얼굴을 맞춰주세요.</p>
+        </div>
       </div>
       <CameraControls
         cameraMode={cameraMode}
@@ -283,6 +285,6 @@ export default function Capture({ onCapture, isLoading }: CaptureProps) {
         onCapture={capture}
         isLoading={isLoading}
       />
-    </>
+    </div>
   );
 }

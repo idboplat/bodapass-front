@@ -8,6 +8,7 @@ import { useWCW000001SSP01 } from "@/hooks/tms/use-authorization";
 import { useQueryClient } from "@tanstack/react-query";
 import { DEVICE_API } from "@/types/common";
 import CustomStep from "../common/custom-step";
+import css from "./leader-face-home.module.scss";
 
 export default function LeaderFaceHome() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function LeaderFaceHome() {
   };
 
   return (
-    <div className={"mobileLayout"}>
+    <div className={`${css.container} mobileLayout`}>
       <CustomStep currentStep={1} totalSteps={4} />
       <Capture onCapture={onCapture} isLoading={WCW000001SSP01.isPending} />
       <LoadingOverlay visible={WCW000001SSP01.isPending} />

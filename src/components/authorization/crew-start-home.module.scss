@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  padding: 2rem 1rem;
 }
 
 .checkIconBox {
@@ -26,11 +27,8 @@
 
 .buttonBox {
   display: flex;
-  padding: 1rem;
-  padding-bottom: 2rem;
   gap: 1rem;
-
-  & > button {
+  button {
     flex: 1;
   }
 }

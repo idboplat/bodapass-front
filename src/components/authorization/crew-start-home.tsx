@@ -7,6 +7,7 @@ import css from "./crew-start-home.module.scss";
 import clsx from "clsx";
 import userDetectImage from "/public/assets/images/user-detect.png";
 import Image from "next/image";
+import CustomButton from "../common/custom-button";
 
 export default function CrewStartHome() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function CrewStartHome() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: DEVICE_API.leaderAuthorizationEnd,
+        type: DEVICE_API.crewAuthorizationEnd,
         payload: null,
       });
     } else {
@@ -42,17 +43,17 @@ export default function CrewStartHome() {
       </div>
 
       <div className={css.buttonBox}>
-        <Button variant="outline" onClick={end}>
+        <CustomButton variant="gray" onClick={end} style={{ padding: "15px 30px" }}>
           나중에
-        </Button>
-        <Button
-          variant="filled"
+        </CustomButton>
+        <CustomButton
           onClick={() => {
             router.push(`/${locale}/authorization/crew/${userId}/face?next=true`);
           }}
+          style={{ padding: "15px 30px" }}
         >
           인증하기
-        </Button>
+        </CustomButton>
       </div>
     </div>
   );

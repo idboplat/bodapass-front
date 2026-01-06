@@ -4,7 +4,7 @@ import Capture from "../capture";
 import { useTCM200101SSQ01 } from "@/hooks/tms/use-attendance";
 import { Button, RemoveScroll, Switch, Textarea } from "@mantine/core";
 import { Moon, Sun, Camera } from "lucide-react";
-import styles from "./search-home.module.scss";
+import css from "./search-home.module.scss";
 import {
   ModalBody,
   ModalFooter,
@@ -90,7 +90,7 @@ export default function SearchHome({
   // }, [isNightMode]);
 
   return (
-    <div className={`${styles.container} mobileLayout`}>
+    <div className={`${css.container} mobileLayout`}>
       {/* <div
         style={{
           display: "flex",
@@ -111,7 +111,7 @@ export default function SearchHome({
         />
       </div> */}
       <CameraView videoRef={videoRef} cameraMode={cameraMode} />
-      <div className={styles.attendanceInfo}>
+      <div className={css.attendanceInfo}>
         <Badge
           leftIcon={<CrewIcon />}
           style={{
@@ -136,14 +136,14 @@ export default function SearchHome({
         </Badge>
       </div>
 
-      <div className={styles.bottomSection}>
+      <div className={css.bottomSection}>
         <CameraControls
           cameraMode={cameraMode}
           onCameraModeChange={(mode) => setCameraMode(mode)}
           onCapture={onClickCapture}
           isLoading={isLoading}
         />
-        <div className={styles.buttonContainer}>
+        <div className={css.buttonContainer}>
           <OutlineButton
             onClick={onClickComplete}
             fullWidth
