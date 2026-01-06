@@ -3,7 +3,7 @@ import { useSession } from "@/libraries/auth/use-session";
 import { DEVICE_API } from "@/types/common";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import css from "./crew-start-home.module.scss";
+import css from "./crew-complete.module.scss";
 import CompletedIcon from "/public/assets/svg/completed-check.svg";
 import CustomButton from "../common/custom-button";
 
@@ -37,7 +37,8 @@ export default function CrewComplete() {
           <p className={css.userNm}>{userNm} 팀원님</p>
           <p className={css.message}>등록이 완료되었습니다.</p>
         </div>
-
+      </div>
+      <div className={css.buttonBox}>
         <CustomButton onClick={end} fullWidth>
           완료
         </CustomButton>
