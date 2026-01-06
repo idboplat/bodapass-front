@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.userNm {
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.message {
+    color: #666;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.completedText {
+    color: #007bff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}

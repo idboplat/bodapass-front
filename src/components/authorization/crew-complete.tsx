@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import css from "./crew-start-home.module.scss";
 import CompletedIcon from "/public/assets/svg/completed-check.svg";
+import CustomButton from "../common/custom-button";
 
 export default function CrewComplete() {
   const router = useRouter();
@@ -37,24 +38,10 @@ export default function CrewComplete() {
           <p className={css.message}>등록이 완료되었습니다.</p>
         </div>
 
-        <div className={css.completedText} onClick={end}>
-          [완료]
-        </div>
+        <CustomButton onClick={end} fullWidth>
+          완료
+        </CustomButton>
       </div>
-
-      {/* <div className={css.buttonBox}>
-        <CustomButton variant="gray" onClick={end} style={{ padding: "15px 30px" }}>
-          나중에
-        </CustomButton>
-        <CustomButton
-          onClick={() => {
-            router.push(`/${locale}/authorization/crew/${userId}/face?next=true`);
-          }}
-          style={{ padding: "15px 30px" }}
-        >
-          인증하기
-        </CustomButton>
-      </div> */}
     </div>
   );
 }
