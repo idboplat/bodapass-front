@@ -28,6 +28,7 @@ import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import MoneyIcon from "/public/assets/svg/money.svg";
 import CalendarIcon from "/public/assets/svg/calendar.svg";
+import CustomSelect from "../common/custom-select";
 
 const workerUpdateDto = z.object({
   instCd: z.string().min(1),
@@ -174,7 +175,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             control={form.control}
             name="instCd"
             render={({ field, fieldState }) => (
-              <Select
+              <CustomSelect
                 {...form.register("instCd")}
                 label="직종"
                 searchable
@@ -188,6 +189,10 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
                     maxHeight: 250,
                     overflow: "auto",
                     scrollbarWidth: "auto",
+                  },
+                  label: {
+                    fontSize: "12px",
+                    color: "#333333",
                   },
                 }}
                 disabled={isInstDataLoading}
@@ -210,7 +215,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
                   label="수당"
                   classNames={{
                     wrapper: css.inputWrapper,
-                    label: css.inputLabel,
+                    label: css.label,
                     input: css.input,
                   }}
                   onFocus={() => {
@@ -249,20 +254,9 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
                 firstDayOfWeek={0}
                 labelSeparator="~"
                 leftSection={<CalendarIcon />}
-                styles={{
-                  input: {
-                    // borderRadius: "8px",
-                    border: "1px solid #d1d5db",
-                    "&:focus": {
-                      borderColor: "#3b82f6",
-                      boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
-                    },
-                  },
-                  label: {
-                    fontWeight: 500,
-                    color: "#374151",
-                    marginBottom: "0.5rem",
-                  },
+                classNames={{
+                  label: css.label,
+                  input: css.input,
                 }}
               />
             )}

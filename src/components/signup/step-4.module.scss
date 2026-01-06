@@ -48,11 +48,6 @@
   }
 }
 
-.submitButtonBox {
-  padding: 1rem;
-  text-align: end;
-}
-
 .idBox {
   margin-top: 1rem;
   display: flex;
@@ -141,8 +136,8 @@ button.prevButton {
 }
 
 button.nextButton {
-  height: 36px;
-  padding: 0 20px;
-  font-size: 14px;
-  border-radius: 4px;
+  height: 50px;
+  // padding: 0 20px;
+  font-size: 18px;
+  border-radius: 12px;
 }

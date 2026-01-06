@@ -1,114 +1,64 @@
 .container {
   padding: 1.5rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   min-height: calc(100vh - 4rem);
   position: relative;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-
-  .title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-}
-
 // 폼 스타일 (crew-conclude용)
 .formSection {
-  background: white;
+  background: #fafafa;
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #ededed;
 
   .formField {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.7rem;
 
     &:last-child {
       margin-bottom: 0;
     }
   }
 
-  .inputLabel {
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
   .infoRow {
     margin-bottom: 1rem;
 
     .label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       span {
-        margin-left: 0.5rem;
+        color: #666;
+        font-weight: 500;
+        font-size: 14px;
       }
-    }
-
-    .value {
     }
   }
 
   .inputWrapper {
-    --left-section-size: 40px;
     position: relative;
-  }
-
-  .input {
-    padding-left: 40px !important;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    &:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-  }
-
-  .inputLabel {
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 0.5rem;
-    display: block;
   }
 }
 
-.submitButton {
-  width: 100%;
-  height: 3rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  border: none;
-  transition: all 0.2s ease;
+.label {
+  font-size: 12px;
+  color: #333333;
+}
 
-  &:hover {
-    background: linear-gradient(135deg, #1d4ed8, #1e40af);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-  }
+.input {
+  border-radius: 8px;
+  border: 1px solid #ededed;
 
-  &:disabled {
-    background: #9ca3af;
-    transform: none;
-    box-shadow: none;
+  &::placeholder {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 300;
   }
 }
 
 .buttonBox {
   display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding: 0 1rem;
+  margin-top: 1rem;
 }
 
 .loadingOverlay {
@@ -123,4 +73,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
+}
+
+.siteNm {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
 }

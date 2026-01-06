@@ -10,6 +10,7 @@ import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useRouter } from "next/router";
 import { AnimatePresence } from "motion/react";
+import CustomButton from "@/components/common/custom-button";
 
 interface Props {
   session: Session;
@@ -78,12 +79,17 @@ export default function InfoEditForm({ session, userData }: Props) {
   return (
     <>
       <div className={css.formBox}>
-        <h2 className={css.title}>주소 변경</h2>
         <Controller
           control={form.control}
           name="zipCd"
           render={({ field }) => (
-            <TextInput {...field} label="우편번호" onFocus={openPostCode} required />
+            <TextInput
+              {...field}
+              label="우편번호"
+              onFocus={openPostCode}
+              required
+              classNames={{ label: css.label, input: css.input }}
+            />
           )}
         />
 
@@ -91,21 +97,34 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="addr"
           render={({ field }) => (
-            <TextInput {...field} label="주소" onFocus={openPostCode} required />
+            <TextInput
+              {...field}
+              label="주소"
+              onFocus={openPostCode}
+              required
+              classNames={{ label: css.label, input: css.input }}
+            />
           )}
         />
 
         <Controller
           control={form.control}
           name="addrDtil"
-          render={({ field }) => <TextInput {...field} label="상세주소" required />}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              label="상세주소"
+              required
+              classNames={{ label: css.label, input: css.input }}
+            />
+          )}
         />
       </div>
 
       <div className={css.submitButtonBox}>
-        <Button variant="filled" type="button" onClick={onSubmit} disabled={mutation.isPending}>
-          수정
-        </Button>
+        <CustomButton type="button" onClick={onSubmit} disabled={mutation.isPending} fullWidth>
+          완료
+        </CustomButton>
       </div>
 
       <AnimatePresence>

@@ -1,15 +1,4 @@
-import { Button, LoadingOverlay } from "@mantine/core";
-import {
-  Building,
-  MapPin,
-  Calendar,
-  DollarSign,
-  Shield,
-  User,
-  X,
-  Check,
-  Briefcase,
-} from "lucide-react";
+import { LoadingOverlay } from "@mantine/core";
 import css from "./leader-conclude.module.scss";
 import { sendMessageToDevice } from "@/hooks/use-device-api";
 import { SignatureCanvas } from "./signature-canvas";
@@ -19,7 +8,17 @@ import { DEVICE_API } from "@/types/common";
 import dayjs from "@/libraries/dayjs";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { useMemo } from "react";
-
+import Paper from "/public/assets/svg/paper-outline.svg";
+import MoneyIcon from "/public/assets/svg/money.svg";
+import BriefcaseIcon from "/public/assets/svg/briefcase.svg";
+import ShieldIcon from "/public/assets/svg/shield.svg";
+import CalendarIcon from "/public/assets/svg/calendar.svg";
+import BuildingColor from "/public/assets/svg/building-color.svg";
+import TelephoneIcon from "/public/assets/svg/tel.svg";
+import BuildingIcon from "/public/assets/svg/building.svg";
+import MarkerIcon from "/public/assets/svg/marker.svg";
+import UserIcon from "/public/assets/svg/person.svg";
+import CustomButton from "../common/custom-button";
 interface Props {
   contractData: NonNullable<TWCM200201SSQ01Data>;
   session: Session;
@@ -78,13 +77,13 @@ export function LeaderConclude({ contractData, session }: Props) {
 
       <div className={css.infoSection}>
         <div className={css.sectionTitle}>
-          <Calendar size={20} />
+          <Paper />
           계약 상세 정보
         </div>
         <div className={`${css.infoCard} ${css.contractInfo}`}>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <DollarSign size={16} />
+              <MoneyIcon />
               수당
             </span>
             <span className={`${css.value} ${css.price}`}>
@@ -93,14 +92,14 @@ export function LeaderConclude({ contractData, session }: Props) {
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Briefcase size={16} />
+              <BriefcaseIcon />
               직종
             </span>
             <span className={css.value}>{instCdMap.get(contractData.instCd)?.instNm || "N/A"}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Shield size={16} />
+              <ShieldIcon />
               보험여부
             </span>
             <span className={`${css.value} ${css.insurance}`}>
@@ -109,7 +108,7 @@ export function LeaderConclude({ contractData, session }: Props) {
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Calendar size={16} />
+              <CalendarIcon />
               계약시작일
             </span>
             <span className={`${css.value} ${css.date}`}>
@@ -118,7 +117,7 @@ export function LeaderConclude({ contractData, session }: Props) {
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Calendar size={16} />
+              <CalendarIcon />
               계약종료일
             </span>
             <span className={`${css.value} ${css.date}`}>
@@ -130,13 +129,13 @@ export function LeaderConclude({ contractData, session }: Props) {
 
       <div className={css.infoSection}>
         <div className={css.sectionTitle}>
-          <Building size={20} />
+          <BuildingColor />
           회사 및 현장 정보
         </div>
         <div className={css.infoCard}>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Building size={16} />
+              <BuildingIcon />
               회사명
             </span>
             <span className={css.value}>{contractData.corpNm}</span>
@@ -150,46 +149,41 @@ export function LeaderConclude({ contractData, session }: Props) {
           </div> */}
           <div className={css.infoRow}>
             <span className={css.label}>
-              <Building size={16} />
+              <TelephoneIcon />
               전화번호
             </span>
             <span className={css.value}>{contractData.telNo}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <MapPin size={16} />
+              <MarkerIcon />
               현장명
             </span>
             <span className={css.value}>{contractData.siteNm}</span>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <MapPin size={16} />
+              <MarkerIcon />
               현장 주소
             </span>
-            <span className={css.value}>{contractData.siteAddr}</span>
-            <span className={css.value}>{contractData.siteAddrDtil}</span>
+            <div className={css.addressBox}>
+              <span className={css.address}>{contractData.siteAddr}</span>
+              <span className={css.address}>{contractData.siteAddrDtil}</span>
+            </div>
           </div>
           <div className={css.infoRow}>
             <span className={css.label}>
-              <MapPin size={16} />
+              <TelephoneIcon />
               현장 전화번호
             </span>
             <span className={css.value}>{contractData.siteTelNo}</span>
           </div>
-          {/* <div className={css.infoRow}>
-            <span className={css.label}>
-              <MapPin size={16} />
-              현장코드
-            </span>
-            <span className={css.value}>{contractData.corpCd}</span>
-          </div> */}
         </div>
       </div>
 
       <div className={css.recipientSection}>
         <div className={css.recipientLabel}>
-          <User size={16} />
+          <UserIcon />
           계약 수령인
         </div>
         <div className={css.recipientValue}>이름 : {contractData.userNm}</div>
@@ -216,24 +210,19 @@ export function LeaderConclude({ contractData, session }: Props) {
       {contractData.cntrStatTp === "REQ" && (
         // 접수 상태일때만 버튼을 화면에 노출
         <div className={css.buttonBox}>
-          <Button
+          <CustomButton
             onClick={onClick("REJ")}
-            classNames={{ root: css.button }}
-            loading={TCM200201SSP01.isPending}
-            leftSection={<X size={20} />}
-            disabled={contractData.cntrStatTp !== "REQ"}
+            disabled={contractData.cntrStatTp !== "REQ" || TCM200201SSP01.isPending}
+            variant="deny"
           >
             반려
-          </Button>
-          <Button
+          </CustomButton>
+          <CustomButton
             onClick={onClick("APL")}
-            classNames={{ root: css.button }}
-            loading={TCM200201SSP01.isPending}
-            leftSection={<Check size={20} />}
-            disabled={contractData.cntrStatTp !== "REQ"}
+            disabled={contractData.cntrStatTp !== "REQ" || TCM200201SSP01.isPending}
           >
             승인
-          </Button>
+          </CustomButton>
         </div>
       )}
 

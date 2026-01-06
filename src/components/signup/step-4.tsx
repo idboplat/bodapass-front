@@ -152,21 +152,9 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
         />
       </div>
 
-      <div className={css.submitButtonBox}>
-        <OutlineButton type="button" onClick={onClickPrev} className={css.prevButton}>
-          이전
-        </OutlineButton>
-        {/* <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
-          이전
-        </Button> */}
-        <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
-          {isLastStep ? "제출" : "다음"}
-        </CustomButton>
-
-        {/* <Button variant="filled" type="button" onClick={onClickNext}>
-          {isLastStep ? "제출" : "다음"}
-        </Button> */}
-      </div>
+      <CustomButton type="button" onClick={onClickNext} className={css.nextButton} fullWidth>
+        인증하기
+      </CustomButton>
     </>
   );
 }

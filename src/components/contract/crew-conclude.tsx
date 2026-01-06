@@ -14,6 +14,12 @@ import { DatePickerInput } from "@mantine/dates";
 import { useTCW000100SMQ02 } from "@/hooks/tms/use-master";
 import { addComma } from "@/utils/regexp";
 import { roundDecimal } from "@/utils/number-formatter";
+import MarkerIcon from "/public/assets/svg/marker.svg";
+import MoneyIcon from "/public/assets/svg/money.svg";
+import CalendarIcon from "/public/assets/svg/calendar.svg";
+import CustomCheckbox from "../common/custom-checkbox";
+import CustomButton from "../common/custom-button";
+import CustomSelect from "../common/custom-select";
 
 const crewConcludeDto = z.object({
   instCd: z.string().min(1),
@@ -105,17 +111,13 @@ export default function CrewConclude({ session, contractData }: Props) {
 
   return (
     <div className={css.container}>
-      <div className={css.header}>
-        <div className={css.title}>현장 근무 조건</div>
-      </div>
-
       <div className={css.formSection}>
         <div className={css.infoRow}>
           <div className={css.label}>
-            <MapPin size={16} />
+            <MarkerIcon />
             <span>현장명</span>
           </div>
-          <div className={css.value}>{contractData.siteNm}</div>
+          <div className={css.siteNm}>{contractData.siteNm}</div>
         </div>
 
         <div className={css.formField}>
@@ -123,15 +125,20 @@ export default function CrewConclude({ session, contractData }: Props) {
             control={form.control}
             name="instCd"
             render={({ field, fieldState }) => (
-              <Select
+              <CustomSelect
                 {...form.register("instCd")}
                 label="직종"
                 searchable
+                required
                 data={instData?.map((d) => ({ value: d.instCd, label: d.instNm }))}
                 allowDeselect={false}
                 onChange={(value) => form.setValue("instCd", value || "")}
                 value={form.getValues("instCd")}
                 styles={{
+                  label: {
+                    fontSize: "12px",
+                    color: "#333333",
+                  },
                   dropdown: {
                     maxHeight: 250,
                     overflow: "auto",
@@ -158,7 +165,7 @@ export default function CrewConclude({ session, contractData }: Props) {
                   label="수당"
                   classNames={{
                     wrapper: css.inputWrapper,
-                    label: css.inputLabel,
+                    label: css.label,
                     input: css.input,
                   }}
                   onFocus={() => {
@@ -170,11 +177,7 @@ export default function CrewConclude({ session, contractData }: Props) {
                   }}
                   placeholder="수당을 입력하세요"
                   error={fieldState.error?.message}
-                  leftSection={
-                    <div>
-                      <DollarSign size={16} />
-                    </div>
-                  }
+                  leftSection={<MoneyIcon />}
                   required
                 />
               </div>
@@ -200,21 +203,10 @@ export default function CrewConclude({ session, contractData }: Props) {
                 allowSingleDateInRange
                 firstDayOfWeek={0}
                 labelSeparator="~"
-                leftSection={<Calendar size={16} />}
-                styles={{
-                  input: {
-                    borderRadius: "8px",
-                    border: "1px solid #d1d5db",
-                    "&:focus": {
-                      borderColor: "#3b82f6",
-                      boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
-                    },
-                  },
-                  label: {
-                    fontWeight: 500,
-                    color: "#374151",
-                    marginBottom: "0.5rem",
-                  },
+                leftSection={<CalendarIcon />}
+                classNames={{
+                  label: css.label,
+                  input: css.input,
                 }}
               />
             )}
@@ -227,7 +219,7 @@ export default function CrewConclude({ session, contractData }: Props) {
             name="insYn"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <Checkbox
+                <CustomCheckbox
                   {...field}
                   label="보험 여부"
                   type="checkbox"
@@ -247,7 +239,7 @@ export default function CrewConclude({ session, contractData }: Props) {
             name="subMngrYn"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <Checkbox
+                <CustomCheckbox
                   {...field}
                   label="팀장 권한 부여"
                   type="checkbox"
@@ -281,15 +273,9 @@ export default function CrewConclude({ session, contractData }: Props) {
       </div> */}
 
       <div className={css.buttonBox}>
-        <Button
-          type="button"
-          onClick={onSubmit}
-          loading={mutation.isPending}
-          classNames={{ root: css.submitButton }}
-          leftSection={<Send size={20} />}
-        >
-          확인
-        </Button>
+        <CustomButton type="button" onClick={onSubmit} disabled={mutation.isPending} fullWidth>
+          계약 제출
+        </CustomButton>
       </div>
 
       {mutation.isPending && (

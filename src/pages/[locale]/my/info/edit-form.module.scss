@@ -16,3 +16,26 @@
     font-weight: 600;
     color: #1e293b;
 }
+
+.label {
+    font-size: 12px;
+    color: #333333;
+}
+
+.input {
+    border-radius: 8px;
+    border: 1px solid #ededed;
+
+    &::placeholder {
+        color: #999999;
+        font-size: 12px;
+        font-weight: 300;
+    }
+
+    // PasswordInput 내부 input 요소의 placeholder
+    input::placeholder {
+        color: #999999;
+        font-size: 12px;
+        font-weight: 300;
+    }
+}
