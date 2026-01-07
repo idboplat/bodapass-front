@@ -75,7 +75,6 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
         <CustomInput
           {...form.register("bankAccountNo")}
           label="계좌번호"
-          mt="1rem"
           required
           classNames={{ label: css.label, input: css.input, required: css.required }}
         />
