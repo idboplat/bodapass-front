@@ -1,97 +1,103 @@
 .container {
   padding: 1rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: #fafafa;
   min-height: calc(100vh - 4rem);
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
-  h1 {
-    color: #1e293b;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .subtitle {
-    color: #64748b;
-    font-size: 0.9rem;
+  .title {
+    color: #999;
+    font-size: 1.2rem;
+    font-weight: 400;
   }
 }
 
 .companyInfo {
-  background: white;
+  background: #fff;
   border-radius: 12px;
   padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+  border: 1px solid #ededed;
   text-align: center;
+  font-weight: 500;
+  color: #333;
+  font-size: 1.2rem;
 
   .companyName {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #1e293b;
     margin-bottom: 0.5rem;
   }
 
   .companyDescription {
-    color: #64748b;
-    font-size: 0.9rem;
+    // font-size: 0.9rem;
   }
 }
 
 .privacyContent {
-  background: white;
+  background: #fff;
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #ededed;
 
   .contentTitle {
     font-size: 1.1rem;
-    font-weight: 600;
-    color: #1e293b;
+    font-weight: 500;
+    color: #666;
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-
-    &::before {
-      content: "📋";
-      font-size: 1.2rem;
-    }
   }
 
   .privacyText {
-    color: #374151;
-    line-height: 1.6;
+    color: #666;
     font-size: 0.9rem;
     white-space: pre-line;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .numberTitle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+  }
+
+  > div > .numberTitle:first-of-type {
+    margin-bottom: 1rem;
+  }
+
+  .numberItem {
+    margin-bottom: 0.5rem;
+  }
+
+  .numberText {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #666;
   }
 
   .highlightBox {
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
-    border-radius: 8px;
+    border: 1px solid #febc2f;
+    border-radius: 12px;
     padding: 1rem;
     margin: 1rem 0;
 
     .highlightTitle {
-      font-weight: 600;
-      color: #92400e;
+      font-weight: 400;
+      color: #febc2f;
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
     }
 
     .highlightText {
-      color: #92400e;
+      color: #666;
       font-size: 0.85rem;
       line-height: 1.5;
+      font-weight: 300;
     }
   }
 }
@@ -100,9 +106,8 @@
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  margin: 2rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
+  margin: 1rem 0;
+  border: 1px solid #ededed;
 
   .agreementTitle {
     font-size: 1.1rem;
@@ -112,89 +117,22 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-
-    &::before {
-      content: "✅";
-      font-size: 1.2rem;
-    }
   }
 
   .checkboxContainer {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: #f8fafc;
-    border-radius: 8px;
-    border: 2px solid #e2e8f0;
-    transition: all 0.2s ease;
-
-    &.checked {
-      border-color: #3b82f6;
-      background: #eff6ff;
-    }
-
-    :global(.mantine-Checkbox-root) {
-      margin: 0;
-      flex-shrink: 0;
-    }
-
-    :global(.mantine-Checkbox-label) {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #1e293b;
-      line-height: 1.4;
-    }
+    margin-left: 1rem;
   }
 }
 
 .buttonSection {
   display: flex;
-  gap: 1rem;
-  padding: 1.5rem 0;
-  justify-content: center;
-  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-direction: row;
+  align-items: center;
 
-  @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.button {
-  border-radius: 12px;
-
-  &.primary {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    color: white;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, #1d4ed8, #1e40af);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-    }
-  }
-
-  &.secondary {
-    background: white;
-    color: #64748b;
-    border: 2px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-    &:hover:not(:disabled) {
-      background: #f8fafc;
-      border-color: #cbd5e1;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-  }
-
-  &:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    border-color: #d1d5db;
+  :global(button) {
+    white-space: nowrap;
   }
 }
 
