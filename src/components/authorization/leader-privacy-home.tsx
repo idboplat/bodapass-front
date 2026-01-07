@@ -59,7 +59,18 @@ export default function LeaderPrivacyHome() {
       return;
     }
 
-    TCW000001SSP04.mutate({ session, userId }, { onSuccess: end });
+    TCW000001SSP04.mutate(
+      { session, userId },
+      {
+        onSuccess: () => {
+          if (next === "true") {
+            router.push(`/${locale}/authorization/leader/complete?next=true`);
+          } else if (next === "webview") {
+            router.back();
+          }
+        },
+      },
+    );
   };
 
   if (WCM200801SSQ01.isPending || TCM200801SSQ02.isPending) {
