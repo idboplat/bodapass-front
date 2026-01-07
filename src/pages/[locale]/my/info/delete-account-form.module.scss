@@ -4,7 +4,8 @@
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    // background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: #f7fbff;
 }
 
 .content {
@@ -19,80 +20,56 @@
 .warningBox {
     padding: 2.5rem 2rem;
     text-align: center;
-    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
-    border-bottom: 1px solid #fee2e2;
-}
-
-.warningIcon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    line-height: 1;
+    background: #f9f9f9;
 }
 
 .title {
     font-size: 1.2em;
-    font-weight: 700;
-    color: #dc2626;
+    font-weight: 500;
+    color: #ff5f57;
     margin: 0 0 1rem 0;
 }
 
 .warningText {
     font-size: 0.95rem;
-    color: #7f1d1d;
+    color: #333;
+    font-weight: 500;
     line-height: 1.6;
     margin: 0;
 }
 
 .formBox {
     padding: 2rem;
+}
 
-    :global(.app-TextInput-root) {
-        margin-top: 0;
+.input {
+    border-radius: 8px;
+    border: 1px solid #ededed;
+
+    &::placeholder {
+        color: #999999;
+        font-size: 12px;
+        font-weight: 300;
     }
 
-    :global(.mantine-TextInput-label) {
-        font-weight: 600;
-        color: #374151;
-        margin-bottom: 0.5rem;
+    // PasswordInput 내부 input 요소의 placeholder
+    input::placeholder {
+        color: #999999;
+        font-size: 12px;
+        font-weight: 300;
     }
+}
 
-    :global(.mantine-TextInput-input) {
-        border-radius: 8px;
-        border: 1px solid #e5e7eb;
-        padding: 0.75rem 1rem;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
-
-        &:focus {
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-    }
+.label {
+    font-size: 12px;
+    color: #333333;
 }
 
 .buttonBox {
-    padding: 0 2rem 2rem 2rem;
+    background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
 }
 
 .deleteButton {
-    width: 100%;
-    height: 48px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    transition: all 0.2s ease;
-
-    &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-
-    &:active:not(:disabled) {
-        transform: translateY(0);
-    }
-
     &:disabled {
         opacity: 0.5;
         cursor: not-allowed;

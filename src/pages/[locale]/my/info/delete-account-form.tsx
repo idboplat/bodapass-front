@@ -1,10 +1,13 @@
 import { TWCM200801SSQ01Data, useTCM200801SSP02 } from "@/hooks/tms/use-worker";
 import { Button, LoadingOverlay, TextInput } from "@mantine/core";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import css from "./delete-account-form.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useRouter } from "next/router";
+import WarningIcon from "/public/assets/svg/warning.svg";
+import CustomButton from "@/components/common/custom-button";
+import { CustomInput, CustomInputPassword } from "@/components/common/custom-input";
 
 interface Props {
   session: Session;
@@ -21,13 +24,18 @@ export default function DeleteAccountForm({ session }: Props) {
   });
 
   const mutation = useTCM200801SSP02();
+  const password = useWatch({
+    control: form.control,
+    name: "password",
+  });
+
   const onSubmit = async () => {
     if (mutation.isPending) return;
 
     mutation.mutate(
       {
         session: session,
-        password: form.watch("password"),
+        password: password,
       },
       {
         onSuccess: () => {
@@ -50,8 +58,8 @@ export default function DeleteAccountForm({ session }: Props) {
     <div className={css.container}>
       <div className={css.content}>
         <div className={css.warningBox}>
-          <div className={css.warningIcon}>⚠️</div>
-          <h2 className={css.title}>회원 탈퇴</h2>
+          <WarningIcon />
+          <h2 className={css.title}>회원탈퇴</h2>
           <p className={css.warningText}>
             일당백 회원탈퇴를 하시겠습니까?
             <br />
@@ -66,27 +74,28 @@ export default function DeleteAccountForm({ session }: Props) {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <TextInput
+              <CustomInputPassword
                 {...field}
                 label="비밀번호 확인"
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
                 required
+                classNames={{ label: css.label, input: css.input }}
               />
             )}
           />
         </div>
 
         <div className={css.buttonBox}>
-          <Button
-            variant="filled"
+          <CustomButton
             type="button"
             onClick={onSubmit}
-            disabled={mutation.isPending || !form.watch("password")}
-            className={css.deleteButton}
+            disabled={mutation.isPending || !password}
+            style={{ borderRadius: "0px" }}
+            fullWidth
           >
-            회원 탈퇴
-          </Button>
+            확인
+          </CustomButton>
         </div>
       </div>
 
