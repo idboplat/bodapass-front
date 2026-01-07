@@ -82,7 +82,7 @@ export default function SigninForm() {
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>
-        <CustomButton fullWidth type="submit">
+        <CustomButton fullWidth type="submit" style={{ borderRadius: "12px" }}>
           로그인
         </CustomButton>
       </Box>
