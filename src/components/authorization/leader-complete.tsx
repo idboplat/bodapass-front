@@ -3,12 +3,12 @@ import { useSession } from "@/libraries/auth/use-session";
 import { DEVICE_API } from "@/types/common";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import css from "./crew-complete.module.scss";
+import css from "./leader-complete.module.scss";
 import CompletedIcon from "/public/assets/svg/completed-check.svg";
 import CustomButton from "../common/custom-button";
 import CrewAllWhiteIcon from "/public/assets/svg/crew-all-white.svg";
 
-export default function CrewComplete() {
+export default function LeaderComplete() {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
 
@@ -18,7 +18,7 @@ export default function CrewComplete() {
   const end = () => {
     if (!!window.ReactNativeWebView) {
       sendMessageToDevice({
-        type: DEVICE_API.crewAuthorizationEnd,
+        type: DEVICE_API.leaderAuthorizationEnd,
         payload: null,
       });
     } else {
