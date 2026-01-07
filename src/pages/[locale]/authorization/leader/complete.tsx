@@ -1,11 +1,9 @@
-import CrewComplete from "@/components/authorization/crew-complete";
-import CrewPrivacyHome from "@/components/authorization/crew-privacy-home";
 import LeaderComplete from "@/components/authorization/leader-complete";
 import { Authorized } from "@/libraries/auth/authorized";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-export default function CrewCompletePage() {
+export default function LeaderCompletePage() {
   const router = useRouter();
 
   return (
