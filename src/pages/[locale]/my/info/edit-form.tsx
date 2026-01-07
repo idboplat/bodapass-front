@@ -11,6 +11,7 @@ import { DEVICE_API } from "@/types/common";
 import { useRouter } from "next/router";
 import { AnimatePresence } from "motion/react";
 import CustomButton from "@/components/common/custom-button";
+import { CustomInput } from "@/components/common/custom-input";
 
 interface Props {
   session: Session;
@@ -83,7 +84,7 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="zipCd"
           render={({ field }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="우편번호"
               onFocus={openPostCode}
@@ -97,7 +98,7 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="addr"
           render={({ field }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="주소"
               onFocus={openPostCode}
@@ -111,7 +112,7 @@ export default function InfoEditForm({ session, userData }: Props) {
           control={form.control}
           name="addrDtil"
           render={({ field }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="상세주소"
               required

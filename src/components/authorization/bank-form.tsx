@@ -7,6 +7,7 @@ import { TBankForm } from "./dto";
 import { useTCW000100SMQ01 } from "@/hooks/tms/use-authorization";
 import CustomStep from "../common/custom-step";
 import CustomButton from "../common/custom-button";
+import { CustomInput } from "../common/custom-input";
 
 interface Props {
   bankImage: Blob;
@@ -71,7 +72,7 @@ export default function BankForm({ bankImage, onSubmit, isLoading, session }: Pr
           required
           classNames={{ label: css.label, input: css.input, required: css.required }}
         />
-        <TextInput
+        <CustomInput
           {...form.register("bankAccountNo")}
           label="계좌번호"
           mt="1rem"

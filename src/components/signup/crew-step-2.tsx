@@ -15,6 +15,7 @@ import CustomStep from "../common/custom-step";
 import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import { AnimatePresence } from "motion/react";
+import { CustomInput } from "../common/custom-input";
 
 export default function CrewStep2({
   session,
@@ -106,7 +107,7 @@ export default function CrewStep2({
         {/* 추후에 다시 필요할 수 도 있음 */}
         {/* <Select
         label="근로 구분"
-        mt="1rem"
+        
         value={wrkTp}
         data={[
           { value: "2", label: "팀원" },
@@ -120,10 +121,9 @@ export default function CrewStep2({
           control={form.control}
           name="userNm"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="이름"
-              mt={0}
               required
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
@@ -135,7 +135,7 @@ export default function CrewStep2({
           control={form.control}
           name="zipCd"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="우편번호"
               value={undefined}
@@ -147,7 +147,6 @@ export default function CrewStep2({
               required
               readOnly
               classNames={{ label: css.label, input: css.input }}
-              mt="1rem"
             />
           )}
         />
@@ -156,7 +155,7 @@ export default function CrewStep2({
           control={form.control}
           name="addr"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="주소"
               value={undefined}
@@ -168,7 +167,6 @@ export default function CrewStep2({
               readOnly
               required
               classNames={{ label: css.label, input: css.input }}
-              mt="1rem"
             />
           )}
         />
@@ -177,14 +175,13 @@ export default function CrewStep2({
           control={form.control}
           name="addrDtil"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="상세주소"
               required
               error={fieldState.error?.message}
               autoComplete="address-line2"
               classNames={{ label: css.label, input: css.input }}
-              mt="1rem"
             />
           )}
         />
@@ -199,7 +196,7 @@ export default function CrewStep2({
               control={form.control}
               name="tel1"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -214,7 +211,7 @@ export default function CrewStep2({
               control={form.control}
               name="tel2"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -229,7 +226,7 @@ export default function CrewStep2({
               control={form.control}
               name="tel3"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -254,11 +251,12 @@ export default function CrewStep2({
             control={form.control}
             name="emailAddr"
             render={({ field, fieldState }) => (
-              <TextInput
+              <CustomInput
                 {...field}
                 label="이메일"
-                mt="1rem"
-                onChange={(e) => onNoSpaceChange(e, field.onChange)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onNoSpaceChange(e, field.onChange)
+                }
                 inputMode="email"
                 autoComplete="email"
                 required

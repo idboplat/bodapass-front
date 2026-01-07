@@ -20,6 +20,7 @@ import CalendarIcon from "/public/assets/svg/calendar.svg";
 import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import CustomSelect from "../common/custom-select";
+import { CustomInput } from "../common/custom-input";
 
 const crewConcludeDto = z.object({
   instCd: z.string().min(1),
@@ -160,7 +161,7 @@ export default function CrewConclude({ session, contractData }: Props) {
             name="orderPrc"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <TextInput
+                <CustomInput
                   {...field}
                   label="수당"
                   classNames={{

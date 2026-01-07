@@ -15,6 +15,7 @@ import { z } from "zod";
 import { onNoSpaceChange } from "@/utils/input-handler";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { AnimatePresence } from "motion/react";
+import { CustomInput, CustomInputPassword } from "../common/custom-input";
 
 export default function RemoteCrewStep2({
   wrkTp,
@@ -155,14 +156,14 @@ export default function RemoteCrewStep2({
     <>
       <div>
         {wrkTp === "2" && (
-          <TextInput
+          <CustomInput
             classNames={{ wrapper: css.brokerInput }}
             mt={28}
             label="반장 아이디 (선택)"
             autoComplete="off"
             disabled={isValidateBrokerId}
             value={brkrIdValue}
-            onChange={(e) => setBrkrIdValue(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBrkrIdValue(e.target.value)}
             placeholder="반장 아이디를 입력해주세요."
             error={brkrIdError}
             rightSection={
@@ -183,14 +184,16 @@ export default function RemoteCrewStep2({
           control={form.control}
           name="exterUserId"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               mt={28}
               value={loginTp === "2" ? socialLoginId : field.value}
               label="아이디"
               autoComplete="off"
               type="text"
-              onChange={(e) => onNoSpaceChange(e, field.onChange)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onNoSpaceChange(e, field.onChange as (value: string) => void)
+              }
               error={fieldState.error?.message}
               required
               disabled={loginTp === "2"}
@@ -203,14 +206,14 @@ export default function RemoteCrewStep2({
             control={form.control}
             name="password"
             render={({ field, fieldState }) => (
-              <PasswordInput
+              <CustomInputPassword
                 {...field}
                 mt={28}
                 label="비밀번호"
                 autoComplete="off"
-                onChange={(e) => {
-                  const value = removeBlank(e.target.value);
-                  const valid = checkPassword(value);
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const cleanedValue = removeBlank(e.target.value);
+                  const valid = checkPassword(cleanedValue);
 
                   form.clearErrors(["password", "passwordConfirm"]);
 
@@ -221,11 +224,11 @@ export default function RemoteCrewStep2({
                     });
                   }
 
-                  if (valid && value !== form.getValues("passwordConfirm")) {
+                  if (valid && cleanedValue !== form.getValues("passwordConfirm")) {
                     form.setError("password", { message: "비밀번호가 일치하지 않습니다." });
                   }
 
-                  form.setValue("password", value);
+                  form.setValue("password", cleanedValue);
                 }}
                 error={fieldState.error?.message}
                 required
@@ -239,12 +242,12 @@ export default function RemoteCrewStep2({
             control={form.control}
             name="passwordConfirm"
             render={({ field, fieldState }) => (
-              <PasswordInput
+              <CustomInputPassword
                 {...field}
                 mt={28}
                 label="비밀번호 확인"
                 autoComplete="off"
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const value = removeBlank(e.target.value);
 
                   form.clearErrors(["password", "passwordConfirm"]);
@@ -266,7 +269,7 @@ export default function RemoteCrewStep2({
           control={form.control}
           name="zipCd"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="우편번호"
               value={undefined}
@@ -283,7 +286,7 @@ export default function RemoteCrewStep2({
           control={form.control}
           name="addr"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="주소"
               value={undefined}
@@ -300,7 +303,7 @@ export default function RemoteCrewStep2({
           control={form.control}
           name="addrDtil"
           render={({ field, fieldState }) => (
-            <TextInput {...field} label="상세주소" required error={fieldState.error?.message} />
+            <CustomInput {...field} label="상세주소" required error={fieldState.error?.message} />
           )}
         />
 
@@ -313,7 +316,7 @@ export default function RemoteCrewStep2({
               control={form.control}
               name="tel1"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -328,7 +331,7 @@ export default function RemoteCrewStep2({
               control={form.control}
               name="tel2"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -343,7 +346,7 @@ export default function RemoteCrewStep2({
               control={form.control}
               name="tel3"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
@@ -366,11 +369,13 @@ export default function RemoteCrewStep2({
             control={form.control}
             name="emailAddr"
             render={({ field, fieldState }) => (
-              <TextInput
+              <CustomInput
                 {...field}
                 label="이메일"
                 mt={28}
-                onChange={(e) => onNoSpaceChange(e, field.onChange)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onNoSpaceChange(e, field.onChange)
+                }
                 inputMode="email"
                 autoComplete="email"
                 required

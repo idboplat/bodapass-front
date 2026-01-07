@@ -29,6 +29,7 @@ import CustomButton from "../common/custom-button";
 import MoneyIcon from "/public/assets/svg/money.svg";
 import CalendarIcon from "/public/assets/svg/calendar.svg";
 import CustomSelect from "../common/custom-select";
+import { CustomInput } from "../common/custom-input";
 
 const workerUpdateDto = z.object({
   instCd: z.string().min(1),
@@ -210,7 +211,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             name="orderPrc"
             render={({ field, fieldState }) => (
               <div className={css.inputWrapper}>
-                <TextInput
+                <CustomInput
                   {...field}
                   label="수당"
                   classNames={{

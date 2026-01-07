@@ -10,6 +10,7 @@ import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import CustomStep from "../common/custom-step";
 import OutlineButton from "../common/outline-button";
 import CustomButton from "../common/custom-button";
+import { CustomInput } from "../common/custom-input";
 
 interface Props {
   idTp: TIdTp;
@@ -89,9 +90,10 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           control={form.control}
           name="userNm"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
+              value={field.value}
               defaultValue={field.value}
-              onChange={undefined}
+              onChange={() => {}}
               label="이름"
               mt={0}
               error={fieldState.error?.message}
@@ -108,7 +110,7 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
               control={form.control}
               name="idNo1"
               render={({ field }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   required
                   error={!!errors.idNo1?.message}
@@ -123,7 +125,7 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
               control={form.control}
               name="idNo2"
               render={({ field }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   required
                   error={!!errors.idNo2?.message}
@@ -140,13 +142,12 @@ export default function Step4({ idTp, onClickNext, onClickPrev, images, isLastSt
           control={form.control}
           name="isuDd"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="발급일자 (YYYYMMDD)"
               required
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
-              mt="1rem"
             />
           )}
         />

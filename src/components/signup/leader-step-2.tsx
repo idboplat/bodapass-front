@@ -17,6 +17,7 @@ import CustomButton from "../common/custom-button";
 import OutlineButton from "../common/outline-button";
 import CustomStep from "../common/custom-step";
 import { AnimatePresence } from "motion/react";
+import { CustomInput, CustomInputPassword } from "../common/custom-input";
 
 export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; locale: string }) {
   const router = useRouter();
@@ -104,14 +105,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           control={form.control}
           name="exterUserId"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
-              mt="1rem"
               value={loginTp === "2" ? socialLoginId : field.value}
               label="아이디"
-              autoComplete="off"
               type="text"
-              onChange={(e) => onNoSpaceChange(e, field.onChange)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => field.onChange(e.target.value)}
               error={fieldState.error?.message}
               required
               disabled={loginTp === "2"}
@@ -125,13 +124,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           control={form.control}
           name="userNm"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="이름"
               required
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
-              mt="1rem"
             />
           )}
         />
@@ -141,14 +139,13 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             control={form.control}
             name="password"
             render={({ field, fieldState }) => (
-              <PasswordInput
+              <CustomInputPassword
                 {...field}
-                mt="1rem"
                 label="비밀번호"
                 autoComplete="off"
-                onChange={(e) => {
-                  const value = removeBlank(e.target.value);
-                  const valid = checkPassword(value);
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const cleanedValue = removeBlank(e.target.value);
+                  const valid = checkPassword(cleanedValue);
 
                   form.clearErrors(["password", "passwordConfirm"]);
 
@@ -159,11 +156,11 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
                     });
                   }
 
-                  if (valid && value !== form.getValues("passwordConfirm")) {
+                  if (valid && cleanedValue !== form.getValues("passwordConfirm")) {
                     form.setError("password", { message: "비밀번호가 일치하지 않습니다." });
                   }
 
-                  form.setValue("password", value);
+                  form.setValue("password", cleanedValue);
                 }}
                 error={fieldState.error?.message}
                 required
@@ -179,21 +176,20 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             control={form.control}
             name="passwordConfirm"
             render={({ field, fieldState }) => (
-              <PasswordInput
+              <CustomInputPassword
                 {...field}
-                mt="1rem"
                 label="비밀번호 확인"
                 autoComplete="off"
-                onChange={(e) => {
-                  const value = removeBlank(e.target.value);
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const cleanedValue = removeBlank(e.target.value);
 
                   form.clearErrors(["password", "passwordConfirm"]);
 
-                  if (value !== form.getValues("password")) {
+                  if (cleanedValue !== form.getValues("password")) {
                     form.setError("passwordConfirm", { message: "비밀번호가 일치하지 않습니다." });
                   }
 
-                  form.setValue("passwordConfirm", value);
+                  form.setValue("passwordConfirm", cleanedValue);
                 }}
                 error={fieldState.error?.message}
                 required
@@ -208,12 +204,11 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           control={form.control}
           name="zipCd"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
-              mt="1rem"
               label="우편번호"
               value={undefined}
-              onChange={undefined}
+              onChange={() => {}}
               defaultValue={field.value}
               onFocus={openPostCode}
               autoComplete="off"
@@ -229,12 +224,11 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           control={form.control}
           name="addr"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
-              mt="1rem"
               label="주소"
               value={undefined}
-              onChange={undefined}
+              onChange={() => {}}
               defaultValue={field.value}
               onFocus={openPostCode}
               error={fieldState.error?.message}
@@ -250,9 +244,8 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
           control={form.control}
           name="addrDtil"
           render={({ field, fieldState }) => (
-            <TextInput
+            <CustomInput
               {...field}
-              mt="1rem"
               label="상세주소"
               required
               error={fieldState.error?.message}
@@ -261,25 +254,6 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             />
           )}
         />
-        {/* 
-        <Controller
-          control={form.control}
-          name="tel"
-          render={({ field, fieldState }) => (
-            <TextInput
-              {...field}
-              mt="1rem"
-              label="전화번호"
-              onChange={onTelChange}
-              placeholder="-를 제외하고 입력해주세요."
-              inputMode="numeric"
-              required
-              autoComplete="tel"
-              error={fieldState.error?.message}
-              classNames={{ label: css.label, input: css.input }}
-            />
-          )}
-        /> */}
 
         <div className={css.telContainer}>
           <label htmlFor="tel" className={css.telLabel}>
@@ -290,12 +264,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               control={form.control}
               name="tel1"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
                   autoComplete="tel1"
-                  error={fieldState.error?.message}
+                  // error={fieldState.error?.message}
                   classNames={{ label: css.label, input: css.input }}
                 />
               )}
@@ -305,12 +279,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               control={form.control}
               name="tel2"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
                   autoComplete="tel2"
-                  error={fieldState.error?.message}
+                  // error={fieldState.error?.message}
                   classNames={{ label: css.label, input: css.input }}
                 />
               )}
@@ -320,12 +294,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
               control={form.control}
               name="tel3"
               render={({ field, fieldState }) => (
-                <TextInput
+                <CustomInput
                   {...field}
                   inputMode="numeric"
                   required
                   autoComplete="tel3"
-                  error={fieldState.error?.message}
+                  // error={fieldState.error?.message}
                   classNames={{ label: css.label, input: css.input }}
                 />
               )}
@@ -345,11 +319,12 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
             control={form.control}
             name="emailAddr"
             render={({ field, fieldState }) => (
-              <TextInput
+              <CustomInput
                 {...field}
                 label="이메일"
-                mt="1rem"
-                onChange={(e) => onNoSpaceChange(e, field.onChange)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  field.onChange(removeBlank(e.target.value))
+                }
                 inputMode="email"
                 autoComplete="email"
                 required

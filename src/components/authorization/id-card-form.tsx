@@ -10,6 +10,7 @@ import PostCodeModal from "../common/modal/post-code-modal";
 import { replaceToTelNumber } from "@/utils/regexp";
 import { TScannedResult } from "@/libraries/auth/auth.dto";
 import { AnimatePresence } from "motion/react";
+import { CustomInput } from "../common/custom-input";
 
 interface Props {
   brkrId?: string;
@@ -75,13 +76,13 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
       <div className={css.imageBox}>{imageUrl && <Image src={imageUrl} alt="신분증" fill />}</div>
 
       <div className={css.formBox}>
-        <TextInput {...form.register("name")} label="이름" mt={0} />
+        <CustomInput {...form.register("name")} label="이름" mt={0} />
 
         <div className={css.idBox}>
           <label>주민등록번호</label>
           <div className={css.idInputBox}>
-            <TextInput {...form.register("id1")} />
-            <TextInput {...form.register("id2")} />
+            <CustomInput {...form.register("id1")} />
+            <CustomInput {...form.register("id2")} />
           </div>
         </div>
 
@@ -89,7 +90,7 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
           control={form.control}
           name="zipCd"
           render={({ field }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="우편번호"
               value={undefined}
@@ -104,7 +105,7 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
           control={form.control}
           name="addr"
           render={({ field }) => (
-            <TextInput
+            <CustomInput
               {...field}
               label="주소"
               value={undefined}
@@ -115,9 +116,9 @@ export default function IdCardForm({ scannedResult, onSubmit, brkrId, isLoading 
           )}
         />
 
-        <TextInput {...form.register("addrDtil")} label="상세주소" />
+        <CustomInput {...form.register("addrDtil")} label="상세주소" />
 
-        <TextInput
+        <CustomInput
           {...form.register("tel")}
           label="전화번호"
           onChange={onTelChange}
