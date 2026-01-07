@@ -48,7 +48,7 @@ export default function LeaderComplete() {
         >
           팀원 등록
         </CustomButton>
-        <CustomButton onClick={end} fullWidth leftIcon={<CrewAllWhiteIcon />}>
+        <CustomButton onClick={end} fullWidth>
           나중에 하기
         </CustomButton>
       </div>
