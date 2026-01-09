@@ -1,0 +1,143 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  flex-direction: column;
+  position: relative;
+  padding: 0 14px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  min-height: 640px;
+  padding: 20px 0;
+}
+
+.form {
+}
+
+.tab {
+  border: 1px solid #ededed;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  background-color: #ffffff;
+  overflow: hidden;
+  border: 1px solid #ededed;
+
+  > button {
+    background: none;
+    border: none;
+    flex: 1;
+    padding: 10px 20px;
+    position: relative;
+
+    > .active {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+      border-radius: 1px;
+    }
+  }
+
+  > button:disabled {
+    background-color: #fafafa;
+  }
+
+  > button:not(:last-of-type) {
+    border-right: 1px solid #ededed;
+  }
+}
+
+.tabBody {
+  background: #fafafa;
+  padding: 10px 10px 50px 10px;
+
+  > h3 {
+    text-align: center;
+    color: #666;
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+}
+
+.userInfoBox {
+  margin-top: 10px;
+  > div {
+    background-color: #ffffff;
+    border: 1px solid #ededed;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  > div:not(:last-of-type) {
+    border-bottom: none;
+  }
+
+  :global(.app-InputWrapper-root) {
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  > div > button {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    padding: 15px 0;
+    font-size: 0.875rem;
+    color: #333333;
+  }
+}
+
+.verificationCodeBox {
+  background: #fff;
+  border: 1px solid #ededed;
+  margin-top: 20px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+  > :global(.app-InputWrapper-root) {
+    flex: 1;
+    margin: 0 10px;
+
+    :global(.app-Input-input) {
+      color: #333;
+      background-color: #fff;
+    }
+  }
+}
+
+.verificationCodeBox.disabled {
+  background: #ededed;
+
+  > :global(.app-InputWrapper-root) :global(.app-Input-input):disabled {
+    color: #999999;
+    background-color: #ededed;
+  }
+}
+
+.verificationCodeButtonBox {
+  background: #ffffff;
+  border: 1px solid #ededed;
+  margin-top: 30px;
+  height: 50px;
+
+  > button {
+    background: #b9c1c9;
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+}

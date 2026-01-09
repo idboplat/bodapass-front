@@ -88,8 +88,8 @@ export default function SigninForm() {
       </Box>
 
       <Box className={css.findLink}>
-        {/* <Link href={`/${locale}/find-id`}>아이디 찾기</Link> |
-        <Link href={`/${locale}/find-password`}>비밀번호 찾기</Link> | */}
+        <Link href={`/${locale}/find-id`}>아이디 찾기</Link> |
+        <Link href={`/${locale}/find-pw`}>비밀번호 찾기</Link> |
         <Link href={`/${locale}/signup`}>회원가입</Link>
       </Box>
 
