@@ -61,7 +61,7 @@ export interface CallTmsArg {
   /** instanceOf를 통해 분기처리 가능 */
   ignore?: boolean;
   signal?: AbortSignal;
-  csvDown?: boolean;
+  zipYn?: boolean;
 }
 
 export interface CallWasArg extends CallTmsArg {
@@ -92,7 +92,7 @@ export const genarateBody = (args: {
   session: Session | null;
   pgSn?: number;
   data: any[];
-  csvDown?: boolean;
+  zipYn?: boolean;
 }) => {
   /** YYYYMMDDHHmmssSSS */
   const currentTime = dayjs().utc().format("YYYYMMDDHHmmssSSS");
@@ -105,7 +105,7 @@ export const genarateBody = (args: {
     svcRqstPageSize: args.pgSize ?? 15, //default 15
     svcRqstPageSn: args.pgSn || 1,
     svcRqstData: [argumentCustom(args.data)], // svcRqstData 배열 초기화
-    svcCsvDownYn: args.csvDown || false,
+    svcZipYn: args.zipYn || false,
   };
 
   const apiBody = {
@@ -153,7 +153,7 @@ export const callTms = async <T extends RspnData<any>>(args: CallTmsArg) => {
       session: args.session,
       data: args.data,
       pgSn: args.pgSn,
-      csvDown: args.csvDown,
+      zipYn: args.zipYn,
     }),
   );
 
@@ -219,7 +219,7 @@ export const callWas = async <T extends RspnData<any>>(args: CallWasArg) => {
       session: args.session,
       data: args.data,
       pgSn: args.pgSn,
-      csvDown: args.csvDown,
+      zipYn: args.zipYn,
     }),
   );
 
