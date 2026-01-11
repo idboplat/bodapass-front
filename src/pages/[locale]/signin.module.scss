@@ -47,11 +47,10 @@
 
 .kakaoSigninButton {
   &:hover {
-    transform: translateY(-2px);
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translateY(1px);
   }
 
   svg {

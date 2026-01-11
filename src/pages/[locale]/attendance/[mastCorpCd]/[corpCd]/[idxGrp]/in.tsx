@@ -63,15 +63,19 @@ export default function Capture() {
   if (siteCoorX === "" || siteCoorY === "") {
     return (
       <div className={"mobileLayout"}>
-        <div>위치정보 가져오는중...</div>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexDirection: "column",
+            width: "100%",
+            height: "100%",
+            paddingBottom: "5rem",
           }}
         >
           <Loader size="lg" />
+          <div style={{ marginTop: "1rem", color: "#666" }}>위치정보 가져오는중...</div>
         </div>
       </div>
     );

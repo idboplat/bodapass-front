@@ -1,113 +1,110 @@
 .nightModeModal {
-    // 배경 오버레이를 더 어둡게
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-    }
+  // 배경 오버레이를 더 어둡게
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
 }
 
 .nightModeModalInner {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(255, 215, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .nightModeTitle {
-    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ff8c00 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 50%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  letter-spacing: 0.5px;
 }
 
 .nightModeBody {
-    color: #e0e0e0;
+  color: #e0e0e0;
 
-    p {
-        color: #b0b0b0;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-    }
+  p {
+    color: #b0b0b0;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 .nightModeTextarea {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: #fff;
-    border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: #fff;
+  border-radius: 8px;
 
-    &:focus {
-        border-color: rgba(255, 215, 0, 0.6);
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-    }
+  &:focus {
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  }
 
-    &::placeholder {
-        color: rgba(255, 255, 255, 0.4);
-    }
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 .nightModeConfirmButton {
-    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
-    color: #000;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 
-    &:hover {
-        background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
-        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-        transform: translateY(-2px);
-    }
+  &:hover {
+    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+  }
 
-    &:active {
-        transform: translateY(0);
-    }
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 .nightModeCloseButton {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 
-    &:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 0.3);
-    }
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .bottomSection {
-    margin-top: auto;
-    padding-bottom: 2rem;
+  margin-top: auto;
+  padding-bottom: 2rem;
 }
 
 .buttonContainer {
-    padding: 0.7rem;
+  padding: 0.7rem;
 }
 
 .attendanceInfo {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    align-items: center;
-    padding-top: 0.7rem;
-    font-size: 14px;
-    color: #999;
-    line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+  padding-top: 0.7rem;
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
 }

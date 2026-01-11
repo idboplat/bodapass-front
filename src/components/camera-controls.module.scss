@@ -1,53 +1,52 @@
 .controls {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.7rem;
 }
 
 .captureButton {
-    flex: 1;
-    padding: 0 0.3rem !important;
+  flex: 1;
+  padding: 0 0.3rem !important;
 
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 
-    &:hover {
-        transform: translateY(-2px);
-    }
+  &:hover {
+  }
 
-    &:active {
-        transform: translateY(0);
-    }
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
 
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 2rem;
-    color: #666;
-    font-weight: 500;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2rem;
+  color: #666;
+  font-weight: 500;
 }
 
 .spinner {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #00ae6a;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #00ae6a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

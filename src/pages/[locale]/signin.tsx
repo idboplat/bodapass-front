@@ -1,14 +1,15 @@
 import SigninForm from "@/components/signin/signin-form";
 import css from "./signin.module.scss";
 import { useTranslation } from "next-i18next";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { UnstyledButton } from "@mantine/core";
+import { LoadingOverlay, UnstyledButton } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import { KAKAO_REDIRECT_URI } from "@/constants";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18nConfig from "/next-i18next.config";
 import KakaoIcon from "/public/assets/svg/kakao-icon.svg";
+import { useEmailLoginMutation } from "@/hooks/tms/use-auth";
+import { TSignInDto } from "@/libraries/auth/auth.dto";
 
 type Props = {
   kakaoSignInUrl: string;
@@ -19,6 +20,29 @@ export default function Page({ kakaoSignInUrl }: Props) {
   const { t } = useTranslation();
 
   const locale = router.query.locale?.toString() || "ko";
+
+  const { isLoading, mutation } = useEmailLoginMutation();
+
+  const submit = (data: TSignInDto) => {
+    // nativeLogger(JSON.stringify(form.formState, null, 2));
+    if (mutation.isPending) return;
+
+    const trimmedExternalId = data.externalId.trim();
+    const trimmedPassword = data.password.trim();
+
+    if (!trimmedExternalId) {
+      throw new Error("아이디를 입력해주세요.");
+    }
+
+    if (!trimmedPassword) {
+      throw new Error("비밀번호를 입력해주세요.");
+    }
+
+    mutation.mutate({
+      externalId: trimmedExternalId,
+      password: trimmedPassword,
+    });
+  };
 
   return (
     <div className={"mobileLayout"}>
@@ -32,7 +56,7 @@ export default function Page({ kakaoSignInUrl }: Props) {
             </p>
           </div>
 
-          <SigninForm />
+          <SigninForm onSubmit={submit} isLoading={isLoading} />
 
           <div className={css.divider}>
             <span>간편 로그인</span>
@@ -45,6 +69,7 @@ export default function Page({ kakaoSignInUrl }: Props) {
           </div>
         </div>
       </div>
+      <LoadingOverlay visible={isLoading} />
     </div>
   );
 }

@@ -101,11 +101,10 @@
   transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    transform: translateY(-1px);
   }
 
   &:active:not(:disabled) {
-    transform: translateY(0);
+    transform: translateY(1px);
   }
 
   &:disabled {

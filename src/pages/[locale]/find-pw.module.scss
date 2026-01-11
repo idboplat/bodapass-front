@@ -34,6 +34,7 @@
     flex: 1;
     padding: 10px 20px;
     position: relative;
+    word-break: keep-all;
 
     > .active {
       position: absolute;

@@ -17,11 +17,11 @@ export default function Page() {
           <div className={css.form}>
             <div className={css.tab}>
               <button>
-                <span>휴대폰 번호로 찾기</span>
+                <span>휴대폰 번호</span>
                 <div className={css.active} />
               </button>
               <button disabled>
-                <span>{/* 이메일 주소로 찾기 */}</span>
+                <span>{/* 이메일 주소 */}</span>
                 {/* <div className={css.active} /> */}
               </button>
             </div>

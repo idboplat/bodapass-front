@@ -1,16 +1,20 @@
 import { useRouter } from "next/router";
-import { Box, Button, LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
-import css from "./signin-form.module.scss";
+import { Box, PasswordInput, TextInput } from "@mantine/core";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInDto, TSignInDto } from "@/libraries/auth/auth.dto";
-import { nativeLogger } from "@/hooks/use-device-api";
-import { useEmailLoginMutation } from "@/hooks/tms/use-auth";
 import CustomButton from "../common/custom-button";
 import LockIcon from "/public/assets/svg/lock.svg";
 import UserIcon from "/public/assets/svg/login-person.svg";
 import Link from "next/link";
-export default function SigninForm() {
+import css from "./signin-form.module.scss";
+
+interface Props {
+  onSubmit: (data: TSignInDto) => void;
+  isLoading: boolean;
+}
+
+export default function SigninForm({ onSubmit, isLoading }: Props) {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
 
@@ -22,32 +26,8 @@ export default function SigninForm() {
     resolver: zodResolver(signInDto),
   });
 
-  const { isLoading, mutation } = useEmailLoginMutation();
-
-  const submit = (data: TSignInDto) => {
-    nativeLogger(JSON.stringify(form.formState, null, 2));
-
-    if (mutation.isPending) return;
-
-    const trimmedExternalId = data.externalId.trim();
-    const trimmedPassword = data.password.trim();
-
-    if (!trimmedExternalId) {
-      throw new Error("아이디를 입력해주세요.");
-    }
-
-    if (!trimmedPassword) {
-      throw new Error("비밀번호를 입력해주세요.");
-    }
-
-    mutation.mutate({
-      externalId: trimmedExternalId,
-      password: trimmedPassword,
-    });
-  };
-
   return (
-    <form className={css.form} onSubmit={form.handleSubmit(submit)}>
+    <form className={css.form} onSubmit={form.handleSubmit(onSubmit)}>
       <Controller
         control={form.control}
         name="externalId"
@@ -61,6 +41,7 @@ export default function SigninForm() {
             classNames={{
               input: css["mantine-TextInput-input"],
             }}
+            disabled={isLoading}
           />
         )}
       />
@@ -77,12 +58,13 @@ export default function SigninForm() {
             classNames={{
               input: css["mantine-PasswordInput-input"],
             }}
+            disabled={isLoading}
           />
         )}
       />
 
       <Box mt={28} style={{ textAlign: "center" }}>
-        <CustomButton fullWidth type="submit">
+        <CustomButton fullWidth type="submit" disabled={isLoading}>
           로그인
         </CustomButton>
       </Box>
@@ -92,8 +74,6 @@ export default function SigninForm() {
         <Link href={`/${locale}/find-pw`}>비밀번호 찾기</Link> |
         <Link href={`/${locale}/signup`}>회원가입</Link>
       </Box>
-
-      <LoadingOverlay visible={isLoading} />
     </form>
   );
 }
