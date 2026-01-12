@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import WarningIcon from "/public/assets/svg/warning.svg";
 import CustomButton from "@/components/common/custom-button";
 import { CustomInput, CustomInputPassword } from "@/components/common/custom-input";
+import CustomCheckbox from "@/components/common/custom-checkbox";
+import { useState } from "react";
 
 interface Props {
   session: Session;
@@ -16,42 +18,26 @@ interface Props {
 export default function DeleteAccountForm({ session }: Props) {
   const router = useRouter();
   const locale = router.query.locale?.toString() || "ko";
-
-  const form = useForm({
-    defaultValues: {
-      password: "",
-    },
-  });
-
+  const [isAgree, setIsAgree] = useState(false);
   const mutation = useTCM200801SSP02();
-  const password = useWatch({
-    control: form.control,
-    name: "password",
-  });
 
   const onSubmit = async () => {
     if (mutation.isPending) return;
 
-    mutation.mutate(
-      {
-        session: session,
-        password: password,
-      },
-      {
-        onSuccess: () => {
-          nativeAlert("회원탈퇴가 완료되었습니다.");
+    mutation.mutate(session, {
+      onSuccess: () => {
+        nativeAlert("회원탈퇴가 완료되었습니다.");
 
-          if (!!window.ReactNativeWebView) {
-            sendMessageToDevice({
-              type: DEVICE_API.deleteAccountEnd,
-              payload: null,
-            });
-          } else {
-            router.replace(`/${locale}/signin`);
-          }
-        },
+        if (!!window.ReactNativeWebView) {
+          sendMessageToDevice({
+            type: DEVICE_API.deleteAccountEnd,
+            payload: null,
+          });
+        } else {
+          router.replace(`/${locale}/signin`);
+        }
       },
-    );
+    });
   };
 
   return (
@@ -70,7 +56,7 @@ export default function DeleteAccountForm({ session }: Props) {
         </div>
 
         <div className={css.formBox}>
-          <Controller
+          {/* <Controller
             control={form.control}
             name="password"
             render={({ field }) => (
@@ -83,6 +69,13 @@ export default function DeleteAccountForm({ session }: Props) {
                 classNames={{ label: css.label, input: css.input }}
               />
             )}
+          /> */}
+          <CustomCheckbox
+            label="동의합니다."
+            required
+            checked={isAgree}
+            className={css.checkbox}
+            onChange={(e) => setIsAgree(e.target.checked)}
           />
         </div>
 
@@ -90,7 +83,7 @@ export default function DeleteAccountForm({ session }: Props) {
           <CustomButton
             type="button"
             onClick={onSubmit}
-            disabled={mutation.isPending || !password}
+            disabled={mutation.isPending || !isAgree}
             style={{ borderRadius: "0px" }}
             fullWidth
           >

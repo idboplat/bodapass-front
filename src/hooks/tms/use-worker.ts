@@ -166,12 +166,12 @@ export const useTCM200801SSP01 = () =>
 /** 회원탈퇴 */
 export const useTCM200801SSP02 = () =>
   useMutation({
-    mutationFn: async (args: { session: Session; password: string }) => {
+    mutationFn: async (session: Session) => {
       const response = await callTms<StringRspnData<1>>({
         svcId: "TCM200801SSP02",
-        session: args.session,
+        session: session,
         locale: "ko",
-        data: [args.session.userId, args.password],
+        data: [session.userId,],
       });
 
       const data = response.svcRspnData?.[0];
