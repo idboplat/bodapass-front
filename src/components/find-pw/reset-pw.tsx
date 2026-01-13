@@ -93,7 +93,9 @@ export default function ResetPw() {
             <div className={css.buttonBox}>
               <CustomButton
                 onClick={() => onClickResetPw(form.getValues())}
-                disabled={resetPwMutation.isPending}
+                disabled={
+                  resetPwMutation.isPending || isPasswordMismatch || !password || !passwordConfirm
+                }
                 style={{ borderRadius: "0px" }}
                 fullWidth
               >
