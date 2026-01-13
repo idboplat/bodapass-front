@@ -1,27 +1,25 @@
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import css from "./reset-pw.module.scss";
-import { Controller, useFormContext, UseFormReturn, useWatch } from "react-hook-form";
-import { LoadingOverlay, PasswordInput, TextInput } from "@mantine/core";
-import { TFindPwForm } from ".";
-import { useTCM200001SSP06 } from "@/hooks/tms/use-auth";
 import CustomButton from "@/components/common/custom-button";
+import { useTCM200001SSP06 } from "@/hooks/tms/use-auth";
+import { LoadingOverlay, PasswordInput } from "@mantine/core";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { TFindPwForm } from "../../pages/[locale]/find-pw";
+import css from "./reset-pw.module.scss";
 
-export default function ResetPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
+export default function ResetPw() {
   const router = useRouter();
   const { t } = useTranslation();
 
   const locale = router.query.locale?.toString() || "ko";
 
+  const form = useFormContext<TFindPwForm>();
+
   const resetPwMutation = useTCM200001SSP06();
 
-  const password = useWatch({
+  const [password, passwordConfirm] = useWatch({
     control: form.control,
-    name: "password",
-  });
-  const passwordConfirm = useWatch({
-    control: form.control,
-    name: "passwordConfirm",
+    name: ["password", "passwordConfirm"],
   });
 
   // 비밀번호가 다를 때 에러 메시지 표시
@@ -58,13 +56,13 @@ export default function ResetPw({ form }: { form: UseFormReturn<TFindPwForm> }) 
                   name="password"
                   render={({ field }) => (
                     <PasswordInput
+                      {...field}
                       variant="unstyled"
                       type="text"
                       placeholder="비밀번호(8자 이상+영문대소문자+숫자+특수문자)"
                       classNames={{
                         input: css.input,
                       }}
-                      {...field}
                     />
                   )}
                 />
@@ -75,13 +73,13 @@ export default function ResetPw({ form }: { form: UseFormReturn<TFindPwForm> }) 
                   name="passwordConfirm"
                   render={({ field }) => (
                     <PasswordInput
+                      {...field}
                       variant="unstyled"
                       type="text"
                       placeholder="비밀번호 확인"
                       classNames={{
                         input: css.input,
                       }}
-                      {...field}
                     />
                   )}
                 />

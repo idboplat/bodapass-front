@@ -9,21 +9,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import CustomButton from "@/components/common/custom-button";
-import { TFindPwForm } from ".";
+import { TFindPwForm } from "../../pages/[locale]/find-pw";
 
-export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
+// 초를 MM:SS 형식으로 변환
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+};
+
+export default function FindPw() {
   const router = useRouter();
   const { t } = useTranslation();
   const [remainingTime, setRemainingTime] = useState(0); // 초 단위 (5분 = 300초)
 
-  // 초를 MM:SS 형식으로 변환
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
-
   const locale = router.query.locale?.toString() || "ko";
+
+  const form = useFormContext<TFindPwForm>();
 
   /** 인증번호 요청 */
   const requestVerificationCodeMutation = useTCM200001SSP04();
@@ -47,26 +49,10 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
     }
   }, [requestVerificationCodeMutation.isSuccess, remainingTime]);
 
-  const cetNo = useWatch({
+  // 필요한 필드만 감시
+  const [cetNo, userId, userNm, telNo, idNo] = useWatch({
     control: form.control,
-    name: "cetNo",
-  });
-
-  const userId = useWatch({
-    control: form.control,
-    name: "userId",
-  });
-  const userNm = useWatch({
-    control: form.control,
-    name: "userNm",
-  });
-  const telNo = useWatch({
-    control: form.control,
-    name: "telNo",
-  });
-  const idNo = useWatch({
-    control: form.control,
-    name: "idNo",
+    name: ["cetNo", "userId", "userNm", "telNo", "idNo"],
   });
 
   const onClickRequestVerificationCode = (data: TFindPwForm) => {
@@ -119,7 +105,7 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                   control={form.control}
                   name="userId"
                   render={({ field }) => (
-                    <TextInput variant="unstyled" type="text" placeholder="아이디" {...field} />
+                    <TextInput {...field} variant="unstyled" type="text" placeholder="아이디" />
                   )}
                 />
               </div>
@@ -128,7 +114,7 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                   control={form.control}
                   name="userNm"
                   render={({ field }) => (
-                    <TextInput variant="unstyled" type="text" placeholder="이름" {...field} />
+                    <TextInput {...field} variant="unstyled" type="text" placeholder="이름" />
                   )}
                 />
               </div>
@@ -138,11 +124,11 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                   name="telNo"
                   render={({ field }) => (
                     <TextInput
+                      {...field}
                       variant="unstyled"
                       type="text"
                       placeholder="연락처('-' 없이 입력)"
                       inputMode="numeric"
-                      {...field}
                     />
                   )}
                 />
@@ -153,12 +139,12 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                   name="idNo"
                   render={({ field }) => (
                     <TextInput
+                      {...field}
                       variant="unstyled"
                       type="text"
                       placeholder="생년월일(YYMMDD)"
                       inputMode="numeric"
                       maxLength={6}
-                      {...field}
                     />
                   )}
                 />
