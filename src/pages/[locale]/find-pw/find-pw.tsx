@@ -7,13 +7,21 @@ import { Controller, useForm, useFormContext, UseFormReturn, useWatch } from "re
 import { TCetRecvTp, TCetTp, useTCM200001SSP04, useTCM200001SSP05 } from "@/hooks/tms/use-auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "@/components/common/custom-button";
 import { TFindPwForm } from ".";
 
 export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
   const router = useRouter();
   const { t } = useTranslation();
+  const [remainingTime, setRemainingTime] = useState(0); // 초 단위 (5분 = 300초)
+
+  // 초를 MM:SS 형식으로 변환
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const locale = router.query.locale?.toString() || "ko";
 
@@ -22,13 +30,28 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
   /** 인증번호 확인 */
   const checkVerificationCodeMutation = useTCM200001SSP05();
 
-  // 실시간으로 cetNo 값 감지
+  // 타이머 시작 (5분 = 300초)
+  useEffect(() => {
+    if (requestVerificationCodeMutation.isSuccess && remainingTime > 0) {
+      const interval = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [requestVerificationCodeMutation.isSuccess, remainingTime]);
+
   const cetNo = useWatch({
     control: form.control,
     name: "cetNo",
   });
 
-  // 실시간으로 필수 필드 값 감지
   const userId = useWatch({
     control: form.control,
     name: "userId",
@@ -56,7 +79,7 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
 
     requestVerificationCodeMutation.mutate(data, {
       onSuccess: () => {
-        console.log("success");
+        setRemainingTime(300); // 5분 = 300초
       },
     });
   };
@@ -154,18 +177,15 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                 >
                   {requestVerificationCodeMutation.isPending
                     ? "인증번호 요청 중..."
+                    : requestVerificationCodeMutation.isSuccess
+                    ? "인증번호 재전송"
                     : "인증번호 요청"}
                 </button>
               </div>
             </div>
 
             {requestVerificationCodeMutation.isSuccess && (
-              <div
-                className={clsx(
-                  css.verificationCodeBox,
-                  !requestVerificationCodeMutation.isSuccess && css.disabled,
-                )}
-              >
+              <div className={clsx(css.verificationCodeBox)}>
                 <Controller
                   control={form.control}
                   name="cetNo"
@@ -173,27 +193,42 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                     <TextInput
                       variant="unstyled"
                       type="text"
-                      placeholder="인증번호 입력"
+                      placeholder="인증번호를 입력하세요."
                       inputMode="numeric"
-                      disabled={!requestVerificationCodeMutation.isSuccess}
                       maxLength={6}
                       {...field}
+                      styles={{
+                        input: {
+                          backgroundColor: "#fff",
+                        },
+                      }}
+                      rightSection={
+                        <div className={css.RemainingTime}>
+                          {remainingTime > 0 ? formatTime(remainingTime) : "00:00"}
+                        </div>
+                      }
                     />
                   )}
                 />
               </div>
             )}
 
-            {requestVerificationCodeMutation.isSuccess && (
+            {/* {requestVerificationCodeMutation.isSuccess && (
               <div className={css.resendButtonBox}>
                 <UnstyledButton
-                  onClick={() => requestVerificationCodeMutation.mutate(form.getValues())}
+                  onClick={() => {
+                    requestVerificationCodeMutation.mutate(form.getValues(), {
+                      onSuccess: () => {
+                        setRemainingTime(1200); // 재전송 시 타이머 리셋
+                      },
+                    });
+                  }}
                   className={css.resendButton}
                 >
                   재전송
                 </UnstyledButton>
               </div>
-            )}
+            )} */}
 
             <div className={css.verificationCodeButtonBox}>
               <CustomButton

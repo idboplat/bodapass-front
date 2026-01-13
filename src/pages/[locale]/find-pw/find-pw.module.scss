@@ -135,9 +135,20 @@
 .resendButtonBox {
   margin-top: 10px;
   text-align: center;
+
+  > button {
+    color: #999;
+    font-weight: 400;
+  }
 }
 
 .resendButton {
   text-decoration: underline;
   font-size: 0.875rem;
+}
+
+.RemainingTime {
+  font-size: 0.875rem;
+  color: #999;
+  font-weight: 400;
 }
