@@ -40,7 +40,7 @@ export default function ResetPw({ form }: { form: UseFormReturn<TFindPwForm> }) 
     resetPwMutation.mutate(payload, {
       onSuccess: () => {
         console.log("success");
-        router.push(`/${locale}/find-pw/?step=3`);
+        router.replace(`/${locale}/find-pw/?step=3`);
       },
     });
   };

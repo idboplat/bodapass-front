@@ -90,7 +90,7 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
     checkVerificationCodeMutation.mutate(args, {
       onSuccess: () => {
         console.log("success");
-        router.push(`/${locale}/find-pw/?step=2`);
+        router.replace(`/${locale}/find-pw/?step=2`);
       },
     });
   };
@@ -212,23 +212,6 @@ export default function FindPw({ form }: { form: UseFormReturn<TFindPwForm> }) {
                 />
               </div>
             )}
-
-            {/* {requestVerificationCodeMutation.isSuccess && (
-              <div className={css.resendButtonBox}>
-                <UnstyledButton
-                  onClick={() => {
-                    requestVerificationCodeMutation.mutate(form.getValues(), {
-                      onSuccess: () => {
-                        setRemainingTime(1200); // 재전송 시 타이머 리셋
-                      },
-                    });
-                  }}
-                  className={css.resendButton}
-                >
-                  재전송
-                </UnstyledButton>
-              </div>
-            )} */}
 
             <div className={css.verificationCodeButtonBox}>
               <CustomButton

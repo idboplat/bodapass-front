@@ -13,7 +13,7 @@ export default function Complete() {
       </div>
 
       <div className={css.buttonBox}>
-        <button onClick={() => router.push(`/${locale}/signin`)}>확인</button>
+        <button onClick={() => router.replace(`/${locale}/signin`)}>확인</button>
       </div>
     </div>
   );
