@@ -1,11 +1,22 @@
 import { frontApi } from "@/apis/fetcher";
 import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
-import { callTms, callWas, StringRspnData } from "@/libraries/call-tms";
+import { callTms, callWas, FillerRspnData, StringRspnData } from "@/libraries/call-tms";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { DEVICE_API, TIdTp, TLoginTp, TWrkTp } from "@/types/common";
+
+/**
+ * 01: 회원 가입
+ * 11: 로그인
+ * 21: 비밀번호 변경
+ * 22: otp 초기화
+ */
+export type TCetTp = "01" | "11" | "21" | "22";
+
+/** E: 이메일, M: 모바일 */
+export type TCetRecvTp = "E" | "M";
 
 export const useKakaoLoginMutation = () => {
   const mutation = useMutation({
@@ -177,4 +188,73 @@ export const useTCM200001SSQ00 = () =>
         locale: "ko",
         data: [args.brkrId],
       }),
+  });
+
+/** 비밀번호 재설정 - 인증번호 요청 */
+export const useTCM200001SSP04 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      userId: string;
+      userNm: string;
+      idNo: string;
+      telNo: string;
+      cetTp: TCetTp;
+      cetRecvTp: TCetRecvTp;
+    }) => {
+      const result = await callTms<FillerRspnData>({
+        svcId: "TCM200001SSP04",
+        locale: "ko",
+        session: null,
+        data: [args.userId, args.userNm, args.idNo, args.telNo, args.cetTp, args.cetRecvTp],
+      });
+
+      const data = result.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });
+
+/** 비밀번호 재설정 - 인증번호 확인 */
+export const useTCM200001SSP05 = () =>
+  useMutation({
+    mutationFn: async (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
+      const result = await callTms<FillerRspnData>({
+        svcId: "TCM200001SSP05",
+        locale: "ko",
+        session: null,
+        data: [args.userId, args.cetTp, args.cetNo],
+      });
+
+      const data = result.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
+  });
+
+/** 비밀번호 재설정 - 이메일 로그인 비밀번호 변경 */
+export const useTCM200001SSP06 = () =>
+  useMutation({
+    mutationFn: async (args: {
+      userId: string;
+      userPswd: string;
+      cetTp: TCetTp;
+      cetNo: string;
+    }) => {
+      const result = await callTms<FillerRspnData>({
+        svcId: "TCM200001SSP06",
+        locale: "ko",
+        session: null,
+        data: [args.userId, args.userPswd, args.cetTp, args.cetNo],
+      });
+
+      const data = result.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
   });
