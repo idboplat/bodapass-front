@@ -1,118 +1,161 @@
-import { useWCW000002SSQ01 } from "@/hooks/tms/use-auth";
-import { useCamera } from "@/hooks/use-camera";
-import { nativeAlert } from "@/hooks/use-device-api";
-import { TScannedResult } from "@/libraries/auth/auth.dto";
-import { ActionIcon, Select } from "@mantine/core";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import css from "./step-3.module.scss";
-import CameraFrame from "../common/camera-frame";
-import clsx from "clsx";
-import { Camera as IconCamera } from "lucide-react";
-import Camera from "../camera";
+import { Controller, useFormContext, useFormState } from "react-hook-form";
+import { Button, Select, TextInput } from "@mantine/core";
+import { findEntity, IdCardEntity } from "@/types/tp";
+import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TIdTp } from "@/types/common";
-import { useRouter } from "next/router";
+import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import CustomStep from "../common/custom-step";
+import OutlineButton from "../common/outline-button";
 import CustomButton from "../common/custom-button";
+import { CustomInput } from "../common/custom-input";
 
-export default function Step3({
-  idTp,
-  locale,
-  onClickNext,
-  onClickPrev,
-}: {
+interface Props {
   idTp: TIdTp;
-  locale: string;
+  onClickNext: () => void;
   onClickPrev: () => void;
-  onClickNext: (args: TScannedResult) => void;
-}) {
-  const router = useRouter();
-  const camera = useCamera();
+  images: Blob[];
+  isLastStep?: boolean;
+}
 
-  const WCW000002SSQ01 = useWCW000002SSQ01();
+export default function Step3({ idTp, onClickNext, onClickPrev, images, isLastStep }: Props) {
+  const form = useFormContext<TSignUpDto>();
+  const { errors } = useFormState({ control: form.control });
 
-  const onClickCapture = async () => {
-    try {
-      if (WCW000002SSQ01.isPending) return;
+  const [imageUrl, setImageUrl] = useState<string[]>([]);
 
-      const image = await camera.capture();
-      if (!image) throw new Error("이미지 캡쳐 실패");
+  const TCW000100SMQ03 = useTCW000100SMQ03({ session: null });
 
-      WCW000002SSQ01.mutate(
-        { image, brkrId: "", idTp, session: null },
-        {
-          onSuccess: onClickNext,
-        },
-      );
-    } catch (error) {
-      console.log("error", error);
-      nativeAlert("이미지 캡쳐 실패");
-    }
-  };
+  useEffect(() => {
+    const urls = images.map((image) => URL.createObjectURL(image));
+    setImageUrl(() => urls);
+
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [images]);
 
   return (
-    <div>
-      <CustomStep totalSteps={4} currentStep={3} />
+    <>
+      <CustomStep totalSteps={4} currentStep={4} />
 
-      <div className={css.nav}>
-        <div className={css.navText}>
-          <p>
-            본인 확인을 위해 <span>주민등록증</span> 또는 <span>운전면허증</span>,
-          </p>
-          <p>
-            <span>외국인 등록증</span>을 준비해주세요.
-          </p>
+      <div className={css.infoBox}>
+        <div>신분증 종류: {findEntity(IdCardEntity, idTp)?.[1]}</div>
+      </div>
+
+      {/* 외국인등록증 일 경우 국가 선택 */}
+      {idTp === "3" && (
+        <Controller
+          control={form.control}
+          name="cntryCd"
+          render={({ field, fieldState }) => (
+            <Select
+              {...field}
+              label="국가 선택"
+              searchable
+              data={TCW000100SMQ03.data?.map((d) => ({
+                value: d.cntryCd,
+                label: `${d.cntryKoNm}`,
+              }))}
+              allowDeselect={false}
+              styles={{
+                dropdown: {
+                  maxHeight: 250,
+                  overflow: "auto",
+                  scrollbarWidth: "auto",
+                },
+              }}
+              error={fieldState.error?.message}
+              disabled={TCW000100SMQ03.isPending}
+              placeholder={
+                TCW000100SMQ03.isPending
+                  ? "국가 정보를 불러오는 중입니다..."
+                  : "국가을 선택해주세요"
+              }
+            />
+          )}
+        />
+      )}
+
+      <div className={css.imageBox}>
+        {imageUrl.map((url, index) => (
+          <Image src={url} alt="신분증" fill key={`image-${index}`} />
+        ))}
+      </div>
+
+      <div className={css.formBox}>
+        <Controller
+          control={form.control}
+          name="userNm"
+          render={({ field, fieldState }) => (
+            <CustomInput
+              value={field.value}
+              defaultValue={field.value}
+              onChange={() => {}}
+              label="이름"
+              mt={0}
+              error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+              readOnly
+            />
+          )}
+        />
+
+        <div className={css.idBox}>
+          <label>주민등록번호</label>
+          <div className={css.idInputBox}>
+            <Controller
+              control={form.control}
+              name="idNo1"
+              render={({ field }) => (
+                <CustomInput
+                  {...field}
+                  required
+                  error={!!errors.idNo1?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+
+            {/* <span>-</span> */}
+
+            <Controller
+              control={form.control}
+              name="idNo2"
+              render={({ field }) => (
+                <CustomInput
+                  {...field}
+                  required
+                  error={!!errors.idNo2?.message}
+                  classNames={{ label: css.label, input: css.input }}
+                />
+              )}
+            />
+          </div>
+          {errors.idNo1?.message && <div className={css.errorMessage}>{errors.idNo1?.message}</div>}
+          {errors.idNo2?.message && <div className={css.errorMessage}>{errors.idNo2?.message}</div>}
         </div>
-        <Select
-          data={[
-            { value: "1", label: "주민등록증" },
-            { value: "2", label: "운전면허증" },
-            { value: "3", label: "외국인등록증" },
-          ]}
-          value={idTp}
-          onChange={(value) => {
-            if (!value) return;
-            const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-            searchParams.set("idTp", value as TIdTp);
-            router.replace(`/${locale}/signup/?${searchParams.toString()}`);
-          }}
+
+        <Controller
+          control={form.control}
+          name="isuDd"
+          render={({ field, fieldState }) => (
+            <CustomInput
+              {...field}
+              label="발급일자 (YYYYMMDD)"
+              required
+              error={fieldState.error?.message}
+              classNames={{ label: css.label, input: css.input }}
+            />
+          )}
         />
       </div>
 
-      <div className={clsx(css.cameraBox)}>
-        <Camera videoRef={camera.videoRef} canvasRef={camera.canvasRef} isMobile={true} />
-        <CameraFrame />
-      </div>
-
-      <div className={css.infoBox}>
-        <div className={css.infoItem}>
-          <div className={css.numberCircle}>1</div>
-          <p>신분증의 앞면이 보이도록 놓아주세요. 어두운 바닥에 놓으면 더 잘 인식됩니다.</p>
-        </div>
-        <div className={css.infoItem}>
-          <div className={css.numberCircle}>2</div>
-          <p>
-            가이드 영역에 맞추어 반드시 <span>신분증 원본</span>으로 촬영하세요.
-          </p>
-        </div>
-        <div className={css.infoItem}>
-          <div className={css.numberCircle}>3</div>
-          <p>
-            빛 반사에 주의하세요. 정보 확인이 어렵거나, 훼손/유효하지 않은 신분증은{" "}
-            <span>거절되거나 이후 이용이 제한</span>될 수 있습니다.
-          </p>
-        </div>
-        <div className={css.infoItem}>
-          <div className={css.numberCircle}>4</div>
-          <p>
-            제출 시 <span>주변 영역도 포함</span>되니 촬영시 주의해 주세요.
-          </p>
-        </div>
-      </div>
-
-      <div className={css.buttonContainer}>
-        <CustomButton type="button" fullWidth onClick={onClickCapture}>
-          사진찍기
-        </CustomButton>
-      </div>
-    </div>
+      <CustomButton type="button" onClick={onClickNext} className={css.nextButton} fullWidth>
+        인증하기
+      </CustomButton>
+    </>
   );
 }

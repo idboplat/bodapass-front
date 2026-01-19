@@ -6,9 +6,9 @@ import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useFormContext } from "react-hook-form";
 import css from "./leader-signup-home.module.scss";
-import LeaderStep2 from "./leader-step-2";
+import LeaderStep4 from "./leader-step-4";
+import Step2 from "./step-2";
 import Step3 from "./step-3";
-import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { TWrkTp } from "@/types/common";
@@ -25,26 +25,27 @@ export default function LeaderSignupHome({}: Props) {
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const step3Prev = () => {
+  const step2Prev = () => {
     router.back();
   };
 
-  const step3Next = (args: TScannedResult) => {
+  const step2Next = (args: TScannedResult) => {
+    form.setValue("userNm", args.userNm);
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
     ctx.saveImages([args.image]);
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
     searchParams.set("idTp", args.idTp);
-    searchParams.set("step", "4");
+    searchParams.set("step", "3");
     router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
   };
 
-  const step4Prev = () => {
+  const step3Prev = () => {
     router.back();
   };
 
-  const step4Submit = async () => {
+  const step3Next = async () => {
     if (WCW000001SSP02.isLoading) return;
 
     const isValid = await form.trigger(["userNm", "idNo1", "idNo2"]);
@@ -63,11 +64,21 @@ export default function LeaderSignupHome({}: Props) {
 
     if (ctx.images.length === 0) {
       const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-      searchParams.set("step", "3");
-      router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+      searchParams.set("step", "2");
+      router.replace(`/${ctx.locale}/signup/?${searchParams.toString()}`);
       return;
     }
 
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("step", "4");
+    router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
+  };
+
+  const step4Prev = () => {
+    router.back();
+  };
+
+  const step4Submit = async () => {
     nativeLogger(JSON.stringify(form.formState, null, 2));
 
     const payload = {
@@ -108,21 +119,29 @@ export default function LeaderSignupHome({}: Props) {
   return (
     <WithSignInLayout title="반장 회원가입">
       <div className={css.form}>
-        {ctx.step === "2" && <LeaderStep2 loginTp={ctx.loginTp} locale={ctx.locale} />}
+        {ctx.step === "2" && (
+          <Step2
+            idTp={ctx.idTp}
+            locale={ctx.locale}
+            onClickNext={step2Next}
+            onClickPrev={step2Prev}
+          />
+        )}
         {ctx.step === "3" && (
           <Step3
             idTp={ctx.idTp}
-            locale={ctx.locale}
             onClickNext={step3Next}
             onClickPrev={step3Prev}
+            images={ctx.images}
           />
         )}
+
         {ctx.step === "4" && (
-          <Step4
-            idTp={ctx.idTp}
+          <LeaderStep4
+            loginTp={ctx.loginTp}
+            locale={ctx.locale}
             onClickNext={step4Submit}
             onClickPrev={step4Prev}
-            images={ctx.images}
           />
         )}
 

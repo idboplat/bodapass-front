@@ -1,8 +1,7 @@
 import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TLoginTp } from "@/types/common";
-import { onNoSpaceChange } from "@/utils/input-handler";
-import { checkPassword, removeBlank, replaceToTelNumber } from "@/utils/regexp";
-import { Box, Button, Checkbox, PasswordInput, TextInput } from "@mantine/core";
+import { checkPassword, removeBlank } from "@/utils/regexp";
+import { Box, Checkbox } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { Address } from "react-daum-postcode";
 import { Controller, useFormContext } from "react-hook-form";
@@ -11,7 +10,7 @@ import PostCodeModal from "../common/modal/post-code-modal";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
-import css from "./leader-step-2.module.scss";
+import css from "./leader-step-4.module.scss";
 import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import OutlineButton from "../common/outline-button";
@@ -19,7 +18,17 @@ import CustomStep from "../common/custom-step";
 import { AnimatePresence } from "motion/react";
 import { CustomInput, CustomInputPassword } from "../common/custom-input";
 
-export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; locale: string }) {
+export default function LeaderStep4({
+  loginTp,
+  locale,
+  onClickNext,
+  onClickPrev,
+}: {
+  loginTp: TLoginTp;
+  locale: string;
+  onClickNext: () => void;
+  onClickPrev: () => void;
+}) {
   const router = useRouter();
 
   const [showPostCode, setShowPostCode] = useState(false);
@@ -48,11 +57,9 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
     });
   };
 
-  const onClickPrev = () => {
-    router.back();
-  };
+  const handleClickPrev = () => onClickPrev();
 
-  const onClickNext = async () => {
+  const handleClickNext = async () => {
     const isValid = await form.trigger(["cntryCd", "zipCd", "addr", "addrDtil", "tel1"]);
     if (!isValid) return;
 
@@ -80,9 +87,7 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
       }
     }
 
-    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "3");
-    router.push(`/${locale}/signup/?${searchParams.toString()}`);
+    onClickNext();
   };
 
   const socialLoginId = useMemo(() => {
@@ -336,10 +341,10 @@ export default function LeaderStep2({ loginTp, locale }: { loginTp: TLoginTp; lo
         )}
 
         <Box mt={10} style={{ textAlign: "right" }}>
-          <OutlineButton type="button" onClick={onClickPrev} className={css.prevButton}>
+          <OutlineButton type="button" onClick={handleClickPrev} className={css.prevButton}>
             이전
           </OutlineButton>
-          <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
+          <CustomButton type="button" onClick={handleClickNext} className={css.nextButton}>
             다음
           </CustomButton>
         </Box>

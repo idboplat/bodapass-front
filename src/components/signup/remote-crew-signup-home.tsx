@@ -6,8 +6,8 @@ import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
 import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
 import RemoteCrewStep2 from "./remote-crew-step-2";
+import Step2 from "./step-2";
 import Step3 from "./step-3";
-import Step4 from "./step-4";
 import { WithSignInLayout } from "./layout";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { useSignupCtx } from "./context-provider";
@@ -117,7 +117,7 @@ export default function RemoteCrewSignupHome({}: Props) {
           />
         )}
         {ctx.step === "3" && (
-          <Step3
+          <Step2
             idTp={ctx.idTp}
             locale={ctx.locale}
             onClickNext={step3Next}
@@ -125,7 +125,7 @@ export default function RemoteCrewSignupHome({}: Props) {
           />
         )}
         {ctx.step === "4" && (
-          <Step4
+          <Step3
             idTp={ctx.idTp}
             onClickNext={step4Submit}
             onClickPrev={step4Prev}

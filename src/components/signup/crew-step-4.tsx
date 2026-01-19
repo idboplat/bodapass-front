@@ -5,26 +5,29 @@ import { Controller, useFormContext } from "react-hook-form";
 import { TWrkTp } from "@/types/common";
 import { useState } from "react";
 import { Address } from "react-daum-postcode";
-import { replaceToTelNumber } from "@/utils/regexp";
 import Portal from "../common/modal/portal";
 import PostCodeModal from "../common/modal/post-code-modal";
 import { useRouter } from "next/router";
 import { z } from "zod";
-import css from "./crew-step-2.module.scss";
+import css from "./crew-step-4.module.scss";
 import CustomStep from "../common/custom-step";
 import CustomCheckbox from "../common/custom-checkbox";
 import CustomButton from "../common/custom-button";
 import { AnimatePresence } from "motion/react";
 import { CustomInput } from "../common/custom-input";
 
-export default function CrewStep2({
+export default function CrewStep4({
   session,
   wrkTp,
   locale,
+  onClickNext,
+  onClickPrev,
 }: {
   session: Session;
   wrkTp: TWrkTp;
   locale: string;
+  onClickNext: () => void;
+  onClickPrev: () => void;
 }) {
   const router = useRouter();
 
@@ -60,11 +63,9 @@ export default function CrewStep2({
     });
   };
 
-  const onClickPrev = () => {
-    router.back();
-  };
+  const handleClickPrev = () => onClickPrev();
 
-  const onClickNext = async () => {
+  const handleClickNext = async () => {
     const isValid = await form.trigger([
       "cntryCd",
       "zipCd",
@@ -94,9 +95,7 @@ export default function CrewStep2({
       }
     }
 
-    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-    searchParams.set("step", "3");
-    router.push(`/${locale}/signup/crew/?${searchParams.toString()}`);
+    onClickNext();
   };
 
   return (
@@ -268,11 +267,15 @@ export default function CrewStep2({
         )}
 
         <Box mt={28} style={{ textAlign: "right" }}>
-          {/* <Button variant="outline" type="button" onClick={onClickPrev} mr={12}>
-          이전
-        </Button> */}
-
-          <CustomButton type="button" onClick={onClickNext} className={css.nextButton}>
+          <Button
+            variant="outline"
+            type="button"
+            onClick={handleClickPrev}
+            className={css.prevButton}
+          >
+            이전
+          </Button>
+          <CustomButton type="button" onClick={handleClickNext} className={css.nextButton}>
             다음
           </CustomButton>
         </Box>

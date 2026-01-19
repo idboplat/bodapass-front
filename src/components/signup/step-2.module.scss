@@ -1,0 +1,82 @@
+.brkrId {
+  font-size: 0.8rem;
+  padding: 1rem;
+  // display: flex;
+  // padding: 1rem;
+}
+
+.nav {
+  padding: 1rem;
+}
+
+.navText {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 1rem;
+  p {
+    margin: 0;
+  }
+  span {
+    color: #3d99d3;
+    font-size: 16px;
+  }
+}
+
+.cameraBox {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+
+.infoBox {
+  background: #fff;
+  padding: 1rem;
+  padding-bottom: 6rem; /* fixed 버튼 높이만큼 여백 추가 */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.numberCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.infoItem p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.infoItem span {
+  color: #3c98d4;
+  font-size: 14px;
+}
+
+.buttonContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background: #fff;
+  z-index: 1000;
+}
