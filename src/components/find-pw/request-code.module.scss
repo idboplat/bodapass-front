@@ -98,6 +98,13 @@
   }
 }
 
+.requestVerificationCodeButton {
+  &:disabled {
+    color: #999999;
+    background-color: #ededed;
+  }
+}
+
 .verificationCodeBox {
   background: #fff;
   border: 1px solid #ededed;
@@ -109,36 +116,39 @@
   > :global(.app-InputWrapper-root) {
     flex: 1;
     margin: 0 10px;
-
-    :global(.app-Input-input) {
-      color: #333;
-      background-color: #fff;
-    }
-  }
-}
-
-.verificationCodeBox.disabled {
-  background: #ededed;
-
-  > :global(.app-InputWrapper-root) :global(.app-Input-input):disabled {
-    color: #999999;
-    background-color: #ededed;
   }
 }
 
 .verificationCodeButtonBox {
-  background: #ffffff;
-  border: 1px solid #ededed;
   margin-top: 30px;
   height: 50px;
 
   > button {
-    background: #b9c1c9;
-    color: #ffffff;
     font-size: 0.875rem;
     font-weight: 500;
     border: none;
     width: 100%;
     height: 100%;
   }
+}
+
+.resendButtonBox {
+  margin-top: 10px;
+  text-align: center;
+
+  > button {
+    color: #999;
+    font-weight: 400;
+  }
+}
+
+.resendButton {
+  text-decoration: underline;
+  font-size: 0.875rem;
+}
+
+.RemainingTime {
+  font-size: 0.875rem;
+  color: #999;
+  font-weight: 400;
 }

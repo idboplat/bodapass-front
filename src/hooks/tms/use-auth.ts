@@ -1,19 +1,20 @@
 import { frontApi } from "@/apis/fetcher";
 import { TSignInDto, TSignUpDto } from "@/libraries/auth/auth.dto";
 import { callTms, callWas, FillerRspnData, StringRspnData } from "@/libraries/call-tms";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
-import { DEVICE_API, TIdTp, TLoginTp, TWrkTp } from "@/types/common";
+import { DEVICE_API, Promised, TIdTp, TLoginTp, TWrkTp } from "@/types/common";
 
 /**
  * 01: 회원 가입
+ * 02: 아이디 찾기
  * 11: 로그인
  * 21: 비밀번호 변경
  * 22: otp 초기화
  */
-export type TCetTp = "01" | "11" | "21" | "22";
+export type TCetTp = "01" | "02" | "11" | "21" | "22";
 
 /** E: 이메일, M: 모바일 */
 export type TCetRecvTp = "E" | "M";
@@ -179,18 +180,26 @@ export const useWCW000001SSP02 = () => {
   };
 };
 
+/** 반장 아이디 조회 */
 export const useTCM200001SSQ00 = () =>
   useMutation({
-    mutationFn: (args: { brkrId: string }) =>
-      callTms<StringRspnData<1>>({
+    mutationFn: async (args: { brkrId: string }) => {
+      const res = await callTms<StringRspnData<1>>({
         svcId: "TCM200001SSQ00",
         session: null,
         locale: "ko",
         data: [args.brkrId],
-      }),
+      });
+
+      const data = res.svcRspnData?.[0];
+
+      if (!data) throw new Error("FW999");
+
+      return data;
+    },
   });
 
-/** 비밀번호 재설정 - 인증번호 요청 */
+/** 공통 인증번호 요청 */
 export const useTCM200001SSP04 = () =>
   useMutation({
     mutationFn: async (args: {
@@ -216,7 +225,7 @@ export const useTCM200001SSP04 = () =>
     },
   });
 
-/** 비밀번호 재설정 - 인증번호 확인 */
+/** 인증번호 확인 */
 export const useTCM200001SSP05 = () =>
   useMutation({
     mutationFn: async (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
@@ -257,4 +266,40 @@ export const useTCM200001SSP06 = () =>
 
       return data;
     },
+  });
+
+const getTCM200001SMQ01 = async (args: {
+  userNm: string;
+  idNo: string;
+  telNo: string;
+  cetTp: TCetTp;
+  cetNo: string;
+}) => {
+  const res = await callTms<StringRspnData<1>>({
+    svcId: "TCM200001SMQ01",
+    locale: "ko",
+    session: null,
+    data: [args.userNm, args.idNo, args.telNo, args.cetTp, args.cetNo],
+  });
+
+  const data = res.svcRspnData || [];
+
+  return data.map((d) => ({
+    extnUserId: d.F01,
+  }));
+};
+
+export type TTCM200001SMQ01Data = Promised<typeof getTCM200001SMQ01>;
+export type TTCM200001SMQ01RowData = TTCM200001SMQ01Data[number];
+
+export const useTCM200001SMQ01 = (args: {
+  userNm: string;
+  idNo: string;
+  telNo: string;
+  cetTp: TCetTp;
+  cetNo: string;
+}) =>
+  useQuery({
+    queryKey: ["TCM200001SMQ01", args.userNm, args.idNo, args.telNo, args.cetTp, args.cetNo],
+    queryFn: () => getTCM200001SMQ01(args),
   });

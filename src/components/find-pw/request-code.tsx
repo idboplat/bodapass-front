@@ -1,0 +1,221 @@
+import { useRouter } from "next/router";
+import css from "./request-code.module.scss";
+import { useTranslation } from "next-i18next";
+import { TextInput } from "@mantine/core";
+import clsx from "clsx";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { TCetTp, useTCM200001SSP04, useTCM200001SSP05 } from "@/hooks/tms/use-auth";
+import { useEffect, useState } from "react";
+import CustomButton from "@/components/common/custom-button";
+import { TFindPwForm } from "@/pages/[locale]/find-pw";
+import { formatTimeMMSS } from "@/utils/date-formatter";
+
+export default function FindPw() {
+  const router = useRouter();
+  const locale = router.query.locale?.toString() || "ko";
+  const { t } = useTranslation();
+
+  const [remainingTime, setRemainingTime] = useState(0); // 초 단위 (5분 = 300초)
+
+  const form = useFormContext<TFindPwForm>();
+
+  /** 인증번호 요청 */
+  const requestVerificationCodeMutation = useTCM200001SSP04();
+  /** 인증번호 확인 */
+  const checkVerificationCodeMutation = useTCM200001SSP05();
+
+  // 필요한 필드만 감시
+  const [cetNo, userId, userNm, telNo, idNo] = useWatch({
+    control: form.control,
+    name: ["cetNo", "userId", "userNm", "telNo", "idNo"],
+  });
+
+  const onClickRequestVerificationCode = (data: TFindPwForm) => {
+    // 필수 필드 검증: 아이디, 이름, 연락처, 생년월일이 빈값이면 실행하지 않음
+    if (!userId?.trim() || !userNm?.trim() || !telNo?.trim() || !idNo?.trim()) {
+      return;
+    }
+
+    if (requestVerificationCodeMutation.isPending) return;
+
+    requestVerificationCodeMutation.mutate(data, {
+      onSuccess: () => {
+        setRemainingTime(300); // 5분 = 300초
+      },
+    });
+  };
+
+  const onClickCheckVerificationCode = (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
+    if (checkVerificationCodeMutation.isPending) return;
+
+    checkVerificationCodeMutation.mutate(args, {
+      onSuccess: () => {
+        router.replace(`/${locale}/find-pw/?step=2`);
+      },
+    });
+  };
+
+  // 타이머 시작 (5분 = 300초)
+  useEffect(() => {
+    if (requestVerificationCodeMutation.isSuccess && remainingTime > 0) {
+      const interval = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [requestVerificationCodeMutation.isSuccess, remainingTime]);
+
+  return (
+    <div className={css.wrap}>
+      <div className={css.inner}>
+        <div className={css.form}>
+          <div className={css.tab}>
+            <button>
+              <span>휴대폰 번호</span>
+              <div className={css.active} />
+            </button>
+            <button disabled>
+              <span>{/* 이메일 주소 */}</span>
+              {/* <div className={css.active} /> */}
+            </button>
+          </div>
+
+          <div className={css.tabBody}>
+            <h3>회원가입 시 등록한 정보를 입력해주세요.</h3>
+
+            <div className={css.userInfoBox}>
+              <div>
+                <Controller
+                  control={form.control}
+                  name="userId"
+                  render={({ field }) => (
+                    <TextInput {...field} variant="unstyled" type="text" placeholder="아이디" />
+                  )}
+                />
+              </div>
+              <div>
+                <Controller
+                  control={form.control}
+                  name="userNm"
+                  render={({ field }) => (
+                    <TextInput {...field} variant="unstyled" type="text" placeholder="이름" />
+                  )}
+                />
+              </div>
+              <div>
+                <Controller
+                  control={form.control}
+                  name="telNo"
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      variant="unstyled"
+                      type="text"
+                      placeholder="연락처('-' 없이 입력)"
+                      inputMode="numeric"
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <Controller
+                  control={form.control}
+                  name="idNo"
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      variant="unstyled"
+                      type="text"
+                      placeholder="생년월일(YYMMDD)"
+                      inputMode="numeric"
+                      maxLength={6}
+                    />
+                  )}
+                />
+              </div>
+              <div>
+                <button
+                  onClick={() => onClickRequestVerificationCode(form.getValues())}
+                  disabled={
+                    requestVerificationCodeMutation.isPending ||
+                    !userId?.trim() ||
+                    !userNm?.trim() ||
+                    !telNo?.trim() ||
+                    !idNo?.trim()
+                  }
+                  className={css.requestVerificationCodeButton}
+                >
+                  {requestVerificationCodeMutation.isPending
+                    ? "인증번호 요청 중..."
+                    : requestVerificationCodeMutation.isSuccess
+                    ? "인증번호 재전송"
+                    : "인증번호 요청"}
+                </button>
+              </div>
+            </div>
+
+            {requestVerificationCodeMutation.isSuccess && (
+              <div className={clsx(css.verificationCodeBox)}>
+                <Controller
+                  control={form.control}
+                  name="cetNo"
+                  render={({ field }) => (
+                    <TextInput
+                      {...field}
+                      variant="unstyled"
+                      type="text"
+                      placeholder="인증번호를 입력하세요."
+                      inputMode="numeric"
+                      maxLength={6}
+                      styles={{
+                        input: {
+                          backgroundColor: "#fff",
+                        },
+                      }}
+                      rightSection={
+                        <div className={css.RemainingTime}>
+                          {remainingTime > 0 ? formatTimeMMSS(remainingTime) : "00:00"}
+                        </div>
+                      }
+                    />
+                  )}
+                />
+              </div>
+            )}
+
+            <div className={css.verificationCodeButtonBox}>
+              <CustomButton
+                onClick={() =>
+                  onClickCheckVerificationCode({
+                    userId: form.getValues().userId,
+                    cetTp: form.getValues().cetTp,
+                    cetNo: form.getValues().cetNo,
+                  })
+                }
+                disabled={
+                  checkVerificationCodeMutation.isPending ||
+                  !requestVerificationCodeMutation.isSuccess
+                }
+                style={{ borderRadius: "0px" }}
+                variant={
+                  checkVerificationCodeMutation.isPending || cetNo?.length !== 6
+                    ? "gray"
+                    : "default"
+                }
+              >
+                {checkVerificationCodeMutation.isPending ? "인증 확인 중..." : "인증 확인"}
+              </CustomButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,53 +1,28 @@
 import { useRouter } from "next/router";
-import css from "./find-pw.module.scss";
+import css from "./request-code.module.scss";
 import { useTranslation } from "next-i18next";
-import { TextInput, UnstyledButton } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import clsx from "clsx";
-import { Controller, useForm, useFormContext, UseFormReturn, useWatch } from "react-hook-form";
-import { TCetRecvTp, TCetTp, useTCM200001SSP04, useTCM200001SSP05 } from "@/hooks/tms/use-auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { TCetTp, useTCM200001SSP04, useTCM200001SSP05 } from "@/hooks/tms/use-auth";
 import { useEffect, useState } from "react";
 import CustomButton from "@/components/common/custom-button";
-import { TFindPwForm } from "../../pages/[locale]/find-pw";
+import { TFindIdForm } from "@/pages/[locale]/find-id";
+import { formatTimeMMSS } from "@/utils/date-formatter";
 
-// 초를 MM:SS 형식으로 변환
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-};
-
-export default function FindPw() {
+export default function FindId() {
   const router = useRouter();
+  const locale = router.query.locale?.toString() || "ko";
   const { t } = useTranslation();
+
   const [remainingTime, setRemainingTime] = useState(0); // 초 단위 (5분 = 300초)
 
-  const locale = router.query.locale?.toString() || "ko";
-
-  const form = useFormContext<TFindPwForm>();
+  const form = useFormContext<TFindIdForm>();
 
   /** 인증번호 요청 */
   const requestVerificationCodeMutation = useTCM200001SSP04();
   /** 인증번호 확인 */
   const checkVerificationCodeMutation = useTCM200001SSP05();
-
-  // 타이머 시작 (5분 = 300초)
-  useEffect(() => {
-    if (requestVerificationCodeMutation.isSuccess && remainingTime > 0) {
-      const interval = setInterval(() => {
-        setRemainingTime((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }
-  }, [requestVerificationCodeMutation.isSuccess, remainingTime]);
 
   // 필요한 필드만 감시
   const [cetNo, userId, userNm, telNo, idNo] = useWatch({
@@ -55,7 +30,7 @@ export default function FindPw() {
     name: ["cetNo", "userId", "userNm", "telNo", "idNo"],
   });
 
-  const onClickRequestVerificationCode = (data: TFindPwForm) => {
+  const onClickRequestVerificationCode = (data: TFindIdForm) => {
     // 필수 필드 검증: 아이디, 이름, 연락처, 생년월일이 빈값이면 실행하지 않음
     if (!userId?.trim() || !userNm?.trim() || !telNo?.trim() || !idNo?.trim()) {
       return;
@@ -75,11 +50,27 @@ export default function FindPw() {
 
     checkVerificationCodeMutation.mutate(args, {
       onSuccess: () => {
-        console.log("success");
-        router.replace(`/${locale}/find-pw/?step=2`);
+        router.replace(`/${locale}/find-id/?step=2`);
       },
     });
   };
+
+  // 타이머 시작 (5분 = 300초)
+  useEffect(() => {
+    if (requestVerificationCodeMutation.isSuccess && remainingTime > 0) {
+      const interval = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [requestVerificationCodeMutation.isSuccess, remainingTime]);
 
   return (
     <div className={css.wrap}>
@@ -177,20 +168,16 @@ export default function FindPw() {
                   name="cetNo"
                   render={({ field }) => (
                     <TextInput
+                      {...field}
                       variant="unstyled"
                       type="text"
                       placeholder="인증번호를 입력하세요."
                       inputMode="numeric"
                       maxLength={6}
-                      {...field}
-                      styles={{
-                        input: {
-                          backgroundColor: "#fff",
-                        },
-                      }}
+                      styles={{ input: { backgroundColor: "#fff" } }}
                       rightSection={
                         <div className={css.RemainingTime}>
-                          {remainingTime > 0 ? formatTime(remainingTime) : "00:00"}
+                          {remainingTime > 0 ? formatTimeMMSS(remainingTime) : "00:00"}
                         </div>
                       }
                     />
@@ -212,9 +199,7 @@ export default function FindPw() {
                   checkVerificationCodeMutation.isPending ||
                   !requestVerificationCodeMutation.isSuccess
                 }
-                style={{
-                  borderRadius: "0px",
-                }}
+                style={{ borderRadius: "0px" }}
                 variant={
                   checkVerificationCodeMutation.isPending || cetNo?.length !== 6
                     ? "gray"

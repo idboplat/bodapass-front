@@ -4,10 +4,10 @@ import { LoadingOverlay, PasswordInput } from "@mantine/core";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { TFindPwForm } from "@/pages/[locale]/find-pw";
-import css from "./reset-pw.module.scss";
+import { TFindPwForm } from "../../pages/[locale]/find-pw";
+import css from "./result-id.module.scss";
 
-export default function ResetPw() {
+export default function ResultId() {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -38,7 +38,7 @@ export default function ResetPw() {
     resetPwMutation.mutate(payload, {
       onSuccess: () => {
         console.log("success");
-        router.replace(`/${locale}/find-pw/?step=3`);
+        router.replace(`/${locale}/signin`);
       },
     });
   };

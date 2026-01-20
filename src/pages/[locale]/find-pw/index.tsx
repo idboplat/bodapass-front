@@ -1,7 +1,7 @@
 import { TCetRecvTp, TCetTp } from "@/hooks/tms/use-auth";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
-import FindPw from "@/components/find-pw/find-pw";
+import FindPw from "@/components/find-pw/request-code";
 import ResetPw from "@/components/find-pw/reset-pw";
 import Complete from "@/components/find-pw/complete";
 
@@ -13,7 +13,6 @@ export type TFindPwForm = {
   cetTp: TCetTp;
   cetRecvTp: TCetRecvTp;
   cetNo: string;
-  step: string;
   password: string;
   passwordConfirm: string;
 };
@@ -30,7 +29,6 @@ export default function Page({ children }: { children: React.ReactNode }) {
       cetTp: "21",
       cetRecvTp: "M",
       cetNo: "",
-      step: "1",
       password: "",
       passwordConfirm: "",
     },
