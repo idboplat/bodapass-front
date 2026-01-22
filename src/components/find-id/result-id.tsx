@@ -1,11 +1,13 @@
 import CustomButton from "@/components/common/custom-button";
-import { useTCM200001SSP06 } from "@/hooks/tms/use-auth";
-import { LoadingOverlay, PasswordInput } from "@mantine/core";
+import { useTCM200001SMQ01 } from "@/hooks/tms/use-auth";
+import { LoadingOverlay } from "@mantine/core";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { TFindPwForm } from "../../pages/[locale]/find-pw";
+import { useFormContext, useWatch } from "react-hook-form";
+import { TFindIdForm } from "@/pages/[locale]/find-id";
 import css from "./result-id.module.scss";
+import KakaoIcon from "/public/assets/svg/kakao-icon.svg";
+import dayjs from "@/libraries/dayjs";
 
 export default function ResultId() {
   const router = useRouter();
@@ -13,99 +15,110 @@ export default function ResultId() {
 
   const locale = router.query.locale?.toString() || "ko";
 
-  const form = useFormContext<TFindPwForm>();
+  const form = useFormContext<TFindIdForm>();
 
-  const resetPwMutation = useTCM200001SSP06();
-
-  const [password, passwordConfirm] = useWatch({
+  const [userNm, idNo, telNo, cetTp, cetNo] = useWatch({
     control: form.control,
-    name: ["password", "passwordConfirm"],
+    name: ["userNm", "idNo", "telNo", "cetTp", "cetNo"],
   });
 
-  // 비밀번호가 다를 때 에러 메시지 표시
-  const isPasswordMismatch = passwordConfirm && password && password !== passwordConfirm;
+  const idResults = useTCM200001SMQ01({
+    userNm,
+    idNo,
+    telNo,
+    cetTp,
+    cetNo,
+  });
 
-  const onClickResetPw = (data: TFindPwForm) => {
-    if (resetPwMutation.isPending) return;
+  const idAccountList = idResults.data?.filter((item) => item.loginTp !== "2") || [];
+  const socialAccountList = idResults.data?.filter((item) => item.loginTp === "2") || [];
 
-    const payload = {
-      userId: data.userId,
-      userPswd: data.password,
-      cetTp: data.cetTp,
-      cetNo: data.cetNo,
-    };
+  if (idResults.isPending && idResults.isError === false) {
+    return <LoadingOverlay visible />;
+  }
 
-    resetPwMutation.mutate(payload, {
-      onSuccess: () => {
-        console.log("success");
-        router.replace(`/${locale}/signin`);
-      },
-    });
-  };
+  if (idResults.isError) {
+    return (
+      <div className={css.errorWrap}>
+        <div className={css.errorMessageBox}>
+          <p>{idResults.error.message}</p>
+        </div>
+
+        <div className={css.errorButtonBox}>
+          <button
+            onClick={() => {
+              form.setValue("cetNo", ""); // 인증번호 초기화
+              router.replace(`/${locale}/find-id/?step=1`);
+            }}
+          >
+            이전으로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={css.wrap}>
         <div className={css.inner}>
-          <h3>회원님의 비밀번호 재설정해주세요.</h3>
+          <h3>
+            아이디가 <span>{idResults.data?.length}건</span> 검색되었습니다.
+          </h3>
 
-          <div className={css.form}>
+          {/* 아이디 계정 리스트 */}
+          {idAccountList.length > 0 && (
             <div className={css.userInfoBox}>
               <div>
-                <Controller
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <PasswordInput
-                      {...field}
-                      variant="unstyled"
-                      type="text"
-                      placeholder="비밀번호(8자 이상+영문대소문자+숫자+특수문자)"
-                      classNames={{
-                        input: css.input,
-                      }}
-                    />
-                  )}
-                />
+                <p>· 동명이인이 있을경우, 본인 외의 ID가 노출될 수 있습니다.</p>
+                {/* <p>· 개인정보보호를 위해 일부분은 *로 표시됩니다.</p> */}
               </div>
+
+              {idAccountList.map((item) => (
+                <div key={item.extnUserId}>
+                  <span>
+                    {item.extnUserId} (가입일: {dayjs(item.creWrkDtm).format("YYYY-MM-DD")})
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* 소셜 계정 리스트 */}
+          {socialAccountList.length > 0 && (
+            <div className={css.userInfoBox}>
               <div>
-                <Controller
-                  control={form.control}
-                  name="passwordConfirm"
-                  render={({ field }) => (
-                    <PasswordInput
-                      {...field}
-                      variant="unstyled"
-                      type="text"
-                      placeholder="비밀번호 확인"
-                      classNames={{
-                        input: css.input,
-                      }}
-                    />
-                  )}
-                />
+                <p>· 동명이인이 있을경우, 본인 외의 ID가 노출될 수 있습니다.</p>
+                {/* <p>· 개인정보보호를 위해 일부분은 *로 표시됩니다.</p> */}
               </div>
-            </div>
 
-            <div className={css.errorMessage}>
-              {isPasswordMismatch && "비밀번호가 일치하지 않습니다."}
+              {socialAccountList.map((item) => (
+                <div key={item.extnUserId}>
+                  <div className={css.iconBox}>
+                    <KakaoIcon width={14} height={14} />
+                  </div>
+                  <span>
+                    소셜로그인 {item.extnUserId} (가입일:{" "}
+                    {dayjs(item.creWrkDtm).format("YYYY-MM-DD")})
+                  </span>
+                </div>
+              ))}
             </div>
+          )}
 
-            <div className={css.buttonBox}>
-              <CustomButton
-                onClick={() => onClickResetPw(form.getValues())}
-                disabled={
-                  resetPwMutation.isPending || isPasswordMismatch || !password || !passwordConfirm
-                }
-                style={{ borderRadius: "0px" }}
-                fullWidth
-              >
-                설정 완료
-              </CustomButton>
-            </div>
+          <div className={css.buttonBox}>
+            <CustomButton
+              style={{ borderRadius: "0px" }}
+              fullWidth
+              onClick={() => {
+                router.replace(`/${locale}/find-pw/?step=1`);
+              }}
+            >
+              비밀번호 찾기
+            </CustomButton>
           </div>
         </div>
       </div>
-      <LoadingOverlay visible={resetPwMutation.isPending} />
     </>
   );
 }

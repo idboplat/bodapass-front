@@ -1,76 +1,119 @@
 .wrap {
-    display: flex;
-    align-items: center;
-    min-height: 100svh;
-    flex-direction: column;
-    position: relative;
-    padding: 0 14px;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  flex-direction: column;
+  position: relative;
+  padding: 0 14px;
 }
 
 .inner {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    min-height: 500px;
-    padding: 20px 0;
-    background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  min-height: 500px;
+  padding: 20px 0;
+  background: #fafafa;
 
-    h3 {
-        text-align: center;
-        color: #666;
-        font-size: 0.875rem;
-        font-weight: 400;
+  > h3 {
+    text-align: center;
+    color: #666;
+    font-size: 0.875rem;
+    font-weight: 400;
+
+    > span {
+      color: #3d99d5;
+      font-weight: 500;
     }
-}
-
-.form {
-    padding: 10px;
+  }
 }
 
 .userInfoBox {
-    margin-top: 10px;
+  margin-top: 10px;
+  background-color: #ffffff;
 
-    > div {
-        background-color: #ffffff;
-        border: 1px solid #ededed;
-        height: 50px;
-        display: flex;
-        align-items: center;
+  > div {
+    padding: 10px 12px;
+    border: 1px solid #ededed;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    > p {
+      font-size: 0.625rem;
+      color: #999;
     }
 
-    > div:not(:last-of-type) {
-        border-bottom: none;
+    > span {
+      font-size: 0.75rem;
+      color: #333;
+      @include util.text-line(1, 1.2);
     }
+  }
 
-    :global(.app-InputWrapper-root) {
-        flex: 1;
-        margin: 0 10px;
-    }
+  > div:not(:last-of-type) {
+    border-bottom: none;
+  }
+}
 
-    // PasswordInput 내부 input 요소의 placeholder
-    .input input::placeholder {
-        font-size: 0.75rem;
-    }
+.iconBox {
+  border: 1px solid #d9d9d9;
+  padding: 4px;
+  display: flex;
+  border-radius: 2px;
 }
 
 .buttonBox {
-    margin-top: 10px;
-    height: 50px;
+  margin-top: 30px;
+  height: 50px;
 
-    > button {
-        font-size: 0.875rem;
-        font-weight: 500;
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
+  > button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .errorMessage {
-    font-size: 0.75rem;
-    color: #ff5f57;
-    margin-top: 0.25rem;
-    min-height: 1.2rem;
-    line-height: 1.2rem;
+  font-size: 0.75rem;
+  color: #ff5f57;
+  margin-top: 0.25rem;
+  min-height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+// error or success
+
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding-top: 30vh;
+  gap: 1rem;
+}
+
+.errorMessageBox {
+  color: #333;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorButtonBox {
+  > button {
+    padding: 0.3rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    border: none;
+    background-color: #666;
+    color: #fff;
+  }
 }

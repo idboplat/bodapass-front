@@ -6,6 +6,7 @@ import { useState } from "react";
 import { nativeAlert, sendMessageToDevice } from "../use-device-api";
 import { SESSION_LOCAL_STORAGE_KEY } from "@/constants";
 import { DEVICE_API, Promised, TIdTp, TLoginTp, TWrkTp } from "@/types/common";
+import { TmsError } from "@/libraries/error";
 
 /**
  * 01: 회원 가입
@@ -225,7 +226,11 @@ export const useTCM200001SSP04 = () =>
     },
   });
 
-/** 인증번호 확인 */
+/**
+ * 인증번호 확인
+ *
+ * 아이디 찾기시에는 사용하지 않는다.
+ */
 export const useTCM200001SSP05 = () =>
   useMutation({
     mutationFn: async (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
@@ -275,7 +280,7 @@ const getTCM200001SMQ01 = async (args: {
   cetTp: TCetTp;
   cetNo: string;
 }) => {
-  const res = await callTms<StringRspnData<1>>({
+  const res = await callTms<StringRspnData<3>>({
     svcId: "TCM200001SMQ01",
     locale: "ko",
     session: null,
@@ -286,12 +291,15 @@ const getTCM200001SMQ01 = async (args: {
 
   return data.map((d) => ({
     extnUserId: d.F01,
+    loginTp: d.F02,
+    creWrkDtm: d.F03,
   }));
 };
 
 export type TTCM200001SMQ01Data = Promised<typeof getTCM200001SMQ01>;
 export type TTCM200001SMQ01RowData = TTCM200001SMQ01Data[number];
 
+/** 아이디 찾기 */
 export const useTCM200001SMQ01 = (args: {
   userNm: string;
   idNo: string;
@@ -300,6 +308,22 @@ export const useTCM200001SMQ01 = (args: {
   cetNo: string;
 }) =>
   useQuery({
-    queryKey: ["TCM200001SMQ01", args.userNm, args.idNo, args.telNo, args.cetTp, args.cetNo],
+    queryKey: [
+      "TCM200001SMQ01",
+      args.userNm,
+      args.idNo,
+      args.telNo,
+      args.cetTp,
+      args.cetNo,
+      "ignore",
+    ],
     queryFn: () => getTCM200001SMQ01(args),
+    retry: (failureCount, error) => {
+      if (error instanceof TmsError && error.errCode === "10017") {
+        // 인증번호 오류일 경우 재시도 하지 않음
+        return false;
+      }
+
+      return failureCount < 2;
+    },
   });

@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import { TextInput } from "@mantine/core";
 import clsx from "clsx";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { TCetTp, useTCM200001SSP04, useTCM200001SSP05 } from "@/hooks/tms/use-auth";
+import { useTCM200001SSP04 } from "@/hooks/tms/use-auth";
 import { useEffect, useState } from "react";
 import CustomButton from "@/components/common/custom-button";
 import { TFindIdForm } from "@/pages/[locale]/find-id";
@@ -21,39 +21,38 @@ export default function FindId() {
 
   /** 인증번호 요청 */
   const requestVerificationCodeMutation = useTCM200001SSP04();
-  /** 인증번호 확인 */
-  const checkVerificationCodeMutation = useTCM200001SSP05();
 
   // 필요한 필드만 감시
-  const [cetNo, userId, userNm, telNo, idNo] = useWatch({
+  const [cetNo, userNm, telNo, idNo] = useWatch({
     control: form.control,
-    name: ["cetNo", "userId", "userNm", "telNo", "idNo"],
+    name: ["cetNo", "userNm", "telNo", "idNo"],
   });
 
   const onClickRequestVerificationCode = (data: TFindIdForm) => {
-    // 필수 필드 검증: 아이디, 이름, 연락처, 생년월일이 빈값이면 실행하지 않음
-    if (!userId?.trim() || !userNm?.trim() || !telNo?.trim() || !idNo?.trim()) {
+    if (requestVerificationCodeMutation.isPending) return;
+
+    // 필수 필드 검증: 이름, 연락처, 생년월일이 빈값이면 실행하지 않음
+    if (!userNm?.trim() || !telNo?.trim() || !idNo?.trim()) {
       return;
     }
 
-    if (requestVerificationCodeMutation.isPending) return;
-
-    requestVerificationCodeMutation.mutate(data, {
-      onSuccess: () => {
-        setRemainingTime(300); // 5분 = 300초
+    requestVerificationCodeMutation.mutate(
+      { ...data, userId: "" },
+      {
+        onSuccess: () => {
+          setRemainingTime(300); // 5분 = 300초
+        },
       },
-    });
+    );
   };
 
-  const onClickCheckVerificationCode = (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
-    if (checkVerificationCodeMutation.isPending) return;
+  const onSubmit = form.handleSubmit((data) => {
+    if (remainingTime <= 0 || data.cetNo.length !== 6) {
+      return;
+    }
 
-    checkVerificationCodeMutation.mutate(args, {
-      onSuccess: () => {
-        router.replace(`/${locale}/find-id/?step=2`);
-      },
-    });
-  };
+    router.replace(`/${locale}/find-id/?step=2`);
+  });
 
   // 타이머 시작 (5분 = 300초)
   useEffect(() => {
@@ -91,15 +90,6 @@ export default function FindId() {
             <h3>회원가입 시 등록한 정보를 입력해주세요.</h3>
 
             <div className={css.userInfoBox}>
-              <div>
-                <Controller
-                  control={form.control}
-                  name="userId"
-                  render={({ field }) => (
-                    <TextInput {...field} variant="unstyled" type="text" placeholder="아이디" />
-                  )}
-                />
-              </div>
               <div>
                 <Controller
                   control={form.control}
@@ -145,7 +135,6 @@ export default function FindId() {
                   onClick={() => onClickRequestVerificationCode(form.getValues())}
                   disabled={
                     requestVerificationCodeMutation.isPending ||
-                    !userId?.trim() ||
                     !userNm?.trim() ||
                     !telNo?.trim() ||
                     !idNo?.trim()
@@ -162,7 +151,11 @@ export default function FindId() {
             </div>
 
             {requestVerificationCodeMutation.isSuccess && (
-              <div className={clsx(css.verificationCodeBox)}>
+              <form
+                id="verificationCodeForm"
+                className={clsx(css.verificationCodeBox)}
+                onSubmit={onSubmit}
+              >
                 <Controller
                   control={form.control}
                   name="cetNo"
@@ -173,6 +166,7 @@ export default function FindId() {
                       type="text"
                       placeholder="인증번호를 입력하세요."
                       inputMode="numeric"
+                      autoComplete="one-time-code"
                       maxLength={6}
                       styles={{ input: { backgroundColor: "#fff" } }}
                       rightSection={
@@ -183,30 +177,18 @@ export default function FindId() {
                     />
                   )}
                 />
-              </div>
+              </form>
             )}
 
             <div className={css.verificationCodeButtonBox}>
               <CustomButton
-                onClick={() =>
-                  onClickCheckVerificationCode({
-                    userId: form.getValues().userId,
-                    cetTp: form.getValues().cetTp,
-                    cetNo: form.getValues().cetNo,
-                  })
-                }
-                disabled={
-                  checkVerificationCodeMutation.isPending ||
-                  !requestVerificationCodeMutation.isSuccess
-                }
+                type="submit"
+                form="verificationCodeForm"
+                disabled={!requestVerificationCodeMutation.isSuccess}
                 style={{ borderRadius: "0px" }}
-                variant={
-                  checkVerificationCodeMutation.isPending || cetNo?.length !== 6
-                    ? "gray"
-                    : "default"
-                }
+                variant={cetNo.length !== 6 ? "gray" : "default"}
               >
-                {checkVerificationCodeMutation.isPending ? "인증 확인 중..." : "인증 확인"}
+                인증 확인
               </CustomButton>
             </div>
           </div>

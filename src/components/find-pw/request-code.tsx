@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import CustomButton from "@/components/common/custom-button";
 import { TFindPwForm } from "@/pages/[locale]/find-pw";
 import { formatTimeMMSS } from "@/utils/date-formatter";
+import { nativeLogger } from "@/hooks/use-device-api";
 
 export default function FindPw() {
   const router = useRouter();
@@ -45,15 +46,21 @@ export default function FindPw() {
     });
   };
 
-  const onClickCheckVerificationCode = (args: { userId: string; cetTp: TCetTp; cetNo: string }) => {
+  const onSubmit = form.handleSubmit((data) => {
+    if (!requestVerificationCodeMutation.isSuccess) return;
     if (checkVerificationCodeMutation.isPending) return;
 
-    checkVerificationCodeMutation.mutate(args, {
+    // 필수 필드 검증: 아이디, 이름, 연락처, 생년월일이 빈값이면 실행하지 않음
+    if (!userId?.trim() || !userNm?.trim() || !telNo?.trim() || !idNo?.trim()) {
+      return;
+    }
+
+    checkVerificationCodeMutation.mutate(data, {
       onSuccess: () => {
         router.replace(`/${locale}/find-pw/?step=2`);
       },
     });
-  };
+  });
 
   // 타이머 시작 (5분 = 300초)
   useEffect(() => {
@@ -162,7 +169,11 @@ export default function FindPw() {
             </div>
 
             {requestVerificationCodeMutation.isSuccess && (
-              <div className={clsx(css.verificationCodeBox)}>
+              <form
+                id="verificationCodeForm"
+                className={clsx(css.verificationCodeBox)}
+                onSubmit={onSubmit}
+              >
                 <Controller
                   control={form.control}
                   name="cetNo"
@@ -173,6 +184,7 @@ export default function FindPw() {
                       type="text"
                       placeholder="인증번호를 입력하세요."
                       inputMode="numeric"
+                      autoComplete="one-time-code"
                       maxLength={6}
                       styles={{
                         input: {
@@ -187,21 +199,16 @@ export default function FindPw() {
                     />
                   )}
                 />
-              </div>
+              </form>
             )}
 
             <div className={css.verificationCodeButtonBox}>
               <CustomButton
-                onClick={() =>
-                  onClickCheckVerificationCode({
-                    userId: form.getValues().userId,
-                    cetTp: form.getValues().cetTp,
-                    cetNo: form.getValues().cetNo,
-                  })
-                }
+                type="submit"
+                form="verificationCodeForm"
                 disabled={
-                  checkVerificationCodeMutation.isPending ||
-                  !requestVerificationCodeMutation.isSuccess
+                  !requestVerificationCodeMutation.isSuccess ||
+                  checkVerificationCodeMutation.isPending
                 }
                 style={{ borderRadius: "0px" }}
                 variant={

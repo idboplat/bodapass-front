@@ -5,7 +5,6 @@ import FindId from "@/components/find-id/request-code";
 import ResultId from "@/components/find-id/result-id";
 
 export type TFindIdForm = {
-  userId: string;
   userNm: string;
   idNo: string;
   telNo: string;
@@ -21,7 +20,6 @@ export default function Page() {
 
   const form = useForm<TFindIdForm>({
     defaultValues: {
-      userId: "",
       userNm: "",
       idNo: "",
       telNo: "",
