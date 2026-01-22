@@ -100,7 +100,7 @@ export default function CrewStep4({
 
   return (
     <>
-      <CustomStep totalSteps={4} currentStep={2} />
+      <CustomStep totalSteps={4} currentStep={4} />
 
       <div>
         {/* 추후에 다시 필요할 수 도 있음 */}

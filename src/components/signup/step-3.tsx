@@ -39,7 +39,7 @@ export default function Step3({ idTp, onClickNext, onClickPrev, images, isLastSt
 
   return (
     <>
-      <CustomStep totalSteps={4} currentStep={4} />
+      <CustomStep totalSteps={4} currentStep={3} />
 
       <div className={css.infoBox}>
         <div>신분증 종류: {findEntity(IdCardEntity, idTp)?.[1]}</div>

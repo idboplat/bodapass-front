@@ -104,7 +104,7 @@ export default function LeaderStep4({
 
   return (
     <>
-      <CustomStep totalSteps={4} currentStep={2} />
+      <CustomStep totalSteps={4} currentStep={4} />
       <div>
         <Controller
           control={form.control}

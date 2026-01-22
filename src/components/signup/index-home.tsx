@@ -24,8 +24,8 @@ export default function IndexHome({}: PageProps) {
 
   return (
     <div className={"mobileLayout"}>
-      <CustomStep totalSteps={4} currentStep={1} />
       <div className={css.wrap}>
+        <CustomStep totalSteps={4} currentStep={1} />
         <div className={css.inner}>
           <div className={css.buttonContainer}>
             <button className={css.roleButton} onClick={nextPage("1")}>

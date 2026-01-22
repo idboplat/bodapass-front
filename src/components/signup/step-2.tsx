@@ -50,7 +50,7 @@ export default function Step2({
 
   return (
     <div>
-      <CustomStep totalSteps={4} currentStep={3} />
+      <CustomStep totalSteps={4} currentStep={2} />
 
       <div className={css.nav}>
         <div className={css.navText}>
