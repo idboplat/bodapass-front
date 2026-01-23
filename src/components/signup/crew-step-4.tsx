@@ -118,20 +118,6 @@ export default function CrewStep4({
 
         <Controller
           control={form.control}
-          name="userNm"
-          render={({ field, fieldState }) => (
-            <CustomInput
-              {...field}
-              label="이름"
-              required
-              error={fieldState.error?.message}
-              classNames={{ label: css.label, input: css.input }}
-            />
-          )}
-        />
-
-        <Controller
-          control={form.control}
           name="zipCd"
           render={({ field, fieldState }) => (
             <CustomInput

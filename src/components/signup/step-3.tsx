@@ -8,7 +8,6 @@ import { TSignUpDto } from "@/libraries/auth/auth.dto";
 import { TIdTp } from "@/types/common";
 import { useTCW000100SMQ03 } from "@/hooks/tms/use-master";
 import CustomStep from "../common/custom-step";
-import OutlineButton from "../common/outline-button";
 import CustomButton from "../common/custom-button";
 import { CustomInput } from "../common/custom-input";
 
@@ -92,13 +91,10 @@ export default function Step3({ idTp, onClickNext, onClickPrev, images, isLastSt
           render={({ field, fieldState }) => (
             <CustomInput
               value={field.value}
-              defaultValue={field.value}
-              onChange={() => {}}
               label="이름"
               mt={0}
               error={fieldState.error?.message}
               classNames={{ label: css.label, input: css.input }}
-              readOnly
             />
           )}
         />
@@ -109,11 +105,11 @@ export default function Step3({ idTp, onClickNext, onClickPrev, images, isLastSt
             <Controller
               control={form.control}
               name="idNo1"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <CustomInput
                   {...field}
                   required
-                  error={!!errors.idNo1?.message}
+                  error={fieldState.error?.message}
                   classNames={{ label: css.label, input: css.input }}
                 />
               )}
@@ -124,11 +120,11 @@ export default function Step3({ idTp, onClickNext, onClickPrev, images, isLastSt
             <Controller
               control={form.control}
               name="idNo2"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <CustomInput
                   {...field}
                   required
-                  error={!!errors.idNo2?.message}
+                  error={fieldState.error?.message}
                   classNames={{ label: css.label, input: css.input }}
                 />
               )}

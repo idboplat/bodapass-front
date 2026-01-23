@@ -125,20 +125,6 @@ export default function LeaderStep4({
           )}
         />
 
-        <Controller
-          control={form.control}
-          name="userNm"
-          render={({ field, fieldState }) => (
-            <CustomInput
-              {...field}
-              label="이름"
-              required
-              error={fieldState.error?.message}
-              classNames={{ label: css.label, input: css.input }}
-            />
-          )}
-        />
-
         {loginTp !== "2" && (
           <Controller
             control={form.control}
