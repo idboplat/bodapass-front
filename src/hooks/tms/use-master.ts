@@ -11,6 +11,7 @@ export const getTCW000100SMQ02 = async (args: { session: Session | null }) => {
     locale: "ko",
     data: [""],
     pgSize: 0, // 전부 다 조회
+    zipYn: true,
   });
 
   const data = response.svcRspnData || [];
