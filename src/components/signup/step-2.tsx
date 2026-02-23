@@ -27,6 +27,8 @@ export default function Step2({
   const router = useRouter();
   const camera = useCamera();
 
+  console.log("pathname", router.asPath);
+
   const WCW000002SSQ01 = useWCW000002SSQ01();
 
   const onClickCapture = async () => {
@@ -72,7 +74,11 @@ export default function Step2({
             if (!value) return;
             const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
             searchParams.set("idTp", value as TIdTp);
-            router.replace(`/${locale}/signup/?${searchParams.toString()}`);
+
+            router.replace({
+              pathname: router.pathname, // 반장 팀원에 따라 pathname을 변경한다.
+              query: { ...Object.fromEntries(searchParams.entries()), locale },
+            });
           }}
         />
       </div>
