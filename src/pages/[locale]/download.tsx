@@ -13,7 +13,7 @@ export default function Download() {
       </div>
       <div className={css.content}>
         <a
-          href="https://play.google.com/apps/internaltest/4701036027179610563"
+          href="https://play.google.com/apps/internaltest/4700762729987241818"
           className={css.DownloadAppBtn}
           target="_blank"
         >
