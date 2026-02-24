@@ -127,7 +127,7 @@ export default function CrewConclude({ session, contractData }: Props) {
             name="instCd"
             render={({ field, fieldState }) => (
               <CustomSelect
-                {...form.register("instCd")}
+                {...field}
                 label="직종"
                 searchable
                 required

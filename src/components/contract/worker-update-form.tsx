@@ -177,7 +177,7 @@ export default function WorkerUpdateForm({ contractData, session }: Props) {
             name="instCd"
             render={({ field, fieldState }) => (
               <CustomSelect
-                {...form.register("instCd")}
+                {...field}
                 label="직종"
                 searchable
                 required
