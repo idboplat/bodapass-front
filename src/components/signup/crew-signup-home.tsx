@@ -1,7 +1,8 @@
 import css from "./crew-signup-home.module.scss";
+import dayjs from "@/libraries/dayjs";
 import { useSession } from "@/libraries/auth/use-session";
 import { useRouter } from "next/router";
-import { nativeLogger, sendMessageToDevice } from "@/hooks/use-device-api";
+import { nativeAlert, nativeLogger, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
 import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
@@ -51,6 +52,7 @@ export default function CrewSignUpHome({}: Props) {
 
   const step3Next = async () => {
     if (WCW000001SSP02.isLoading) return;
+    form.clearErrors();
 
     if (form.getValues("idNo1").length !== 6) {
       form.setError("idNo1", { message: "신분증 앞 6자리를 입력해주세요." });
@@ -59,6 +61,18 @@ export default function CrewSignUpHome({}: Props) {
 
     if (form.getValues("idNo2").length !== 7) {
       form.setError("idNo2", { message: "신분증 뒤 7자리를 입력해주세요." });
+      return;
+    }
+
+    const isuDd = dayjs(form.getValues("isuDd"), "YYYYMMDD", true);
+
+    if (!isuDd.isValid()) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
+      return;
+    }
+
+    if (!isuDd.isBefore(dayjs(), "day")) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
       return;
     }
 
@@ -94,6 +108,13 @@ export default function CrewSignUpHome({}: Props) {
       idTp: ctx.idTp,
       brkrId: session.userId, // 반장 아이디
     };
+
+    // id 체크
+    if (payload.exterUserId.toLowerCase() === "guest") {
+      nativeAlert("사용할 수 없는 아이디입니다.");
+      form.setError("exterUserId", { message: "사용할 수 없는 아이디입니다." });
+      return;
+    }
 
     WCW000001SSP02.mutation.mutate(payload, {
       onSuccess: (data) => {

@@ -11,6 +11,7 @@ import Step3 from "./step-3";
 import { WithSignInLayout } from "./layout";
 import { SOCIAL_LOGIN_SESSION_STORAGE_KEY } from "@/constants";
 import { useSignupCtx } from "./context-provider";
+import dayjs from "@/libraries/dayjs";
 
 interface Props {}
 
@@ -46,7 +47,7 @@ export default function RemoteCrewSignupHome({}: Props) {
 
   const step4Submit = async () => {
     if (WCW000001SSP02.isLoading) return;
-
+    form.clearErrors();
     const isValid = await form.trigger(["userNm", "idNo1", "idNo2"]);
 
     if (!isValid) return;
@@ -61,14 +62,24 @@ export default function RemoteCrewSignupHome({}: Props) {
       return;
     }
 
+    const isuDd = dayjs(form.getValues("isuDd"), "YYYYMMDD", true);
+
+    if (!isuDd.isValid()) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
+      return;
+    }
+
+    if (!isuDd.isBefore(dayjs(), "day")) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
+      return;
+    }
+
     if (ctx.images.length === 0) {
       const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
       searchParams.set("step", "3");
       router.push(`/${ctx.locale}/signup/?${searchParams.toString()}`);
       return;
     }
-
-    nativeLogger(JSON.stringify(form.formState, null, 2));
 
     const payload = {
       ...form.getValues(),
@@ -88,11 +99,20 @@ export default function RemoteCrewSignupHome({}: Props) {
       brkrId: ctx.brkrId,
     };
 
+    nativeLogger(JSON.stringify(payload, null, 2));
+
     // socialLoginSession 체크
     if (!payload.exterUserId || !payload.password) {
       sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
       nativeAlert("[F999] 비정상적인 접근입니다.");
       router.replace(`/${ctx.locale}/signin`);
+      return;
+    }
+
+    // id 체크
+    if (payload.exterUserId.toLowerCase() === "guest") {
+      nativeAlert("사용할 수 없는 아이디입니다.");
+      form.setError("exterUserId", { message: "사용할 수 없는 아이디입니다." });
       return;
     }
 

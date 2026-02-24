@@ -1,3 +1,4 @@
+import dayjs from "@/libraries/dayjs";
 import { useWCW000001SSP02 } from "@/hooks/tms/use-auth";
 import { nativeAlert, nativeLogger } from "@/hooks/use-device-api";
 import { TScannedResult, TSignUpDto } from "@/libraries/auth/auth.dto";
@@ -47,6 +48,7 @@ export default function LeaderSignupHome({}: Props) {
 
   const step3Next = async () => {
     if (WCW000001SSP02.isLoading) return;
+    form.clearErrors();
 
     const isValid = await form.trigger(["userNm", "idNo1", "idNo2"]);
 
@@ -59,6 +61,18 @@ export default function LeaderSignupHome({}: Props) {
 
     if (form.getValues("idNo2").length !== 7) {
       form.setError("idNo2", { message: "주민등록번호 뒤 7자리를 입력해주세요." });
+      return;
+    }
+
+    const isuDd = dayjs(form.getValues("isuDd"), "YYYYMMDD", true);
+
+    if (!isuDd.isValid()) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
+      return;
+    }
+
+    if (!isuDd.isBefore(dayjs(), "day")) {
+      form.setError("isuDd", { message: "유효하지않은 발급일자 입니다." });
       return;
     }
 
@@ -79,7 +93,8 @@ export default function LeaderSignupHome({}: Props) {
   };
 
   const step4Submit = async () => {
-    nativeLogger(JSON.stringify(form.formState, null, 2));
+    if (WCW000001SSP02.isLoading) return;
+    form.clearErrors();
 
     const payload = {
       ...form.getValues(),
@@ -99,11 +114,20 @@ export default function LeaderSignupHome({}: Props) {
       brkrId: "",
     };
 
+    nativeLogger(JSON.stringify(payload, null, 2));
+
     // socialLoginSession 체크
     if (!payload.exterUserId || !payload.password) {
       sessionStorage.removeItem(SOCIAL_LOGIN_SESSION_STORAGE_KEY);
       nativeAlert("[FW990] 비정상적인 접근입니다.");
       router.replace(`/${ctx.locale}/signin`);
+      return;
+    }
+
+    // id 체크
+    if (payload.exterUserId.toLowerCase() === "guest") {
+      nativeAlert("사용할 수 없는 아이디입니다.");
+      form.setError("exterUserId", { message: "사용할 수 없는 아이디입니다." });
       return;
     }
 
