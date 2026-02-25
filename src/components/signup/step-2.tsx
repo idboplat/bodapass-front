@@ -27,8 +27,6 @@ export default function Step2({
   const router = useRouter();
   const camera = useCamera();
 
-  console.log("pathname", router.asPath);
-
   const WCW000002SSQ01 = useWCW000002SSQ01();
 
   const onClickCapture = async () => {
@@ -67,7 +65,7 @@ export default function Step2({
           data={[
             { value: "1", label: "주민등록증" },
             { value: "2", label: "운전면허증" },
-            { value: "3", label: "외국인등록증" },
+            { value: "5-1", label: "외국인등록증" },
           ]}
           value={idTp}
           onChange={(value) => {

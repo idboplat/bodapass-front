@@ -58,7 +58,11 @@ export const USEABLE_TP: Entity = [
 export const IdCardEntity: Entity = [
   ["1", "주민등록증"],
   ["2", "운전면허증"],
-  ["3", "외국인등록증"],
+  ["3", "여권(국내)"],
+  ["4", "여권(국외)"],
+  ["5-1", "외국인등록증"],
+  ["5-2", "국내거소신고증"],
+  ["5-3", "영주증"],
 ];
 
 export const findEntity = (entity: Entity, value: string) => {

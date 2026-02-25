@@ -91,7 +91,7 @@ export const useWCW000002SSQ01 = () =>
       idTp: TIdTp;
       session: Session | null;
     }) => {
-      const result = await callWas<StringRspnData<3>>({
+      const result = await callWas<StringRspnData<7>>({
         svcId: "WCW000002SSQ01", // 매칭되는 svcId 없음
         apiPathName: "WCW000002SSQ01",
         locale: "ko",
@@ -105,11 +105,14 @@ export const useWCW000002SSQ01 = () =>
       if (!data) throw new Error("FW999");
 
       return {
-        userNm: data.F01,
-        id1: data.F02,
-        id2: data.F03,
+        idTp: data.F01 as TIdTp,
+        userNm: data.F02,
+        id1: data.F03,
+        id2: data.F04,
+        isuDd: data.F05,
+        cntryCd: data.F06,
+        visaCd: data.F07,
         image: args.image,
-        idTp: args.idTp,
       };
     },
   });

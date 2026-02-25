@@ -5,7 +5,7 @@ import { useSession } from "@/libraries/auth/use-session";
 import { useCamera } from "@/hooks/use-camera";
 import { useRouter } from "next/router";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
-import { DEVICE_API } from "@/types/common";
+import { DEVICE_API, TIdTp } from "@/types/common";
 import { TOCR, TScannedResult } from "@/libraries/auth/auth.dto";
 
 interface Props {}
@@ -101,7 +101,7 @@ export default function CrewIdcardHome({}: Props) {
     addrDtil: string;
     tel: string;
     zipCd: string;
-    idTp: "1" | "2" | "3";
+    idTp: TIdTp;
     image: Blob;
   }) => {
     // if (WCW000001SSP02.mutation.isPending) return;

@@ -35,9 +35,12 @@ export const signUpDto = z.object({
 });
 
 export type TScannedResult = {
+  idTp: TIdTp;
+  userNm: string;
   id1: string;
   id2: string;
-  idTp: TIdTp;
+  isuDd: string;
+  cntryCd: string;
+  visaCd: string;
   image: Blob;
-  userNm: string;
 };

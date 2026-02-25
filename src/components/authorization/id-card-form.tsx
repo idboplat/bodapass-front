@@ -11,6 +11,7 @@ import { replaceToTelNumber } from "@/utils/regexp";
 import { TScannedResult } from "@/libraries/auth/auth.dto";
 import { AnimatePresence } from "motion/react";
 import { CustomInput } from "../common/custom-input";
+import { TIdTp } from "@/types/common";
 
 interface Props {
   brkrId?: string;
@@ -22,7 +23,7 @@ interface Props {
     addr: string;
     addrDtil: string;
     tel: string;
-    idTp: "1" | "2" | "3";
+    idTp: TIdTp;
     zipCd: string;
     image: Blob;
   }) => void;
