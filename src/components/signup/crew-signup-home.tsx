@@ -23,21 +23,18 @@ export default function CrewSignUpHome({}: Props) {
   const form = useFormContext<TSignUpDto>();
   const ctx = useOnSiteSignupCtx();
 
-  // 국가코드 일시적 생략
-
   const { data: session } = useSession();
   if (!session) throw new Error("FW401");
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const step2Prev = () => {
-    router.back();
-  };
-
   const step2Next = (args: TScannedResult) => {
     form.setValue("userNm", args.userNm);
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
+    form.setValue("isuDd", args.isuDd);
+    form.setValue("cntryCd", args.cntryCd);
+    form.setValue("visaCd", args.visaCd);
     ctx.saveImages([args.image]);
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
@@ -134,14 +131,8 @@ export default function CrewSignUpHome({}: Props) {
     <WithoutSignInLayout>
       <div className={css.form}>
         {ctx.step === "1" && <CrewStep1 />}
-        {ctx.step === "2" && (
-          <Step2
-            onClickNext={step2Next}
-            onClickPrev={step2Prev}
-            idTp={ctx.idTp}
-            locale={ctx.locale}
-          />
-        )}
+        {ctx.step === "2" && <Step2 onClickNext={step2Next} idTp={ctx.idTp} locale={ctx.locale} />}
+
         {ctx.step === "3" && (
           <Step3
             onClickNext={step3Next}
@@ -151,6 +142,7 @@ export default function CrewSignUpHome({}: Props) {
             idTp={ctx.idTp}
           />
         )}
+
         {ctx.step === "4" && (
           <CrewStep4
             wrkTp={ctx.wrkTp}

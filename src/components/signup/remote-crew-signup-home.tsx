@@ -26,10 +26,6 @@ export default function RemoteCrewSignupHome({}: Props) {
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const step3Prev = () => {
-    router.back();
-  };
-
   const step3Next = (args: TScannedResult) => {
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
@@ -136,14 +132,7 @@ export default function RemoteCrewSignupHome({}: Props) {
             loginTp={ctx.loginTp}
           />
         )}
-        {ctx.step === "3" && (
-          <Step2
-            idTp={ctx.idTp}
-            locale={ctx.locale}
-            onClickNext={step3Next}
-            onClickPrev={step3Prev}
-          />
-        )}
+        {ctx.step === "3" && <Step2 idTp={ctx.idTp} locale={ctx.locale} onClickNext={step3Next} />}
         {ctx.step === "4" && (
           <Step3
             idTp={ctx.idTp}

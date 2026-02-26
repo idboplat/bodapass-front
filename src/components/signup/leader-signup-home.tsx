@@ -26,14 +26,13 @@ export default function LeaderSignupHome({}: Props) {
 
   const WCW000001SSP02 = useWCW000001SSP02();
 
-  const step2Prev = () => {
-    router.back();
-  };
-
   const step2Next = (args: TScannedResult) => {
     form.setValue("userNm", args.userNm);
     form.setValue("idNo1", args.id1);
     form.setValue("idNo2", args.id2);
+    form.setValue("isuDd", args.isuDd);
+    form.setValue("cntryCd", args.cntryCd);
+    form.setValue("visaCd", args.visaCd);
     ctx.saveImages([args.image]);
 
     const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
@@ -143,14 +142,8 @@ export default function LeaderSignupHome({}: Props) {
   return (
     <WithSignInLayout title="반장 회원가입">
       <div className={css.form}>
-        {ctx.step === "2" && (
-          <Step2
-            idTp={ctx.idTp}
-            locale={ctx.locale}
-            onClickNext={step2Next}
-            onClickPrev={step2Prev}
-          />
-        )}
+        {ctx.step === "2" && <Step2 idTp={ctx.idTp} locale={ctx.locale} onClickNext={step2Next} />}
+
         {ctx.step === "3" && (
           <Step3
             idTp={ctx.idTp}

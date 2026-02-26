@@ -1,25 +1,64 @@
 .brkrId {
   font-size: 0.8rem;
   padding: 1rem;
-  // display: flex;
-  // padding: 1rem;
 }
 
 .nav {
-  padding: 1rem;
 }
 
 .navText {
+  margin: 1.5rem 1.5rem 1.875rem 1.5rem;
   text-align: center;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #666;
-  margin-bottom: 1rem;
+
   p {
     margin: 0;
   }
+
   span {
     color: #3d99d3;
-    font-size: 16px;
+    font-size: 1rem;
+  }
+}
+
+.tabs {
+  display: flex;
+  border: 1px solid #ededed;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 1.75rem;
+
+  > button {
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.75rem 1.25rem;
+    color: #999;
+    position: relative;
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+      border-right: 1px solid #ededed;
+    }
+
+    &[data-active="true"] {
+      color: #666;
+      font-weight: 500;
+      cursor: default;
+
+      &::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #3d99d5 0%, #00ae6a 100%);
+        border-radius: 1px;
+        content: "";
+      }
+    }
   }
 }
 
@@ -33,6 +72,7 @@
 .infoBox {
   background: #fff;
   padding: 1rem;
+  margin-top: 0.75rem;
   padding-bottom: 6rem; /* fixed 버튼 높이만큼 여백 추가 */
   display: flex;
   flex-direction: column;
@@ -68,7 +108,7 @@
 
 .infoItem span {
   color: #3c98d4;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .buttonContainer {

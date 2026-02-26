@@ -1,4 +1,4 @@
-import { Input, InputProps, InputWrapperProps, PasswordInput } from "@mantine/core";
+import { Input, InputProps, PasswordInput } from "@mantine/core";
 import clsx from "clsx";
 import css from "./custom-input.module.scss";
 
@@ -6,7 +6,7 @@ interface CustomInputProps extends Omit<InputProps, "onChange"> {
   className?: string;
   value?: string | undefined;
   defaultValue?: string | undefined;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | ((value: string) => void);
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   label?: string;
   required?: boolean;
@@ -15,8 +15,8 @@ interface CustomInputProps extends Omit<InputProps, "onChange"> {
     label?: string;
     required?: string;
   };
-  onFocus?: React.FocusEventHandler<HTMLInputElement> | (() => void);
-  onBlur?: React.FocusEventHandler<HTMLInputElement> | (() => void);
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   autoComplete?: string;
   readOnly?: boolean;
   inputMode?: "text" | "numeric" | "tel" | "email" | "url" | "search";
@@ -155,17 +155,7 @@ export function CustomInputPassword({
         <PasswordInput
           value={value}
           defaultValue={defaultValue}
-          onChange={(e) => {
-            if (onChange) {
-              const handler = onChange as any;
-              // 이벤트 핸들러로 시도하고, 실패하면 value만 전달
-              try {
-                handler(e);
-              } catch {
-                handler(e.target.value);
-              }
-            }
-          }}
+          onChange={onChange}
           color="#ededed"
           className={clsx(css.input, className)}
           placeholder={placeholder}
@@ -180,26 +170,8 @@ export function CustomInputPassword({
               },
             } as any
           }
-          onFocus={(e) => {
-            if (onFocus) {
-              const handler = onFocus as any;
-              try {
-                handler(e);
-              } catch {
-                handler();
-              }
-            }
-          }}
-          onBlur={(e) => {
-            if (onBlur) {
-              const handler = onBlur as any;
-              try {
-                handler(e);
-              } catch {
-                handler();
-              }
-            }
-          }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           autoComplete={autoComplete}
           readOnly={readOnly}
           {...inputProps}

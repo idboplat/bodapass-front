@@ -2,11 +2,10 @@ import { useWCW000002SSQ01 } from "@/hooks/tms/use-auth";
 import { useCamera } from "@/hooks/use-camera";
 import { nativeAlert } from "@/hooks/use-device-api";
 import { TScannedResult } from "@/libraries/auth/auth.dto";
-import { ActionIcon, Loader, LoadingOverlay, Select } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import css from "./step-2.module.scss";
 import CameraFrame from "../common/camera-frame";
 import clsx from "clsx";
-import { Camera as IconCamera } from "lucide-react";
 import Camera from "../camera";
 import { TIdTp } from "@/types/common";
 import { useRouter } from "next/router";
@@ -17,11 +16,9 @@ export default function Step2({
   idTp,
   locale,
   onClickNext,
-  onClickPrev,
 }: {
   idTp: TIdTp;
   locale: string;
-  onClickPrev: () => void;
   onClickNext: (args: TScannedResult) => void;
 }) {
   const router = useRouter();
@@ -48,6 +45,21 @@ export default function Step2({
     }
   };
 
+  const onClickTab = (value: TIdTp) => {
+    if (!value) return;
+    const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
+    searchParams.set("idTp", value as TIdTp);
+
+    router.replace(
+      {
+        pathname: router.pathname, // 반장 팀원에 따라 pathname을 변경한다.
+        query: { ...Object.fromEntries(searchParams.entries()), locale },
+      },
+      undefined,
+      { scroll: false },
+    );
+  };
+
   return (
     <>
       <div>
@@ -62,24 +74,30 @@ export default function Step2({
               <span>외국인 등록증</span>을 준비해주세요.
             </p>
           </div>
-          <Select
-            data={[
-              { value: "1", label: "주민등록증" },
-              { value: "2", label: "운전면허증" },
-              { value: "5-1", label: "외국인등록증" },
-            ]}
-            value={idTp}
-            onChange={(value) => {
-              if (!value) return;
-              const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
-              searchParams.set("idTp", value as TIdTp);
 
-              router.replace({
-                pathname: router.pathname, // 반장 팀원에 따라 pathname을 변경한다.
-                query: { ...Object.fromEntries(searchParams.entries()), locale },
-              });
-            }}
-          />
+          <div className={css.tabs}>
+            <button
+              onClick={() => onClickTab("1")}
+              data-active={idTp === "1"}
+              disabled={idTp === "1"}
+            >
+              주민등록증
+            </button>
+            <button
+              onClick={() => onClickTab("2")}
+              data-active={idTp === "2"}
+              disabled={idTp === "2"}
+            >
+              운전면허증
+            </button>
+            <button
+              onClick={() => onClickTab("5-1")}
+              data-active={idTp === "5-1"}
+              disabled={idTp === "5-1"}
+            >
+              외국인
+            </button>
+          </div>
         </div>
 
         <div className={clsx(css.cameraBox)}>
