@@ -52,7 +52,7 @@ export default function Page({ kakaoSignInUrl }: Props) {
             <p className={css.title}>
               안녕하세요 :&#41;
               <br />
-              일당백 입니다.
+              보다패스 입니다.
             </p>
           </div>
 

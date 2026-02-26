@@ -3,9 +3,9 @@
     "details": [
       {
         "appIds": [
-          "com.onehundredwork.ildangbaek",
-          "com.onehundredwork.ildangbaek.development",
-          "com.onehundredwork.ildangbaek.preview"
+          "com.idboplat.bodapass.production",
+          "com.idboplat.bodapass.preview",
+          "com.idboplat.bodapass.development"
         ],
         "paths": []
       }

@@ -3,9 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.onehundredwork.ildangbaek",
+      "package_name": "com.idboplat.bodapass.production",
       "sha256_cert_fingerprints": [
-        "E5:2F:D3:34:75:7D:9C:F3:2F:B9:CA:0D:65:35:57:95:7B:D5:46:F5:1F:47:45:F8:31:A5:A5:22:FE:04:CE:70"
+        "11:29:19:8C:C2:C3:8C:85:B3:ED:9E:59:A5:16:A8:93:F1:88:3F:1A:42:97:CE:A1:C9:AD:1D:D5:FA:14:D9:C3"
       ]
     }
   }

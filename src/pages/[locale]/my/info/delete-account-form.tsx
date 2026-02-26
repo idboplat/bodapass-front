@@ -1,13 +1,11 @@
 import { TWCM200801SSQ01Data, useTCM200801SSP02 } from "@/hooks/tms/use-worker";
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { LoadingOverlay } from "@mantine/core";
 import css from "./delete-account-form.module.scss";
 import { nativeAlert, sendMessageToDevice } from "@/hooks/use-device-api";
 import { DEVICE_API } from "@/types/common";
 import { useRouter } from "next/router";
 import WarningIcon from "/public/assets/svg/warning.svg";
 import CustomButton from "@/components/common/custom-button";
-import { CustomInput, CustomInputPassword } from "@/components/common/custom-input";
 import CustomCheckbox from "@/components/common/custom-checkbox";
 import { useState } from "react";
 
@@ -47,7 +45,7 @@ export default function DeleteAccountForm({ session }: Props) {
           <WarningIcon />
           <h2 className={css.title}>회원탈퇴</h2>
           <p className={css.warningText}>
-            일당백 회원탈퇴를 하시겠습니까?
+            보다패스 회원탈퇴를 하시겠습니까?
             <br />
             탈퇴 후에는 모든 정보가 삭제되며
             <br />

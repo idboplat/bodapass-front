@@ -8,7 +8,7 @@ export default function Download() {
         <Image src="/assets/images/logo.png" alt="Logo" width={200} height={200} />
         <p className={css.firstText}>쉽고 간편한 건설노동자 관리! </p>
         <p>
-          <strong>일당백</strong> 어플로 시작하세요.
+          <strong>보다패스</strong> 어플로 시작하세요.
         </p>
       </div>
       <div className={css.content}>

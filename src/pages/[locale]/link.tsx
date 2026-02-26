@@ -2,7 +2,7 @@ import { Button } from "@mantine/core";
 
 export default function Private() {
   const onClick = () => {
-    const appUrl = "com.onehundredwork.ildangbaek://";
+    const appUrl = "com.idboplat.bodapass.production://";
     window.location.href = appUrl;
   };
 

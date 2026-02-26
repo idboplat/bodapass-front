@@ -34,7 +34,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   return getLayout(
     <>
       <Head>
-        <title>일당백</title>
+        <title>보다패스</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, viewport-fit=cover"
